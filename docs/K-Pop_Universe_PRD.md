@@ -1,4 +1,5 @@
 # K-Pop Universe - Product Requirements Document (PRD)
+
 **Version:** 3.0
 **Last Updated:** October 31, 2025
 **Project Type:** Reddit-Style K-Pop Community Platform
@@ -7,6 +8,7 @@
 ---
 
 ## Table of Contents
+
 1. [Executive Summary](#executive-summary)
 2. [User Stories & Use Cases](#user-stories--use-cases)
 3. [Data Models & Database Schema](#data-models--database-schema)
@@ -23,9 +25,11 @@
 ## Executive Summary
 
 ### Project Vision
+
 K-Pop Universe is a mobile-first, Reddit-style community platform dedicated to K-Pop fans worldwide. The platform combines community-driven discussion (similar to Reddit) with Instagram-style engagement mechanics and a comprehensive K-Pop group discovery system.
 
 ### Core Value Propositions
+
 - **Community-First**: Fan-created communities for every K-Pop topic imaginable
 - **Discovery**: Comprehensive database of K-Pop groups with rich profiles
 - **Mobile-Optimized**: Built mobile-first with exceptional touch-friendly UX
@@ -33,6 +37,7 @@ K-Pop Universe is a mobile-first, Reddit-style community platform dedicated to K
 - **Accessible**: Free browsing for guests, account required for participation
 
 ### Key Success Metrics
+
 - User Registration Conversion Rate: >15% from guest to member
 - Daily Active Users (DAU): Target 10K+ in first 6 months
 - Average Session Duration: >8 minutes
@@ -40,6 +45,7 @@ K-Pop Universe is a mobile-first, Reddit-style community platform dedicated to K
 - Mobile Traffic: >70% of total traffic
 
 ### Technical Architecture Highlights
+
 - **Backend**: Ruby on Rails 7.x with PostgreSQL
 - **Real-Time**: ActionCable + Hotwire Turbo Streams
 - **Feed System**: Denormalized, pre-built feeds with push-based updates
@@ -54,15 +60,18 @@ K-Pop Universe is a mobile-first, Reddit-style community platform dedicated to K
 ### User Personas
 
 #### 1. Guest Browser (Unauthenticated)
+
 **Demographics**: New visitors, lurkers, international fans
 **Goals**: Discover K-Pop content, explore communities without commitment
 **Behaviors**:
+
 - Browses homepage trending posts
 - Explores "Get to Know Groups" discovery section
 - Views posts and comments (read-only)
 - Filters groups by company/type
 
 **Key User Stories**:
+
 - As a guest, I can browse all community posts without creating an account
 - As a guest, I can search and filter K-Pop groups by entertainment company
 - As a guest, I see prominent CTAs encouraging me to sign up after 3+ interactions
@@ -73,9 +82,11 @@ K-Pop Universe is a mobile-first, Reddit-style community platform dedicated to K
 ---
 
 #### 2. Community Member (Registered User)
+
 **Demographics**: Active K-Pop fans, ages 16-35, global audience
 **Goals**: Engage with community, share content, discover new groups
 **Behaviors**:
+
 - Creates posts (text, images, videos, links, polls)
 - Hearts and comments on posts
 - Shares posts to other communities or externally
@@ -84,6 +95,7 @@ K-Pop Universe is a mobile-first, Reddit-style community platform dedicated to K
 - Customizes profile with favorite groups and flair
 
 **Key User Stories**:
+
 - As a member, I can create a post in any community I've joined with rich media (images/videos)
 - As a member, I can heart posts and comments to show appreciation
 - As a member, I can share posts to other communities or social media
@@ -94,6 +106,7 @@ K-Pop Universe is a mobile-first, Reddit-style community platform dedicated to K
 - As a member, I can save/bookmark posts to read later
 
 **Mobile Considerations**:
+
 - Floating Action Button (FAB) for quick post creation
 - Swipe gestures for navigation between feeds
 - Bottom sheet for quick actions (share, save, report)
@@ -102,9 +115,11 @@ K-Pop Universe is a mobile-first, Reddit-style community platform dedicated to K
 ---
 
 #### 3. Community Moderator
+
 **Demographics**: Trusted community members, volunteer role
 **Goals**: Maintain community quality, enforce rules, handle reports
 **Behaviors**:
+
 - Reviews reported posts/comments
 - Removes rule-breaking content
 - Pins important announcements
@@ -112,6 +127,7 @@ K-Pop Universe is a mobile-first, Reddit-style community platform dedicated to K
 - Bans/warns problematic users
 
 **Key User Stories**:
+
 - As a moderator, I can remove posts and comments that violate community rules
 - As a moderator, I can pin important posts to the top of the community
 - As a moderator, I can view a moderation queue of reported content
@@ -124,15 +140,18 @@ K-Pop Universe is a mobile-first, Reddit-style community platform dedicated to K
 ---
 
 #### 4. Community Creator/Admin
+
 **Demographics**: Passionate fans who want to start new communities
 **Goals**: Build and grow niche K-Pop communities
 **Behaviors**:
+
 - Creates new communities instantly (no approval needed)
 - Customizes community appearance and settings
 - Appoints moderators
 - Monitors community growth analytics
 
 **Key User Stories**:
+
 - As a creator, I can instantly create a new community with a unique name/URL
 - As a creator, I can upload a community icon and banner image
 - As a creator, I can set community visibility (public/private)
@@ -147,6 +166,7 @@ K-Pop Universe is a mobile-first, Reddit-style community platform dedicated to K
 ### Core User Journeys
 
 #### Journey 1: Discovery & Onboarding Flow
+
 ```
 Guest User
   ↓
@@ -168,6 +188,7 @@ Presented with personalized feed of followed communities
 ```
 
 **Key Touchpoints**:
+
 - Homepage must load <2s on 3G connections
 - "Get to Know Groups" must be prominent in navigation
 - Sign up flow <30 seconds with social login
@@ -176,6 +197,7 @@ Presented with personalized feed of followed communities
 ---
 
 #### Journey 2: Content Creation (Mobile-Optimized)
+
 ```
 Logged-In User browsing feed
   ↓
@@ -199,6 +221,7 @@ Receives push notification: "Your post got 10 hearts!"
 ```
 
 **Key Touchpoints**:
+
 - FAB must be accessible with thumb on all screen sizes
 - Image upload supports multi-select from camera roll
 - Video upload with progress indicator
@@ -208,6 +231,7 @@ Receives push notification: "Your post got 10 hearts!"
 ---
 
 #### Journey 3: Community Engagement Loop
+
 ```
 User opens app / visits site
   ↓
@@ -229,6 +253,7 @@ Pulls to refresh → New posts appear at top with animation
 ```
 
 **Key Touchpoints**:
+
 - Feed must load <1s (pre-built architecture)
 - Voting/hearting must feel instant (optimistic UI)
 - Real-time comment updates via ActionCable
@@ -239,41 +264,46 @@ Pulls to refresh → New posts appear at top with animation
 
 ### Mobile vs Desktop Experience Comparison
 
-| Feature                 | Mobile Experience                              | Desktop Experience                       |
-|-------------------------|------------------------------------------------|------------------------------------------|
-| **Navigation**          | Bottom tab bar (Home, Discover, Notifications, Profile) or hamburger menu | Persistent left sidebar with community list |
-| **Post Creation**       | Floating Action Button (FAB)                   | Prominent "Create Post" button in header |
-| **Voting/Hearts**       | Large touch targets (48x48px), swipe gestures  | Standard buttons (hover effects)         |
-| **Content Display**     | Single column, card-based (16:9 images)        | Multi-column layout (feed + sidebar)     |
-| **Comments**            | Full-screen modal or bottom sheet              | Inline expansion or side panel           |
-| **Search**              | Full-screen search overlay                     | Header search with dropdown              |
-| **Moderation**          | Core actions only (remove, pin, ban)           | Full moderation dashboard                |
-| **Group Discovery**     | Swipeable cards, bottom sheet filters          | Grid layout with sidebar filters         |
-| **Notifications**       | Push notifications + in-app notification center| Browser notifications + dropdown         |
-| **Profile**             | Full-screen profile view with tabs             | Two-column layout (info + activity)      |
+| Feature             | Mobile Experience                                                         | Desktop Experience                          |
+| ------------------- | ------------------------------------------------------------------------- | ------------------------------------------- |
+| **Navigation**      | Bottom tab bar (Home, Discover, Notifications, Profile) or hamburger menu | Persistent left sidebar with community list |
+| **Post Creation**   | Floating Action Button (FAB)                                              | Prominent "Create Post" button in header    |
+| **Voting/Hearts**   | Large touch targets (48x48px), swipe gestures                             | Standard buttons (hover effects)            |
+| **Content Display** | Single column, card-based (16:9 images)                                   | Multi-column layout (feed + sidebar)        |
+| **Comments**        | Full-screen modal or bottom sheet                                         | Inline expansion or side panel              |
+| **Search**          | Full-screen search overlay                                                | Header search with dropdown                 |
+| **Moderation**      | Core actions only (remove, pin, ban)                                      | Full moderation dashboard                   |
+| **Group Discovery** | Swipeable cards, bottom sheet filters                                     | Grid layout with sidebar filters            |
+| **Notifications**   | Push notifications + in-app notification center                           | Browser notifications + dropdown            |
+| **Profile**         | Full-screen profile view with tabs                                        | Two-column layout (info + activity)         |
 
 ---
 
 ### Engagement & Retention Mechanics
 
 #### Post-Signup Engagement Hooks
+
 1. **Onboarding Flow**:
+
    - "Follow 3 communities to get started" (required step)
    - "Add your favorite K-Pop groups to your profile" (optional)
    - "Enable notifications to never miss updates" (permission prompt)
 
 2. **Gamification - Karma System**:
+
    - Earn karma from hearts on posts/comments
    - Karma thresholds unlock badges (Bronze: 100, Silver: 500, Gold: 1000)
    - Display karma on profile and next to username
 
 3. **Notifications** (Critical for retention):
+
    - Comment replies (instant push)
    - Post hearts (batched: "Your post got 10 hearts!")
    - Milestone notifications ("Your post reached 100 hearts!")
    - Community updates (weekly digest: "5 new posts in r/BTS")
 
 4. **Profile Building**:
+
    - User flair (text next to username, e.g., "ARMY since 2013")
    - Favorite groups displayed on profile
    - Achievement badges (e.g., "Early Adopter", "Top Contributor")
@@ -285,16 +315,20 @@ Pulls to refresh → New posts appear at top with animation
    - Post templates for common types (e.g., "Comeback Discussion")
 
 #### Guest → Member Conversion Triggers
+
 1. **Persistent CTA Bar**:
+
    - Bottom sticky bar (mobile): "Sign up to customize your feed"
    - Top banner (desktop): "Join 50K+ K-Pop fans on K-Pop Universe"
 
 2. **Feature Gating**:
+
    - After 3 post views: "Create account to save posts"
    - After 5 minutes: "Sign up to follow your favorite communities"
    - After clicking heart: Immediate signup modal
 
 3. **Social Proof**:
+
    - "Join 50,000+ K-Pop fans"
    - "12,345 posts created today"
    - "Trending: 500 people discussing [Group Name]"
@@ -329,6 +363,7 @@ Users ←1:N→ Notifications
 ### Core Models
 
 #### 1. User Model
+
 ```ruby
 # app/models/user.rb
 class User < ApplicationRecord
@@ -361,6 +396,7 @@ end
 ```
 
 **Database Schema**:
+
 ```sql
 CREATE TABLE users (
   id BIGSERIAL PRIMARY KEY,
@@ -409,6 +445,7 @@ CREATE TABLE users (
 ---
 
 #### 2. Community Model
+
 ```ruby
 # app/models/community.rb
 class Community < ApplicationRecord
@@ -432,6 +469,7 @@ end
 ```
 
 **Database Schema**:
+
 ```sql
 CREATE TABLE communities (
   id BIGSERIAL PRIMARY KEY,
@@ -466,6 +504,7 @@ CREATE TABLE communities (
 ---
 
 #### 3. Post Model
+
 ```ruby
 # app/models/post.rb
 class Post < ApplicationRecord
@@ -499,6 +538,7 @@ end
 ```
 
 **Database Schema**:
+
 ```sql
 CREATE TABLE posts (
   id BIGSERIAL PRIMARY KEY,
@@ -542,6 +582,7 @@ CREATE TABLE posts (
 ---
 
 #### 4. Comment Model
+
 ```ruby
 # app/models/comment.rb
 class Comment < ApplicationRecord
@@ -566,6 +607,7 @@ end
 ```
 
 **Database Schema**:
+
 ```sql
 CREATE TABLE comments (
   id BIGSERIAL PRIMARY KEY,
@@ -595,6 +637,7 @@ CREATE TABLE comments (
 ---
 
 #### 5. Heart Model (Polymorphic for Posts & Comments)
+
 ```ruby
 # app/models/heart.rb
 class Heart < ApplicationRecord
@@ -622,6 +665,7 @@ end
 ```
 
 **Database Schema**:
+
 ```sql
 CREATE TABLE hearts (
   id BIGSERIAL PRIMARY KEY,
@@ -639,6 +683,7 @@ CREATE TABLE hearts (
 ---
 
 #### 6. FeedItem Model (Denormalized for Performance)
+
 ```ruby
 # app/models/feed_item.rb
 class FeedItem < ApplicationRecord
@@ -654,6 +699,7 @@ end
 ```
 
 **Database Schema**:
+
 ```sql
 CREATE TABLE feed_items (
   id BIGSERIAL PRIMARY KEY,
@@ -690,6 +736,7 @@ CREATE TABLE feed_items (
 ```
 
 **Feed Update Strategy**:
+
 - When user follows community → Backfill top 50 recent posts into their feed
 - When new post is created → Push to feeds of all community members (background job)
 - When post crosses engagement thresholds (10, 50, 100, 500, 1000 hearts) → Update cached metrics across all feed_items
@@ -698,6 +745,7 @@ CREATE TABLE feed_items (
 ---
 
 #### 7. KpopGroup Model (Discovery Section)
+
 ```ruby
 # app/models/kpop_group.rb
 class KpopGroup < ApplicationRecord
@@ -716,6 +764,7 @@ end
 ```
 
 **Database Schema**:
+
 ```sql
 CREATE TABLE kpop_groups (
   id BIGSERIAL PRIMARY KEY,
@@ -760,6 +809,7 @@ CREATE TABLE kpop_groups (
 ---
 
 #### 8. Company Model
+
 ```ruby
 # app/models/company.rb
 class Company < ApplicationRecord
@@ -770,6 +820,7 @@ end
 ```
 
 **Database Schema**:
+
 ```sql
 CREATE TABLE companies (
   id BIGSERIAL PRIMARY KEY,
@@ -792,6 +843,7 @@ CREATE TABLE companies (
 #### 9. Additional Supporting Models
 
 **GroupMember**:
+
 ```sql
 CREATE TABLE group_members (
   id BIGSERIAL PRIMARY KEY,
@@ -812,6 +864,7 @@ CREATE TABLE group_members (
 ```
 
 **PostImage**:
+
 ```sql
 CREATE TABLE post_images (
   id BIGSERIAL PRIMARY KEY,
@@ -829,6 +882,7 @@ CREATE TABLE post_images (
 ```
 
 **PostVideo**:
+
 ```sql
 CREATE TABLE post_videos (
   id BIGSERIAL PRIMARY KEY,
@@ -845,6 +899,7 @@ CREATE TABLE post_videos (
 ```
 
 **Notification**:
+
 ```sql
 CREATE TABLE notifications (
   id BIGSERIAL PRIMARY KEY,
@@ -874,6 +929,7 @@ CREATE TABLE notifications (
 ```
 
 **CommunityMembership**:
+
 ```sql
 CREATE TABLE community_memberships (
   id BIGSERIAL PRIMARY KEY,
@@ -888,6 +944,7 @@ CREATE TABLE community_memberships (
 ```
 
 **ModeratorRole**:
+
 ```sql
 CREATE TABLE moderator_roles (
   id BIGSERIAL PRIMARY KEY,
@@ -909,6 +966,7 @@ CREATE TABLE moderator_roles (
 ### RESTful Routes
 
 #### Authentication (Devise)
+
 ```ruby
 # config/routes.rb
 devise_for :users, controllers: {
@@ -926,6 +984,7 @@ end
 ```
 
 **Endpoints**:
+
 - `POST /users` - Sign up with email/password
 - `POST /users/sign_in` - Log in
 - `DELETE /users/sign_out` - Log out
@@ -936,6 +995,7 @@ end
 ---
 
 #### Users
+
 ```ruby
 resources :users, only: [:show, :update] do
   member do
@@ -950,6 +1010,7 @@ end
 ```
 
 **Endpoints**:
+
 - `GET /users/:id` - User profile
 - `PATCH /users/:id` - Update profile
 - `GET /users/:id/posts` - User's posts
@@ -959,6 +1020,7 @@ end
 ---
 
 #### Communities
+
 ```ruby
 resources :communities do
   member do
@@ -973,6 +1035,7 @@ end
 ```
 
 **Endpoints**:
+
 - `GET /communities` - List all communities (with filters)
 - `POST /communities` - Create community
 - `GET /communities/:id` - Community detail
@@ -986,6 +1049,7 @@ end
 ---
 
 #### Posts
+
 ```ruby
 resources :posts do
   member do
@@ -1003,6 +1067,7 @@ end
 ```
 
 **Endpoints**:
+
 - `GET /posts/:id` - Post detail
 - `PATCH /posts/:id` - Update post (author only)
 - `DELETE /posts/:id` - Delete post (author or moderator)
@@ -1016,6 +1081,7 @@ end
 ---
 
 #### Comments
+
 ```ruby
 resources :comments, only: [:update, :destroy] do
   member do
@@ -1028,6 +1094,7 @@ end
 ```
 
 **Endpoints**:
+
 - `PATCH /comments/:id` - Update comment
 - `DELETE /comments/:id` - Delete comment
 - `POST /comments/:id/heart` - Heart comment
@@ -1036,6 +1103,7 @@ end
 ---
 
 #### Feed
+
 ```ruby
 namespace :feed do
   get 'home', to: 'feed#home' # Personalized feed
@@ -1045,11 +1113,13 @@ end
 ```
 
 **Endpoints**:
+
 - `GET /feed/home` - Personalized feed (followed communities)
 - `GET /feed/all` - All posts from all communities
 - `GET /feed/popular` - Trending posts (algorithm-based)
 
 **Query Parameters**:
+
 - `filter`: `hot`, `new`, `top` (default: `hot`)
 - `time`: `today`, `week`, `month`, `year`, `all` (for `top` filter)
 - `page`: Pagination (default: 1)
@@ -1058,6 +1128,7 @@ end
 ---
 
 #### K-Pop Discovery
+
 ```ruby
 resources :kpop_groups, only: [:index, :show] do
   member do
@@ -1075,6 +1146,7 @@ resources :companies, only: [:index, :show]
 ```
 
 **Endpoints**:
+
 - `GET /kpop_groups` - List groups (with filters)
 - `GET /kpop_groups/:id` - Group detail
 - `POST /kpop_groups/:id/follow` - Follow group
@@ -1086,6 +1158,7 @@ resources :companies, only: [:index, :show]
 ---
 
 #### Notifications
+
 ```ruby
 resources :notifications, only: [:index] do
   member do
@@ -1099,6 +1172,7 @@ end
 ```
 
 **Endpoints**:
+
 - `GET /notifications` - List notifications
 - `PATCH /notifications/:id/mark_read` - Mark as read
 - `PATCH /notifications/mark_all_read` - Mark all as read
@@ -1106,6 +1180,7 @@ end
 ---
 
 #### Search
+
 ```ruby
 namespace :search do
   get 'global' # Search across posts, communities, users, groups
@@ -1117,6 +1192,7 @@ end
 ```
 
 **Endpoints**:
+
 - `GET /search/global?q=BTS` - Search everything
 - `GET /search/posts?q=comeback` - Search posts
 - `GET /search/communities?q=bts` - Search communities
@@ -1144,6 +1220,7 @@ turbo_stream_from "post_#{post.id}_comments"
 ```
 
 **Turbo Stream Actions**:
+
 - `append` - Add new comments to thread
 - `update` - Update heart count on post
 - `prepend` - Add new post to top of feed
@@ -1154,6 +1231,7 @@ turbo_stream_from "post_#{post.id}_comments"
 ### API Response Format (JSON)
 
 #### Success Response
+
 ```json
 {
   "status": "success",
@@ -1187,6 +1265,7 @@ turbo_stream_from "post_#{post.id}_comments"
 ```
 
 #### Error Response
+
 ```json
 {
   "status": "error",
@@ -1207,6 +1286,7 @@ turbo_stream_from "post_#{post.id}_comments"
 ### Authentication Strategy (Devise + OmniAuth)
 
 #### Devise Configuration
+
 ```ruby
 # config/initializers/devise.rb
 Devise.setup do |config|
@@ -1226,6 +1306,7 @@ end
 ```
 
 #### Social Login (OmniAuth)
+
 ```ruby
 # config/initializers/omniauth.rb
 Rails.application.config.middleware.use OmniAuth::Builder do
@@ -1260,6 +1341,7 @@ end
 ```
 
 #### Mobile-Friendly Auth Flow
+
 1. **Guest Browsing**: No friction, immediate access to content
 2. **Social Login Priority**: Google/Apple buttons above email/password form
 3. **One-Tap Sign-In**: Pre-fill email if possible (browser autocomplete)
@@ -1271,6 +1353,7 @@ end
 ### Authorization Strategy (Pundit)
 
 #### User Roles
+
 ```ruby
 # app/models/user.rb
 enum role: {
@@ -1284,6 +1367,7 @@ enum role: {
 #### Policy Structure
 
 **PostPolicy**:
+
 ```ruby
 # app/policies/post_policy.rb
 class PostPolicy < ApplicationPolicy
@@ -1316,6 +1400,7 @@ end
 ```
 
 **CommunityPolicy**:
+
 ```ruby
 # app/policies/community_policy.rb
 class CommunityPolicy < ApplicationPolicy
@@ -1345,24 +1430,25 @@ end
 
 #### Permission Matrix
 
-| Action            | Guest | Member | Moderator (per-community) | Community Creator | Admin |
-|-------------------|-------|--------|---------------------------|-------------------|-------|
-| Browse posts      | ✓     | ✓      | ✓                         | ✓                 | ✓     |
-| Create post       | ✗     | ✓      | ✓                         | ✓                 | ✓     |
-| Edit own post     | ✗     | ✓      | ✓                         | ✓                 | ✓     |
-| Delete own post   | ✗     | ✓      | ✓                         | ✓                 | ✓     |
-| Delete any post   | ✗     | ✗      | ✓ (in community)          | ✓ (in community)  | ✓     |
-| Pin post          | ✗     | ✗      | ✓ (in community)          | ✓ (in community)  | ✓     |
-| Create community  | ✗     | ✓      | ✓                         | ✓                 | ✓     |
-| Edit community    | ✗     | ✗      | ✓ (in community)          | ✓ (in community)  | ✓     |
-| Add moderator     | ✗     | ✗      | ✗                         | ✓ (in community)  | ✓     |
-| Ban user          | ✗     | ✗      | ✗                         | ✗                 | ✓     |
+| Action           | Guest | Member | Moderator (per-community) | Community Creator | Admin |
+| ---------------- | ----- | ------ | ------------------------- | ----------------- | ----- |
+| Browse posts     | ✓     | ✓      | ✓                         | ✓                 | ✓     |
+| Create post      | ✗     | ✓      | ✓                         | ✓                 | ✓     |
+| Edit own post    | ✗     | ✓      | ✓                         | ✓                 | ✓     |
+| Delete own post  | ✗     | ✓      | ✓                         | ✓                 | ✓     |
+| Delete any post  | ✗     | ✗      | ✓ (in community)          | ✓ (in community)  | ✓     |
+| Pin post         | ✗     | ✗      | ✓ (in community)          | ✓ (in community)  | ✓     |
+| Create community | ✗     | ✓      | ✓                         | ✓                 | ✓     |
+| Edit community   | ✗     | ✗      | ✓ (in community)          | ✓ (in community)  | ✓     |
+| Add moderator    | ✗     | ✗      | ✗                         | ✓ (in community)  | ✓     |
+| Ban user         | ✗     | ✗      | ✗                         | ✗                 | ✓     |
 
 ---
 
 ### Mobile Authentication UX
 
 #### Sign Up Flow
+
 ```
 1. User taps "Sign Up" button
    ↓
@@ -1385,6 +1471,7 @@ end
 ```
 
 #### Sign In Flow
+
 ```
 1. User taps "Sign In" button
    ↓
@@ -1400,6 +1487,7 @@ end
 ```
 
 #### Session Management
+
 - **Web**: 30-day cookie with `remember_me` token
 - **Mobile**: Store JWT token in secure storage
 - **Auto-refresh**: Silent token refresh before expiry
@@ -1422,74 +1510,76 @@ end
 ### Stimulus Controllers
 
 #### 1. Heart Controller
+
 ```javascript
 // app/javascript/controllers/heart_controller.js
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
   static values = {
     heartableType: String,
     heartableId: Number,
-    hearted: Boolean
-  }
-  static targets = ["button", "count"]
+    hearted: Boolean,
+  };
+  static targets = ["button", "count"];
 
   connect() {
-    this.updateUI()
+    this.updateUI();
   }
 
   async toggle(event) {
-    event.preventDefault()
+    event.preventDefault();
 
     // Optimistic UI update
-    this.heartedValue = !this.heartedValue
-    this.updateUI()
+    this.heartedValue = !this.heartedValue;
+    this.updateUI();
 
     const url = this.heartedValue
       ? `/posts/${this.heartableIdValue}/heart`
-      : `/posts/${this.heartableIdValue}/unheart`
+      : `/posts/${this.heartableIdValue}/unheart`;
 
     try {
       const response = await fetch(url, {
-        method: this.heartedValue ? 'POST' : 'DELETE',
+        method: this.heartedValue ? "POST" : "DELETE",
         headers: {
-          'X-CSRF-Token': this.csrfToken(),
-          'Content-Type': 'application/json'
-        }
-      })
+          "X-CSRF-Token": this.csrfToken(),
+          "Content-Type": "application/json",
+        },
+      });
 
       if (!response.ok) {
         // Revert on error
-        this.heartedValue = !this.heartedValue
-        this.updateUI()
+        this.heartedValue = !this.heartedValue;
+        this.updateUI();
       } else {
-        const data = await response.json()
-        this.countTarget.textContent = data.hearts_count
+        const data = await response.json();
+        this.countTarget.textContent = data.hearts_count;
       }
     } catch (error) {
       // Revert on error
-      this.heartedValue = !this.heartedValue
-      this.updateUI()
+      this.heartedValue = !this.heartedValue;
+      this.updateUI();
     }
   }
 
   updateUI() {
     if (this.heartedValue) {
-      this.buttonTarget.classList.add('hearted')
-      this.buttonTarget.innerHTML = '❤️'
+      this.buttonTarget.classList.add("hearted");
+      this.buttonTarget.innerHTML = "❤️";
     } else {
-      this.buttonTarget.classList.remove('hearted')
-      this.buttonTarget.innerHTML = '🤍'
+      this.buttonTarget.classList.remove("hearted");
+      this.buttonTarget.innerHTML = "🤍";
     }
   }
 
   csrfToken() {
-    return document.querySelector('[name="csrf-token"]').content
+    return document.querySelector('[name="csrf-token"]').content;
   }
 }
 ```
 
 **Usage**:
+
 ```erb
 <div data-controller="heart"
      data-heart-heartable-type-value="Post"
@@ -1507,76 +1597,77 @@ export default class extends Controller {
 ---
 
 #### 2. Infinite Scroll Controller
+
 ```javascript
 // app/javascript/controllers/infinite_scroll_controller.js
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
   static values = {
     url: String,
     page: { type: Number, default: 1 },
-    loading: { type: Boolean, default: false }
-  }
-  static targets = ["entries", "pagination", "loader"]
+    loading: { type: Boolean, default: false },
+  };
+  static targets = ["entries", "pagination", "loader"];
 
   connect() {
     this.intersectionObserver = new IntersectionObserver(
-      entries => this.handleIntersection(entries),
+      (entries) => this.handleIntersection(entries),
       { threshold: 0.1 }
-    )
+    );
 
     if (this.hasPaginationTarget) {
-      this.intersectionObserver.observe(this.paginationTarget)
+      this.intersectionObserver.observe(this.paginationTarget);
     }
   }
 
   disconnect() {
-    this.intersectionObserver.disconnect()
+    this.intersectionObserver.disconnect();
   }
 
   async handleIntersection(entries) {
-    entries.forEach(async entry => {
+    entries.forEach(async (entry) => {
       if (entry.isIntersecting && !this.loadingValue) {
-        await this.loadMore()
+        await this.loadMore();
       }
-    })
+    });
   }
 
   async loadMore() {
-    if (this.loadingValue) return
+    if (this.loadingValue) return;
 
-    this.loadingValue = true
-    this.showLoader()
+    this.loadingValue = true;
+    this.showLoader();
 
-    this.pageValue += 1
-    const url = `${this.urlValue}?page=${this.pageValue}`
+    this.pageValue += 1;
+    const url = `${this.urlValue}?page=${this.pageValue}`;
 
     try {
       const response = await fetch(url, {
-        headers: { 'Accept': 'text/vnd.turbo-stream.html' }
-      })
+        headers: { Accept: "text/vnd.turbo-stream.html" },
+      });
 
       if (response.ok) {
-        const html = await response.text()
-        Turbo.renderStreamMessage(html)
+        const html = await response.text();
+        Turbo.renderStreamMessage(html);
       }
     } catch (error) {
-      console.error('Failed to load more:', error)
+      console.error("Failed to load more:", error);
     } finally {
-      this.loadingValue = false
-      this.hideLoader()
+      this.loadingValue = false;
+      this.hideLoader();
     }
   }
 
   showLoader() {
     if (this.hasLoaderTarget) {
-      this.loaderTarget.classList.remove('hidden')
+      this.loaderTarget.classList.remove("hidden");
     }
   }
 
   hideLoader() {
     if (this.hasLoaderTarget) {
-      this.loaderTarget.classList.add('hidden')
+      this.loaderTarget.classList.add("hidden");
     }
   }
 }
@@ -1585,40 +1676,41 @@ export default class extends Controller {
 ---
 
 #### 3. Dropdown Controller (Mobile-Friendly)
+
 ```javascript
 // app/javascript/controllers/dropdown_controller.js
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["menu", "button"]
+  static targets = ["menu", "button"];
 
   connect() {
-    this.closeOnClickOutside = this.closeOnClickOutside.bind(this)
+    this.closeOnClickOutside = this.closeOnClickOutside.bind(this);
   }
 
   toggle(event) {
-    event.stopPropagation()
+    event.stopPropagation();
 
-    if (this.menuTarget.classList.contains('hidden')) {
-      this.open()
+    if (this.menuTarget.classList.contains("hidden")) {
+      this.open();
     } else {
-      this.close()
+      this.close();
     }
   }
 
   open() {
-    this.menuTarget.classList.remove('hidden')
-    document.addEventListener('click', this.closeOnClickOutside)
+    this.menuTarget.classList.remove("hidden");
+    document.addEventListener("click", this.closeOnClickOutside);
   }
 
   close() {
-    this.menuTarget.classList.add('hidden')
-    document.removeEventListener('click', this.closeOnClickOutside)
+    this.menuTarget.classList.add("hidden");
+    document.removeEventListener("click", this.closeOnClickOutside);
   }
 
   closeOnClickOutside(event) {
     if (!this.element.contains(event.target)) {
-      this.close()
+      this.close();
     }
   }
 }
@@ -1627,40 +1719,41 @@ export default class extends Controller {
 ---
 
 #### 4. Image Upload Controller (Mobile Camera Support)
+
 ```javascript
 // app/javascript/controllers/image_upload_controller.js
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["input", "preview", "progressBar"]
-  static values = { maxFiles: { type: Number, default: 10 } }
+  static targets = ["input", "preview", "progressBar"];
+  static values = { maxFiles: { type: Number, default: 10 } };
 
   connect() {
-    this.selectedFiles = []
+    this.selectedFiles = [];
   }
 
   selectFiles(event) {
-    const files = Array.from(event.target.files)
+    const files = Array.from(event.target.files);
 
     if (files.length + this.selectedFiles.length > this.maxFilesValue) {
-      alert(`You can only upload up to ${this.maxFilesValue} images`)
-      return
+      alert(`You can only upload up to ${this.maxFilesValue} images`);
+      return;
     }
 
-    files.forEach(file => {
-      if (file.type.startsWith('image/')) {
-        this.selectedFiles.push(file)
-        this.showPreview(file)
+    files.forEach((file) => {
+      if (file.type.startsWith("image/")) {
+        this.selectedFiles.push(file);
+        this.showPreview(file);
       }
-    })
+    });
   }
 
   showPreview(file) {
-    const reader = new FileReader()
+    const reader = new FileReader();
 
     reader.onload = (e) => {
-      const div = document.createElement('div')
-      div.className = 'relative inline-block m-2'
+      const div = document.createElement("div");
+      div.className = "relative inline-block m-2";
       div.innerHTML = `
         <img src="${e.target.result}" class="h-24 w-24 object-cover rounded">
         <button type="button"
@@ -1669,44 +1762,44 @@ export default class extends Controller {
                 class="absolute top-0 right-0 bg-red-500 text-white rounded-full w-6 h-6">
           ×
         </button>
-      `
-      this.previewTarget.appendChild(div)
-    }
+      `;
+      this.previewTarget.appendChild(div);
+    };
 
-    reader.readAsDataURL(file)
+    reader.readAsDataURL(file);
   }
 
   removeImage(event) {
-    const filename = event.currentTarget.dataset.filename
-    this.selectedFiles = this.selectedFiles.filter(f => f.name !== filename)
-    event.currentTarget.parentElement.remove()
+    const filename = event.currentTarget.dataset.filename;
+    this.selectedFiles = this.selectedFiles.filter((f) => f.name !== filename);
+    event.currentTarget.parentElement.remove();
   }
 
   async upload() {
-    const formData = new FormData()
+    const formData = new FormData();
 
     this.selectedFiles.forEach((file, index) => {
-      formData.append(`images[${index}]`, file)
-    })
+      formData.append(`images[${index}]`, file);
+    });
 
     try {
-      const response = await fetch('/api/upload', {
-        method: 'POST',
+      const response = await fetch("/api/upload", {
+        method: "POST",
         body: formData,
         headers: {
-          'X-CSRF-Token': this.csrfToken()
-        }
-      })
+          "X-CSRF-Token": this.csrfToken(),
+        },
+      });
 
-      const data = await response.json()
-      return data.image_urls
+      const data = await response.json();
+      return data.image_urls;
     } catch (error) {
-      console.error('Upload failed:', error)
+      console.error("Upload failed:", error);
     }
   }
 
   csrfToken() {
-    return document.querySelector('[name="csrf-token"]').content
+    return document.querySelector('[name="csrf-token"]').content;
   }
 }
 ```
@@ -1714,41 +1807,42 @@ export default class extends Controller {
 ---
 
 #### 5. Filter Controller (Mobile Bottom Sheet)
+
 ```javascript
 // app/javascript/controllers/filter_controller.js
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["modal", "form"]
-  static values = { url: String }
+  static targets = ["modal", "form"];
+  static values = { url: String };
 
   open() {
-    this.modalTarget.classList.remove('translate-y-full')
-    document.body.classList.add('overflow-hidden')
+    this.modalTarget.classList.remove("translate-y-full");
+    document.body.classList.add("overflow-hidden");
   }
 
   close() {
-    this.modalTarget.classList.add('translate-y-full')
-    document.body.classList.remove('overflow-hidden')
+    this.modalTarget.classList.add("translate-y-full");
+    document.body.classList.remove("overflow-hidden");
   }
 
   async apply(event) {
-    event.preventDefault()
+    event.preventDefault();
 
-    const formData = new FormData(this.formTarget)
-    const params = new URLSearchParams(formData)
+    const formData = new FormData(this.formTarget);
+    const params = new URLSearchParams(formData);
 
-    const url = `${this.urlValue}?${params.toString()}`
+    const url = `${this.urlValue}?${params.toString()}`;
 
     // Use Turbo to navigate and update the page
-    Turbo.visit(url)
+    Turbo.visit(url);
 
-    this.close()
+    this.close();
   }
 
   reset() {
-    this.formTarget.reset()
-    this.apply({ preventDefault: () => {} })
+    this.formTarget.reset();
+    this.apply({ preventDefault: () => {} });
   }
 }
 ```
@@ -1760,6 +1854,7 @@ export default class extends Controller {
 #### Card Components
 
 **PostCardComponent**:
+
 ```ruby
 # app/components/post_card_component.rb
 class PostCardComponent < ViewComponent::Base
@@ -1838,6 +1933,7 @@ end
 ### Hotwire Turbo Implementation
 
 #### Turbo Frames for Modals
+
 ```erb
 <!-- app/views/posts/index.html.erb -->
 <div id="posts-container">
@@ -1855,6 +1951,7 @@ end
 ```
 
 #### Turbo Streams for Real-Time Updates
+
 ```ruby
 # app/controllers/posts_controller.rb
 def create
@@ -1894,44 +1991,70 @@ end
 ### Mobile-First Approach
 
 #### Breakpoints (Tailwind CSS)
+
 ```javascript
 // tailwind.config.js
 module.exports = {
   theme: {
     screens: {
-      'sm': '640px',   // Small phones in landscape, large phones in portrait
-      'md': '768px',   // Tablets in portrait
-      'lg': '1024px',  // Tablets in landscape, small laptops
-      'xl': '1280px',  // Desktop
-      '2xl': '1536px'  // Large desktop
-    }
-  }
-}
+      sm: "640px", // Small phones in landscape, large phones in portrait
+      md: "768px", // Tablets in portrait
+      lg: "1024px", // Tablets in landscape, small laptops
+      xl: "1280px", // Desktop
+      "2xl": "1536px", // Large desktop
+    },
+  },
+};
 ```
 
 #### Design System
 
 **Typography Scale**:
+
 ```css
 /* Base: 16px (1rem) */
-.text-xs    { font-size: 0.75rem; }   /* 12px */
-.text-sm    { font-size: 0.875rem; }  /* 14px */
-.text-base  { font-size: 1rem; }      /* 16px */
-.text-lg    { font-size: 1.125rem; }  /* 18px */
-.text-xl    { font-size: 1.25rem; }   /* 20px */
-.text-2xl   { font-size: 1.5rem; }    /* 24px */
-.text-3xl   { font-size: 1.875rem; }  /* 30px */
+.text-xs {
+  font-size: 0.75rem;
+} /* 12px */
+.text-sm {
+  font-size: 0.875rem;
+} /* 14px */
+.text-base {
+  font-size: 1rem;
+} /* 16px */
+.text-lg {
+  font-size: 1.125rem;
+} /* 18px */
+.text-xl {
+  font-size: 1.25rem;
+} /* 20px */
+.text-2xl {
+  font-size: 1.5rem;
+} /* 24px */
+.text-3xl {
+  font-size: 1.875rem;
+} /* 30px */
 ```
 
 **Spacing Scale**:
+
 ```css
-.p-2   { padding: 0.5rem; }   /* 8px */
-.p-4   { padding: 1rem; }     /* 16px */
-.p-6   { padding: 1.5rem; }   /* 24px */
-.p-8   { padding: 2rem; }     /* 32px */
+.p-2 {
+  padding: 0.5rem;
+} /* 8px */
+.p-4 {
+  padding: 1rem;
+} /* 16px */
+.p-6 {
+  padding: 1.5rem;
+} /* 24px */
+.p-8 {
+  padding: 2rem;
+} /* 32px */
 ```
 
 **Touch Targets**:
+
 - Minimum tap target size: **48x48px** (iOS/Android standard)
 - Interactive elements: **44x44px minimum**
 - Spacing between tappable elements: **8px minimum**
@@ -1941,6 +2064,7 @@ module.exports = {
 ### Navigation Patterns
 
 #### Mobile Navigation (Bottom Tab Bar)
+
 ```erb
 <!-- app/views/layouts/_mobile_nav.html.erb -->
 <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 lg:hidden z-50">
@@ -1981,6 +2105,7 @@ module.exports = {
 ```
 
 #### Desktop Navigation (Sidebar)
+
 ```erb
 <!-- app/views/layouts/_desktop_nav.html.erb -->
 <aside class="hidden lg:block fixed left-0 top-0 h-full w-64 bg-white border-r border-gray-200 overflow-y-auto">
@@ -2013,6 +2138,7 @@ module.exports = {
 ### Responsive Layout Examples
 
 #### Post Feed Layout
+
 ```erb
 <!-- Mobile: Single column, Desktop: Feed + Sidebar -->
 <div class="lg:ml-64 min-h-screen bg-gray-50">
@@ -2041,7 +2167,9 @@ module.exports = {
 ### Performance Optimizations for Mobile
 
 #### Image Optimization
+
 1. **Responsive Images**:
+
 ```erb
 <%= image_tag post.image_url,
               srcset: "#{post.image_url_small} 320w,
@@ -2055,34 +2183,41 @@ module.exports = {
 ```
 
 2. **WebP Format**:
+
 ```ruby
 # Use AWS Lambda or ImageMagick to convert uploads to WebP
 # Serve WebP to supported browsers, fallback to JPEG/PNG
 ```
 
 3. **CDN Delivery**:
+
 - Store all images on S3
 - Serve via CloudFront CDN
 - Enable Brotli/Gzip compression
 
 #### CSS Optimization
+
 ```bash
 # Purge unused Tailwind CSS classes in production
 npm run build:css -- --minify
 ```
 
 #### JavaScript Bundle Size
+
 - **Stimulus.js**: ~40KB (gzipped)
 - **Hotwire Turbo**: ~25KB (gzipped)
 - **Total JS**: <100KB (target)
 
 #### Lazy Loading
+
 ```javascript
 // Lazy load images, iframes, and below-the-fold content
-<img src="placeholder.jpg"
-     data-src="actual-image.jpg"
-     loading="lazy"
-     class="lazyload" />
+<img
+  src="placeholder.jpg"
+  data-src="actual-image.jpg"
+  loading="lazy"
+  class="lazyload"
+/>
 ```
 
 ---
@@ -2094,12 +2229,14 @@ npm run build:css -- --minify
 #### Core Services
 
 **1. EC2 (Web Server)**:
+
 - **Instance Type**: t3.medium (2 vCPU, 4GB RAM) initially, scale to t3.large/c5.large as needed
 - **OS**: Ubuntu 22.04 LTS
 - **Auto Scaling**: Target 70% CPU utilization
 - **Load Balancer**: Application Load Balancer (ALB) for HTTPS termination
 
 **2. RDS (PostgreSQL Database)**:
+
 - **Instance**: db.t4g.medium (2 vCPU, 4GB RAM) initially
 - **Engine**: PostgreSQL 15.x
 - **Multi-AZ**: Enabled for high availability
@@ -2107,6 +2244,7 @@ npm run build:css -- --minify
 - **Read Replicas**: Add as traffic grows
 
 **3. S3 (Object Storage)**:
+
 - **Buckets**:
   - `kpopuniverse-uploads` - User-uploaded images/videos
   - `kpopuniverse-assets` - Static assets (CSS, JS, fonts)
@@ -2114,6 +2252,7 @@ npm run build:css -- --minify
 - **Lifecycle Policies**: Transition old images to Glacier after 1 year
 
 **4. CloudFront (CDN)**:
+
 - **Purpose**: Serve static assets and images with low latency globally
 - **Origin**: S3 buckets
 - **Cache Behavior**:
@@ -2122,6 +2261,7 @@ npm run build:css -- --minify
 - **Compression**: Enable Gzip and Brotli
 
 **5. ElastiCache (Redis)**:
+
 - **Instance**: cache.t4g.micro initially
 - **Purpose**:
   - Session storage
@@ -2130,10 +2270,12 @@ npm run build:css -- --minify
   - Job queue (Sidekiq)
 
 **6. SES (Email Service)**:
+
 - **Purpose**: Transactional emails (password reset, notifications)
 - **Configuration**: Domain verification, DKIM, SPF records
 
 **7. CloudWatch (Monitoring)**:
+
 - **Metrics**: CPU, memory, disk, network, application errors
 - **Alarms**: High CPU (>80%), high error rate (>5%)
 - **Logs**: Application logs, access logs, error logs
@@ -2184,6 +2326,7 @@ npm run build:css -- --minify
 ### Deployment Strategy
 
 #### 1. Initial Setup (Terraform)
+
 ```hcl
 # terraform/main.tf
 provider "aws" {
@@ -2225,6 +2368,7 @@ resource "aws_s3_bucket" "uploads" {
 ```
 
 #### 2. Continuous Deployment (GitHub Actions)
+
 ```yaml
 # .github/workflows/deploy.yml
 name: Deploy to AWS
@@ -2312,6 +2456,7 @@ APP_DOMAIN=kpopuniverse.com
 ### Monitoring & Alerting
 
 #### CloudWatch Alarms
+
 1. **High CPU Usage**: >80% for 5 minutes → Alert
 2. **High Error Rate**: >5% of requests → Alert
 3. **Database Connections**: >80% of max connections → Alert
@@ -2319,6 +2464,7 @@ APP_DOMAIN=kpopuniverse.com
 5. **Memory Usage**: >90% for 5 minutes → Alert
 
 #### Application Monitoring (Datadog or New Relic)
+
 - **APM**: Track slow requests, database queries
 - **Error Tracking**: Sentry integration for exception monitoring
 - **Custom Metrics**: Feed build time, notification delivery rate
@@ -2330,6 +2476,7 @@ APP_DOMAIN=kpopuniverse.com
 ### Feature 1: Personalized Feed System
 
 #### Requirements
+
 - Pre-built feeds for instant loading (<1s)
 - Push-based updates (not pull-based)
 - Real-time new post notifications
@@ -2341,6 +2488,7 @@ APP_DOMAIN=kpopuniverse.com
 **1. Feed Item Model** (see Data Models section)
 
 **2. Feed Builder Service**:
+
 ```ruby
 # app/services/feed_builder_service.rb
 class FeedBuilderService
@@ -2392,6 +2540,7 @@ end
 ```
 
 **3. Feed Update Job** (Background job to push posts to feeds):
+
 ```ruby
 # app/jobs/push_post_to_feeds_job.rb
 class PushPostToFeedsJob < ApplicationJob
@@ -2448,6 +2597,7 @@ end
 ```
 
 **4. Engagement Sync Job** (Update cached metrics at thresholds):
+
 ```ruby
 # app/jobs/sync_engagement_job.rb
 class SyncEngagementJob < ApplicationJob
@@ -2481,6 +2631,7 @@ end
 ```
 
 **5. Feed Controller**:
+
 ```ruby
 # app/controllers/feed_controller.rb
 class FeedController < ApplicationController
@@ -2504,6 +2655,7 @@ end
 ### Feature 2: K-Pop Group Discovery
 
 #### Requirements
+
 - Filterable by company and group type
 - Detailed profiles (members, photos, discography, social links)
 - Follow/unfollow groups
@@ -2512,6 +2664,7 @@ end
 #### Implementation
 
 **1. Discovery Page**:
+
 ```erb
 <!-- app/views/kpop_groups/index.html.erb -->
 <div class="max-w-7xl mx-auto px-4 py-6">
@@ -2571,6 +2724,7 @@ end
 ```
 
 **2. Group Detail Page**:
+
 ```erb
 <!-- app/views/kpop_groups/show.html.erb -->
 <div class="max-w-5xl mx-auto px-4 py-6">
@@ -2693,6 +2847,7 @@ end
 ### Feature 3: Real-Time Notifications
 
 #### Requirements
+
 - Instant notifications for comment replies
 - Batched notifications for hearts (e.g., "Your post got 10 hearts!")
 - Milestone notifications (e.g., "Your post reached 100 hearts!")
@@ -2701,6 +2856,7 @@ end
 #### Implementation
 
 **1. Notification Service**:
+
 ```ruby
 # app/services/notification_service.rb
 class NotificationService
@@ -2752,6 +2908,7 @@ end
 ```
 
 **2. ActionCable Channel**:
+
 ```ruby
 # app/channels/notification_channel.rb
 class NotificationChannel < ApplicationCable::Channel
@@ -2766,21 +2923,22 @@ end
 ```
 
 **3. Stimulus Controller for Notifications**:
+
 ```javascript
 // app/javascript/controllers/notification_controller.js
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["badge", "list"]
-  static values = { userId: Number }
+  static targets = ["badge", "list"];
+  static values = { userId: Number };
 
   connect() {
-    this.subscription = this.createSubscription()
-    this.requestPermission()
+    this.subscription = this.createSubscription();
+    this.requestPermission();
   }
 
   disconnect() {
-    this.subscription?.unsubscribe()
+    this.subscription?.unsubscribe();
   }
 
   createSubscription() {
@@ -2788,39 +2946,40 @@ export default class extends Controller {
       { channel: "NotificationChannel", user_id: this.userIdValue },
       {
         received: (data) => {
-          if (data.type === 'new_notification') {
-            this.addNotification(data.html)
-            this.incrementBadge()
-            this.showToast(data.message)
+          if (data.type === "new_notification") {
+            this.addNotification(data.html);
+            this.incrementBadge();
+            this.showToast(data.message);
           }
-        }
+        },
       }
-    )
+    );
   }
 
   addNotification(html) {
-    this.listTarget.insertAdjacentHTML('afterbegin', html)
+    this.listTarget.insertAdjacentHTML("afterbegin", html);
   }
 
   incrementBadge() {
-    const count = parseInt(this.badgeTarget.textContent) || 0
-    this.badgeTarget.textContent = count + 1
-    this.badgeTarget.classList.remove('hidden')
+    const count = parseInt(this.badgeTarget.textContent) || 0;
+    this.badgeTarget.textContent = count + 1;
+    this.badgeTarget.classList.remove("hidden");
   }
 
   showToast(message) {
     // Show brief notification toast
-    const toast = document.createElement('div')
-    toast.className = 'fixed top-4 right-4 bg-blue-600 text-white px-6 py-3 rounded-lg shadow-lg z-50'
-    toast.textContent = message
-    document.body.appendChild(toast)
+    const toast = document.createElement("div");
+    toast.className =
+      "fixed top-4 right-4 bg-blue-600 text-white px-6 py-3 rounded-lg shadow-lg z-50";
+    toast.textContent = message;
+    document.body.appendChild(toast);
 
-    setTimeout(() => toast.remove(), 3000)
+    setTimeout(() => toast.remove(), 3000);
   }
 
   async requestPermission() {
-    if ('Notification' in window && Notification.permission === 'default') {
-      await Notification.requestPermission()
+    if ("Notification" in window && Notification.permission === "default") {
+      await Notification.requestPermission();
     }
   }
 }
@@ -2831,6 +2990,7 @@ export default class extends Controller {
 ### Feature 4: Community Creation & Moderation
 
 #### Requirements
+
 - Any registered user can create communities instantly
 - Customizable community appearance (icon, banner, rules)
 - Moderator appointment by community creator
@@ -2839,6 +2999,7 @@ export default class extends Controller {
 #### Implementation
 
 **1. Community Creation Flow**:
+
 ```erb
 <!-- app/views/communities/new.html.erb -->
 <div class="max-w-2xl mx-auto px-4 py-6">
@@ -2904,6 +3065,7 @@ export default class extends Controller {
 ```
 
 **2. Moderation Dashboard**:
+
 ```erb
 <!-- app/views/communities/moderate.html.erb -->
 <div class="max-w-7xl mx-auto px-4 py-6">
@@ -2971,6 +3133,7 @@ export default class extends Controller {
 **Goal**: Launch a functional web app with core community features
 
 #### Week 1-2: Project Setup & Infrastructure
+
 - [ ] Rails 7.x app initialization
 - [ ] PostgreSQL database setup
 - [ ] Devise authentication with email/password
@@ -2979,6 +3142,7 @@ export default class extends Controller {
 - [ ] Stimulus.js setup
 
 #### Week 3-4: User Authentication & Profiles
+
 - [ ] User registration/login
 - [ ] User profile pages
 - [ ] Avatar upload to S3
@@ -2986,6 +3150,7 @@ export default class extends Controller {
 - [ ] Mobile-responsive auth forms
 
 #### Week 5-6: Communities & Posts
+
 - [ ] Community model & CRUD
 - [ ] Post model & CRUD (text posts only)
 - [ ] Community membership (join/leave)
@@ -2993,6 +3158,7 @@ export default class extends Controller {
 - [ ] Mobile-responsive layouts
 
 #### Week 7-8: Engagement Features
+
 - [ ] Heart system (posts & comments)
 - [ ] Comment system (nested replies)
 - [ ] Karma/points system
@@ -3000,6 +3166,7 @@ export default class extends Controller {
 - [ ] Save/bookmark posts
 
 #### Week 9-10: Feed System
+
 - [ ] Feed item model & denormalization
 - [ ] Feed builder service
 - [ ] Personalized home feed
@@ -3007,6 +3174,7 @@ export default class extends Controller {
 - [ ] Real-time feed updates (Turbo Streams)
 
 #### Week 11-12: Polish & Launch Prep
+
 - [ ] Mobile UI refinements
 - [ ] Performance optimization
 - [ ] Error handling & validations
@@ -3023,6 +3191,7 @@ export default class extends Controller {
 **Goal**: Add rich media, discovery, and advanced features
 
 #### Month 4: Media & Content Types
+
 - [ ] Image uploads (multi-image posts)
 - [ ] Video uploads + YouTube/TikTok embeds
 - [ ] Link posts with preview cards
@@ -3031,6 +3200,7 @@ export default class extends Controller {
 - [ ] Image optimization pipeline
 
 #### Month 5: K-Pop Discovery
+
 - [ ] K-Pop group model & database
 - [ ] Company model
 - [ ] Group member profiles
@@ -3040,6 +3210,7 @@ export default class extends Controller {
 - [ ] Link groups to communities
 
 #### Month 6: Notifications & Real-Time
+
 - [ ] Notification model & system
 - [ ] ActionCable for real-time updates
 - [ ] Web push notifications
@@ -3056,12 +3227,14 @@ export default class extends Controller {
 **Goal**: Scale infrastructure and add growth features
 
 #### Month 7: Search & SEO
+
 - [ ] Full-text search (PostgreSQL FTS or Elasticsearch)
 - [ ] Search posts, communities, users, groups
 - [ ] SEO optimization (meta tags, sitemaps, structured data)
 - [ ] Open Graph tags for social sharing
 
 #### Month 8: Advanced Moderation
+
 - [ ] Moderation dashboard
 - [ ] Content reporting system
 - [ ] AutoMod rules (spam detection)
@@ -3069,6 +3242,7 @@ export default class extends Controller {
 - [ ] Community analytics
 
 #### Month 9: Performance & Reliability
+
 - [ ] Database query optimization
 - [ ] Fragment caching with Redis
 - [ ] Auto-scaling EC2 instances
@@ -3085,12 +3259,14 @@ export default class extends Controller {
 **Goal**: Launch native iOS/Android apps with Hotwire Native
 
 #### Month 10: Hotwire Native Setup
+
 - [ ] Hotwire Native iOS app
 - [ ] Hotwire Native Android app
 - [ ] Path configurations for native screens
 - [ ] Deep linking setup
 
 #### Month 11: Native Features
+
 - [ ] Native navigation (tab bar, modals)
 - [ ] Native camera integration
 - [ ] Native push notifications
@@ -3098,6 +3274,7 @@ export default class extends Controller {
 - [ ] App Store/Play Store setup
 
 #### Month 12: Launch & Iterate
+
 - [ ] Beta testing (TestFlight, Google Play Beta)
 - [ ] App Store submissions
 - [ ] User feedback iteration
@@ -3110,6 +3287,7 @@ export default class extends Controller {
 ## Appendix
 
 ### Design Mockups (To Be Created)
+
 - Homepage (guest vs logged-in)
 - Community page
 - Post detail page
@@ -3119,10 +3297,12 @@ export default class extends Controller {
 - Community creation wizard
 
 ### API Documentation (To Be Generated)
+
 - Use `rswag` gem for Swagger/OpenAPI docs
 - Document all endpoints for future mobile API usage
 
 ### Testing Strategy
+
 - **Unit Tests**: RSpec for models, services
 - **Integration Tests**: RSpec for controllers, request specs
 - **System Tests**: Capybara for end-to-end flows
@@ -3130,6 +3310,7 @@ export default class extends Controller {
 - **Load Testing**: k6 or Apache JMeter
 
 ### Analytics & Metrics
+
 - **Google Analytics 4**: User behavior tracking
 - **Mixpanel**: Event tracking (post creation, hearts, shares)
 - **Hotjar**: Heatmaps & session recordings (mobile UX)
@@ -3142,6 +3323,7 @@ export default class extends Controller {
 This PRD provides a comprehensive blueprint for building K-Pop Universe as a mobile-first, Reddit-style community platform. The phased approach ensures we deliver value quickly while maintaining quality and scalability.
 
 **Key Success Factors**:
+
 1. **Mobile-First Design**: Excellent mobile UX is non-negotiable
 2. **Performance**: Pre-built feeds ensure instant load times
 3. **Engagement**: Instagram-style hearts + Reddit-style communities
@@ -3149,6 +3331,7 @@ This PRD provides a comprehensive blueprint for building K-Pop Universe as a mob
 5. **Real-Time**: ActionCable for live updates without page reloads
 
 **Next Steps**:
+
 1. Review and approve this PRD
 2. Create detailed design mockups (Figma)
 3. Set up project infrastructure (Rails app, AWS, GitHub)
