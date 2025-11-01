@@ -1,7 +1,13 @@
 class Api::V1::Auth::SessionsController < Devise::SessionsController
+  include ActionController::MimeResponds
   respond_to :json
+  prepend_before_action :skip_session_storage
 
   private
+
+  def skip_session_storage
+    request.session_options[:skip] = true
+  end
 
   def respond_with(resource, _opts = {})
     render json: {

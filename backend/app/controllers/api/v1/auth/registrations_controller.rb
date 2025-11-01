@@ -1,7 +1,13 @@
 class Api::V1::Auth::RegistrationsController < Devise::RegistrationsController
+  include ActionController::MimeResponds
   respond_to :json
+  prepend_before_action :skip_session_storage
 
   private
+
+  def skip_session_storage
+    request.session_options[:skip] = true
+  end
 
   def respond_with(resource, _opts = {})
     if resource.persisted?
@@ -30,6 +36,6 @@ class Api::V1::Auth::RegistrationsController < Devise::RegistrationsController
   end
 
   def sign_up_params
-    params.require(:user).permit(:email, :username, :password, :password_confirmation)
+    params.require(:user).permit(:email, :password, :password_confirmation, :username)
   end
 end
