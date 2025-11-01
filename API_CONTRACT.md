@@ -21,7 +21,8 @@
 ## Quick Start
 
 ### Backend Developer (Rails)
-```bash
+
+```bashSoun
 cd backend
 bundle install
 rails db:create db:migrate db:seed
@@ -29,12 +30,14 @@ rails server -p 9000
 ```
 
 **Your responsibilities:**
+
 - Build API endpoints under `/api/v1/`
 - Handle authentication (Devise + JWT)
 - Return JSON responses
 - Set up OAuth providers
 
 ### Frontend Developer (React)
+
 ```bash
 cd frontend
 npm install
@@ -42,6 +45,7 @@ npm run dev
 ```
 
 **Your responsibilities:**
+
 - Build UI components
 - Call API endpoints using Axios
 - Store JWT tokens in localStorage
@@ -86,6 +90,7 @@ npm run dev
 ### Tech Stack Summary
 
 **Backend:**
+
 - Devise (user authentication)
 - devise-jwt (JWT token generation)
 - OmniAuth (Google, Facebook, Apple OAuth)
@@ -93,6 +98,7 @@ npm run dev
 - PostgreSQL
 
 **Frontend:**
+
 - Axios (API calls with token interceptors)
 - React Router (navigation)
 - localStorage (token storage)
@@ -299,12 +305,12 @@ end
 
 ```javascript
 // src/api/axios.js
-import axios from 'axios';
+import axios from "axios";
 
 const api = axios.create({
-  baseURL: '/api/v1',
+  baseURL: "/api/v1",
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
   withCredentials: true,
 });
@@ -312,7 +318,7 @@ const api = axios.create({
 // Add token to all requests
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('authToken');
+    const token = localStorage.getItem("authToken");
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -326,8 +332,8 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      localStorage.removeItem('authToken');
-      window.location.href = '/login';
+      localStorage.removeItem("authToken");
+      window.location.href = "/login";
     }
     return Promise.reject(error);
   }
@@ -340,11 +346,11 @@ export default api;
 
 ```javascript
 // src/api/authApi.js
-import api from './axios';
+import api from "./axios";
 
 // Regular email/password signup
 export const signup = async (userData) => {
-  const response = await api.post('/auth', {
+  const response = await api.post("/auth", {
     user: {
       email: userData.email,
       password: userData.password,
@@ -354,7 +360,7 @@ export const signup = async (userData) => {
 
   // Store token
   if (response.data.data.token) {
-    localStorage.setItem('authToken', response.data.data.token);
+    localStorage.setItem("authToken", response.data.data.token);
   }
 
   return response.data;
@@ -362,7 +368,7 @@ export const signup = async (userData) => {
 
 // Regular email/password login
 export const login = async (credentials) => {
-  const response = await api.post('/auth/sign_in', {
+  const response = await api.post("/auth/sign_in", {
     user: {
       email: credentials.email,
       password: credentials.password,
@@ -371,7 +377,7 @@ export const login = async (credentials) => {
 
   // Store token
   if (response.data.data.token) {
-    localStorage.setItem('authToken', response.data.data.token);
+    localStorage.setItem("authToken", response.data.data.token);
   }
 
   return response.data;
@@ -379,8 +385,8 @@ export const login = async (credentials) => {
 
 // Logout
 export const logout = async () => {
-  const response = await api.delete('/auth/sign_out');
-  localStorage.removeItem('authToken');
+  const response = await api.delete("/auth/sign_out");
+  localStorage.removeItem("authToken");
   return response.data;
 };
 
@@ -393,17 +399,17 @@ export const loginWithOAuth = (provider) => {
 
   const popup = window.open(
     `http://localhost:9000/api/v1/auth/${provider}`,
-    'OAuth Login',
+    "OAuth Login",
     `width=${width},height=${height},left=${left},top=${top}`
   );
 
   // Listen for OAuth callback
   return new Promise((resolve, reject) => {
-    window.addEventListener('message', (event) => {
+    window.addEventListener("message", (event) => {
       if (event.origin !== window.location.origin) return;
 
       if (event.data.token) {
-        localStorage.setItem('authToken', event.data.token);
+        localStorage.setItem("authToken", event.data.token);
         popup.close();
         resolve(event.data);
       } else if (event.data.error) {
@@ -419,16 +425,16 @@ export const loginWithOAuth = (provider) => {
 
 ```javascript
 // src/pages/AuthCallback.jsx
-import { useEffect } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useEffect } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 const AuthCallback = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = searchParams.get('token');
-    const error = searchParams.get('message');
+    const token = searchParams.get("token");
+    const error = searchParams.get("message");
 
     if (token) {
       // Send token to parent window
@@ -436,14 +442,14 @@ const AuthCallback = () => {
         window.opener.postMessage({ token }, window.location.origin);
       } else {
         // Fallback: store token and redirect
-        localStorage.setItem('authToken', token);
-        navigate('/');
+        localStorage.setItem("authToken", token);
+        navigate("/");
       }
     } else if (error) {
       if (window.opener) {
         window.opener.postMessage({ error }, window.location.origin);
       } else {
-        navigate('/login?error=' + error);
+        navigate("/login?error=" + error);
       }
     }
   }, [searchParams, navigate]);
@@ -464,32 +470,32 @@ export default AuthCallback;
 
 ```javascript
 // src/components/auth/LoginForm.jsx
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { login, loginWithOAuth } from '../../api/authApi';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { login, loginWithOAuth } from "../../api/authApi";
 
 const LoginForm = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       await login({ email, password });
-      navigate('/');
+      navigate("/");
     } catch (err) {
-      setError(err.response?.data?.message || 'Login failed');
+      setError(err.response?.data?.message || "Login failed");
     }
   };
 
   const handleOAuthLogin = async (provider) => {
     try {
       await loginWithOAuth(provider);
-      navigate('/');
+      navigate("/");
     } catch (err) {
-      setError('OAuth login failed');
+      setError("OAuth login failed");
     }
   };
 
@@ -498,9 +504,7 @@ const LoginForm = () => {
       <h2 className="text-2xl font-bold mb-6">Login</h2>
 
       {error && (
-        <div className="bg-red-100 text-red-700 p-3 rounded mb-4">
-          {error}
-        </div>
+        <div className="bg-red-100 text-red-700 p-3 rounded mb-4">{error}</div>
       )}
 
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -540,13 +544,15 @@ const LoginForm = () => {
             <div className="w-full border-t border-gray-300"></div>
           </div>
           <div className="relative flex justify-center text-sm">
-            <span className="px-2 bg-white text-gray-500">Or continue with</span>
+            <span className="px-2 bg-white text-gray-500">
+              Or continue with
+            </span>
           </div>
         </div>
 
         <div className="mt-6 space-y-3">
           <button
-            onClick={() => handleOAuthLogin('google_oauth2')}
+            onClick={() => handleOAuthLogin("google_oauth2")}
             className="w-full flex items-center justify-center px-4 py-2 border rounded hover:bg-gray-50"
           >
             <img src="/google-icon.svg" alt="Google" className="w-5 h-5 mr-2" />
@@ -554,10 +560,14 @@ const LoginForm = () => {
           </button>
 
           <button
-            onClick={() => handleOAuthLogin('facebook')}
+            onClick={() => handleOAuthLogin("facebook")}
             className="w-full flex items-center justify-center px-4 py-2 border rounded hover:bg-gray-50"
           >
-            <img src="/facebook-icon.svg" alt="Facebook" className="w-5 h-5 mr-2" />
+            <img
+              src="/facebook-icon.svg"
+              alt="Facebook"
+              className="w-5 h-5 mr-2"
+            />
             Continue with Facebook
           </button>
         </div>
@@ -573,8 +583,8 @@ export default LoginForm;
 
 ```javascript
 // src/context/AuthContext.jsx
-import { createContext, useContext, useState, useEffect } from 'react';
-import api from '../api/axios';
+import { createContext, useContext, useState, useEffect } from "react";
+import api from "../api/axios";
 
 const AuthContext = createContext();
 
@@ -584,7 +594,7 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     // Check if user is logged in on mount
-    const token = localStorage.getItem('authToken');
+    const token = localStorage.getItem("authToken");
     if (token) {
       // Optionally verify token with backend
       fetchCurrentUser();
@@ -595,10 +605,10 @@ export const AuthProvider = ({ children }) => {
 
   const fetchCurrentUser = async () => {
     try {
-      const response = await api.get('/auth/me');
+      const response = await api.get("/auth/me");
       setUser(response.data.data);
     } catch (error) {
-      localStorage.removeItem('authToken');
+      localStorage.removeItem("authToken");
     } finally {
       setLoading(false);
     }
@@ -623,15 +633,19 @@ export const useAuth = () => useContext(AuthContext);
 ### Standard Response Format
 
 **Success:**
+
 ```json
 {
   "success": true,
-  "data": { /* resource data */ },
+  "data": {
+    /* resource data */
+  },
   "message": "Operation successful"
 }
 ```
 
 **Error:**
+
 ```json
 {
   "success": false,
@@ -641,10 +655,13 @@ export const useAuth = () => useContext(AuthContext);
 ```
 
 **Pagination:**
+
 ```json
 {
   "success": true,
-  "data": [ /* array of items */ ],
+  "data": [
+    /* array of items */
+  ],
   "meta": {
     "current_page": 1,
     "total_pages": 10,
@@ -661,6 +678,7 @@ export const useAuth = () => useContext(AuthContext);
 #### POST /api/v1/auth (Sign Up)
 
 **Request:**
+
 ```json
 {
   "user": {
@@ -672,6 +690,7 @@ export const useAuth = () => useContext(AuthContext);
 ```
 
 **Response (201):**
+
 ```json
 {
   "success": true,
@@ -690,17 +709,18 @@ export const useAuth = () => useContext(AuthContext);
 ```
 
 **Frontend Example:**
+
 ```javascript
-import { signup } from '../api/authApi';
+import { signup } from "../api/authApi";
 
 const handleSignup = async (formData) => {
   try {
     const result = await signup(formData);
     // Token is already stored in localStorage by authApi
-    console.log('User:', result.data.user);
-    navigate('/');
+    console.log("User:", result.data.user);
+    navigate("/");
   } catch (error) {
-    console.error('Signup failed:', error.response.data.errors);
+    console.error("Signup failed:", error.response.data.errors);
   }
 };
 ```
@@ -710,6 +730,7 @@ const handleSignup = async (formData) => {
 #### POST /api/v1/auth/sign_in (Login)
 
 **Request:**
+
 ```json
 {
   "user": {
@@ -720,6 +741,7 @@ const handleSignup = async (formData) => {
 ```
 
 **Response (200):**
+
 ```json
 {
   "success": true,
@@ -738,14 +760,15 @@ const handleSignup = async (formData) => {
 ```
 
 **Frontend Example:**
+
 ```javascript
-import { login } from '../api/authApi';
+import { login } from "../api/authApi";
 
 const handleLogin = async (credentials) => {
   try {
     const result = await login(credentials);
-    console.log('Logged in:', result.data.user);
-    navigate('/');
+    console.log("Logged in:", result.data.user);
+    navigate("/");
   } catch (error) {
     setError(error.response?.data?.message);
   }
@@ -759,6 +782,7 @@ const handleLogin = async (credentials) => {
 **Headers:** `Authorization: Bearer <token>`
 
 **Response (200):**
+
 ```json
 {
   "success": true,
@@ -767,16 +791,17 @@ const handleLogin = async (credentials) => {
 ```
 
 **Frontend Example:**
+
 ```javascript
-import { logout } from '../api/authApi';
+import { logout } from "../api/authApi";
 
 const handleLogout = async () => {
   try {
     await logout();
     // Token is already removed from localStorage
-    navigate('/login');
+    navigate("/login");
   } catch (error) {
-    console.error('Logout failed:', error);
+    console.error("Logout failed:", error);
   }
 };
 ```
@@ -786,6 +811,7 @@ const handleLogout = async () => {
 #### GET /api/v1/auth/:provider (OAuth - Google/Facebook/Apple)
 
 **Flow:**
+
 1. Frontend opens popup: `http://localhost:9000/api/v1/auth/google_oauth2`
 2. User authorizes on Google
 3. Google redirects to: `http://localhost:9000/api/v1/auth/google_oauth2/callback`
@@ -794,16 +820,17 @@ const handleLogout = async () => {
 6. React stores token and closes popup
 
 **Frontend Example:**
+
 ```javascript
-import { loginWithOAuth } from '../api/authApi';
+import { loginWithOAuth } from "../api/authApi";
 
 const handleGoogleLogin = async () => {
   try {
-    await loginWithOAuth('google_oauth2');
-    console.log('OAuth login successful');
-    navigate('/');
+    await loginWithOAuth("google_oauth2");
+    console.log("OAuth login successful");
+    navigate("/");
   } catch (error) {
-    console.error('OAuth failed:', error);
+    console.error("OAuth failed:", error);
   }
 };
 ```
@@ -815,6 +842,7 @@ const handleGoogleLogin = async () => {
 #### GET /api/v1/users/:id
 
 **Response (200):**
+
 ```json
 {
   "success": true,
@@ -826,9 +854,7 @@ const handleGoogleLogin = async () => {
     "bio": "BTS ARMY 💜",
     "karma": 1250,
     "created_at": "2025-01-15T10:00:00Z",
-    "favorite_groups": [
-      { "id": 1, "name": "BTS", "logo_url": "..." }
-    ],
+    "favorite_groups": [{ "id": 1, "name": "BTS", "logo_url": "..." }],
     "stats": {
       "posts_count": 45,
       "comments_count": 320,
@@ -839,9 +865,10 @@ const handleGoogleLogin = async () => {
 ```
 
 **Frontend Example:**
+
 ```javascript
 // src/api/usersApi.js
-import api from './axios';
+import api from "./axios";
 
 export const getUser = async (id) => {
   const response = await api.get(`/users/${id}`);
@@ -849,7 +876,7 @@ export const getUser = async (id) => {
 };
 
 // Usage in component
-const { data: user, loading } = useQuery('user', () => getUser(userId));
+const { data: user, loading } = useQuery("user", () => getUser(userId));
 ```
 
 ---
@@ -859,6 +886,7 @@ const { data: user, loading } = useQuery('user', () => getUser(userId));
 **Headers:** `Authorization: Bearer <token>`
 
 **Request:**
+
 ```json
 {
   "user": {
@@ -870,6 +898,7 @@ const { data: user, loading } = useQuery('user', () => getUser(userId));
 ```
 
 **Response (200):**
+
 ```json
 {
   "success": true,
@@ -889,11 +918,13 @@ const { data: user, loading } = useQuery('user', () => getUser(userId));
 #### GET /api/v1/communities
 
 **Query Params:**
+
 - `search` (string): Search communities
 - `sort` (string): `popular`, `new`, `members`
 - `page` (int), `per_page` (int)
 
 **Response (200):**
+
 ```json
 {
   "success": true,
@@ -916,15 +947,16 @@ const { data: user, loading } = useQuery('user', () => getUser(userId));
 ```
 
 **Frontend Example:**
+
 ```javascript
 // src/api/communitiesApi.js
 export const getCommunities = async (params = {}) => {
-  const response = await api.get('/communities', { params });
+  const response = await api.get("/communities", { params });
   return response.data;
 };
 
 // Usage
-const communities = await getCommunities({ sort: 'popular', page: 1 });
+const communities = await getCommunities({ sort: "popular", page: 1 });
 ```
 
 ---
@@ -934,6 +966,7 @@ const communities = await getCommunities({ sort: 'popular', page: 1 });
 **Headers:** `Authorization: Bearer <token>`
 
 **Request:**
+
 ```json
 {
   "community": {
@@ -945,6 +978,7 @@ const communities = await getCommunities({ sort: 'popular', page: 1 });
 ```
 
 **Response (201):**
+
 ```json
 {
   "success": true,
@@ -964,6 +998,7 @@ const communities = await getCommunities({ sort: 'popular', page: 1 });
 **Headers:** `Authorization: Bearer <token>`
 
 **Response (200):**
+
 ```json
 {
   "success": true,
@@ -976,6 +1011,7 @@ const communities = await getCommunities({ sort: 'popular', page: 1 });
 ```
 
 **Frontend Example:**
+
 ```javascript
 export const joinCommunity = async (id) => {
   const response = await api.post(`/communities/${id}/join`);
@@ -990,11 +1026,13 @@ export const joinCommunity = async (id) => {
 #### GET /api/v1/communities/:community_id/posts
 
 **Query Params:**
+
 - `filter`: `hot`, `new`, `top`
 - `time`: `today`, `week`, `month`, `all` (for top)
 - `page`, `per_page`
 
 **Response (200):**
+
 ```json
 {
   "success": true,
@@ -1029,15 +1067,18 @@ export const joinCommunity = async (id) => {
 ```
 
 **Frontend Example:**
+
 ```javascript
 // src/api/postsApi.js
 export const getPosts = async (communityId, params = {}) => {
-  const response = await api.get(`/communities/${communityId}/posts`, { params });
+  const response = await api.get(`/communities/${communityId}/posts`, {
+    params,
+  });
   return response.data;
 };
 
 // Usage in component
-const posts = await getPosts(communityId, { filter: 'hot', page: 1 });
+const posts = await getPosts(communityId, { filter: "hot", page: 1 });
 ```
 
 ---
@@ -1047,6 +1088,7 @@ const posts = await getPosts(communityId, { filter: 'hot', page: 1 });
 **Headers:** `Authorization: Bearer <token>`
 
 **Request (Text Post):**
+
 ```json
 {
   "post": {
@@ -1058,21 +1100,23 @@ const posts = await getPosts(communityId, { filter: 'hot', page: 1 });
 ```
 
 **Request (Image Post):**
+
 ```javascript
 // Use FormData for images
 const formData = new FormData();
-formData.append('post[title]', 'Check out these photos!');
-formData.append('post[content]', 'From the concert...');
-formData.append('post[post_type]', 'image');
-formData.append('post[images][]', file1);
-formData.append('post[images][]', file2);
+formData.append("post[title]", "Check out these photos!");
+formData.append("post[content]", "From the concert...");
+formData.append("post[post_type]", "image");
+formData.append("post[images][]", file1);
+formData.append("post[images][]", file2);
 
 const response = await api.post(`/communities/${id}/posts`, formData, {
-  headers: { 'Content-Type': 'multipart/form-data' }
+  headers: { "Content-Type": "multipart/form-data" },
 });
 ```
 
 **Response (201):**
+
 ```json
 {
   "success": true,
@@ -1093,6 +1137,7 @@ const response = await api.post(`/communities/${id}/posts`, formData, {
 **Headers:** `Authorization: Bearer <token>`
 
 **Response (200):**
+
 ```json
 {
   "success": true,
@@ -1104,6 +1149,7 @@ const response = await api.post(`/communities/${id}/posts`, formData, {
 ```
 
 **Frontend Example:**
+
 ```javascript
 export const heartPost = async (postId) => {
   const response = await api.post(`/posts/${postId}/heart`);
@@ -1113,14 +1159,14 @@ export const heartPost = async (postId) => {
 // Usage with optimistic update
 const handleHeart = async () => {
   setIsHearted(true);
-  setHeartsCount(prev => prev + 1);
+  setHeartsCount((prev) => prev + 1);
 
   try {
     await heartPost(post.id);
   } catch (error) {
     // Rollback on error
     setIsHearted(false);
-    setHeartsCount(prev => prev - 1);
+    setHeartsCount((prev) => prev - 1);
   }
 };
 ```
@@ -1132,6 +1178,7 @@ const handleHeart = async () => {
 **Headers:** `Authorization: Bearer <token>`
 
 **Request:**
+
 ```json
 {
   "comment": {
@@ -1141,6 +1188,7 @@ const handleHeart = async () => {
 ```
 
 **Response (201):**
+
 ```json
 {
   "success": true,
@@ -1171,9 +1219,10 @@ const handleHeart = async () => {
 **Response:** Same as posts list
 
 **Frontend Example:**
+
 ```javascript
 export const getHomeFeed = async (params = {}) => {
-  const response = await api.get('/feed/home', { params });
+  const response = await api.get("/feed/home", { params });
   return response.data;
 };
 ```
@@ -1193,6 +1242,7 @@ export const getHomeFeed = async (params = {}) => {
 #### GET /api/v1/kpop_groups
 
 **Query Params:**
+
 - `search` (string)
 - `company_id` (int)
 - `group_type`: `boy_group`, `girl_group`, `solo`
@@ -1200,6 +1250,7 @@ export const getHomeFeed = async (params = {}) => {
 - `sort`: `popular`, `new`, `alphabetical`
 
 **Response (200):**
+
 ```json
 {
   "success": true,
@@ -1229,6 +1280,7 @@ export const getHomeFeed = async (params = {}) => {
 #### GET /api/v1/kpop_groups/:id
 
 **Response (200):**
+
 ```json
 {
   "success": true,
@@ -1310,22 +1362,22 @@ export const handleApiError = (error) => {
 
     switch (status) {
       case 401:
-        return 'Please log in to continue';
+        return "Please log in to continue";
       case 403:
-        return 'You do not have permission to perform this action';
+        return "You do not have permission to perform this action";
       case 404:
-        return 'Resource not found';
+        return "Resource not found";
       case 422:
-        return data.errors?.join(', ') || 'Validation failed';
+        return data.errors?.join(", ") || "Validation failed";
       case 500:
-        return 'Server error. Please try again later';
+        return "Server error. Please try again later";
       default:
-        return data.message || 'Something went wrong';
+        return data.message || "Something went wrong";
     }
   } else if (error.request) {
-    return 'Network error. Please check your connection';
+    return "Network error. Please check your connection";
   } else {
-    return 'An unexpected error occurred';
+    return "An unexpected error occurred";
   }
 };
 
@@ -1347,12 +1399,14 @@ try {
 For each new feature:
 
 1. **Create Migration**
+
 ```bash
 rails generate migration CreateFeature field:type
 rails db:migrate
 ```
 
 2. **Create Model**
+
 ```ruby
 class Feature < ApplicationRecord
   belongs_to :user
@@ -1361,6 +1415,7 @@ end
 ```
 
 3. **Create Serializer**
+
 ```ruby
 class FeatureSerializer
   def initialize(feature)
@@ -1377,6 +1432,7 @@ end
 ```
 
 4. **Create Controller**
+
 ```ruby
 class Api::V1::FeaturesController < Api::V1::ApplicationController
   def index
@@ -1390,6 +1446,7 @@ end
 ```
 
 5. **Add Routes**
+
 ```ruby
 namespace :api do
   namespace :v1 do
@@ -1413,15 +1470,17 @@ end
 For each new feature:
 
 1. **Create API module**
+
 ```javascript
 // src/api/featureApi.js
 export const getFeatures = async () => {
-  const response = await api.get('/features');
+  const response = await api.get("/features");
   return response.data;
 };
 ```
 
 2. **Create custom hook (optional)**
+
 ```javascript
 // src/hooks/useFeatures.js
 export const useFeatures = () => {
@@ -1430,6 +1489,7 @@ export const useFeatures = () => {
 ```
 
 3. **Create component**
+
 ```javascript
 // src/components/features/FeatureList.jsx
 const FeatureList = () => {
@@ -1439,6 +1499,7 @@ const FeatureList = () => {
 ```
 
 4. **Add to router**
+
 ```javascript
 <Route path="/features" element={<FeatureList />} />
 ```
@@ -1448,16 +1509,19 @@ const FeatureList = () => {
 ### Communication Tips
 
 **Backend to Frontend:**
+
 - "✅ POST /api/v1/communities endpoint is ready"
 - "📝 Here's the request format: {...}"
 - "🔍 Test it with: curl http://localhost:9000/api/v1/communities"
 
 **Frontend to Backend:**
+
 - "🐛 Getting 422 error on POST /posts, can you check validation?"
 - "📊 Can we add `followers_count` to the community response?"
 - "🚀 Need pagination for /feed/home endpoint"
 
 **Testing Together:**
+
 1. Backend creates endpoint and tests with Postman
 2. Backend shares curl command or Postman collection
 3. Frontend integrates and tests
@@ -1508,25 +1572,25 @@ VITE_APP_NAME=K-Pop Universe
 
 ### HTTP Methods
 
-| Method | Purpose | Example |
-|--------|---------|---------|
-| GET | Retrieve data | Get posts, Get user |
-| POST | Create new resource | Create post, Join community |
-| PATCH/PUT | Update resource | Update profile |
-| DELETE | Delete resource | Delete post, Leave community |
+| Method    | Purpose             | Example                      |
+| --------- | ------------------- | ---------------------------- |
+| GET       | Retrieve data       | Get posts, Get user          |
+| POST      | Create new resource | Create post, Join community  |
+| PATCH/PUT | Update resource     | Update profile               |
+| DELETE    | Delete resource     | Delete post, Leave community |
 
 ### Common Status Codes
 
-| Code | Meaning |
-|------|---------|
-| 200 | Success (GET, PATCH, DELETE) |
-| 201 | Created (POST) |
-| 400 | Bad request |
-| 401 | Unauthorized (no token or invalid) |
-| 403 | Forbidden (not authorized) |
-| 404 | Not found |
-| 422 | Validation failed |
-| 500 | Server error |
+| Code | Meaning                            |
+| ---- | ---------------------------------- |
+| 200  | Success (GET, PATCH, DELETE)       |
+| 201  | Created (POST)                     |
+| 400  | Bad request                        |
+| 401  | Unauthorized (no token or invalid) |
+| 403  | Forbidden (not authorized)         |
+| 404  | Not found                          |
+| 422  | Validation failed                  |
+| 500  | Server error                       |
 
 ---
 
