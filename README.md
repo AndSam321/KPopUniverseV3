@@ -2,6 +2,7 @@
 
 A full-stack web application for K-Pop fans featuring artist profiles, group information, music content, and social features.
 
+Read the Docs in Backend/docs for more information
 ## 📋 Table of Contents
 - [Project Structure](#project-structure)
 - [Prerequisites](#prerequisites)
