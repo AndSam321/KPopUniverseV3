@@ -12,11 +12,8 @@ Rails.application.routes.draw do
       devise_for :users, path: 'auth', controllers: {
         registrations: 'api/v1/auth/registrations',
         sessions: 'api/v1/auth/sessions',
+        omniauth_callbacks: 'api/v1/auth/omniauth'
       }
-
-      devise_scope :user do
-        get 'auth/:provider/callback', to: 'auth/omniauth#:provider'
-      end
     end
   end
 
