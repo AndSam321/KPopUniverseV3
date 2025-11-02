@@ -13,7 +13,7 @@ class Api::V1::Auth::RegistrationsController < Devise::RegistrationsController
     if resource.persisted?
       render json: {
         success: true,
-        message: 'Signed up successfully',
+        message: "Signed up successfully",
         data: {
           user: {
             id: resource.id,
@@ -23,13 +23,13 @@ class Api::V1::Auth::RegistrationsController < Devise::RegistrationsController
             title: resource.title,
             idol_points: resource.idol_points
           },
-          token: request.env['warden-jwt_auth.token']
+          token: request.env["warden-jwt_auth.token"]
         }
       }, status: :created
     else
       render json: {
         success: false,
-        message: 'Sign up failed',
+        message: "Sign up failed",
         errors: resource.errors.full_messages
       }, status: :unprocessable_entity
     end

@@ -1,13 +1,12 @@
 class Api::V1::Auth::OmniauthController < ApplicationController
-
   def google_oauth2
-    handle_auth 'Google'
+    handle_auth "Google"
   end
 
   private
 
   def handle_auth(provider)
-    @user = User.from_omniauth(request.env['omniauth.auth'])
+    @user = User.from_omniauth(request.env["omniauth.auth"])
 
     if @user.persisted?
       # Generate JWT token
@@ -29,7 +28,7 @@ class Api::V1::Auth::OmniauthController < ApplicationController
         email: user.email,
         exp: 24.hours.from_now.to_i
       },
-      ENV['DEVISE_JWT_SECRET_KEY']
+      ENV["DEVISE_JWT_SECRET_KEY"]
     )
   end
 end
