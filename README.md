@@ -122,36 +122,48 @@ npm run build
 
 ## ▶️ Running the Application
 
-### Development Mode
+### Development Mode (Recommended)
 
-You'll need **two terminal windows/tabs** running simultaneously:
+The easiest way to run both servers is using **Foreman**:
+
+#### 1. Install Foreman (one-time setup)
+```bash
+gem install foreman
+```
+
+#### 2. Start Both Servers
+From the **root directory**:
+```bash
+foreman start -f Procfile.dev
+```
+
+This will run both servers in one terminal window:
+- **Backend (Rails)**: http://localhost:9000
+- **Frontend (React)**: http://localhost:5173
+
+To stop both servers, press `Ctrl+C`.
+
+### Accessing the Application
+- **Frontend**: http://localhost:5173
+- **Backend API**: http://localhost:9000
+- **API Endpoints**: http://localhost:9000/api/v1/...
+
+API requests from frontend automatically proxy to backend via `/api` prefix.
+
+### Alternative: Manual Two-Terminal Approach
+
+If you prefer running servers separately:
 
 #### Terminal 1: Start Backend Server
 ```bash
 cd backend
 rails server -p 9000
 ```
-The Rails API will run on **http://localhost:9000**
 
 #### Terminal 2: Start Frontend Server
 ```bash
 cd frontend
 npm run dev
-```
-The React app will run on **http://localhost:5173**
-
-### Accessing the Application
-- **Frontend**: http://localhost:5173
-- **Backend API**: http://localhost:9000
-- API requests from frontend will automatically proxy to backend via `/api` prefix
-
-### Alternative: Using Process Manager (Optional)
-You can use a process manager like `foreman` or `overmind` to run both servers:
-
-```bash
-# Create a Procfile in the root directory
-web: cd frontend && npm run dev
-api: cd backend && rails server -p 9000
 ```
 
 ## 🔄 Development Workflow
@@ -207,9 +219,11 @@ The frontend is configured to proxy API requests to the backend:
 import api from './api/axios';
 
 // Make requests using the /api prefix
-const response = await api.get('/artists');
-// This will request: http://localhost:9000/api/artists
+const response = await api.get('/v1/artists');
+// This will request: http://localhost:9000/api/v1/artists
 ```
+
+**For complete API documentation** including authentication endpoints, request/response formats, and examples, see [API_CONTRACT.md](API_CONTRACT.md).
 
 ## 🛠️ Tech Stack
 
@@ -217,10 +231,11 @@ const response = await api.get('/artists');
 - **Framework**: Ruby on Rails 8.0
 - **Database**: PostgreSQL
 - **CSS Framework**: Tailwind CSS (for Rails views if needed)
-- **Authentication**: Devise + OAuth/OmniAuth (to be implemented)
+- **Authentication**: Devise + JWT + OAuth (Google) ✅
 - **Authorization**: Pundit (to be implemented)
 - **Background Jobs**: Sidekiq + Redis (to be implemented)
 - **File Storage**: AWS S3 + Active Storage (to be implemented)
+- **Testing**: RSpec + FactoryBot ✅
 
 ### Frontend
 - **Framework**: React 19.1.1
