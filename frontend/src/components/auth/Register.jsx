@@ -1,21 +1,18 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { signup } from "../../api/authApi";
+import "./Register.css";
 
 export default function Register() {
   const navigate = useNavigate();
 
-  // form fields
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
-
-  // ui state
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  /** @param {React.FormEvent<HTMLFormElement>} e */
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
@@ -36,10 +33,8 @@ export default function Register() {
       });
 
       console.log("Registered user:", data.user);
-
-      // redirect after signup
       navigate("/");
-    } catch (/** @type {any} */ err) {
+    } catch (err) {
       console.error(err);
       const msg =
         err?.response?.data?.errors?.join(", ") ||
@@ -52,87 +47,103 @@ export default function Register() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-900 px-4">
-      <div className="w-full max-w-md bg-slate-800 rounded-xl p-8 shadow-lg">
-        <h1 className="text-2xl font-bold text-white mb-6 text-center">
-          Create your K-Pop Universe account
-        </h1>
+    <div className="register-page">
+      <div className="register-container">
+        {/* Website title OUTSIDE the card */}
+        <h1 className="register-site-title">K·POP UNIVERSE</h1>
 
-        {error && (
-          <div className="mb-4 bg-red-500/10 text-red-300 text-sm px-3 py-2 rounded">
-            {error}
-          </div>
-        )}
+        {/* Card with form */}
+        <div className="register-card">
+          <header className="register-header">
+            <h2 className="register-title">Create your account</h2>
+            <p className="register-subtitle">
+              Claim your fandom name and join the galaxy ✨
+            </p>
+          </header>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-sm text-slate-200 mb-1">Email</label>
-            <input
-              type="email"
-              className="w-full px-3 py-2 rounded bg-slate-900 border border-slate-600 text-slate-100 focus:outline-none focus:ring-2 focus:ring-purple-500"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              autoComplete="email"
-            />
-          </div>
+          {error && <div className="register-error">{error}</div>}
 
-          <div>
-            <label className="block text-sm text-slate-200 mb-1">Username</label>
-            <input
-              type="text"
-              className="w-full px-3 py-2 rounded bg-slate-900 border border-slate-600 text-slate-100 focus:outline-none focus:ring-2 focus:ring-purple-500"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required
-              autoComplete="username"
-            />
-          </div>
+          <form className="register-form" onSubmit={handleSubmit}>
+            <div className="form-group">
+              <label className="form-label" htmlFor="email">
+                Email
+              </label>
+              <input
+                id="email"
+                type="email"
+                className="form-input"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                autoComplete="email"
+                placeholder="you@idolmail.com"
+              />
+            </div>
 
-          <div>
-            <label className="block text-sm text-slate-200 mb-1">Password</label>
-            <input
-              type="password"
-              className="w-full px-3 py-2 rounded bg-slate-900 border border-slate-600 text-slate-100 focus:outline-none focus:ring-2 focus:ring-purple-500"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              autoComplete="new-password"
-            />
-          </div>
+            <div className="form-group">
+              <label className="form-label" htmlFor="username">
+                Username
+              </label>
+              <input
+                id="username"
+                type="text"
+                className="form-input"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required
+                autoComplete="username"
+                placeholder="e.g. lightstick_lover"
+              />
+            </div>
 
-          <div>
-            <label className="block text-sm text-slate-200 mb-1">
-              Confirm Password
-            </label>
-            <input
-              type="password"
-              className="w-full px-3 py-2 rounded bg-slate-900 border border-slate-600 text-slate-100 focus:outline-none focus:ring-2 focus:ring-purple-500"
-              value={passwordConfirmation}
-              onChange={(e) => setPasswordConfirmation(e.target.value)}
-              required
-              autoComplete="new-password"
-            />
-          </div>
+            <div className="form-row">
+              <div className="form-group half">
+                <label className="form-label" htmlFor="password">
+                  Password
+                </label>
+                <input
+                  id="password"
+                  type="password"
+                  className="form-input"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  autoComplete="new-password"
+                />
+              </div>
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full py-2 mt-2 rounded bg-purple-600 hover:bg-purple-500 text-white font-semibold disabled:bg-slate-600 disabled:cursor-not-allowed transition"
-          >
-            {loading ? "Creating account..." : "Sign Up"}
-          </button>
-        </form>
+              <div className="form-group half">
+                <label className="form-label" htmlFor="passwordConfirmation">
+                  Confirm
+                </label>
+                <input
+                  id="passwordConfirmation"
+                  type="password"
+                  className="form-input"
+                  value={passwordConfirmation}
+                  onChange={(e) => setPasswordConfirmation(e.target.value)}
+                  required
+                  autoComplete="new-password"
+                />
+              </div>
+            </div>
 
-        <p className="text-slate-400 text-sm text-center mt-6">
-          Already have an account?{" "}
-          <a
-            href="/login"
-            className="text-purple-400 hover:text-purple-300 underline"
-          >
-            Log in
-          </a>
-        </p>
+            <button
+              type="submit"
+              className="register-button"
+              disabled={loading}
+            >
+              {loading ? "Creating account..." : "Sign Up"}
+            </button>
+          </form>
+
+          <p className="register-footer-text">
+            Already have an account?{" "}
+            <a href="/login" className="register-footer-link">
+              Log in
+            </a>
+          </p>
+        </div>
       </div>
     </div>
   );

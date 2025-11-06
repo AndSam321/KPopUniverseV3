@@ -1,0 +1,218 @@
+/* === Full-page layout (no scroll) === */
+.register-page {
+  height: 100dvh; /* true viewport height */
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #f5d3c4 0%, #f2aebb 45%, #a7aae1 100%);
+  font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  overflow: hidden; /* no scrollbars, even with tiny overflow */
+}
+
+/* === Container holds title + card === */
+.register-container {
+  width: 100%;
+  max-width: 640px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px; /* space between title and card */
+  padding: 0 16px;
+}
+
+/* === Website title (outside card) === */
+.register-site-title {
+  margin: 0;
+  text-align: center;
+  font-family: "DynaPuff", system-ui, cursive;
+  font-size: 3rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 1px;
+
+  /* Outline-ish effect + glow using text-shadow */
+  text-shadow:
+    -2px 0 #696fc7,
+     2px 0 #696fc7,
+     0 -2px #696fc7,
+     0  2px #696fc7,
+     0  0 10px rgba(105, 111, 199, 0.6),
+     0  0 18px rgba(167, 170, 225, 0.6),
+     0  0 24px rgba(242, 174, 187, 0.5);
+
+  animation: titleFloat 3s ease-in-out infinite;
+}
+
+@keyframes titleFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@media (max-width: 640px) {
+  .register-site-title {
+    font-size: 2.4rem;
+  }
+}
+
+/* === Card component === */
+.register-card {
+  width: 100%;
+  max-width: 540px;
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 32px 28px 26px;
+  box-shadow: 0 12px 35px rgba(105, 111, 199, 0.25);
+  border: 1px solid rgba(167, 170, 225, 0.4);
+  transition: transform 0.2s ease;
+}
+
+.register-card:hover {
+  transform: translateY(-2px);
+}
+
+@media (max-width: 640px) {
+  .register-card {
+    padding: 24px 18px 20px;
+    border-radius: 18px;
+  }
+}
+
+/* === Card header === */
+.register-header {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.register-title {
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #696fc7; /* primary */
+}
+
+.register-subtitle {
+  margin-top: 6px;
+  font-size: 0.9rem;
+  color: #8a8dd9; /* lighter periwinkle */
+}
+
+/* === Error message === */
+.register-error {
+  margin-bottom: 16px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background-color: rgba(242, 174, 187, 0.15);
+  border: 1px solid #f2aebb;
+  color: #b0234d;
+  text-align: center;
+  font-size: 0.85rem;
+}
+
+/* === Form layout === */
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* row for password + confirm on desktop */
+.form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+@media (min-width: 640px) {
+  .form-row {
+    flex-direction: row;
+  }
+
+  .form-group.half {
+    width: 50%;
+  }
+}
+
+.form-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #696fc7;
+}
+
+/* === Inputs === */
+.form-input {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #a7aae1;
+  background: #f9f9ff;
+  color: #1e1e2f;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+}
+
+.form-input::placeholder {
+  color: #a7aae1;
+}
+
+.form-input:focus {
+  border-color: #696fc7;
+  box-shadow: 0 0 0 3px rgba(105, 111, 199, 0.2);
+  outline: none;
+}
+
+/* === Button === */
+.register-button {
+  margin-top: 8px;
+  width: 100%;
+  padding: 12px 16px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #696fc7, #a7aae1);
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 6px 20px rgba(105, 111, 199, 0.35);
+}
+
+.register-button:hover:not(:disabled) {
+  background: linear-gradient(135deg, #5d63b3, #989bd9);
+  box-shadow: 0 10px 25px rgba(105, 111, 199, 0.45);
+  transform: translateY(-2px);
+}
+
+.register-button:disabled {
+  opacity: 0.7;
+  cursor: default;
+}
+
+/* === Footer === */
+.register-footer-text {
+  margin-top: 18px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #55557a;
+}
+
+.register-footer-link {
+  color: #f2aebb;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.register-footer-link:hover {
+  text-decoration: underline;
+}
