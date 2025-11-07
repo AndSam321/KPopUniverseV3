@@ -168,6 +168,41 @@
   outline: none;
 }
 
+/* === Password Eye Wrapper === */
+.password-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-input-wrapper .form-input {
+  width: 100%;
+  padding-right: 40px;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 10px;
+  background: none;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #a7aae1;
+  transition: color 0.2s ease;
+}
+
+.password-toggle:hover {
+  color: #696fc7;
+}
+
+.password-toggle:focus {
+  outline: none;
+  color: #696fc7;
+}
+
 /* === Button === */
 .register-button {
   margin-top: 8px;
