@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { signup } from "../../api/authApi";
+import TermsModal from "./TermsModal";
 import "./Register.css";
 
 export default function Register() {
@@ -12,6 +13,8 @@ export default function Register() {
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showTermsModal, setShowTermsModal] = useState(false);
+  const [termsAccepted, setTermsAccepted] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -57,7 +60,7 @@ export default function Register() {
           <header className="register-header">
             <h2 className="register-title">Create your account</h2>
             <p className="register-subtitle">
-              Claim your fandom name and join the galaxy ✨
+              Join the fandom and connect with K-pop lovers worldwide! ✨
             </p>
           </header>
 
@@ -128,10 +131,21 @@ export default function Register() {
               </div>
             </div>
 
+            <p className="terms-notice">
+              By signing up, you agree to our{" "}
+              <button
+                type="button"
+                onClick={() => setShowTermsModal(true)}
+                className="terms-link-button"
+              >
+                Terms and Conditions
+              </button>
+            </p>
+
             <button
               type="submit"
               className="register-button"
-              disabled={loading}
+              disabled={loading || !termsAccepted}
             >
               {loading ? "Creating account..." : "Sign Up"}
             </button>
@@ -145,6 +159,13 @@ export default function Register() {
           </p>
         </div>
       </div>
+
+      <TermsModal
+        isOpen={showTermsModal}
+        onClose={() => setShowTermsModal(false)}
+        onAccept={() => setTermsAccepted(true)}
+        isAccepted={termsAccepted}
+      />
     </div>
   );
 }
