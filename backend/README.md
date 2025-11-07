@@ -104,7 +104,49 @@ bundle install
 # npm install  # Uncomment if package.json exists
 ```
 
-### 6. Database Setup
+### 6. Environment Variables
+
+Create a `.env` file in the project root by copying the example file:
+
+```bash
+cp .env.example .env
+```
+
+Then edit `.env` and configure your database credentials:
+
+```bash
+# Database Configuration
+DB_USERNAME=your_postgres_username     # Usually 'postgres' or your system username
+DB_PASSWORD=your_postgres_password     # Your PostgreSQL password
+DB_HOST=localhost
+DB_PORT=5432
+DB_NAME=k_pop_universe_v3_development
+
+# Server Configuration
+PORT=9000
+RAILS_ENV=development
+
+# Devise Configuration (generate these with: rake secret)
+DEVISE_SECRET_KEY=generate_with_rake_secret
+DEVISE_JWT_SECRET_KEY=generate_with_rake_secret
+```
+
+**Note**: If you have `DATABASE_PASSWORD` already set in your system environment variables, the app will automatically use it as a fallback if `DB_PASSWORD` is not set. Both work!
+
+**Important**: Make sure your PostgreSQL user has a password set. If you need to set one:
+
+```bash
+# Connect to PostgreSQL
+psql postgres
+
+# Set password for postgres user
+\password postgres
+
+# Exit
+\q
+```
+
+### 7. Database Setup
 
 ```bash
 # Create the database
@@ -115,18 +157,6 @@ rails db:migrate
 
 # Seed the database (if seeds are available)
 rails db:seed
-```
-
-### 7. Environment Variables
-
-Create a `.env` file in the project root for development environment variables:
-
-```bash
-# .env file (create this)
-# Add any required API keys or configuration here
-# REDIS_URL=redis://localhost:6379/0
-# AWS_ACCESS_KEY_ID=your_key_here
-# AWS_SECRET_ACCESS_KEY=your_secret_here
 ```
 
 ### 8. Start the Development Server
