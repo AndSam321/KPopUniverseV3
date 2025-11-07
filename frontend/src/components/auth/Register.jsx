@@ -55,15 +55,15 @@ export default function Register() {
     <div className="register-page">
       <div className="register-container">
         {/* Website title OUTSIDE the card */}
-        <h1 className="register-site-title">K·POP UNIVERSE</h1>
+        <h1 className="register-site-title">k·pop universe</h1>
 
         {/* Card with form */}
         <div className="register-card">
           <header className="register-header">
-            <h2 className="register-title">Create your account</h2>
+            <h2 className="register-title">create your account</h2>
             <p className="register-subtitle">
-              Join the largest K-pop community and connect with fans worldwide!
-              ✨
+              join the largest k-pop community and connect with fans worldwide!{" "}
+              <span className="emoji-small">✨</span>
             </p>
           </header>
 
@@ -72,7 +72,7 @@ export default function Register() {
           <form className="register-form" onSubmit={handleSubmit}>
             <div className="form-group">
               <label className="form-label" htmlFor="email">
-                Email
+                email
               </label>
               <input
                 id="email"
@@ -88,7 +88,7 @@ export default function Register() {
 
             <div className="form-group">
               <label className="form-label" htmlFor="username">
-                Username
+                username
               </label>
               <input
                 id="username"
@@ -105,7 +105,7 @@ export default function Register() {
             <div className="form-row">
               <div className="form-group half">
                 <label className="form-label" htmlFor="password">
-                  Password
+                  password
                 </label>
                 <div className="password-input-wrapper">
                   <input
@@ -140,7 +140,7 @@ export default function Register() {
 
               <div className="form-group half">
                 <label className="form-label" htmlFor="passwordConfirmation">
-                  Confirm Password
+                  confirm password
                 </label>
                 <div className="password-input-wrapper">
                   <input
@@ -175,13 +175,13 @@ export default function Register() {
             </div>
 
             <p className="terms-notice">
-              By signing up, you agree to our{" "}
+              by signing up, you agree to our{" "}
               <button
                 type="button"
                 onClick={() => setShowTermsModal(true)}
                 className="terms-link-button"
               >
-                Terms and Conditions
+                terms and conditions
               </button>
             </p>
 
@@ -190,14 +190,14 @@ export default function Register() {
               className="register-button"
               disabled={loading || !termsAccepted}
             >
-              {loading ? "Creating account..." : "Sign Up"}
+              {loading ? "creating account..." : "sign up"}
             </button>
           </form>
 
           <p className="register-footer-text">
-            Already have an account?{" "}
+            already have an account?{" "}
             <a href="/login" className="register-footer-link">
-              Log in
+              log in
             </a>
           </p>
         </div>

@@ -44,14 +44,12 @@ export default function Login() {
     <div className="register-page">
       <div className="register-container">
         {/* Same title styling as Register */}
-        <h1 className="register-site-title">K·POP UNIVERSE</h1>
+        <h1 className="register-site-title">k·pop universe</h1>
 
         <div className="register-card">
           <header className="register-header">
-            <h2 className="register-title">Welcome back</h2>
-            <p className="register-subtitle">
-              Log in to your fandom account 🌙
-            </p>
+            <h2 className="register-title">welcome back</h2>
+            <p className="register-subtitle">log in to your account</p>
           </header>
 
           {error && <div className="register-error">{error}</div>}
@@ -59,7 +57,7 @@ export default function Login() {
           <form className="register-form" onSubmit={handleSubmit}>
             <div className="form-group">
               <label className="form-label" htmlFor="email">
-                Email
+                email
               </label>
               <input
                 id="email"
@@ -75,7 +73,7 @@ export default function Login() {
 
             <div className="form-group">
               <label className="form-label" htmlFor="password">
-                Password
+                password
               </label>
               <input
                 id="password"
@@ -93,14 +91,14 @@ export default function Login() {
               className="register-button"
               disabled={loading}
             >
-              {loading ? "Logging in..." : "Log In"}
+              {loading ? "logging in..." : "log In"}
             </button>
           </form>
 
           <p className="register-footer-text">
-            Don’t have an account yet?{" "}
+            don’t have an account yet?{" "}
             <a href="/register" className="register-footer-link">
-              Sign up
+              sign up
             </a>
           </p>
         </div>

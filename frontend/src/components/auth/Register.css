@@ -6,9 +6,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg, #f5d3c4 0%, #f2aebb 45%, #a7aae1 100%);
-  font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont,
-    sans-serif;
+  background: linear-gradient(135deg, #e0c3fc 0%, #bbadff 45%, #757bc8 100%);
+  font-family: "Zen Kaku Gothic New", system-ui, -apple-system,
+    BlinkMacSystemFont, sans-serif;
   overflow: hidden; /* no scrollbars, even with tiny overflow */
 }
 
@@ -34,9 +34,9 @@
   letter-spacing: 1px;
 
   /* Outline-ish effect + glow using text-shadow */
-  text-shadow: -2px 0 #696fc7, 2px 0 #696fc7, 0 -2px #696fc7, 0 2px #696fc7,
-    0 0 10px rgba(105, 111, 199, 0.6), 0 0 18px rgba(167, 170, 225, 0.6),
-    0 0 24px rgba(242, 174, 187, 0.5);
+  text-shadow: -2px 0 #757bc8, 2px 0 #757bc8, 0 -2px #757bc8, 0 2px #757bc8,
+    0 0 10px rgba(117, 123, 200, 0.6), 0 0 18px rgba(159, 160, 255, 0.6),
+    0 0 24px rgba(187, 173, 255, 0.5);
 
   animation: titleFloat 3s ease-in-out infinite;
 }
@@ -64,8 +64,8 @@
   background: #ffffff;
   border-radius: 24px;
   padding: 32px 28px 26px;
-  box-shadow: 0 12px 35px rgba(105, 111, 199, 0.25);
-  border: 1px solid rgba(167, 170, 225, 0.4);
+  box-shadow: 0 12px 35px rgba(117, 123, 200, 0.25);
+  border: 1px solid rgba(173, 167, 255, 0.4);
   transition: transform 0.2s ease;
 }
 
@@ -89,14 +89,18 @@
 .register-title {
   margin: 0;
   font-size: 1.6rem;
-  font-weight: 700;
-  color: #696fc7; /* primary */
+  font-weight: 400;
+  color: #757bc8; /* primary */
 }
 
 .register-subtitle {
   margin-top: 6px;
   font-size: 0.9rem;
-  color: #8a8dd9; /* lighter periwinkle */
+  color: #6d7093; /* lighter purple */
+}
+
+.emoji-small {
+  font-size: 0.75em;
 }
 
 /* === Error message === */
@@ -104,9 +108,9 @@
   margin-bottom: 16px;
   padding: 10px 12px;
   border-radius: 10px;
-  background-color: rgba(242, 174, 187, 0.15);
-  border: 1px solid #f2aebb;
-  color: #b0234d;
+  background-color: rgba(218, 182, 252, 0.15);
+  border: 1px solid #dab6fc;
+  color: #6b3d8c;
   text-align: center;
   font-size: 0.85rem;
 }
@@ -144,14 +148,14 @@
 .form-label {
   font-size: 0.85rem;
   font-weight: 600;
-  color: #696fc7;
+  color: #757bc8;
 }
 
 /* === Inputs === */
 .form-input {
   padding: 10px 12px;
   border-radius: 10px;
-  border: 1px solid #a7aae1;
+  border: 1px solid #ada7ff;
   background: #f9f9ff;
   color: #1e1e2f;
   font-size: 0.95rem;
@@ -159,12 +163,12 @@
 }
 
 .form-input::placeholder {
-  color: #a7aae1;
+  color: #ada7ff;
 }
 
 .form-input:focus {
-  border-color: #696fc7;
-  box-shadow: 0 0 0 3px rgba(105, 111, 199, 0.2);
+  border-color: #757bc8;
+  box-shadow: 0 0 0 3px rgba(117, 123, 200, 0.2);
   outline: none;
 }
 
@@ -190,17 +194,17 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #a7aae1;
+  color: #ada7ff;
   transition: color 0.2s ease;
 }
 
 .password-toggle:hover {
-  color: #696fc7;
+  color: #757bc8;
 }
 
 .password-toggle:focus {
   outline: none;
-  color: #696fc7;
+  color: #757bc8;
 }
 
 /* === Button === */
@@ -210,18 +214,18 @@
   padding: 12px 16px;
   border: none;
   border-radius: 12px;
-  background: linear-gradient(135deg, #696fc7, #a7aae1);
+  background: linear-gradient(135deg, #757bc8, #ada7ff);
   color: #ffffff;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
-  box-shadow: 0 6px 20px rgba(105, 111, 199, 0.35);
+  box-shadow: 0 6px 20px rgba(117, 123, 200, 0.35);
 }
 
 .register-button:hover:not(:disabled) {
-  background: linear-gradient(135deg, #5d63b3, #989bd9);
-  box-shadow: 0 10px 25px rgba(105, 111, 199, 0.45);
+  background: linear-gradient(135deg, #6b70b8, #9fa0ff);
+  box-shadow: 0 10px 25px rgba(117, 123, 200, 0.45);
   transform: translateY(-2px);
 }
 
@@ -239,7 +243,7 @@
 }
 
 .register-footer-link {
-  color: #f2aebb;
+  color: #9fa0ff;
   font-weight: 600;
   text-decoration: none;
 }
@@ -253,7 +257,7 @@
   background: none;
   border: none;
   padding: 0;
-  color: #f2aebb;
+  color: #9fa0ff;
   font-weight: 600;
   text-decoration: none;
   cursor: pointer;
@@ -278,7 +282,7 @@
   opacity: 0.5;
   cursor: not-allowed;
   pointer-events: none;
-  background: linear-gradient(135deg, #9ca0d4, #c5c7e8) !important;
+  background: linear-gradient(135deg, #cbb2fe, #ddbdfc) !important;
   box-shadow: none !important;
   transform: none !important;
 }
