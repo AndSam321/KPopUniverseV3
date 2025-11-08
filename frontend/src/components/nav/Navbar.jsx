@@ -15,7 +15,7 @@ import { logout as logoutApi } from "../../api/authApi";
 
 export default function Navbar() {
   const navigate = useNavigate();
-  const { user, logout } = useAuth();
+  const { user, logout, loading } = useAuth();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -106,7 +106,10 @@ export default function Navbar() {
             />
           </div>
 
-          {user ? (
+          {loading ? (
+            // Show nothing while loading to prevent flash
+            <div style={{ width: "80px" }}></div>
+          ) : user ? (
             <div className="kp-nav__profile-container" ref={dropdownRef}>
               <button
                 className="kp-nav__profile"

@@ -5,6 +5,7 @@ import Login from "./components/auth/Login.jsx";
 import Profile from "./components/profile/Profile.jsx";
 import Navbar from "./components/nav/Navbar.jsx";
 import { AuthProvider } from "./context/AuthContext.jsx";
+import GuestRoute from "./components/routes/GuestRoute.jsx";
 
 function App() {
   return (
@@ -13,8 +14,22 @@ function App() {
       <Routes>
         <Route path="/" element={<div>Home Page - Coming Soon</div>} />
         <Route path="/sandbox" element={<Sandbox />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
+        <Route
+          path="/register"
+          element={
+            <GuestRoute>
+              <Register />
+            </GuestRoute>
+          }
+        />
+        <Route
+          path="/login"
+          element={
+            <GuestRoute>
+              <Login />
+            </GuestRoute>
+          }
+        />
         <Route path="/profile" element={<Profile />} />
         <Route path="/profile/:username" element={<Profile />} />
       </Routes>

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../api/authApi";
 import { useAuth } from "../../context/AuthContext";
-import "./Register.css"; // reuse the same CSS as Register
+import "./Register.css";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -27,11 +27,7 @@ export default function Login() {
       });
 
       console.log("Logged in user:", data.user);
-
-      // Update auth context with user data
       setUser(data.user);
-
-      // After login, send them to home (or /feed later)
       navigate("/");
     } catch (err) {
       console.error(err);
@@ -48,7 +44,6 @@ export default function Login() {
   return (
     <div className="register-page">
       <div className="register-container">
-        {/* Same title styling as Register */}
         <h1 className="register-site-title">k·pop universe</h1>
 
         <div className="register-card">
