@@ -15,6 +15,12 @@ Rails.application.routes.draw do
                    sessions: "api/v1/auth/sessions",
                    omniauth_callbacks: "api/v1/auth/omniauth"
                  }
+
+      resources :users, only: [:show] do
+        collection do
+          get :my_profile
+        end
+      end
     end
   end
 
