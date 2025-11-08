@@ -23,7 +23,7 @@ default: &default
 development:
   <<: *default
   database: <%= ENV.fetch("DB_NAME") { "k_pop_universe_v3_development" } %>
-  username: <%= ENV.fetch("DB_USERNAME") { "postgres" } %>
+  username: <%= ENV.fetch("DB_USERNAME") { "kpop_user" } %>
   password: <%= ENV.fetch("DB_PASSWORD") { ENV.fetch("DATABASE_PASSWORD") { "" } } %>
   host: <%= ENV.fetch("DB_HOST") { "localhost" } %>
   port: <%= ENV.fetch("DB_PORT") { 5432 } %>
