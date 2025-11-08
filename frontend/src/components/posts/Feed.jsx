@@ -56,7 +56,7 @@ const Feed = () => {
   return (
     <div className="feed">
       <div className="feed__header">
-        <h1>Feed</h1>
+        <h1>for you</h1>
         <button
           onClick={() => setShowCreatePost(!showCreatePost)}
           className="feed__create-btn"

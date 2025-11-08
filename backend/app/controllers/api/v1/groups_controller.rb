@@ -1,5 +1,6 @@
 class Api::V1::GroupsController < Api::V1::BaseController
   before_action :authenticate_user!, only: [:create]
+  before_action :set_active_storage_url_options
 
   def index
     @groups = Group.alphabetical
@@ -54,17 +55,35 @@ class Api::V1::GroupsController < Api::V1::BaseController
     }
   end
 
+  def set_active_storage_url_options
+    ActiveStorage::Current.url_options = {host: "localhost", port: 9000}
+  end
+
   def post_summary_json(post)
     {
       id: post.id,
       title: post.title,
+      caption: post.caption,
+      images: post.images.attached? ? post.images.map { |img| image_json(img) } : [],
+      groups: post.groups.map { |g| {id: g.id, name: g.name, slug: g.slug} },
       user: {
         id: post.user.id,
-        username: post.user.username
+        username: post.user.username,
+        avatar_url: post.user.avatar_url
       },
       likes_count: post.likes_count,
       comments_count: post.comments_count,
       created_at: post.created_at
+    }
+  end
+
+  def image_json(image)
+    {
+      url: Rails.application.routes.url_helpers.url_for(image),
+      thumbnail_url: image.variant(:thumb).processed.url,
+      filename: image.filename.to_s,
+      content_type: image.content_type,
+      byte_size: image.byte_size
     }
   end
 end
