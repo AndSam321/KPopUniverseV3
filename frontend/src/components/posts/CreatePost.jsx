@@ -3,11 +3,13 @@ import { createPost } from "../../api/postsApi";
 import { getGroups } from "../../api/groupsApi";
 import "./CreatePost.css";
 
-const CreatePost = ({ onPostCreated }) => {
+const CreatePost = ({ onPostCreated, defaultGroupId }) => {
   const [title, setTitle] = useState("");
   const [caption, setCaption] = useState("");
   const [images, setImages] = useState([]);
-  const [selectedGroups, setSelectedGroups] = useState([]);
+  const [selectedGroups, setSelectedGroups] = useState(
+    defaultGroupId ? [defaultGroupId] : []
+  );
   const [groups, setGroups] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -16,6 +18,12 @@ const CreatePost = ({ onPostCreated }) => {
   useEffect(() => {
     fetchGroups();
   }, []);
+
+  useEffect(() => {
+    if (defaultGroupId && !selectedGroups.includes(defaultGroupId)) {
+      setSelectedGroups([defaultGroupId]);
+    }
+  }, [defaultGroupId]);
 
   const fetchGroups = async () => {
     try {
