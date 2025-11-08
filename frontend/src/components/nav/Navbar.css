@@ -1,0 +1,202 @@
+/* Navbar base */
+.kp-nav {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  width: 100%;
+  background: linear-gradient(90deg, #757bc8, #8e94f2, #ada7ff);
+  box-shadow: 0 4px 18px rgba(52, 45, 120, 0.35);
+}
+
+/* Inner full-width layout */
+.kp-nav__inner {
+  width: 100%;
+  height: 64px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* center middle links */
+  font-family: "Zen Kaku Gothic New", system-ui, -apple-system, sans-serif;
+}
+
+/* Left cluster */
+.kp-nav__left {
+  position: absolute;
+  left: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.kp-nav__logo-mark {
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  background: radial-gradient(circle at 30% 20%, #e0c3fc, #bbadff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #2b2257;
+  font-size: 16px;
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.kp-nav__logo-text {
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #ffffff;
+  white-space: nowrap;
+}
+
+/* Center nav links */
+.kp-nav__center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+}
+
+.kp-nav__link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+
+  position: relative;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #e0c3fc;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.kp-nav__icon {
+  color: #e0c3fc;
+  transition: color 0.15s ease, transform 0.15s ease;
+}
+
+.kp-nav__label {
+  font-size: 0.75rem;
+  letter-spacing: 0.03em;
+}
+
+.kp-nav__link:hover .kp-nav__icon {
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.kp-nav__link:hover .kp-nav__label {
+  color: #fff;
+}
+
+.kp-nav__link--active .kp-nav__icon,
+.kp-nav__link--active .kp-nav__label {
+  color: #fff;
+}
+
+/* Right cluster */
+.kp-nav__right {
+  position: absolute;
+  right: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Search */
+.kp-nav__search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 20px;
+  height: 36px;
+
+  border-radius: 999px;
+  background: linear-gradient(135deg, #e0c3fc 0%, #cbb2fe 100%);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 0 10px rgba(155, 100, 255, 0.25);
+  transition: all 0.2s ease;
+}
+
+.kp-nav__search:hover,
+.kp-nav__search:focus-within {
+  box-shadow: 0 0 12px rgba(155, 100, 255, 0.4);
+  transform: translateY(-1px);
+}
+
+.kp-nav__search-input {
+  font-family: "Zen Kaku Gothic New", system-ui, sans-serif;
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-size: 0.9rem;
+  color: #2a214c;
+  outline: none;
+  width: 220px;
+}
+
+.kp-nav__search-input::placeholder {
+  color: rgba(42, 33, 76, 0.6);
+}
+
+/* Profile */
+.kp-nav__profile {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+}
+
+.kp-nav__profile-circle {
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  background: radial-gradient(circle at 30% 20%, #e0c3fc, #9fa0ff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #2a214c;
+  font-weight: 700;
+  font-size: 0.95rem;
+  box-shadow: 0 4px 10px rgba(34, 21, 76, 0.4);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.kp-nav__profile-circle:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(34, 21, 76, 0.6);
+}
+
+/* Responsive */
+@media (max-width: 720px) {
+  .kp-nav__center {
+    display: none;
+  }
+
+  .kp-nav__inner {
+    height: 56px;
+  }
+
+  .kp-nav__search-input {
+    width: 140px;
+  }
+
+  .kp-nav__logo-text {
+    font-size: 1rem;
+  }
+
+  .kp-nav__left {
+    left: 12px;
+  }
+
+  .kp-nav__right {
+    right: 12px;
+  }
+}
