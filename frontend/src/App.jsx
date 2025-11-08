@@ -3,6 +3,7 @@ import Sandbox from "./playground/Sandbox.jsx";
 import Register from "./components/auth/Register.jsx";
 import Login from "./components/auth/Login.jsx";
 import Profile from "./components/profile/Profile.jsx";
+import Feed from "./components/posts/Feed.jsx";
 import Navbar from "./components/nav/Navbar.jsx";
 import { AuthProvider } from "./context/AuthContext.jsx";
 import GuestRoute from "./components/routes/GuestRoute.jsx";
@@ -12,7 +13,7 @@ function App() {
     <AuthProvider>
       <Navbar />
       <Routes>
-        <Route path="/" element={<div>Home Page - Coming Soon</div>} />
+        <Route path="/" element={<Feed />} />
         <Route path="/sandbox" element={<Sandbox />} />
         <Route
           path="/register"
