@@ -8,6 +8,7 @@ class User < ApplicationRecord
            omniauth_providers: [ :google_oauth2 ]
 
   has_many :posts, dependent: :destroy
+  has_many :groups, dependent: :destroy
 
   validates :username, presence: true, uniqueness: true
   validates :email, presence: true, uniqueness: true

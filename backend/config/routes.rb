@@ -23,7 +23,7 @@ Rails.application.routes.draw do
       end
 
       resources :posts
-      resources :groups, only: [:index, :show]
+      resources :groups, only: [:index, :show, :create]
     end
   end
 
