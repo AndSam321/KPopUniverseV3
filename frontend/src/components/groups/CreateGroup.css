@@ -1,0 +1,81 @@
+.create-group {
+  max-width: 600px;
+  margin: 0 auto 2rem;
+  padding: 2rem;
+  background: #1a1a1a;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.create-group h2 {
+  color: #ff4da6;
+  margin-bottom: 1.5rem;
+  font-family: "Dynapuff", cursive;
+}
+
+.create-group__error {
+  background: #ff4444;
+  color: white;
+  padding: 0.75rem;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+}
+
+.create-group__form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.create-group__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.create-group__field label {
+  color: #fff;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.create-group__field input[type="text"],
+.create-group__field input[type="url"],
+.create-group__field textarea {
+  padding: 0.75rem;
+  background: #2a2a2a;
+  border: 2px solid #3a3a3a;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+.create-group__field input[type="text"]:focus,
+.create-group__field input[type="url"]:focus,
+.create-group__field textarea:focus {
+  outline: none;
+  border-color: #ff4da6;
+}
+
+.create-group__submit {
+  padding: 1rem;
+  background: linear-gradient(135deg, #ff4da6 0%, #ff6b9d 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.create-group__submit:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 77, 166, 0.4);
+}
+
+.create-group__submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
