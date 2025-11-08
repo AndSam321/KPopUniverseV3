@@ -4,6 +4,8 @@ import Register from "./components/auth/Register.jsx";
 import Login from "./components/auth/Login.jsx";
 import Profile from "./components/profile/Profile.jsx";
 import Feed from "./components/posts/Feed.jsx";
+import GroupsList from "./components/groups/GroupsList.jsx";
+import GroupDetail from "./components/groups/GroupDetail.jsx";
 import Navbar from "./components/nav/Navbar.jsx";
 import { AuthProvider } from "./context/AuthContext.jsx";
 import GuestRoute from "./components/routes/GuestRoute.jsx";
@@ -14,6 +16,8 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Feed />} />
+        <Route path="/groups" element={<GroupsList />} />
+        <Route path="/groups/:id" element={<GroupDetail />} />
         <Route path="/sandbox" element={<Sandbox />} />
         <Route
           path="/register"
