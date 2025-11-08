@@ -1,0 +1,198 @@
+/* === Full-page layout === */
+.profile-page {
+  min-height: 100dvh;
+  margin: 0;
+  padding: 32px 16px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  background: linear-gradient(135deg, #e0c3fc 0%, #bbadff 45%, #757bc8 100%);
+  font-family: "Zen Kaku Gothic New", system-ui, -apple-system,
+    BlinkMacSystemFont, sans-serif;
+}
+
+/* === Container holds title + card === */
+.profile-container {
+  width: 100%;
+  max-width: 720px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+/* === Website title (outside card) === */
+.profile-site-title {
+  margin: 0;
+  text-align: center;
+  font-family: "DynaPuff", system-ui, cursive;
+  font-size: 3rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 1px;
+  text-shadow: -2px 0 #757bc8, 2px 0 #757bc8, 0 -2px #757bc8, 0 2px #757bc8,
+    0 0 10px rgba(117, 123, 200, 0.6), 0 0 18px rgba(159, 160, 255, 0.6),
+    0 0 24px rgba(187, 173, 255, 0.5);
+  animation: titleFloat 3s ease-in-out infinite;
+}
+
+@keyframes titleFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@media (max-width: 640px) {
+  .profile-site-title {
+    font-size: 2.4rem;
+  }
+}
+
+/* === Card component === */
+.profile-card {
+  width: 100%;
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 32px 28px;
+  box-shadow: 0 12px 35px rgba(117, 123, 200, 0.25);
+  border: 1px solid rgba(173, 167, 255, 0.4);
+  transition: transform 0.2s ease;
+}
+
+.profile-card:hover {
+  transform: translateY(-2px);
+}
+
+@media (max-width: 640px) {
+  .profile-card {
+    padding: 24px 18px;
+    border-radius: 18px;
+  }
+}
+
+/* === Loading & Error states === */
+.profile-loading,
+.profile-error {
+  text-align: center;
+  padding: 2rem;
+  color: #ffffff;
+  font-size: 1.2rem;
+  text-shadow: 0 2px 8px rgba(117, 123, 200, 0.4);
+}
+
+.profile-error {
+  color: #dab6fc;
+}
+
+/* === Profile Header === */
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #cbb2fe;
+}
+
+.profile-avatar {
+  flex-shrink: 0;
+}
+
+.profile-avatar img,
+.avatar-placeholder {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #9fa0ff;
+}
+
+.avatar-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #757bc8, #9fa0ff);
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.profile-info {
+  flex: 1;
+}
+
+.profile-username {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem 0;
+  color: #757bc8;
+}
+
+.profile-title {
+  font-size: 1rem;
+  color: #8187dc;
+  margin: 0;
+}
+
+/* === Stats Grid === */
+.profile-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.stat-item {
+  background: #f9f9ff;
+  border: 1px solid #ada7ff;
+  border-radius: 12px;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  transition: all 0.2s ease;
+}
+
+.stat-item:hover {
+  border-color: #757bc8;
+  box-shadow: 0 4px 12px rgba(117, 123, 200, 0.15);
+  transform: translateY(-2px);
+}
+
+.stat-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #8187dc;
+}
+
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #757bc8;
+}
+
+/* === Bio Section === */
+.profile-bio {
+  background: #f9f9ff;
+  border: 1px solid #ada7ff;
+  border-radius: 12px;
+  padding: 1.25rem;
+}
+
+.profile-bio h3 {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #8187dc;
+  margin: 0 0 0.75rem 0;
+}
+
+.profile-bio p {
+  color: #55557a;
+  line-height: 1.6;
+  margin: 0;
+  font-size: 0.95rem;
+}
