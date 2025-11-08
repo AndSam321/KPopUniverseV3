@@ -21,6 +21,9 @@ Rails.application.routes.draw do
           get :my_profile
         end
       end
+
+      resources :posts
+      resources :groups, only: [:index, :show]
     end
   end
 
