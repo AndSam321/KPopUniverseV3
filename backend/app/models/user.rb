@@ -7,6 +7,8 @@ class User < ApplicationRecord
            jwt_revocation_strategy: JwtDenylist,
            omniauth_providers: [ :google_oauth2 ]
 
+  has_many :posts, dependent: :destroy
+
   validates :username, presence: true, uniqueness: true
   validates :email, presence: true, uniqueness: true
 
