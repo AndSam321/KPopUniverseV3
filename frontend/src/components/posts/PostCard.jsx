@@ -1,0 +1,130 @@
+import React, { useState } from "react";
+import "./PostCard.css";
+
+const PostCard = ({ post }) => {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  const nextImage = () => {
+    if (post.images && post.images.length > 0) {
+      setCurrentImageIndex((prev) => (prev + 1) % post.images.length);
+    }
+  };
+
+  const prevImage = () => {
+    if (post.images && post.images.length > 0) {
+      setCurrentImageIndex((prev) =>
+        prev === 0 ? post.images.length - 1 : prev - 1
+      );
+    }
+  };
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffInSeconds = Math.floor((now - date) / 1000);
+
+    if (diffInSeconds < 60) return "just now";
+    if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)}m ago`;
+    if (diffInSeconds < 86400)
+      return `${Math.floor(diffInSeconds / 3600)}h ago`;
+    if (diffInSeconds < 604800)
+      return `${Math.floor(diffInSeconds / 86400)}d ago`;
+
+    return date.toLocaleDateString();
+  };
+
+  return (
+    <div className="post-card">
+      <div className="post-card__header">
+        <div className="post-card__user">
+          {post.user.avatar_url ? (
+            <img
+              src={post.user.avatar_url}
+              alt={post.user.username}
+              className="post-card__avatar"
+            />
+          ) : (
+            <div className="post-card__avatar post-card__avatar--placeholder">
+              {post.user.username.charAt(0).toUpperCase()}
+            </div>
+          )}
+          <div className="post-card__user-info">
+            <span className="post-card__username">{post.user.username}</span>
+            <span className="post-card__timestamp">
+              {formatDate(post.created_at)}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div className="post-card__content">
+        <h3 className="post-card__title">{post.title}</h3>
+        {post.caption && <p className="post-card__caption">{post.caption}</p>}
+
+        {post.images && post.images.length > 0 && (
+          <div className="post-card__images">
+            <img
+              src={post.images[currentImageIndex].url}
+              alt={`${post.title} - ${currentImageIndex + 1}`}
+              className="post-card__image"
+            />
+
+            {post.images.length > 1 && (
+              <>
+                <button
+                  onClick={prevImage}
+                  className="post-card__nav post-card__nav--prev"
+                  aria-label="Previous image"
+                >
+                  ‹
+                </button>
+                <button
+                  onClick={nextImage}
+                  className="post-card__nav post-card__nav--next"
+                  aria-label="Next image"
+                >
+                  ›
+                </button>
+                <div className="post-card__image-counter">
+                  {currentImageIndex + 1} / {post.images.length}
+                </div>
+              </>
+            )}
+          </div>
+        )}
+
+        {post.groups && post.groups.length > 0 && (
+          <div className="post-card__groups">
+            {post.groups.map((group) => (
+              <span key={group.id} className="post-card__group-tag">
+                {group.name}
+              </span>
+            ))}
+          </div>
+        )}
+      </div>
+
+      <div className="post-card__footer">
+        <div className="post-card__stats">
+          <span className="post-card__stat">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
+              <path
+                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 
+  3.78-3.4 6.86-8.55 11.54L12 21.35z"
+              />
+            </svg>
+            {post.likes_count}
+          </span>
+          <span className="post-card__stat">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
+              <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z" />
+            </svg>
+            {post.comments_count}
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default PostCard;
