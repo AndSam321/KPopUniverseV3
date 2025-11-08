@@ -1,4 +1,6 @@
 class Api::V1::BaseController < ActionController::API
+  include Pagy::Backend
+
   respond_to :json
 
   private

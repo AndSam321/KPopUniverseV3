@@ -9,16 +9,16 @@ class Api::V1::GroupsController < Api::V1::BaseController
 
   def show
     @group = Group.find(params[:id])
-    @posts = @group.posts.recent.with_associations.page(params[:page] || 1).per(20)
+    @pagy, @posts = pagy(@group.posts.recent.with_associations, items: 20)
 
     render json: {
       data: {
         group: group_json(@group),
         posts: @posts.map { |post| post_summary_json(post) },
         meta: {
-          current_page: @posts.current_page,
-          total_pages: @posts.total_pages,
-          total_count: @posts.total_count
+          current_page: @pagy.page,
+          total_pages: @pagy.pages,
+          total_count: @pagy.count
         }
       }
     }

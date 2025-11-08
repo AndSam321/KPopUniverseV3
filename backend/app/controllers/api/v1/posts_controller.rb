@@ -4,14 +4,14 @@ class Api::V1::PostsController < Api::V1::BaseController
   before_action :authorize_user!, only: [:update, :destroy]
 
   def index
-    @posts = Post.recent.with_associations.page(params[:page] || 1).per(20)
+    @pagy, @posts = pagy(Post.recent.with_associations, items: 20)
 
     render json: {
       data: @posts.map { |post| post_json(post) },
       meta: {
-        current_page: @posts.current_page,
-        total_pages: @posts.total_pages,
-        total_count: @posts.total_count
+        current_page: @pagy.page,
+        total_pages: @pagy.pages,
+        total_count: @pagy.count
       }
     }
   end
