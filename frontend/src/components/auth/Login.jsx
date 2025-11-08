@@ -67,7 +67,7 @@ export default function Login() {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 autoComplete="email"
-                placeholder="you@idolmail.com"
+                placeholder="jungkook@bts.com"
               />
             </div>
 
