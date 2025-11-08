@@ -1,0 +1,141 @@
+.feed {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.feed__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.feed__header h1 {
+  color: #fff;
+  font-family: "Dynapuff", cursive;
+  font-size: 2rem;
+  margin: 0;
+}
+
+.feed__create-btn {
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, #ff4da6 0%, #ff6b9d 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.feed__create-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 77, 166, 0.4);
+}
+
+.feed__error {
+  background: #ff4444;
+  color: white;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.feed__loading {
+  text-align: center;
+  color: #888;
+  font-size: 1.2rem;
+  padding: 3rem;
+}
+
+.feed__empty {
+  text-align: center;
+  padding: 3rem;
+  background: #1a1a1a;
+  border-radius: 12px;
+  margin-top: 2rem;
+}
+
+.feed__empty p {
+  color: #888;
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.feed__posts {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.feed__pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  margin-top: 2rem;
+  padding: 1.5rem 0;
+}
+
+.feed__page-btn {
+  padding: 0.75rem 1.5rem;
+  background: #2a2a2a;
+  color: white;
+  border: 2px solid #3a3a3a;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.feed__page-btn:hover:not(:disabled) {
+  background: #3a3a3a;
+  border-color: #ff4da6;
+  transform: translateY(-2px);
+}
+
+.feed__page-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.feed__page-info {
+  color: #888;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .feed {
+    padding: 1rem 0.5rem;
+  }
+
+  .feed__header {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: stretch;
+  }
+
+  .feed__header h1 {
+    font-size: 1.5rem;
+    text-align: center;
+  }
+
+  .feed__create-btn {
+    width: 100%;
+  }
+
+  .feed__pagination {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .feed__page-btn {
+    width: 100%;
+  }
+}
