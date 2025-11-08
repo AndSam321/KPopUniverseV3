@@ -1,0 +1,198 @@
+/* === Full-page layout === */
+.settings-page {
+  min-height: 100dvh;
+  margin: 0;
+  padding: 32px 16px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  background: linear-gradient(135deg, #e0c3fc 0%, #bbadff 45%, #757bc8 100%);
+  font-family: "Zen Kaku Gothic New", system-ui, -apple-system,
+    BlinkMacSystemFont, sans-serif;
+}
+
+/* === Container === */
+.settings-container {
+  width: 100%;
+  max-width: 720px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+/* === Card === */
+.settings-card {
+  width: 100%;
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 32px 28px;
+  box-shadow: 0 12px 35px rgba(117, 123, 200, 0.25);
+  border: 1px solid rgba(173, 167, 255, 0.4);
+  transition: transform 0.2s ease;
+}
+
+.settings-card:hover {
+  transform: translateY(-2px);
+}
+
+@media (max-width: 640px) {
+  .settings-card {
+    padding: 24px 18px;
+    border-radius: 18px;
+  }
+}
+
+/* === Title === */
+.settings-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #757bc8;
+  margin: 0 0 2rem 0;
+  font-family: "DynaPuff", system-ui, cursive;
+}
+
+/* === Section === */
+.settings-section {
+  margin-bottom: 2rem;
+}
+
+.settings-section:last-child {
+  margin-bottom: 0;
+}
+
+.settings-section-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #8187dc;
+  margin: 0 0 1rem 0;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #cbb2fe;
+}
+
+/* === Settings Item === */
+.settings-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem;
+  background: #f9f9ff;
+  border: 1px solid #ada7ff;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+}
+
+.settings-item:hover {
+  border-color: #757bc8;
+  box-shadow: 0 4px 12px rgba(117, 123, 200, 0.15);
+}
+
+.settings-item-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.settings-item-label {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #757bc8;
+}
+
+.settings-icon {
+  color: #8187dc;
+}
+
+.settings-item-description {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #8187dc;
+  line-height: 1.5;
+}
+
+/* === Toggle Switch === */
+.settings-toggle {
+  position: relative;
+  width: 56px;
+  height: 28px;
+  background: #d0d0d0;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  flex-shrink: 0;
+}
+
+.settings-toggle:hover {
+  background: #b8b8b8;
+}
+
+.settings-toggle--active {
+  background: linear-gradient(135deg, #757bc8, #9fa0ff);
+}
+
+.settings-toggle--active:hover {
+  background: linear-gradient(135deg, #6b70b8, #8e94f2);
+}
+
+.settings-toggle-slider {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 22px;
+  height: 22px;
+  background: #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.settings-toggle--active .settings-toggle-slider {
+  transform: translateX(28px);
+}
+
+/* === Dark Mode Styles === */
+:root.dark-mode .settings-page {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 45%, #0f3460 100%);
+}
+
+:root.dark-mode .settings-card {
+  background: #1e1e2f;
+  border: 1px solid #2d2d44;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5);
+}
+
+:root.dark-mode .settings-title {
+  color: #ada7ff;
+}
+
+:root.dark-mode .settings-section-title {
+  color: #9fa0ff;
+  border-bottom-color: #2d2d44;
+}
+
+:root.dark-mode .settings-item {
+  background: #252538;
+  border: 1px solid #2d2d44;
+}
+
+:root.dark-mode .settings-item:hover {
+  border-color: #9fa0ff;
+  box-shadow: 0 4px 12px rgba(159, 160, 255, 0.15);
+}
+
+:root.dark-mode .settings-item-label {
+  color: #e0c3fc;
+}
+
+:root.dark-mode .settings-icon {
+  color: #bbadff;
+}
+
+:root.dark-mode .settings-item-description {
+  color: #9fa0ff;
+}
