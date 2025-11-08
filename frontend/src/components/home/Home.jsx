@@ -1,9 +1,12 @@
-import React from 'react'
+import Feed from "../posts/Feed";
+import "./Home.css";
 
 const Home = () => {
   return (
-    <div>Home</div>
-  )
-}
+    <div className="home">
+      <Feed />
+    </div>
+  );
+};
 
-export default Home
+export default Home;

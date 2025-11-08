@@ -3,7 +3,7 @@ import Sandbox from "./playground/Sandbox.jsx";
 import Register from "./components/auth/Register.jsx";
 import Login from "./components/auth/Login.jsx";
 import Profile from "./components/profile/Profile.jsx";
-import Feed from "./components/posts/Feed.jsx";
+import Home from "./components/home/Home.jsx";
 import GroupsList from "./components/groups/GroupsList.jsx";
 import GroupDetail from "./components/groups/GroupDetail.jsx";
 import AccountSettings from "./components/settings/AccountSettings.jsx";
@@ -18,7 +18,7 @@ function App() {
       <AuthProvider>
         <Navbar />
         <Routes>
-          <Route path="/" element={<Feed />} />
+          <Route path="/" element={<Home />} />
           <Route path="/groups" element={<GroupsList />} />
           <Route path="/groups/:id" element={<GroupDetail />} />
           <Route path="/sandbox" element={<Sandbox />} />
