@@ -10,15 +10,25 @@ import {
   Settings,
   LogOut,
 } from "lucide-react";
+import { useAuth } from "../../context/AuthContext";
+import { logout as logoutApi } from "../../api/authApi";
 
 export default function Navbar() {
   const navigate = useNavigate();
+  const { user, logout } = useAuth();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
 
   const handleProfileClick = () => {
     setIsDropdownOpen(false);
     navigate("/profile");
+  };
+
+  const handleLogout = async () => {
+    setIsDropdownOpen(false);
+    await logoutApi();
+    logout();
+    navigate("/login");
   };
 
   // Close dropdown when clicking outside
@@ -95,35 +105,50 @@ export default function Navbar() {
               placeholder="search artists, groups, fans..."
             />
           </div>
-          <div className="kp-nav__profile-container" ref={dropdownRef}>
-            <button
-              className="kp-nav__profile"
-              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-            >
-              <div className="kp-nav__profile-circle">K</div>
-            </button>
 
-            {isDropdownOpen && (
-              <div className="kp-nav__dropdown">
-                <button
-                  className="kp-nav__dropdown-item"
-                  onClick={handleProfileClick}
-                >
-                  <User size={18} />
-                  <span>view my profile</span>
-                </button>
-                <button className="kp-nav__dropdown-item">
-                  <Settings size={18} />
-                  <span>account settings</span>
-                </button>
-                <div className="kp-nav__dropdown-divider"></div>
-                <button className="kp-nav__dropdown-item kp-nav__dropdown-item--logout">
-                  <LogOut size={18} />
-                  <span>log out</span>
-                </button>
-              </div>
-            )}
-          </div>
+          {user ? (
+            <div className="kp-nav__profile-container" ref={dropdownRef}>
+              <button
+                className="kp-nav__profile"
+                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+              >
+                <div className="kp-nav__profile-circle">
+                  {user.username?.charAt(0).toUpperCase() || "U"}
+                </div>
+              </button>
+
+              {isDropdownOpen && (
+                <div className="kp-nav__dropdown">
+                  <button
+                    className="kp-nav__dropdown-item"
+                    onClick={handleProfileClick}
+                  >
+                    <User size={18} />
+                    <span>view my profile</span>
+                  </button>
+                  <button className="kp-nav__dropdown-item">
+                    <Settings size={18} />
+                    <span>account settings</span>
+                  </button>
+                  <div className="kp-nav__dropdown-divider"></div>
+                  <button
+                    className="kp-nav__dropdown-item kp-nav__dropdown-item--logout"
+                    onClick={handleLogout}
+                  >
+                    <LogOut size={18} />
+                    <span>log out</span>
+                  </button>
+                </div>
+              )}
+            </div>
+          ) : (
+            <button
+              className="kp-nav__login-button"
+              onClick={() => navigate("/login")}
+            >
+              log in
+            </button>
+          )}
         </div>
       </div>
     </nav>

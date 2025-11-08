@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { signup } from "../../api/authApi";
+import { useAuth } from "../../context/AuthContext";
 import TermsModal from "./TermsModal";
 import "./Register.css";
 
 export default function Register() {
   const navigate = useNavigate();
+  const { login: setUser } = useAuth();
 
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
@@ -39,6 +41,10 @@ export default function Register() {
       });
 
       console.log("Registered user:", data.user);
+
+      // Update auth context with user data
+      setUser(data.user);
+
       navigate("/");
     } catch (err) {
       console.error(err);

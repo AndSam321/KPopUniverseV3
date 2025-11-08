@@ -259,6 +259,33 @@
   margin: 6px 0;
 }
 
+/* Login Button */
+.kp-nav__login-button {
+  padding: 8px 20px;
+  border: none;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #e0c3fc 0%, #cbb2fe 100%);
+  color: #2a214c;
+  font-family: "Zen Kaku Gothic New", system-ui, sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(155, 100, 255, 0.25);
+  transition: all 0.2s ease;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.kp-nav__login-button:hover {
+  background: linear-gradient(135deg, #d4b5f8 0%, #bfa5fe 100%);
+  box-shadow: 0 4px 12px rgba(155, 100, 255, 0.4);
+  transform: translateY(-1px);
+}
+
+.kp-nav__login-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(155, 100, 255, 0.3);
+}
+
 /* Responsive */
 @media (max-width: 720px) {
   .kp-nav__center {
