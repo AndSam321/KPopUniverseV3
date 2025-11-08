@@ -1,16 +1,54 @@
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "./Navbar.css";
-import { NavLink } from "react-router-dom";
-import { TrendingUp, ContactRound, Users, Search } from "lucide-react";
+import { NavLink, useNavigate } from "react-router-dom";
+import {
+  TrendingUp,
+  ContactRound,
+  Users,
+  Search,
+  User,
+  Settings,
+  LogOut,
+} from "lucide-react";
 
 export default function Navbar() {
+  const navigate = useNavigate();
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  const handleProfileClick = () => {
+    setIsDropdownOpen(false);
+    navigate("/profile");
+  };
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    }
+
+    if (isDropdownOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isDropdownOpen]);
+
   return (
     <nav className="kp-nav">
       <div className="kp-nav__inner">
         {/* Left: Logo */}
-        <div className="kp-nav__left">
-          <div className="kp-nav__logo-mark">K</div>
-          <div className="kp-nav__logo-text">KPop Universe</div>
+        <div className="kp-nav__left" onClick={() => navigate("/")}>
+          <img
+            src="/kpopuniverselogo.svg"
+            alt="KPop Universe Logo"
+            className="kp-nav__logo-mark"
+          />
+          <div className="kp-nav__logo-text">k-pop universe</div>
         </div>
 
         {/* Center: Nav Links */}
@@ -19,9 +57,7 @@ export default function Navbar() {
             to="/"
             end
             className={({ isActive }) =>
-              isActive
-                ? "kp-nav__link kp-nav__link--active"
-                : "kp-nav__link"
+              isActive ? "kp-nav__link kp-nav__link--active" : "kp-nav__link"
             }
           >
             <TrendingUp className="kp-nav__icon" />
@@ -31,9 +67,7 @@ export default function Navbar() {
           <NavLink
             to="/following"
             className={({ isActive }) =>
-              isActive
-                ? "kp-nav__link kp-nav__link--active"
-                : "kp-nav__link"
+              isActive ? "kp-nav__link kp-nav__link--active" : "kp-nav__link"
             }
           >
             <ContactRound className="kp-nav__icon" />
@@ -43,9 +77,7 @@ export default function Navbar() {
           <NavLink
             to="/groups"
             className={({ isActive }) =>
-              isActive
-                ? "kp-nav__link kp-nav__link--active"
-                : "kp-nav__link"
+              isActive ? "kp-nav__link kp-nav__link--active" : "kp-nav__link"
             }
           >
             <Users className="kp-nav__icon" />
@@ -60,12 +92,38 @@ export default function Navbar() {
             <input
               type="text"
               className="kp-nav__search-input"
-              placeholder="Search..."
+              placeholder="search artists, groups, fans..."
             />
           </div>
-          <button className="kp-nav__profile">
-            <div className="kp-nav__profile-circle">K</div>
-          </button>
+          <div className="kp-nav__profile-container" ref={dropdownRef}>
+            <button
+              className="kp-nav__profile"
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+            >
+              <div className="kp-nav__profile-circle">K</div>
+            </button>
+
+            {isDropdownOpen && (
+              <div className="kp-nav__dropdown">
+                <button
+                  className="kp-nav__dropdown-item"
+                  onClick={handleProfileClick}
+                >
+                  <User size={18} />
+                  <span>view my profile</span>
+                </button>
+                <button className="kp-nav__dropdown-item">
+                  <Settings size={18} />
+                  <span>account settings</span>
+                </button>
+                <div className="kp-nav__dropdown-divider"></div>
+                <button className="kp-nav__dropdown-item kp-nav__dropdown-item--logout">
+                  <LogOut size={18} />
+                  <span>log out</span>
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </nav>
