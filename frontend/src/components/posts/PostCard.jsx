@@ -35,6 +35,7 @@ const PostCard = ({ post }) => {
 
   return (
     <div className="post-card">
+      {/* Header: User + Group */}
       <div className="post-card__header">
         <div className="post-card__user">
           {post.user.avatar_url ? (
@@ -49,18 +50,41 @@ const PostCard = ({ post }) => {
             </div>
           )}
           <div className="post-card__user-info">
-            <span className="post-card__username">{post.user.username}</span>
-            <span className="post-card__timestamp">
-              {formatDate(post.created_at)}
-            </span>
+            {post.groups && post.groups.length > 0 && (
+              <span className="post-card__group-name">
+                {post.groups[0].name}
+              </span>
+            )}
+            <div className="post-card__meta">
+              <span className="post-card__username">{post.user.username}</span>
+              <span className="post-card__dot">•</span>
+              <span className="post-card__timestamp">
+                {formatDate(post.created_at)}
+              </span>
+            </div>
           </div>
         </div>
       </div>
 
       <div className="post-card__content">
+        {/* Tags */}
+        {post.groups && post.groups.length > 1 && (
+          <div className="post-card__tags">
+            {post.groups.slice(1).map((group) => (
+              <span key={group.id} className="post-card__tag">
+                {group.name}
+              </span>
+            ))}
+          </div>
+        )}
+
+        {/* Title */}
         <h3 className="post-card__title">{post.title}</h3>
+
+        {/* Caption/Body */}
         {post.caption && <p className="post-card__caption">{post.caption}</p>}
 
+        {/* Images */}
         {post.images && post.images.length > 0 && (
           <div className="post-card__images">
             <img
@@ -92,36 +116,22 @@ const PostCard = ({ post }) => {
             )}
           </div>
         )}
-
-        {post.groups && post.groups.length > 0 && (
-          <div className="post-card__groups">
-            {post.groups.map((group) => (
-              <span key={group.id} className="post-card__group-tag">
-                {group.name}
-              </span>
-            ))}
-          </div>
-        )}
       </div>
 
+      {/* Footer: Hearts & Comments */}
       <div className="post-card__footer">
-        <div className="post-card__stats">
-          <span className="post-card__stat">
-            <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
-              <path
-                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 
-  3.78-3.4 6.86-8.55 11.54L12 21.35z"
-              />
-            </svg>
-            {post.likes_count}
-          </span>
-          <span className="post-card__stat">
-            <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
-              <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z" />
-            </svg>
-            {post.comments_count}
-          </span>
-        </div>
+        <button className="post-card__action post-card__action--like">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+          </svg>
+          <span>{post.likes_count}</span>
+        </button>
+        <button className="post-card__action post-card__action--comment">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+            <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z" />
+          </svg>
+          <span>{post.comments_count}</span>
+        </button>
       </div>
     </div>
   );

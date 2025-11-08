@@ -1,19 +1,24 @@
+/* === Card Container === */
 .post-card {
-  background: #1a1a1a;
+  background: #ffffff;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(117, 123, 200, 0.15);
+  border: 1px solid rgba(173, 167, 255, 0.2);
+  transition: all 0.2s ease;
+  font-family: "Zen Kaku Gothic New", system-ui, sans-serif;
 }
 
 .post-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 4px 16px rgba(117, 123, 200, 0.25);
+  border-color: rgba(173, 167, 255, 0.4);
 }
 
+/* === Header: User + Group === */
 .post-card__header {
-  padding: 1rem;
-  border-bottom: 1px solid #2a2a2a;
+  padding: 0.75rem 1rem;
+  background: #fafbff;
+  border-bottom: 1px solid #f0f0ff;
 }
 
 .post-card__user {
@@ -23,154 +28,304 @@
 }
 
 .post-card__avatar {
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   object-fit: cover;
+  flex-shrink: 0;
 }
 
 .post-card__avatar--placeholder {
-  background: linear-gradient(135deg, #ff4da6 0%, #ff6b9d 100%);
+  background: linear-gradient(135deg, #757bc8, #9fa0ff);
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
-  font-weight: 600;
-  font-size: 1.2rem;
+  font-weight: 700;
+  font-size: 0.9rem;
 }
 
 .post-card__user-info {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: 0.15rem;
+  min-width: 0;
+  flex: 1;
+}
+
+.post-card__group-name {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.post-card__meta {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.75rem;
+  color: #6d7093;
 }
 
 .post-card__username {
-  color: #fff;
-  font-weight: 600;
-  font-size: 0.95rem;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.post-card__dot {
+  color: #ada7ff;
+  font-weight: 700;
 }
 
 .post-card__timestamp {
-  color: #888;
-  font-size: 0.8rem;
+  white-space: nowrap;
 }
 
+/* === Content Section === */
 .post-card__content {
-  padding: 1rem;
+  padding: 1rem 1rem 0.5rem;
 }
 
-.post-card__title {
-  color: #fff;
-  font-size: 1.1rem;
+/* Tags */
+.post-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 0.6rem;
+}
+
+.post-card__tag {
+  display: inline-block;
+  padding: 0.25rem 0.6rem;
+  background: #f0f0ff;
+  color: #757bc8;
+  border-radius: 12px;
+  font-size: 0.7rem;
   font-weight: 600;
-  margin-bottom: 0.5rem;
+  border: 1px solid #e0e0ff;
 }
 
+/* Title */
+.post-card__title {
+  color: #1a1a1a;
+  font-size: 1.15rem;
+  font-weight: 600;
+  line-height: 1.4;
+  margin: 0 0 0.5rem 0;
+}
+
+/* Caption/Body */
 .post-card__caption {
-  color: #ccc;
-  font-size: 0.95rem;
-  line-height: 1.5;
-  margin-bottom: 1rem;
+  color: #3d3d5c;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin: 0 0 1rem 0;
   white-space: pre-wrap;
   word-wrap: break-word;
 }
 
+/* Images */
 .post-card__images {
   position: relative;
   width: 100%;
-  aspect-ratio: 4 / 3;
-  background: #0a0a0a;
+  max-height: 512px;
+  background: #f9f9ff;
   border-radius: 8px;
   overflow: hidden;
-  margin-bottom: 1rem;
+  margin-top: 0.75rem;
 }
 
 .post-card__image {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  max-height: 512px;
+  object-fit: contain;
+  display: block;
 }
 
 .post-card__nav {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  width: 40px;
-  height: 40px;
-  background: rgba(0, 0, 0, 0.6);
-  color: white;
+  width: 36px;
+  height: 36px;
+  background: rgba(255, 255, 255, 0.9);
+  color: #757bc8;
   border: none;
   border-radius: 50%;
-  font-size: 2rem;
+  font-size: 1.8rem;
   line-height: 1;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.3s;
+  transition: all 0.2s;
   z-index: 2;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 .post-card__nav:hover {
-  background: rgba(255, 77, 166, 0.8);
+  background: rgba(255, 255, 255, 1);
+  color: #6b70b8;
+  transform: translateY(-50%) scale(1.1);
 }
 
 .post-card__nav--prev {
-  left: 0.5rem;
+  left: 0.75rem;
 }
 
 .post-card__nav--next {
-  right: 0.5rem;
+  right: 0.75rem;
 }
 
 .post-card__image-counter {
   position: absolute;
-  bottom: 0.5rem;
-  right: 0.5rem;
+  bottom: 0.75rem;
+  right: 0.75rem;
   background: rgba(0, 0, 0, 0.7);
   color: white;
-  padding: 0.25rem 0.75rem;
-  border-radius: 12px;
-  font-size: 0.85rem;
-  font-weight: 500;
+  padding: 0.3rem 0.7rem;
+  border-radius: 16px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  backdrop-filter: blur(4px);
 }
 
-.post-card__groups {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
-.post-card__group-tag {
-  display: inline-block;
-  padding: 0.4rem 0.75rem;
-  background: linear-gradient(135deg, #ff4da6 0%, #ff6b9d 100%);
-  color: white;
-  border-radius: 20px;
-  font-size: 0.85rem;
-  font-weight: 500;
-}
-
+/* === Footer: Actions === */
 .post-card__footer {
-  padding: 1rem;
-  border-top: 1px solid #2a2a2a;
-}
-
-.post-card__stats {
-  display: flex;
-  gap: 1.5rem;
-}
-
-.post-card__stat {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  color: #888;
-  font-size: 0.9rem;
-  font-weight: 500;
+  padding: 0.5rem 1rem 0.75rem;
 }
 
-.post-card__stat svg {
+.post-card__action {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 0.75rem;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #6d7093;
+}
+
+.post-card__action svg {
+  transition: all 0.2s ease;
+}
+
+.post-card__action--like svg {
+  color: #ff6b9d;
+}
+
+.post-card__action--like:hover {
+  background: #fff0f7;
   color: #ff4da6;
+}
+
+.post-card__action--like:hover svg {
+  color: #ff4da6;
+  transform: scale(1.15);
+}
+
+.post-card__action--comment svg {
+  color: #757bc8;
+}
+
+.post-card__action--comment:hover {
+  background: #f5f0ff;
+  color: #6b70b8;
+}
+
+.post-card__action--comment:hover svg {
+  color: #6b70b8;
+  transform: scale(1.15);
+}
+
+/* === Dark Mode === */
+:root.dark-mode .post-card {
+  background: #1e1e2f;
+  border: 1px solid #2d2d44;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+:root.dark-mode .post-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+  border-color: #3a3a55;
+}
+
+:root.dark-mode .post-card__header {
+  background: #252538;
+  border-bottom: 1px solid #2d2d44;
+}
+
+:root.dark-mode .post-card__group-name {
+  color: #e0c3fc;
+}
+
+:root.dark-mode .post-card__meta {
+  color: #9fa0ff;
+}
+
+:root.dark-mode .post-card__dot {
+  color: #757bc8;
+}
+
+:root.dark-mode .post-card__tag {
+  background: #2d2d44;
+  color: #bbadff;
+  border: 1px solid #3a3a55;
+}
+
+:root.dark-mode .post-card__title {
+  color: #e0c3fc;
+}
+
+:root.dark-mode .post-card__caption {
+  color: #bbadff;
+}
+
+:root.dark-mode .post-card__images {
+  background: #252538;
+}
+
+:root.dark-mode .post-card__nav {
+  background: rgba(30, 30, 47, 0.9);
+  color: #bbadff;
+}
+
+:root.dark-mode .post-card__nav:hover {
+  background: rgba(30, 30, 47, 1);
+  color: #e0c3fc;
+}
+
+:root.dark-mode .post-card__action {
+  color: #9fa0ff;
+}
+
+:root.dark-mode .post-card__action--like:hover {
+  background: #2d1a24;
+  color: #ffadd5;
+}
+
+:root.dark-mode .post-card__action--like:hover svg {
+  color: #ffadd5;
+}
+
+:root.dark-mode .post-card__action--comment:hover {
+  background: #2d2d44;
+  color: #bbadff;
+}
+
+:root.dark-mode .post-card__action--comment:hover svg {
+  color: #bbadff;
 }
