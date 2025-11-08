@@ -2,6 +2,7 @@ class Api::V1::PostsController < Api::V1::BaseController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :set_post, only: [:show, :update, :destroy]
   before_action :authorize_user!, only: [:update, :destroy]
+  before_action :set_active_storage_url_options
 
   def index
     @pagy, @posts = pagy(Post.recent.with_associations, items: 20)
@@ -52,6 +53,10 @@ class Api::V1::PostsController < Api::V1::BaseController
   end
 
   private
+
+  def set_active_storage_url_options
+    ActiveStorage::Current.url_options = {host: "localhost", port: 9000}
+  end
 
   def set_post
     @post = Post.includes(:user, :groups, images_attachments: :blob).find(params[:id])
