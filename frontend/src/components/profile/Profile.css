@@ -196,3 +196,77 @@
   margin: 0;
   font-size: 0.95rem;
 }
+
+/* === Dark Mode === */
+:root.dark-mode .profile-page {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 45%, #0f3460 100%);
+}
+
+:root.dark-mode .profile-card {
+  background: #1e1e2f;
+  border: 1px solid #2d2d44;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5);
+}
+
+:root.dark-mode .profile-loading,
+:root.dark-mode .profile-error {
+  color: #e0c3fc;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+:root.dark-mode .profile-error {
+  color: #ff9dc7;
+}
+
+:root.dark-mode .profile-header {
+  border-bottom: 1px solid #2d2d44;
+}
+
+:root.dark-mode .profile-avatar img,
+:root.dark-mode .avatar-placeholder {
+  border: 3px solid #9fa0ff;
+}
+
+:root.dark-mode .avatar-placeholder {
+  background: linear-gradient(135deg, #2d2d44, #3a3a55);
+  color: #e0c3fc;
+}
+
+:root.dark-mode .profile-username {
+  color: #ada7ff;
+}
+
+:root.dark-mode .profile-title {
+  color: #9fa0ff;
+}
+
+:root.dark-mode .stat-item {
+  background: #252538;
+  border: 1px solid #2d2d44;
+}
+
+:root.dark-mode .stat-item:hover {
+  border-color: #9fa0ff;
+  box-shadow: 0 4px 12px rgba(159, 160, 255, 0.15);
+}
+
+:root.dark-mode .stat-label {
+  color: #9fa0ff;
+}
+
+:root.dark-mode .stat-value {
+  color: #bbadff;
+}
+
+:root.dark-mode .profile-bio {
+  background: #252538;
+  border: 1px solid #2d2d44;
+}
+
+:root.dark-mode .profile-bio h3 {
+  color: #9fa0ff;
+}
+
+:root.dark-mode .profile-bio p {
+  color: #bbadff;
+}

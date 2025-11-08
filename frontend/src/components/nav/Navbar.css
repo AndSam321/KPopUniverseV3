@@ -286,6 +286,94 @@
   box-shadow: 0 2px 6px rgba(155, 100, 255, 0.3);
 }
 
+/* === Dark Mode === */
+:root.dark-mode .kp-nav {
+  background: linear-gradient(90deg, #1a1a2e, #16213e, #0f3460);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.5);
+}
+
+:root.dark-mode .kp-nav__logo-text {
+  color: #e0c3fc;
+  text-shadow: -1px -1px 0 #0f3460, 1px -1px 0 #0f3460, -1px 1px 0 #0f3460,
+    1px 1px 0 #0f3460, 0 0 8px rgba(224, 195, 252, 0.6),
+    0 0 12px rgba(159, 160, 255, 0.4);
+}
+
+:root.dark-mode .kp-nav__link {
+  color: #bbadff;
+}
+
+:root.dark-mode .kp-nav__icon {
+  color: #bbadff;
+}
+
+:root.dark-mode .kp-nav__link:hover .kp-nav__icon,
+:root.dark-mode .kp-nav__link:hover .kp-nav__label {
+  color: #e0c3fc;
+}
+
+:root.dark-mode .kp-nav__link--active .kp-nav__icon,
+:root.dark-mode .kp-nav__link--active .kp-nav__label {
+  color: #e0c3fc;
+}
+
+:root.dark-mode .kp-nav__search {
+  background: linear-gradient(135deg, #2d2d44 0%, #1e1e2f 100%);
+  border: 1px solid rgba(159, 160, 255, 0.3);
+}
+
+:root.dark-mode .kp-nav__search-input {
+  color: #e0c3fc;
+}
+
+:root.dark-mode .kp-nav__search-input::placeholder {
+  color: rgba(187, 173, 255, 0.5);
+}
+
+:root.dark-mode .kp-nav__profile-circle {
+  background: radial-gradient(circle at 30% 20%, #2d2d44, #1e1e2f);
+  color: #e0c3fc;
+}
+
+:root.dark-mode .kp-nav__dropdown {
+  background: #1e1e2f;
+  border: 1px solid #2d2d44;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+:root.dark-mode .kp-nav__dropdown-item {
+  color: #bbadff;
+}
+
+:root.dark-mode .kp-nav__dropdown-item:hover {
+  background: linear-gradient(135deg, #2d2d44 0%, #252538 100%);
+  color: #e0c3fc;
+}
+
+:root.dark-mode .kp-nav__dropdown-item--logout {
+  color: #ff9dc7;
+}
+
+:root.dark-mode .kp-nav__dropdown-item--logout:hover {
+  background: linear-gradient(135deg, #2d1a24 0%, #261a22 100%);
+  color: #ffadd5;
+}
+
+:root.dark-mode .kp-nav__dropdown-divider {
+  background: linear-gradient(90deg, transparent, #2d2d44, transparent);
+}
+
+:root.dark-mode .kp-nav__login-button {
+  background: linear-gradient(135deg, #2d2d44 0%, #252538 100%);
+  color: #e0c3fc;
+  border: 1px solid rgba(159, 160, 255, 0.3);
+}
+
+:root.dark-mode .kp-nav__login-button:hover {
+  background: linear-gradient(135deg, #3a3a55 0%, #2d2d44 100%);
+  box-shadow: 0 4px 12px rgba(159, 160, 255, 0.3);
+}
+
 /* Responsive */
 @media (max-width: 720px) {
   .kp-nav__center {

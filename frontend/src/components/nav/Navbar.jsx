@@ -24,6 +24,11 @@ export default function Navbar() {
     navigate("/profile");
   };
 
+  const handleSettingsClick = () => {
+    setIsDropdownOpen(false);
+    navigate("/settings");
+  };
+
   const handleLogout = async () => {
     setIsDropdownOpen(false);
     await logoutApi();
@@ -129,7 +134,10 @@ export default function Navbar() {
                     <User size={18} />
                     <span>view my profile</span>
                   </button>
-                  <button className="kp-nav__dropdown-item">
+                  <button
+                    className="kp-nav__dropdown-item"
+                    onClick={handleSettingsClick}
+                  >
                     <Settings size={18} />
                     <span>account settings</span>
                   </button>
