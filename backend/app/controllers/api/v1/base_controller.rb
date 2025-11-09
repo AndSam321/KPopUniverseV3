@@ -13,7 +13,7 @@ class Api::V1::BaseController < ActionController::API
       payload = JWT.decode(token, ENV["DEVISE_JWT_SECRET_KEY"]).first
       @current_user = User.find(payload["sub"])
     rescue JWT::DecodeError, ActiveRecord::RecordNotFound
-      render json: {error: "Unauthorized"}, status: unauthroized
+      render json: {error: "Unauthorized"}, status: :unauthorized
     end
   end
 
