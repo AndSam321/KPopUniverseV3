@@ -8,7 +8,7 @@ class Group < ApplicationRecord
 
   before_validation :generate_slug, if: -> { name.present? && slug.blank? }
 
-  scope :alphabetical, -> { order(name: :asc) }
+  scope :alphabetical, -> { order(Arel.sql("LOWER(REGEXP_REPLACE(name, '^[^A-Za-z]+', ''))")) }
 
   private
 
