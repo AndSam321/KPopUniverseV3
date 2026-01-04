@@ -40,10 +40,31 @@
 .feed__error {
   background: #ff4444;
   color: white;
-  padding: 1rem;
-  border-radius: 8px;
-  margin-bottom: 2rem;
+  padding: 2rem;
+  border-radius: 12px;
+  margin-top: 2rem;
   text-align: center;
+}
+
+.feed__error p {
+  margin: 0 0 1rem 0;
+  font-size: 1.1rem;
+}
+
+.feed__retry-btn {
+  padding: 0.75rem 1.5rem;
+  background: white;
+  color: #ff4444;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.feed__retry-btn:hover {
+  transform: translateY(-2px);
 }
 
 .feed__loading {
@@ -130,6 +151,15 @@
 
 :root.dark-mode .feed__error {
   background: #ff4444;
+}
+
+:root.dark-mode .feed__retry-btn {
+  background: #1e1e2f;
+  color: white;
+}
+
+:root.dark-mode .feed__retry-btn:hover {
+  background: #252538;
 }
 
 :root.dark-mode .feed__loading {

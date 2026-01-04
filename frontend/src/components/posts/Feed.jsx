@@ -19,13 +19,14 @@ const Feed = () => {
   const fetchPosts = async (page) => {
     try {
       setLoading(true);
+      setError("");
       const data = await getPosts(page);
       setPosts(data.data);
       setCurrentPage(data.meta.current_page);
       setTotalPages(data.meta.total_pages);
-      setError("");
     } catch (err) {
       setError("Failed to load posts. Please try again.");
+      setPosts([]);
       console.error("Error fetching posts:", err);
     } finally {
       setLoading(false);
@@ -67,10 +68,15 @@ const Feed = () => {
 
       {showCreatePost && <CreatePost onPostCreated={handlePostCreated} />}
 
-      {error && <div className="feed__error">{error}</div>}
-
       {loading ? (
         <div className="feed__loading">Loading posts...</div>
+      ) : error ? (
+        <div className="feed__error">
+          <p>{error}</p>
+          <button onClick={() => fetchPosts(currentPage)} className="feed__retry-btn">
+            Retry
+          </button>
+        </div>
       ) : posts.length === 0 ? (
         <div className="feed__empty">
           <p>No posts yet. Be the first to create one!</p>
