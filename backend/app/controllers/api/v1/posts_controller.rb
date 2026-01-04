@@ -93,9 +93,16 @@ class Api::V1::PostsController < Api::V1::BaseController
   end
 
   def image_json(image)
+    begin
+      thumbnail_url = Rails.application.routes.url_helpers.url_for(image.variant(:thumb))
+    rescue => e
+      Rails.logger.error("Failed to generate thumbnail for image #{image.id}: #{e.message}")
+      thumbnail_url = Rails.application.routes.url_helpers.url_for(image)
+    end
+
     {
       url: Rails.application.routes.url_helpers.url_for(image),
-      thumbnail_url: image.variant(:thumb).processed.url,
+      thumbnail_url: thumbnail_url,
       filename: image.filename.to_s,
       content_type: image.content_type,
       byte_size: image.byte_size

@@ -14,6 +14,8 @@ class Post < ApplicationRecord
   scope :recent, -> { order(created_at: :desc) }
   scope :with_associations, -> { includes(:user, :groups, images_attachments: :blob) }
 
+  after_commit :generate_image_variants, on: [:create, :update]
+
   private
 
   def acceptable_images
@@ -31,6 +33,17 @@ class Post < ApplicationRecord
       if image.byte_size > 5.megabytes
         errors.add(:images, "must be less than 5MB")
       end
+    end
+  end
+
+  def generate_image_variants
+    return unless images.attached?
+
+    images.each do |image|
+      image.variant(:thumb).processed
+      image.variant(:medium).processed
+    rescue => e
+      Rails.logger.error("Failed to generate variants for image #{image.id}: #{e.message}")
     end
   end
 end
