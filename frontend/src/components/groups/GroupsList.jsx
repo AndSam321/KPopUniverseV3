@@ -39,8 +39,13 @@ const GroupsList = () => {
   const userGroups = groups.filter(group => group.user_id);
 
   const filteredGroups = groups.filter(group => {
-    const matchesSearch = group.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         group.description?.toLowerCase().includes(searchTerm.toLowerCase());
+    const searchLower = searchTerm.toLowerCase();
+    const nameLower = group.name.toLowerCase();
+    const nameWithoutSpecialChars = group.name.replace(/[^a-zA-Z0-9\s]/g, '').toLowerCase();
+
+    const matchesSearch = nameLower.includes(searchLower) ||
+                         nameWithoutSpecialChars.includes(searchLower) ||
+                         group.description?.toLowerCase().includes(searchLower);
     const matchesFilter = filter === "all" ||
                          (filter === "official" && !group.user_id) ||
                          (filter === "community" && group.user_id);
