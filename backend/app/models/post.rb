@@ -1,6 +1,7 @@
 class Post < ApplicationRecord
   belongs_to :user
   has_many :post_tags, dependent: :destroy
+  has_many :likes, dependent: :destroy
   has_many :groups, through: :post_tags
   has_many_attached :images do |attachable|
     attachable.variant :thumb, resize_to_limit: [300, 300]

@@ -1,24 +1,20 @@
 class Api::V1::PostsController < Api::V1::BaseController
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :set_post, only: [:show, :update, :destroy]
+  before_action :set_post, only: [:show, :update, :destroy, :like, :unlike]
   before_action :authorize_user!, only: [:update, :destroy]
   before_action :set_active_storage_url_options
 
   def index
-    @pagy, @posts = pagy(Post.recent.with_associations, items: 20)
+    @posts = Post.includes(:user, :groups, images_attachments: :blob)
+                  .order(created_at: :desc)
+                  .page(params[:page])
+                  .per(params[:per_page] || 10)
 
-    render json: {
-      data: @posts.map { |post| post_json(post) },
-      meta: {
-        current_page: @pagy.page,
-        total_pages: @pagy.pages,
-        total_count: @pagy.count
-      }
-    }
+    render json: @posts.map { |post| post_json(post) }, status: :ok
   end
 
   def show
-    render json: {data: post_json(@post)}
+    render json: post_json(@post), status: :ok
   end
 
   def create
@@ -52,6 +48,23 @@ class Api::V1::PostsController < Api::V1::BaseController
     head :no_content
   end
 
+  def like
+    like = current_user.likes.find_or_initialize_by(post: @post)
+
+    liked = if like.persisted?
+      like.destroy
+      false
+    else
+      like.save
+      true
+    end
+    render json: {liked: liked, likes_count: @post.reload.likes_count}, status: :ok
+  end
+
+  def unlike
+    like
+  end
+
   private
 
   def set_active_storage_url_options
@@ -75,21 +88,13 @@ class Api::V1::PostsController < Api::V1::BaseController
   end
 
   def post_json(post)
-    {
-      id: post.id,
-      title: post.title,
-      caption: post.caption,
-      images: post.images.attached? ? post.images.map { |img| image_json(img) } : [],
-      groups: post.groups.map { |g| {id: g.id, name: g.name, slug: g.slug} },
-      user: {
-        id: post.user.id,
-        username: post.user.username,
-        avatar_url: post.user.avatar_url
-      },
-      likes_count: post.likes_count,
-      comments_count: post.comments_count,
-      created_at: post.created_at
-    }
+    post.as_json(include: {
+      user: { only: [:id, :username, :avatar_url] },
+      groups: { only: [:id, :name, :slug] }
+    }).merge(
+      is_liked: current_user ? current_user.likes.exists?(post: post) : false,
+      images: post.images.map { |img| image_json(img) }
+    )
   end
 
   def image_json(image)
