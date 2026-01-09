@@ -6,6 +6,7 @@ import Profile from "./components/profile/Profile.jsx";
 import Home from "./components/home/Home.jsx";
 import GroupsList from "./components/groups/GroupsList.jsx";
 import GroupDetail from "./components/groups/GroupDetail.jsx";
+import PostDetail from "./pages/PostDetail.jsx";
 import AccountSettings from "./components/settings/AccountSettings.jsx";
 import Navbar from "./components/nav/Navbar.jsx";
 import { AuthProvider } from "./context/AuthContext.jsx";
@@ -19,6 +20,7 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/posts/:id" element={<PostDetail />} />
           <Route path="/groups" element={<GroupsList />} />
           <Route path="/groups/:id" element={<GroupDetail />} />
           <Route path="/sandbox" element={<Sandbox />} />
