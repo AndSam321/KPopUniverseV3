@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "./PostCard.css";
 import { likePost } from "../../api/postsApi";
 
 const PostCard = ({ post }) => {
+  const navigate = useNavigate();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isLiked, setIsLiked] = useState(post.is_liked || false);
   const [likesCount, setLikesCount] = useState(post.likes_count || 0);
@@ -187,7 +189,10 @@ const PostCard = ({ post }) => {
           )}
           <span>{likesCount}</span>
         </button>
-        <button className="post-card__action post-card__action--comment">
+        <button
+          className="post-card__action post-card__action--comment"
+          onClick={() => navigate(`/posts/${post.id}`)}
+        >
           <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
             <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z" />
           </svg>
