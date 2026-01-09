@@ -51,7 +51,8 @@ class Api::V1::GroupsController < Api::V1::BaseController
       name: group.name,
       slug: group.slug,
       description: group.description,
-      logo_url: group.logo_url
+      logo_url: group.logo_url,
+      user_id: group.user_id
     }
   end
 
