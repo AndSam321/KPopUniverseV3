@@ -1,8 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./PostCard.css";
+import { likePost } from "../../api/postsApi";
 
 const PostCard = ({ post }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isLiked, setIsLiked] = useState(post.is_liked || false);
+  const [likesCount, setLikesCount] = useState(post.likes_count || 0);
+  const [isLiking, setIsLiking] = useState(false);
+
+  useEffect(() => {
+    setIsLiked(post.is_liked || false);
+    setLikesCount(post.likes_count || 0);
+  }, [post.is_liked, post.likes_count]);
 
   const nextImage = () => {
     if (post.images && post.images.length > 0) {
@@ -31,6 +40,37 @@ const PostCard = ({ post }) => {
       return `${Math.floor(diffInSeconds / 86400)}d ago`;
 
     return date.toLocaleDateString();
+  };
+
+  const handleLikeClick = async (e) => {
+    e.stopPropagation(); // Prevent navigation when clicking like button
+
+    if (isLiking) return; // Prevent double-clicking
+
+    // Optimistic update - update UI immediately
+    const previousIsLiked = isLiked;
+    const previousLikesCount = likesCount;
+
+    setIsLiked(!isLiked);
+    setLikesCount(isLiked ? likesCount - 1 : likesCount + 1);
+    setIsLiking(true);
+
+    try {
+      // Make API call
+      const response = await likePost(post.id);
+
+      // Update with server response (in case of race conditions)
+      setIsLiked(response.liked);
+      setLikesCount(response.likes_count);
+    } catch (error) {
+      console.error("Failed to like post:", error);
+
+      // Rollback on error
+      setIsLiked(previousIsLiked);
+      setLikesCount(previousLikesCount);
+    } finally {
+      setIsLiking(false);
+    }
   };
 
   return (
@@ -120,11 +160,32 @@ const PostCard = ({ post }) => {
 
       {/* Footer: Hearts & Comments */}
       <div className="post-card__footer">
-        <button className="post-card__action post-card__action--like">
-          <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
-            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-          </svg>
-          <span>{post.likes_count}</span>
+        <button
+          className={`post-card__action post-card__action--like ${
+            isLiked ? "liked" : ""
+          }`}
+          onClick={handleLikeClick}
+          disabled={isLiking}
+        >
+          {isLiked ? (
+            // Filled heart when liked
+            <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+            </svg>
+          ) : (
+            // Outline heart when not liked
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              width="20"
+              height="20"
+            >
+              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+            </svg>
+          )}
+          <span>{likesCount}</span>
         </button>
         <button className="post-card__action post-card__action--comment">
           <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
