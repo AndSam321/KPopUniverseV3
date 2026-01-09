@@ -1,16 +1,28 @@
 class Api::V1::PostsController < Api::V1::BaseController
   before_action :authenticate_user!, except: [:index, :show]
+  before_action :set_current_user_optional, only: [:index, :show]
   before_action :set_post, only: [:show, :update, :destroy, :like, :unlike]
   before_action :authorize_user!, only: [:update, :destroy]
   before_action :set_active_storage_url_options
 
   def index
-    @posts = Post.includes(:user, :groups, images_attachments: :blob)
-                  .order(created_at: :desc)
-                  .page(params[:page])
-                  .per(params[:per_page] || 10)
+    @pagy, @posts = pagy(Post.includes(:user, :groups, images_attachments: :blob)
+                              .order(created_at: :desc), items: params[:per_page] || 10)
 
-    render json: @posts.map { |post| post_json(post) }, status: :ok
+    @liked_post_ids = if current_user
+      current_user.likes.where(post_id: @posts.map(&:id)).pluck(:post_id).to_set
+    else
+      Set.new
+    end
+
+    render json: {
+      data: @posts.map { |post| post_json(post, @liked_post_ids) },
+      meta: {
+        current_page: @pagy.page,
+        total_pages: @pagy.pages,
+        total_count: @pagy.count
+      }
+    }, status: :ok
   end
 
   def show
@@ -67,6 +79,18 @@ class Api::V1::PostsController < Api::V1::BaseController
 
   private
 
+  def set_current_user_optional # This sets the current user if the token is present, to make sure the current user is available
+    token = request.headers["Authorization"]&.split(" ")&.last
+    return unless token
+
+    begin
+      payload = JWT.decode(token, ENV["DEVISE_JWT_SECRET_KEY"]).first
+      @current_user = User.find(payload["sub"])
+    rescue JWT::DecodeError, ActiveRecord::RecordNotFound
+      @current_user = nil
+    end
+  end
+
   def set_active_storage_url_options
     ActiveStorage::Current.url_options = {host: "localhost", port: 9000}
   end
@@ -87,12 +111,20 @@ class Api::V1::PostsController < Api::V1::BaseController
     params.permit(:title, :caption, images: [])
   end
 
-  def post_json(post)
+  def post_json(post, liked_post_ids = nil)
+    is_liked = if liked_post_ids
+      liked_post_ids.include?(post.id)
+    elsif current_user
+      current_user.likes.exists?(post: post)
+    else
+      false
+    end
+
     post.as_json(include: {
-      user: { only: [:id, :username, :avatar_url] },
-      groups: { only: [:id, :name, :slug] }
+      user: {only: [:id, :username, :avatar_url]},
+      groups: {only: [:id, :name, :slug]}
     }).merge(
-      is_liked: current_user ? current_user.likes.exists?(post: post) : false,
+      is_liked: is_liked,
       images: post.images.map { |img| image_json(img) }
     )
   end
