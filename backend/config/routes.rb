@@ -22,7 +22,13 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :posts
+      resources :posts do
+        member do
+          post :like
+          delete :unlike
+        end
+      end
+
       resources :groups, only: [:index, :show, :create]
     end
   end
