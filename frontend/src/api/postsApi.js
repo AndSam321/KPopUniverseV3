@@ -9,7 +9,7 @@ export const getPosts = async (page = 1) => {
 
 export const getPost = async (postId) => {
   const response = await api.get(`/posts/${postId}`);
-  return response.data.data;
+  return response.data;
 };
 
 export const createPost = async (postData) => {
