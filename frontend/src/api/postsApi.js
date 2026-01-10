@@ -20,6 +20,10 @@ export const createPost = async (postData) => {
     formData.append("caption", postData.caption);
   }
 
+  if (postData.flair) {
+    formData.append("flair", postData.flair);
+  }
+
   if (postData.images && postData.images.length > 0) {
     postData.images.forEach((image) => {
       formData.append("images[]", image);
