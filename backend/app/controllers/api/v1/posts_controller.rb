@@ -108,7 +108,7 @@ class Api::V1::PostsController < Api::V1::BaseController
   end
 
   def post_params
-    params.permit(:title, :caption, images: [])
+    params.permit(:title, :caption, :flair, images: [])
   end
 
   def post_json(post, liked_post_ids = nil)

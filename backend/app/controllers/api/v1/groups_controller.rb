@@ -65,6 +65,7 @@ class Api::V1::GroupsController < Api::V1::BaseController
       id: post.id,
       title: post.title,
       caption: post.caption,
+      flair: post.flair,
       images: post.images.attached? ? post.images.map { |img| image_json(img) } : [],
       groups: post.groups.map { |g| {id: g.id, name: g.name, slug: g.slug} },
       user: {
