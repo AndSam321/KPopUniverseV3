@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import ReactDOM from "react-dom";
 import { useNavigate } from "react-router-dom";
 import "./PostCard.css";
 import { likePost } from "../../api/postsApi";
@@ -20,6 +21,10 @@ const PostCard = ({ post }) => {
   const [isLiked, setIsLiked] = useState(post.is_liked || false);
   const [likesCount, setLikesCount] = useState(post.likes_count || 0);
   const [isLiking, setIsLiking] = useState(false);
+  const [showShareMenu, setShowShareMenu] = useState(false);
+  const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0 });
+  const [showToast, setShowToast] = useState(false);
+  const shareButtonRef = useRef(null);
 
   useEffect(() => {
     setIsLiked(post.is_liked || false);
@@ -55,6 +60,32 @@ const PostCard = ({ post }) => {
       return `${Math.floor(diffInSeconds / 86400)}d ago`;
 
     return date.toLocaleDateString();
+  };
+
+  const handleShareClick = (e) => {
+    e.stopPropagation();
+
+    if (!showShareMenu && shareButtonRef.current) {
+      const rect = shareButtonRef.current.getBoundingClientRect();
+      setMenuPosition({
+        top: rect.bottom + 8,
+        left: rect.left,
+      });
+    }
+
+    setShowShareMenu(!showShareMenu);
+  };
+
+  const handleCopyLink = (e) => {
+    e.stopPropagation();
+    const postUrl = `${window.location.origin}/posts/${post.id}`;
+    navigator.clipboard.writeText(postUrl).then(() => {
+      setShowShareMenu(false);
+      setShowToast(true);
+      setTimeout(() => setShowToast(false), 3000);
+    }).catch(err => {
+      console.error("Failed to copy link:", err);
+    });
   };
 
   const handleLikeClick = async (e) => {
@@ -238,6 +269,48 @@ const PostCard = ({ post }) => {
           </svg>
           <span>{post.comments_count}</span>
         </button>
+        <div className="post-card__share-container">
+          <button
+            ref={shareButtonRef}
+            className="post-card__action post-card__action--share"
+            onClick={handleShareClick}
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="20" height="20">
+              <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
+              <polyline points="16 6 12 2 8 6" />
+              <line x1="12" y1="2" x2="12" y2="15" />
+            </svg>
+            <span>Share</span>
+          </button>
+        </div>
+        {showShareMenu && ReactDOM.createPortal(
+          <div
+            className="post-card__share-menu"
+            style={{
+              position: 'fixed',
+              top: `${menuPosition.top}px`,
+              left: `${menuPosition.left}px`,
+            }}
+          >
+            <button className="post-card__share-option" onClick={handleCopyLink}>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18" height="18">
+                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+              </svg>
+              Copy link
+            </button>
+          </div>,
+          document.body
+        )}
+        {showToast && ReactDOM.createPortal(
+          <div className="post-card__toast">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18" height="18">
+              <path d="M20 6L9 17l-5-5" />
+            </svg>
+            Link copied!
+          </div>,
+          document.body
+        )}
       </div>
     </div>
   );
