@@ -9,7 +9,7 @@
 }
 
 .create-post h2 {
-  color: var(--accent-primary);
+  color: #757bc8;
   margin-bottom: 1.5rem;
   font-family: "Zen Kaku Gothic New", sans-serif;
   font-weight: 700;
@@ -56,8 +56,8 @@
 .create-post__field input[type="text"]:focus,
 .create-post__field textarea:focus {
   outline: none;
-  border-color: var(--accent-primary);
-  box-shadow: 0 0 0 3px rgba(255, 111, 177, 0.1);
+  border-color: #757bc8;
+  box-shadow: 0 0 0 3px rgba(117, 123, 200, 0.1);
 }
 
 .create-post__field input[type="file"] {
@@ -71,8 +71,8 @@
 }
 
 .create-post__field input[type="file"]:hover {
-  border-color: var(--accent-primary);
-  background: rgba(255, 111, 177, 0.05);
+  border-color: #757bc8;
+  background: rgba(117, 123, 200, 0.05);
 }
 
 .create-post__previews {
@@ -115,7 +115,7 @@
 }
 
 .create-post__remove-image:hover {
-  background: rgba(255, 77, 166, 1);
+  background: #ff4444;
 }
 
 .create-post__groups {
@@ -144,18 +144,18 @@
 }
 
 .create-post__group-tag:hover {
-  border-color: var(--accent-primary);
-  background: rgba(255, 111, 177, 0.1);
+  border-color: #757bc8;
+  background: rgba(117, 123, 200, 0.1);
   transform: translateY(-1px);
 }
 
 .create-post__group-tag input[type="checkbox"] {
   cursor: pointer;
-  accent-color: var(--accent-primary);
+  accent-color: #757bc8;
 }
 
 .create-post__group-tag input[type="checkbox"]:checked + span {
-  color: var(--accent-primary);
+  color: #757bc8;
   font-weight: 700;
 }
 
@@ -163,6 +163,51 @@
   color: var(--text-primary);
   font-size: 0.95rem;
   font-weight: 500;
+}
+
+/* Flair Styles */
+.create-post__flairs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding: 1rem;
+  background: white;
+  border: 2px solid var(--border-color);
+  border-radius: 10px;
+}
+
+.create-post__flair-tag {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1rem;
+  background: rgba(187, 173, 255, 0.05);
+  border: 2px solid var(--border-color);
+  border-radius: 24px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  user-select: none;
+}
+
+.create-post__flair-tag:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(117, 123, 200, 0.1);
+}
+
+.create-post__flair-tag.selected {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(117, 123, 200, 0.2);
+}
+
+.create-post__flair-tag input[type="radio"] {
+  cursor: pointer;
+  accent-color: #757bc8;
+}
+
+.create-post__flair-tag span {
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: color 0.25s ease;
 }
 
 .create-post__submit {

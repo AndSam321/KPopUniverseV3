@@ -10,10 +10,20 @@ const CreatePost = ({ onPostCreated, defaultGroupId }) => {
   const [selectedGroups, setSelectedGroups] = useState(
     defaultGroupId ? [defaultGroupId] : []
   );
+  const [selectedFlair, setSelectedFlair] = useState("");
   const [groups, setGroups] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [imagePreviews, setImagePreviews] = useState([]);
+
+  const flairs = [
+    { value: "discussion", label: "Discussion", color: "#757bc8" },
+    { value: "question", label: "Question", color: "#6ee7d8" },
+    { value: "music", label: "Music", color: "#ff6fb1" },
+    { value: "news", label: "News", color: "#ffd166" },
+    { value: "media", label: "Media/Photos", color: "#9fa0ff" },
+    { value: "fan-content", label: "Fan Content", color: "#ff8ccf" },
+  ];
 
   useEffect(() => {
     fetchGroups();
@@ -85,6 +95,7 @@ const CreatePost = ({ onPostCreated, defaultGroupId }) => {
         caption,
         images,
         groupIds: selectedGroups,
+        flair: selectedFlair,
       };
 
       const newPost = await createPost(postData);
@@ -93,6 +104,7 @@ const CreatePost = ({ onPostCreated, defaultGroupId }) => {
       setCaption("");
       setImages([]);
       setSelectedGroups([]);
+      setSelectedFlair("");
       imagePreviews.forEach((preview) => URL.revokeObjectURL(preview));
       setImagePreviews([]);
 
@@ -168,21 +180,62 @@ const CreatePost = ({ onPostCreated, defaultGroupId }) => {
           </div>
         )}
 
-        <div className="create-post__field">
-          <label>Tag K-pop Groups</label>
-          <div className="create-post__groups">
-            {groups.map((group) => (
-              <label key={group.id} className="create-post__group-tag">
-                <input
-                  type="checkbox"
-                  checked={selectedGroups.includes(group.id)}
-                  onChange={() => handleGroupToggle(group.id)}
-                />
-                <span>{group.name}</span>
-              </label>
-            ))}
+        {defaultGroupId ? (
+          <div className="create-post__field">
+            <label>Select Flair</label>
+            <div className="create-post__flairs">
+              {flairs.map((flair) => (
+                <label
+                  key={flair.value}
+                  className={`create-post__flair-tag ${
+                    selectedFlair === flair.value ? "selected" : ""
+                  }`}
+                  style={{
+                    borderColor:
+                      selectedFlair === flair.value ? flair.color : undefined,
+                    background:
+                      selectedFlair === flair.value
+                        ? `${flair.color}15`
+                        : undefined,
+                  }}
+                >
+                  <input
+                    type="radio"
+                    name="flair"
+                    value={flair.value}
+                    checked={selectedFlair === flair.value}
+                    onChange={(e) => setSelectedFlair(e.target.value)}
+                  />
+                  <span
+                    style={{
+                      color:
+                        selectedFlair === flair.value ? flair.color : undefined,
+                    }}
+                  >
+                    {flair.label}
+                  </span>
+                </label>
+              ))}
+            </div>
           </div>
-        </div>
+        ) : (
+          // Show group selector when posting from main feed
+          <div className="create-post__field">
+            <label>Tag K-pop Groups</label>
+            <div className="create-post__groups">
+              {groups.map((group) => (
+                <label key={group.id} className="create-post__group-tag">
+                  <input
+                    type="checkbox"
+                    checked={selectedGroups.includes(group.id)}
+                    onChange={() => handleGroupToggle(group.id)}
+                  />
+                  <span>{group.name}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+        )}
 
         <button
           type="submit"

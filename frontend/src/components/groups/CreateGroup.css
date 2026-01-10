@@ -8,7 +8,7 @@
 }
 
 .create-group h2 {
-  color: #ff4da6;
+  color: #757bc8;
   margin-bottom: 1.5rem;
   font-family: "Dynapuff", cursive;
 }
@@ -55,7 +55,7 @@
 .create-group__field input[type="url"]:focus,
 .create-group__field textarea:focus {
   outline: none;
-  border-color: #ff4da6;
+  border-color: #757bc8;
 }
 
 .create-group__submit {

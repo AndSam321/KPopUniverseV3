@@ -60,6 +60,12 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  transition: color 0.2s ease;
+}
+
+.post-card__group-name:hover {
+  color: #757bc8;
+  text-decoration: underline;
 }
 
 .post-card__meta {
@@ -84,6 +90,18 @@
 
 .post-card__timestamp {
   white-space: nowrap;
+}
+
+.post-card__flair {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  border: 1.5px solid;
+  white-space: nowrap;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
 }
 
 /* === Content Section === */

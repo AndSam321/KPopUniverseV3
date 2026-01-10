@@ -4,6 +4,15 @@ import "./PostCard.css";
 import { likePost } from "../../api/postsApi";
 import { useAuth } from "../../context/AuthContext";
 
+const FLAIRS = {
+  discussion: { label: "Discussion", color: "#757bc8" },
+  question: { label: "Question", color: "#6ee7d8" },
+  music: { label: "Music", color: "#ff6fb1" },
+  news: { label: "News", color: "#ffd166" },
+  media: { label: "Media/Photos", color: "#9fa0ff" },
+  "fan-content": { label: "Fan Content", color: "#ff8ccf" },
+};
+
 const PostCard = ({ post }) => {
   const navigate = useNavigate();
   const { user } = useAuth();
@@ -17,13 +26,15 @@ const PostCard = ({ post }) => {
     setLikesCount(post.likes_count || 0);
   }, [post.is_liked, post.likes_count]);
 
-  const nextImage = () => {
+  const nextImage = (e) => {
+    e.stopPropagation();
     if (post.images && post.images.length > 0) {
       setCurrentImageIndex((prev) => (prev + 1) % post.images.length);
     }
   };
 
-  const prevImage = () => {
+  const prevImage = (e) => {
+    e.stopPropagation();
     if (post.images && post.images.length > 0) {
       setCurrentImageIndex((prev) =>
         prev === 0 ? post.images.length - 1 : prev - 1
@@ -74,7 +85,11 @@ const PostCard = ({ post }) => {
   };
 
   return (
-    <div className="post-card">
+    <div
+      className="post-card"
+      onClick={() => navigate(`/posts/${post.id}`)}
+      style={{ cursor: "pointer" }}
+    >
       {/* Header: User + Group */}
       <div className="post-card__header">
         <div className="post-card__user">
@@ -91,7 +106,14 @@ const PostCard = ({ post }) => {
           )}
           <div className="post-card__user-info">
             {post.groups && post.groups.length > 0 && (
-              <span className="post-card__group-name">
+              <span
+                className="post-card__group-name"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  navigate(`/groups/${post.groups[0].id}`);
+                }}
+                style={{ cursor: "pointer" }}
+              >
                 {post.groups[0].name}
               </span>
             )}
@@ -101,6 +123,21 @@ const PostCard = ({ post }) => {
               <span className="post-card__timestamp">
                 {formatDate(post.created_at)}
               </span>
+              {post.flair && FLAIRS[post.flair] && (
+                <>
+                  <span className="post-card__dot">•</span>
+                  <span
+                    className="post-card__flair"
+                    style={{
+                      color: FLAIRS[post.flair].color,
+                      borderColor: FLAIRS[post.flair].color,
+                      backgroundColor: `${FLAIRS[post.flair].color}15`,
+                    }}
+                  >
+                    {FLAIRS[post.flair].label}
+                  </span>
+                </>
+              )}
             </div>
           </div>
         </div>
@@ -187,7 +224,8 @@ const PostCard = ({ post }) => {
         </button>
         <button
           className="post-card__action post-card__action--comment"
-          onClick={() => {
+          onClick={(e) => {
+            e.stopPropagation();
             if (!user) {
               navigate("/login");
               return;

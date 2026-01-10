@@ -6,6 +6,15 @@ import { likePost } from "../api/postsApi";
 import CommentItem from "../components/comments/CommentItem";
 import "./PostDetail.css";
 
+const FLAIRS = {
+  discussion: { label: "Discussion", color: "#757bc8" },
+  question: { label: "Question", color: "#6ee7d8" },
+  music: { label: "Music", color: "#ff6fb1" },
+  news: { label: "News", color: "#ffd166" },
+  media: { label: "Media/Photos", color: "#9fa0ff" },
+  "fan-content": { label: "Fan Content", color: "#ff8ccf" },
+};
+
 const PostDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -62,7 +71,6 @@ const PostDetail = () => {
   const handleReply = async (parentId, content) => {
     try {
       const response = await createComment(id, content, parentId);
-      // Refresh comments to get updated thread
       const commentsResponse = await getComments(id);
       setComments(commentsResponse.data || []);
     } catch (err) {
@@ -95,12 +103,10 @@ const PostDetail = () => {
   };
 
   const handleCommentClick = () => {
-    // Scroll to comment form
-    const commentForm = document.querySelector('.post-detail__comment-form');
+    const commentForm = document.querySelector(".post-detail__comment-form");
     if (commentForm) {
-      commentForm.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      // Focus on the textarea
-      const textarea = commentForm.querySelector('textarea');
+      commentForm.scrollIntoView({ behavior: "smooth", block: "center" });
+      const textarea = commentForm.querySelector("textarea");
       if (textarea) {
         setTimeout(() => textarea.focus(), 300);
       }
@@ -112,14 +118,27 @@ const PostDetail = () => {
   }
 
   if (error || !post) {
-    return <div className="post-detail__error">{error || "Post not found"}</div>;
+    return (
+      <div className="post-detail__error">{error || "Post not found"}</div>
+    );
   }
 
   return (
     <div className="post-detail">
       <div className="post-detail__header">
         <button onClick={() => navigate(-1)} className="post-detail__back">
-          ← Back
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            width="20"
+            height="20"
+          >
+            <path d="M19 12H5M12 19l-7-7 7-7" />
+          </svg>
         </button>
       </div>
 
@@ -127,14 +146,34 @@ const PostDetail = () => {
       <div className="post-detail__post">
         {/* Group badge */}
         {post.groups && post.groups.length > 0 && (
-          <div className="post-detail__group">
+          <div
+            className="post-detail__group"
+            onClick={() => navigate(`/groups/${post.groups[0].id}`)}
+            style={{ cursor: "pointer" }}
+          >
             {post.groups[0].name}
           </div>
         )}
 
         {/* Author and time */}
         <div className="post-detail__meta">
-          Posted by @{post.user.username} • {new Date(post.created_at).toLocaleString()}
+          Posted by @{post.user.username} •{" "}
+          {new Date(post.created_at).toLocaleString()}
+          {post.flair && FLAIRS[post.flair] && (
+            <>
+              {" • "}
+              <span
+                className="post-detail__flair"
+                style={{
+                  color: FLAIRS[post.flair].color,
+                  borderColor: FLAIRS[post.flair].color,
+                  backgroundColor: `${FLAIRS[post.flair].color}15`,
+                }}
+              >
+                {FLAIRS[post.flair].label}
+              </span>
+            </>
+          )}
         </div>
 
         {/* Title */}
@@ -155,9 +194,7 @@ const PostDetail = () => {
         )}
 
         {/* Caption */}
-        {post.caption && (
-          <p className="post-detail__caption">{post.caption}</p>
-        )}
+        {post.caption && <p className="post-detail__caption">{post.caption}</p>}
 
         {/* Actions */}
         <div className="post-detail__actions">
@@ -169,7 +206,12 @@ const PostDetail = () => {
             disabled={isLiking}
           >
             {isLiked ? (
-              <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+              <svg
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                width="20"
+                height="20"
+              >
                 <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
               </svg>
             ) : (
@@ -199,7 +241,10 @@ const PostDetail = () => {
       </div>
 
       {/* Comment Form */}
-      <form onSubmit={handleSubmitComment} className="post-detail__comment-form">
+      <form
+        onSubmit={handleSubmitComment}
+        className="post-detail__comment-form"
+      >
         <textarea
           value={newComment}
           onChange={(e) => setNewComment(e.target.value)}
@@ -219,7 +264,8 @@ const PostDetail = () => {
       {/* Comments Section */}
       <div className="post-detail__comments">
         <h2 className="post-detail__comments-header">
-          {post.comments_count} {post.comments_count === 1 ? 'Comment' : 'Comments'}
+          {post.comments_count}{" "}
+          {post.comments_count === 1 ? "Comment" : "Comments"}
         </h2>
 
         {comments.length === 0 ? (

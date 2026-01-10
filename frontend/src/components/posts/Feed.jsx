@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { getPosts } from "../../api/postsApi";
 import PostCard from "./PostCard";
-import CreatePost from "./CreatePost";
 import "./Feed.css";
 
 const Feed = () => {
@@ -10,7 +9,6 @@ const Feed = () => {
   const [error, setError] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [showCreatePost, setShowCreatePost] = useState(false);
 
   useEffect(() => {
     fetchPosts(currentPage);
@@ -33,13 +31,6 @@ const Feed = () => {
     }
   };
 
-  const handlePostCreated = (newPost) => {
-    setPosts([newPost, ...posts]);
-    setShowCreatePost(false);
-    setError("");
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
   const handlePreviousPage = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
@@ -58,15 +49,7 @@ const Feed = () => {
     <div className="feed">
       <div className="feed__header">
         <h1>for you</h1>
-        <button
-          onClick={() => setShowCreatePost(!showCreatePost)}
-          className="feed__create-btn"
-        >
-          {showCreatePost ? "Cancel" : "+ Create Post"}
-        </button>
       </div>
-
-      {showCreatePost && <CreatePost onPostCreated={handlePostCreated} />}
 
       {loading ? (
         <div className="feed__loading">Loading posts...</div>
