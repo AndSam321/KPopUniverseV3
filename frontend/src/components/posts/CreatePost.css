@@ -167,7 +167,7 @@
 
 .create-post__submit {
   padding: 1rem 1.5rem;
-  background: var(--accent-primary);
+  background: #757bc8;
   color: white;
   border: none;
   border-radius: 10px;
@@ -175,13 +175,13 @@
   font-weight: 700;
   cursor: pointer;
   transition: all 0.25s ease;
-  box-shadow: 0 4px 12px rgba(255, 111, 177, 0.25);
+  box-shadow: 0 4px 12px rgba(117, 123, 200, 0.25);
 }
 
 .create-post__submit:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(255, 111, 177, 0.4);
-  background: #ff5ba3;
+  box-shadow: 0 6px 20px rgba(117, 123, 200, 0.4);
+  background: #6b70b8;
 }
 
 .create-post__submit:disabled {

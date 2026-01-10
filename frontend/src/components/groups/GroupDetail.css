@@ -62,7 +62,7 @@
 
 .group-detail__create-btn {
   padding: 0.75rem 1.5rem;
-  background: linear-gradient(135deg, #ff4da6 0%, #ff6b9d 100%);
+  background: #757bc8;
   color: white;
   border: none;
   border-radius: 8px;
@@ -74,7 +74,8 @@
 
 .group-detail__create-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(255, 77, 166, 0.4);
+  box-shadow: 0 4px 12px rgba(117, 123, 200, 0.4);
+  background: #6b70b8;
 }
 
 .group-detail__loading {

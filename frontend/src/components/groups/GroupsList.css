@@ -29,7 +29,7 @@
 
 .groups-list__create-btn {
   padding: 0.875rem 1.75rem;
-  background: var(--accent-primary);
+  background: #757bc8;
   color: white;
   border: none;
   border-radius: 10px;
@@ -38,13 +38,13 @@
   cursor: pointer;
   transition: all 0.25s ease;
   white-space: nowrap;
-  box-shadow: 0 4px 12px rgba(255, 111, 177, 0.25);
+  box-shadow: 0 4px 12px rgba(117, 123, 200, 0.25);
 }
 
 .groups-list__create-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(255, 111, 177, 0.4);
-  background: #ff5ba3;
+  box-shadow: 0 6px 20px rgba(117, 123, 200, 0.4);
+  background: #6b70b8;
 }
 
 .groups-list__controls {
@@ -97,17 +97,17 @@
 }
 
 .groups-list__filter:hover {
-  border-color: var(--accent-primary);
+  border-color: #757bc8;
   color: var(--text-primary);
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(117, 123, 200, 0.1);
 }
 
 .groups-list__filter.active {
-  background: var(--accent-primary);
+  background: #757bc8;
   color: white;
-  border-color: var(--accent-primary);
-  box-shadow: 0 4px 12px rgba(255, 111, 177, 0.3);
+  border-color: #757bc8;
+  box-shadow: 0 4px 12px rgba(117, 123, 200, 0.3);
 }
 
 .groups-list__error {

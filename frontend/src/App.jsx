@@ -12,6 +12,7 @@ import Navbar from "./components/nav/Navbar.jsx";
 import { AuthProvider } from "./context/AuthContext.jsx";
 import { ThemeProvider } from "./context/ThemeContext.jsx";
 import GuestRoute from "./components/routes/GuestRoute.jsx";
+import PrivateRoute from "./components/routes/PrivateRoute.jsx";
 
 function App() {
   return (
@@ -20,9 +21,23 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/posts/:id" element={<PostDetail />} />
+          <Route
+            path="/posts/:id"
+            element={
+              <PrivateRoute>
+                <PostDetail />
+              </PrivateRoute>
+            }
+          />
           <Route path="/groups" element={<GroupsList />} />
-          <Route path="/groups/:id" element={<GroupDetail />} />
+          <Route
+            path="/groups/:id"
+            element={
+              <PrivateRoute>
+                <GroupDetail />
+              </PrivateRoute>
+            }
+          />
           <Route path="/sandbox" element={<Sandbox />} />
           <Route
             path="/register"
@@ -40,9 +55,30 @@ function App() {
               </GuestRoute>
             }
           />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/profile/:username" element={<Profile />} />
-          <Route path="/settings" element={<AccountSettings />} />
+          <Route
+            path="/profile"
+            element={
+              <PrivateRoute>
+                <Profile />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/profile/:username"
+            element={
+              <PrivateRoute>
+                <Profile />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/settings"
+            element={
+              <PrivateRoute>
+                <AccountSettings />
+              </PrivateRoute>
+            }
+          />
         </Routes>
       </AuthProvider>
     </ThemeProvider>

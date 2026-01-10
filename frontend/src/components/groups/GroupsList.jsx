@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { getGroups } from "../../api/groupsApi";
 import CreateGroup from "./CreateGroup";
+import { useAuth } from "../../context/AuthContext";
 import "./GroupsList.css";
 
 const GroupsList = () => {
+  const navigate = useNavigate();
+  const { user } = useAuth();
   const [groups, setGroups] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -118,10 +121,17 @@ const GroupsList = () => {
       ) : (
         <div className="groups-list__content">
           {filteredGroups.map((group) => (
-            <Link
+            <div
               key={group.id}
-              to={`/groups/${group.id}`}
               className="group-item"
+              onClick={() => {
+                if (!user) {
+                  navigate('/login');
+                  return;
+                }
+                navigate(`/groups/${group.id}`);
+              }}
+              style={{ cursor: 'pointer' }}
             >
               <div className="group-item__icon">
                 {group.logo_url ? (
@@ -144,7 +154,7 @@ const GroupsList = () => {
                 )}
               </div>
               <div className="group-item__arrow">›</div>
-            </Link>
+            </div>
           ))}
         </div>
       )}
