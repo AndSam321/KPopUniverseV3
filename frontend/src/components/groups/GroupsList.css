@@ -13,12 +13,12 @@
 }
 
 .groups-list__title-section h1 {
-  color: var(--text-primary);
+  color: #4a4b7e;
   font-family: 'Zen Kaku Gothic New', sans-serif;
   font-size: 2.25rem;
   font-weight: 800;
   margin: 0 0 0.5rem 0;
-  text-shadow: 0 2px 4px rgba(117, 123, 200, 0.2);
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
 }
 
 .groups-list__subtitle {
@@ -69,8 +69,8 @@
 
 .groups-list__search-input:focus {
   outline: none;
-  border-color: var(--accent-primary);
-  box-shadow: 0 0 0 3px rgba(255, 111, 177, 0.1), 0 2px 8px rgba(117, 123, 200, 0.15);
+  border-color: #757bc8;
+  box-shadow: 0 0 0 3px rgba(117, 123, 200, 0.15);
 }
 
 .groups-list__search-input::placeholder {
@@ -163,9 +163,9 @@
 
 .group-item:hover {
   background: white;
-  border-color: var(--accent-primary);
+  border-color: #757bc8;
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(255, 111, 177, 0.15);
+  box-shadow: 0 8px 24px rgba(117, 123, 200, 0.2);
 }
 
 .group-item__icon {
@@ -191,7 +191,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--accent-primary);
+  background: linear-gradient(135deg, #757bc8, #ada7ff);
   color: white;
   font-size: 1.5rem;
   font-weight: 700;
@@ -247,8 +247,52 @@
 }
 
 .group-item:hover .group-item__arrow {
-  color: var(--accent-primary);
+  color: #757bc8;
   transform: translateX(6px);
+}
+
+/* Dark mode support */
+:root.dark-mode .group-item {
+  background: var(--dark-card);
+  border-color: rgba(159, 160, 255, 0.15);
+}
+
+:root.dark-mode .group-item:hover {
+  background: rgba(38, 37, 74, 0.9);
+  border-color: #9fa0ff;
+}
+
+:root.dark-mode .groups-list__search-input {
+  background: var(--dark-card);
+  border-color: rgba(159, 160, 255, 0.15);
+  color: var(--dark-text-primary);
+}
+
+:root.dark-mode .groups-list__search-input:focus {
+  border-color: #9fa0ff;
+  box-shadow: 0 0 0 3px rgba(159, 160, 255, 0.2);
+}
+
+:root.dark-mode .groups-list__filter {
+  background: var(--dark-card);
+  border-color: rgba(159, 160, 255, 0.15);
+  color: var(--dark-text-secondary);
+}
+
+:root.dark-mode .groups-list__filter:hover {
+  border-color: #9fa0ff;
+  color: var(--dark-text-primary);
+}
+
+:root.dark-mode .groups-list__filter.active {
+  background: #757bc8;
+  color: white;
+  border-color: #757bc8;
+}
+
+:root.dark-mode .groups-list__empty {
+  background: var(--dark-card);
+  border-color: rgba(159, 160, 255, 0.15);
 }
 
 @media (max-width: 768px) {

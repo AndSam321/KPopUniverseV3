@@ -17,9 +17,11 @@
   --accent-secondary: #6ee7d8;    /* Mint - success/active */
   --accent-highlight: #ffd166;    /* Warm yellow - hover */
   --accent-link: #5b6cff;         /* Purple-blue - links */
+  --accent-pink: #ff4da6;         /* Standardized pink for likes/hearts */
+  --accent-error: #ff4444;        /* Error red */
 
   /* Interaction Colors */
-  --upvote: #ff8ccf;
+  --upvote: #ff4da6;              /* Standardized to match accent-pink */
   --downvote: #6a72d9;
 
   /* Dark Mode */

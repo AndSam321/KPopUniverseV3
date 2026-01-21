@@ -101,7 +101,7 @@
   right: 0.25rem;
   width: 24px;
   height: 24px;
-  background: rgba(255, 77, 166, 0.9);
+  background: var(--accent-pink);
   color: white;
   border: none;
   border-radius: 50%;

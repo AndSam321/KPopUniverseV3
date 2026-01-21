@@ -245,12 +245,12 @@
 }
 
 .kp-nav__dropdown-item--logout {
-  color: #d96b9f;
+  color: var(--accent-pink);
 }
 
 .kp-nav__dropdown-item--logout:hover {
   background: linear-gradient(135deg, #fff0f7 0%, #ffe9f3 100%);
-  color: #c9578c;
+  color: var(--accent-pink);
 }
 
 .kp-nav__dropdown-divider {

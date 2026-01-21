@@ -2,15 +2,17 @@
   max-width: 600px;
   margin: 0 auto 2rem;
   padding: 2rem;
-  background: #1a1a1a;
+  background: var(--card-bg);
+  border: 2px solid var(--border-color);
   border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 12px rgba(117, 123, 200, 0.15);
 }
 
 .create-group h2 {
   color: #757bc8;
   margin-bottom: 1.5rem;
-  font-family: "Dynapuff", cursive;
+  font-family: "DynaPuff", cursive;
+  font-weight: 700;
 }
 
 .create-group__error {
@@ -34,8 +36,8 @@
 }
 
 .create-group__field label {
-  color: #fff;
-  font-weight: 500;
+  color: var(--text-primary);
+  font-weight: 600;
   font-size: 0.9rem;
 }
 
@@ -43,12 +45,12 @@
 .create-group__field input[type="url"],
 .create-group__field textarea {
   padding: 0.75rem;
-  background: #2a2a2a;
-  border: 2px solid #3a3a3a;
+  background: white;
+  border: 2px solid var(--border-color);
   border-radius: 8px;
-  color: #fff;
+  color: var(--text-primary);
   font-size: 1rem;
-  transition: border-color 0.3s;
+  transition: border-color 0.2s ease;
 }
 
 .create-group__field input[type="text"]:focus,
@@ -56,6 +58,7 @@
 .create-group__field textarea:focus {
   outline: none;
   border-color: #757bc8;
+  box-shadow: 0 0 0 3px rgba(117, 123, 200, 0.15);
 }
 
 .create-group__submit {
@@ -79,4 +82,33 @@
 .create-group__submit:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+/* Dark mode support */
+:root.dark-mode .create-group {
+  background: var(--dark-card);
+  border-color: rgba(159, 160, 255, 0.15);
+}
+
+:root.dark-mode .create-group h2 {
+  color: #9fa0ff;
+}
+
+:root.dark-mode .create-group__field label {
+  color: var(--dark-text-primary);
+}
+
+:root.dark-mode .create-group__field input[type="text"],
+:root.dark-mode .create-group__field input[type="url"],
+:root.dark-mode .create-group__field textarea {
+  background: rgba(38, 37, 74, 0.5);
+  border-color: rgba(159, 160, 255, 0.15);
+  color: var(--dark-text-primary);
+}
+
+:root.dark-mode .create-group__field input[type="text"]:focus,
+:root.dark-mode .create-group__field input[type="url"]:focus,
+:root.dark-mode .create-group__field textarea:focus {
+  border-color: #9fa0ff;
+  box-shadow: 0 0 0 3px rgba(159, 160, 255, 0.2);
 }

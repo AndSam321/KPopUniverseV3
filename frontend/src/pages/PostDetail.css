@@ -136,16 +136,16 @@
 }
 
 .post-detail__action--like svg {
-  color: #ff6b9d;
+  color: var(--accent-pink);
 }
 
 .post-detail__action--like:hover {
   background: #fff0f7;
-  color: #ff4da6;
+  color: var(--accent-pink);
 }
 
 .post-detail__action--like:hover svg {
-  color: #ff4da6;
+  color: var(--accent-pink);
   transform: scale(1.15);
 }
 
@@ -256,11 +256,11 @@
 }
 
 .post-detail__action--like.liked {
-  color: #ff4458;
+  color: var(--accent-pink);
 }
 
 .post-detail__action--like.liked svg {
-  fill: #ff4458;
+  fill: var(--accent-pink);
   animation: heartPop 0.3s ease;
 }
 
