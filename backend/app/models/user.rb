@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  include Pointable
+
   devise :database_authenticatable, :registerable,
            :recoverable, :rememberable, :validatable, :trackable,
            :jwt_authenticatable, :omniauthable,

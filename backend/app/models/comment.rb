@@ -9,4 +9,12 @@ class Comment < ApplicationRecord
 
   scope :top_level, -> { where(parent_id: nil) }
   scope :recent, -> { order(created_at: :desc) }
+
+  after_create_commit :award_commenter_points
+
+  private
+
+  def award_commenter_points
+    user.award_points(:create_comment)
+  end
 end
