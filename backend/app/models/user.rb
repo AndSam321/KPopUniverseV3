@@ -14,6 +14,7 @@ class User < ApplicationRecord
   has_many :likes, dependent: :destroy
   has_many :liked_post, through: :likes, source: :post
   has_many :comments, dependent: :destroy
+  has_many :notifications, foreign_key: :recipient_id, dependent: :destroy
 
   validates :username, presence: true, uniqueness: true
   validates :email, presence: true, uniqueness: true
