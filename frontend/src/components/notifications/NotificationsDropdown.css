@@ -213,6 +213,28 @@
   margin-top: 8px;
 }
 
+/* View all link */
+.notif-view-all {
+  display: block;
+  width: 100%;
+  padding: 12px 16px;
+  border: none;
+  border-top: 1px solid rgba(173, 167, 255, 0.15);
+  background: transparent;
+  color: #757bc8;
+  font-family: "Zen Kaku Gothic New", system-ui, sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.notif-view-all:hover {
+  background: #f9f7ff;
+  color: #6b70b8;
+}
+
 /* === Dark Mode === */
 :root.dark-mode .notif-bell {
   background: rgba(255, 255, 255, 0.08);
@@ -285,6 +307,16 @@
 
 :root.dark-mode .notif-empty {
   color: #6b6b8a;
+}
+
+:root.dark-mode .notif-view-all {
+  border-top-color: #2d2d44;
+  color: #bbadff;
+}
+
+:root.dark-mode .notif-view-all:hover {
+  background: #252538;
+  color: #e0c3fc;
 }
 
 /* Responsive */

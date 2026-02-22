@@ -208,6 +208,16 @@ export default function NotificationsDropdown() {
               ))
             )}
           </div>
+
+          <button
+            className="notif-view-all"
+            onClick={() => {
+              setIsOpen(false);
+              navigate("/notifications");
+            }}
+          >
+            view all notifications
+          </button>
         </div>
       )}
     </div>
