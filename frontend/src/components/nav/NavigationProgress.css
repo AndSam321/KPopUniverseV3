@@ -1,0 +1,54 @@
+/* === Navigation Progress Bar (Reddit-style) === */
+.nav-progress {
+  position: fixed;
+  top: 64px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  z-index: 39;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.nav-progress--completing {
+  opacity: 0;
+  transition: opacity 0.4s ease 0.1s;
+}
+
+.nav-progress__bar {
+  height: 100%;
+  background: linear-gradient(90deg, #9fa0ff, #e0c3fc, #ff8ccf);
+  border-radius: 0 2px 2px 0;
+  box-shadow: 0 0 8px rgba(159, 160, 255, 0.6);
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+/* Bright glow at the leading edge */
+.nav-progress__bar::after {
+  content: "";
+  position: absolute;
+  right: -2px;
+  top: -1px;
+  width: 80px;
+  height: 5px;
+  background: radial-gradient(ellipse at right, rgba(255, 255, 255, 0.5), transparent);
+  border-radius: 50%;
+}
+
+/* === Dark Mode === */
+:root.dark-mode .nav-progress__bar {
+  background: linear-gradient(90deg, #757bc8, #9fa0ff, #e0c3fc);
+  box-shadow: 0 0 12px rgba(159, 160, 255, 0.8);
+}
+
+:root.dark-mode .nav-progress__bar::after {
+  background: radial-gradient(ellipse at right, rgba(224, 195, 252, 0.6), transparent);
+}
+
+/* === Mobile === */
+@media (max-width: 720px) {
+  .nav-progress {
+    top: 56px;
+  }
+}

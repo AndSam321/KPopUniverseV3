@@ -1,22 +1,27 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { getPosts } from "../../api/postsApi";
+import { useNavigationLoading } from "../../context/NavigationLoadingContext";
 import PostCard from "./PostCard";
+import PostCardSkeleton from "../skeletons/PostCardSkeleton";
 import "./Feed.css";
 
 const Feed = () => {
+  const { startLoading, completeLoading } = useNavigationLoading();
   const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [initialLoading, setInitialLoading] = useState(true);
+  const [pageLoading, setPageLoading] = useState(false);
   const [error, setError] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
-  useEffect(() => {
-    fetchPosts(currentPage);
-  }, [currentPage]);
-
-  const fetchPosts = async (page) => {
+  const fetchPosts = useCallback(async (page) => {
     try {
-      setLoading(true);
+      if (posts.length === 0) {
+        setInitialLoading(true);
+        startLoading();
+      } else {
+        setPageLoading(true);
+      }
       setError("");
       const data = await getPosts(page);
       setPosts(data.data);
@@ -25,11 +30,16 @@ const Feed = () => {
     } catch (err) {
       setError("Failed to load posts. Please try again.");
       setPosts([]);
-      console.error("Error fetching posts:", err);
     } finally {
-      setLoading(false);
+      setInitialLoading(false);
+      setPageLoading(false);
+      completeLoading();
     }
-  };
+  }, [posts.length, startLoading, completeLoading]);
+
+  useEffect(() => {
+    fetchPosts(currentPage);
+  }, [currentPage, fetchPosts]);
 
   const handlePreviousPage = () => {
     if (currentPage > 1) {
@@ -51,8 +61,12 @@ const Feed = () => {
         <h1>for you</h1>
       </div>
 
-      {loading ? (
-        <div className="feed__loading">Loading posts...</div>
+      {initialLoading ? (
+        <div className="feed__posts">
+          <PostCardSkeleton showImage={true} />
+          <PostCardSkeleton showImage={false} />
+          <PostCardSkeleton showImage={true} />
+        </div>
       ) : error ? (
         <div className="feed__error">
           <p>{error}</p>
@@ -66,7 +80,12 @@ const Feed = () => {
         </div>
       ) : (
         <>
-          <div className="feed__posts">
+          {pageLoading && (
+            <div className="feed__page-loading">
+              <div className="feed__page-spinner" />
+            </div>
+          )}
+          <div className={`feed__posts${pageLoading ? " feed__posts--loading" : ""}`}>
             {posts.map((post) => (
               <PostCard key={post.id} post={post} />
             ))}
@@ -76,7 +95,7 @@ const Feed = () => {
             <div className="feed__pagination">
               <button
                 onClick={handlePreviousPage}
-                disabled={currentPage === 1}
+                disabled={currentPage === 1 || pageLoading}
                 className="feed__page-btn"
               >
                 Previous
@@ -86,7 +105,7 @@ const Feed = () => {
               </span>
               <button
                 onClick={handleNextPage}
-                disabled={currentPage === totalPages}
+                disabled={currentPage === totalPages || pageLoading}
                 className="feed__page-btn"
               >
                 Next

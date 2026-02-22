@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { getGroups } from "../../api/groupsApi";
+import { useNavigationLoading } from "../../context/NavigationLoadingContext";
 import CreateGroup from "./CreateGroup";
 import { useAuth } from "../../context/AuthContext";
+import GroupItemSkeleton from "../skeletons/GroupItemSkeleton";
 import "./GroupsList.css";
 
 const GroupsList = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { startLoading, completeLoading } = useNavigationLoading();
   const [groups, setGroups] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -22,6 +25,7 @@ const GroupsList = () => {
   const fetchGroups = async () => {
     try {
       setLoading(true);
+      startLoading();
       const data = await getGroups();
       setGroups(data);
       setError("");
@@ -30,6 +34,7 @@ const GroupsList = () => {
       console.error("Error fetching groups:", err);
     } finally {
       setLoading(false);
+      completeLoading();
     }
   };
 
@@ -109,7 +114,11 @@ const GroupsList = () => {
       {error && <div className="groups-list__error">{error}</div>}
 
       {loading ? (
-        <div className="groups-list__loading">Loading communities...</div>
+        <div className="groups-list__content">
+          {[1, 2, 3, 4, 5, 6].map((i) => (
+            <GroupItemSkeleton key={i} />
+          ))}
+        </div>
       ) : filteredGroups.length === 0 ? (
         <div className="groups-list__empty">
           <p>

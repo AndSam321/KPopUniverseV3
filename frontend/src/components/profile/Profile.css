@@ -61,6 +61,7 @@
   box-shadow: 0 12px 35px rgba(117, 123, 200, 0.25);
   border: 1px solid rgba(173, 167, 255, 0.4);
   transition: transform 0.2s ease;
+  position: relative;
 }
 
 .profile-card:hover {
@@ -86,6 +87,32 @@
 
 .profile-error {
   color: #dab6fc;
+}
+
+/* === Edit Profile Button === */
+.edit-profile-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: transparent;
+  border: 1px solid #ada7ff;
+  border-radius: 10px;
+  color: #757bc8;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.edit-profile-btn:hover {
+  background: #f3f0ff;
+  border-color: #757bc8;
+  transform: translateY(-1px);
 }
 
 /* === Profile Header === */
@@ -119,6 +146,45 @@
   font-size: 2.5rem;
   font-weight: bold;
   color: #ffffff;
+}
+
+/* === Avatar Upload === */
+.avatar-upload {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.avatar-upload img,
+.avatar-upload .avatar-placeholder {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #9fa0ff;
+}
+
+.avatar-upload-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: rgba(117, 123, 200, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.avatar-upload:hover .avatar-upload-overlay {
+  opacity: 1;
 }
 
 .profile-info {
@@ -181,6 +247,7 @@
   border: 1px solid #ada7ff;
   border-radius: 12px;
   padding: 1.25rem;
+  margin-bottom: 1.5rem;
 }
 
 .profile-bio h3 {
@@ -195,6 +262,219 @@
   line-height: 1.6;
   margin: 0;
   font-size: 0.95rem;
+}
+
+/* === Bio Edit Textarea === */
+.bio-edit-textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ada7ff;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #55557a;
+  font-family: inherit;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  resize: vertical;
+  outline: none;
+  transition: border-color 0.2s ease;
+  box-sizing: border-box;
+}
+
+.bio-edit-textarea:focus {
+  border-color: #757bc8;
+  box-shadow: 0 0 0 3px rgba(117, 123, 200, 0.15);
+}
+
+.bio-edit-textarea::placeholder {
+  color: #b0b0cc;
+}
+
+.char-count {
+  display: block;
+  text-align: right;
+  font-size: 0.75rem;
+  color: #8187dc;
+  margin-top: 6px;
+}
+
+/* === Points Tracker === */
+.points-tracker {
+  background: #f9f9ff;
+  border: 1px solid #ada7ff;
+  border-radius: 12px;
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.points-tracker h3 {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #8187dc;
+  margin: 0 0 1rem 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.progress-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.current-title,
+.next-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #757bc8;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.max-level {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #9fa0ff;
+  font-style: italic;
+}
+
+.progress-bar-container {
+  width: 100%;
+  height: 12px;
+  background: #e8e6ff;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  border-radius: 6px;
+  background: linear-gradient(90deg, #9fa0ff, #e0c3fc);
+  transition: width 0.6s ease;
+}
+
+.progress-points {
+  text-align: center;
+  font-size: 0.8rem;
+  color: #8187dc;
+  margin: 8px 0 0 0;
+  font-weight: 500;
+}
+
+/* === Badges Section === */
+.badges-section {
+  background: #f9f9ff;
+  border: 1px solid #ada7ff;
+  border-radius: 12px;
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.badges-section h3 {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #8187dc;
+  margin: 0 0 1rem 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.badge-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 12px;
+}
+
+.badge-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 14px 10px;
+  background: #ffffff;
+  border: 1px solid #d4d0ff;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+}
+
+.badge-item:hover {
+  border-color: #9fa0ff;
+  box-shadow: 0 4px 12px rgba(159, 160, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.badge-icon {
+  font-size: 1.8rem;
+}
+
+.badge-name {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #757bc8;
+  text-align: center;
+}
+
+.badges-empty {
+  color: #8187dc;
+  font-size: 0.9rem;
+  margin: 0;
+  text-align: center;
+  padding: 12px 0;
+}
+
+/* === Edit Actions === */
+.edit-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 1rem;
+}
+
+.edit-cancel-btn,
+.edit-save-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  border: none;
+}
+
+.edit-cancel-btn {
+  background: #f3f0ff;
+  color: #757bc8;
+  border: 1px solid #ada7ff;
+}
+
+.edit-cancel-btn:hover {
+  background: #e8e6ff;
+  transform: translateY(-1px);
+}
+
+.edit-save-btn {
+  background: linear-gradient(135deg, #757bc8, #9fa0ff);
+  color: #ffffff;
+}
+
+.edit-save-btn:hover {
+  box-shadow: 0 4px 14px rgba(117, 123, 200, 0.4);
+  transform: translateY(-1px);
+}
+
+.edit-save-btn:disabled,
+.edit-cancel-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
 }
 
 /* === Dark Mode === */
@@ -218,6 +498,16 @@
   color: #ff9dc7;
 }
 
+:root.dark-mode .edit-profile-btn {
+  color: #ada7ff;
+  border-color: #3a3a55;
+}
+
+:root.dark-mode .edit-profile-btn:hover {
+  background: #252538;
+  border-color: #9fa0ff;
+}
+
 :root.dark-mode .profile-header {
   border-bottom: 1px solid #2d2d44;
 }
@@ -230,6 +520,15 @@
 :root.dark-mode .avatar-placeholder {
   background: linear-gradient(135deg, #2d2d44, #3a3a55);
   color: #e0c3fc;
+}
+
+:root.dark-mode .avatar-upload img,
+:root.dark-mode .avatar-upload .avatar-placeholder {
+  border: 3px solid #9fa0ff;
+}
+
+:root.dark-mode .avatar-upload-overlay {
+  background: rgba(30, 30, 47, 0.6);
 }
 
 :root.dark-mode .profile-username {
@@ -269,4 +568,98 @@
 
 :root.dark-mode .profile-bio p {
   color: #bbadff;
+}
+
+:root.dark-mode .bio-edit-textarea {
+  background: #1e1e2f;
+  border-color: #3a3a55;
+  color: #bbadff;
+}
+
+:root.dark-mode .bio-edit-textarea:focus {
+  border-color: #9fa0ff;
+  box-shadow: 0 0 0 3px rgba(159, 160, 255, 0.15);
+}
+
+:root.dark-mode .bio-edit-textarea::placeholder {
+  color: #4a4a6a;
+}
+
+:root.dark-mode .char-count {
+  color: #9fa0ff;
+}
+
+:root.dark-mode .points-tracker {
+  background: #252538;
+  border: 1px solid #2d2d44;
+}
+
+:root.dark-mode .points-tracker h3 {
+  color: #9fa0ff;
+}
+
+:root.dark-mode .current-title,
+:root.dark-mode .next-title {
+  color: #ada7ff;
+}
+
+:root.dark-mode .max-level {
+  color: #e0c3fc;
+}
+
+:root.dark-mode .progress-bar-container {
+  background: #2d2d44;
+}
+
+:root.dark-mode .progress-bar-fill {
+  background: linear-gradient(90deg, #757bc8, #9fa0ff);
+}
+
+:root.dark-mode .progress-points {
+  color: #9fa0ff;
+}
+
+:root.dark-mode .badges-section {
+  background: #252538;
+  border: 1px solid #2d2d44;
+}
+
+:root.dark-mode .badges-section h3 {
+  color: #9fa0ff;
+}
+
+:root.dark-mode .badge-item {
+  background: #1e1e2f;
+  border-color: #3a3a55;
+}
+
+:root.dark-mode .badge-item:hover {
+  border-color: #9fa0ff;
+  box-shadow: 0 4px 12px rgba(159, 160, 255, 0.15);
+}
+
+:root.dark-mode .badge-name {
+  color: #ada7ff;
+}
+
+:root.dark-mode .badges-empty {
+  color: #9fa0ff;
+}
+
+:root.dark-mode .edit-cancel-btn {
+  background: #252538;
+  color: #ada7ff;
+  border-color: #3a3a55;
+}
+
+:root.dark-mode .edit-cancel-btn:hover {
+  background: #2d2d44;
+}
+
+:root.dark-mode .edit-save-btn {
+  background: linear-gradient(135deg, #5a5fc8, #757bc8);
+}
+
+:root.dark-mode .edit-save-btn:hover {
+  box-shadow: 0 4px 14px rgba(90, 95, 200, 0.4);
 }

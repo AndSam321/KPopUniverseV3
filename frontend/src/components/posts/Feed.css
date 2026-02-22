@@ -140,6 +140,32 @@
   font-weight: 500;
 }
 
+/* === Page transition loading === */
+.feed__posts--loading {
+  opacity: 0.5;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.feed__page-loading {
+  display: flex;
+  justify-content: center;
+  padding: 12px 0;
+}
+
+.feed__page-spinner {
+  width: 24px;
+  height: 24px;
+  border: 3px solid rgba(117, 123, 200, 0.2);
+  border-top-color: #757bc8;
+  border-radius: 50%;
+  animation: feedSpinner 0.7s linear infinite;
+}
+
+@keyframes feedSpinner {
+  to { transform: rotate(360deg); }
+}
+
 /* === Dark Mode === */
 :root.dark-mode .feed__header h1 {
   color: #e0c3fc;
@@ -196,6 +222,11 @@
 
 :root.dark-mode .feed__page-info {
   color: var(--dark-text-secondary);
+}
+
+:root.dark-mode .feed__page-spinner {
+  border-color: rgba(159, 160, 255, 0.2);
+  border-top-color: #9fa0ff;
 }
 
 @media (max-width: 768px) {

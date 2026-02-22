@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import ReactDOM from "react-dom";
 import { useNavigate } from "react-router-dom";
 import "./PostCard.css";
@@ -13,6 +13,60 @@ const FLAIRS = {
   media: { label: "Media/Photos", color: "#9fa0ff" },
   "fan-content": { label: "Fan Content", color: "#ff8ccf" },
 };
+
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  const now = new Date();
+  const diffInSeconds = Math.floor((now - date) / 1000);
+
+  if (diffInSeconds < 60) return "just now";
+  if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)}m ago`;
+  if (diffInSeconds < 86400)
+    return `${Math.floor(diffInSeconds / 3600)}h ago`;
+  if (diffInSeconds < 604800)
+    return `${Math.floor(diffInSeconds / 86400)}d ago`;
+
+  return date.toLocaleDateString();
+};
+
+const LikeIconFilled = () => (
+  <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+  </svg>
+);
+
+const LikeIconOutline = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="20" height="20">
+    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+  </svg>
+);
+
+const CommentIcon = () => (
+  <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+    <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z" />
+  </svg>
+);
+
+const ShareIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="20" height="20">
+    <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
+    <polyline points="16 6 12 2 8 6" />
+    <line x1="12" y1="2" x2="12" y2="15" />
+  </svg>
+);
+
+const LinkIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18" height="18">
+    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+  </svg>
+);
+
+const CheckIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18" height="18">
+    <path d="M20 6L9 17l-5-5" />
+  </svg>
+);
 
 const PostCard = ({ post }) => {
   const navigate = useNavigate();
@@ -31,38 +85,23 @@ const PostCard = ({ post }) => {
     setLikesCount(post.likes_count || 0);
   }, [post.is_liked, post.likes_count]);
 
-  const nextImage = (e) => {
+  const nextImage = useCallback((e) => {
     e.stopPropagation();
     if (post.images && post.images.length > 0) {
       setCurrentImageIndex((prev) => (prev + 1) % post.images.length);
     }
-  };
+  }, [post.images]);
 
-  const prevImage = (e) => {
+  const prevImage = useCallback((e) => {
     e.stopPropagation();
     if (post.images && post.images.length > 0) {
       setCurrentImageIndex((prev) =>
         prev === 0 ? post.images.length - 1 : prev - 1
       );
     }
-  };
+  }, [post.images]);
 
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    const now = new Date();
-    const diffInSeconds = Math.floor((now - date) / 1000);
-
-    if (diffInSeconds < 60) return "just now";
-    if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)}m ago`;
-    if (diffInSeconds < 86400)
-      return `${Math.floor(diffInSeconds / 3600)}h ago`;
-    if (diffInSeconds < 604800)
-      return `${Math.floor(diffInSeconds / 86400)}d ago`;
-
-    return date.toLocaleDateString();
-  };
-
-  const handleShareClick = (e) => {
+  const handleShareClick = useCallback((e) => {
     e.stopPropagation();
 
     if (!showShareMenu && shareButtonRef.current) {
@@ -74,9 +113,9 @@ const PostCard = ({ post }) => {
     }
 
     setShowShareMenu(!showShareMenu);
-  };
+  }, [showShareMenu]);
 
-  const handleCopyLink = (e) => {
+  const handleCopyLink = useCallback((e) => {
     e.stopPropagation();
     const postUrl = `${window.location.origin}/posts/${post.id}`;
     navigator.clipboard.writeText(postUrl).then(() => {
@@ -86,9 +125,9 @@ const PostCard = ({ post }) => {
     }).catch(err => {
       console.error("Failed to copy link:", err);
     });
-  };
+  }, [post.id]);
 
-  const handleLikeClick = async (e) => {
+  const handleLikeClick = useCallback(async (e) => {
     e.stopPropagation();
 
     if (isLiking) return;
@@ -113,7 +152,7 @@ const PostCard = ({ post }) => {
     } finally {
       setIsLiking(false);
     }
-  };
+  }, [isLiked, likesCount, isLiking, post.id]);
 
   return (
     <div
@@ -235,22 +274,7 @@ const PostCard = ({ post }) => {
           onClick={handleLikeClick}
           disabled={isLiking}
         >
-          {isLiked ? (
-            <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
-              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-            </svg>
-          ) : (
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              width="20"
-              height="20"
-            >
-              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-            </svg>
-          )}
+          {isLiked ? <LikeIconFilled /> : <LikeIconOutline />}
           <span>{likesCount}</span>
         </button>
         <button
@@ -264,9 +288,7 @@ const PostCard = ({ post }) => {
             navigate(`/posts/${post.id}`);
           }}
         >
-          <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
-            <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z" />
-          </svg>
+          <CommentIcon />
           <span>{post.comments_count}</span>
         </button>
         <div className="post-card__share-container">
@@ -275,11 +297,7 @@ const PostCard = ({ post }) => {
             className="post-card__action post-card__action--share"
             onClick={handleShareClick}
           >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="20" height="20">
-              <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
-              <polyline points="16 6 12 2 8 6" />
-              <line x1="12" y1="2" x2="12" y2="15" />
-            </svg>
+            <ShareIcon />
             <span>Share</span>
           </button>
         </div>
@@ -293,10 +311,7 @@ const PostCard = ({ post }) => {
             }}
           >
             <button className="post-card__share-option" onClick={handleCopyLink}>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18" height="18">
-                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
-                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
-              </svg>
+              <LinkIcon />
               Copy link
             </button>
           </div>,
@@ -304,9 +319,7 @@ const PostCard = ({ post }) => {
         )}
         {showToast && ReactDOM.createPortal(
           <div className="post-card__toast">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18" height="18">
-              <path d="M20 6L9 17l-5-5" />
-            </svg>
+            <CheckIcon />
             Link copied!
           </div>,
           document.body
@@ -316,4 +329,4 @@ const PostCard = ({ post }) => {
   );
 };
 
-export default PostCard;
+export default React.memo(PostCard);
