@@ -7,6 +7,8 @@ class User < ApplicationRecord
            jwt_revocation_strategy: JwtDenylist,
            omniauth_providers: [ :google_oauth2 ]
 
+  has_one_attached :avatar
+
   has_many :posts, dependent: :destroy
   has_many :groups, dependent: :destroy
   has_many :likes, dependent: :destroy
@@ -15,6 +17,10 @@ class User < ApplicationRecord
 
   validates :username, presence: true, uniqueness: true
   validates :email, presence: true, uniqueness: true
+  validate :acceptable_avatar, if: -> { avatar.attached? }
+
+  ALLOWED_AVATAR_TYPES = %w[image/jpeg image/png image/gif image/webp].freeze
+  MAX_AVATAR_SIZE = 5.megabytes
 
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
@@ -25,10 +31,27 @@ class User < ApplicationRecord
     end
   end
 
+  def profile_avatar_url
+    if avatar.attached?
+      Rails.application.routes.url_helpers.rails_blob_url(avatar, only_path: true)
+    else
+      avatar_url
+    end
+  end
+
   def jwt_payload
-    { "user_id" => id,
-      "username" => username,
-      "email" => email
-    }
+    { "user_id" => id, "username" => username, "email" => email }
+  end
+
+  private
+
+  def acceptable_avatar
+    unless avatar.blob.content_type.in?(ALLOWED_AVATAR_TYPES)
+      errors.add(:avatar, "must be a JPEG, PNG, GIF, or WEBP image")
+    end
+
+    if avatar.blob.byte_size > MAX_AVATAR_SIZE
+      errors.add(:avatar, "must be less than 5MB")
+    end
   end
 end

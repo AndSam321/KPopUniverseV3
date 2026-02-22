@@ -8,10 +8,30 @@ module Pointable
     create_group: 25
   }.freeze
 
+  TITLE_THRESHOLDS = [
+    { min: 0, max: 100, title: "Trainee" },
+    { min: 100, max: 500, title: "Rising Star" },
+    { min: 500, max: 2000, title: "Idol" },
+    { min: 2000, max: Float::INFINITY, title: "Superstar" }
+  ].freeze
+
   def award_points(action)
     points = POINT_VALUES[action] || 0
     increment!(:idol_points, points)
     update_title_if_needed
+  end
+
+  def points_info
+    current = TITLE_THRESHOLDS.find { |t| idol_points >= t[:min] && idol_points < t[:max] }
+    current_index = TITLE_THRESHOLDS.index(current)
+    next_tier = TITLE_THRESHOLDS[current_index + 1]
+
+    {
+      current_points: idol_points,
+      current_title: current[:title],
+      next_title: next_tier&.dig(:title),
+      points_to_next_title: next_tier ? next_tier[:min] - idol_points : 0
+    }
   end
 
   private
@@ -22,11 +42,6 @@ module Pointable
   end
 
   def calculate_title
-    case idol_points
-    when 0...100 then "Trainee"
-    when 100...500 then "Rising Star"
-    when 500...2000 then "Idol"
-    else "Superstar"
-    end
+    TITLE_THRESHOLDS.find { |t| idol_points >= t[:min] && idol_points < t[:max] }&.dig(:title) || "Superstar"
   end
 end
