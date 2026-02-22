@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { getGroup } from "../../api/groupsApi";
+import { useNavigationLoading } from "../../context/NavigationLoadingContext";
 import PostCard from "../posts/PostCard";
+import PostCardSkeleton from "../skeletons/PostCardSkeleton";
 import CreatePost from "../posts/CreatePost";
 import "./GroupDetail.css";
+import "../skeletons/Skeleton.css";
 
 const GroupDetail = () => {
   const { id } = useParams();
+  const { startLoading, completeLoading } = useNavigationLoading();
   const [groupData, setGroupData] = useState(null);
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -22,6 +26,7 @@ const GroupDetail = () => {
   const fetchGroupData = async (page) => {
     try {
       setLoading(true);
+      if (!groupData) startLoading();
       const data = await getGroup(id, page);
       setGroupData(data.group);
       setPosts(data.posts);
@@ -33,6 +38,7 @@ const GroupDetail = () => {
       console.error("Error fetching group:", err);
     } finally {
       setLoading(false);
+      completeLoading();
     }
   };
 
@@ -58,7 +64,26 @@ const GroupDetail = () => {
   };
 
   if (loading && !groupData) {
-    return <div className="group-detail__loading">Loading group...</div>;
+    return (
+      <div className="group-detail-skeleton">
+        <div className="group-detail-skeleton__header">
+          <div className="skeleton skeleton--circle group-detail-skeleton__logo" />
+          <div className="group-detail-skeleton__info">
+            <div className="skeleton skeleton--title" style={{ width: "50%" }} />
+            <div className="skeleton skeleton--text" style={{ width: "80%" }} />
+            <div className="skeleton skeleton--text" style={{ width: "45%" }} />
+          </div>
+        </div>
+        <div className="group-detail-skeleton__posts-header">
+          <div className="skeleton skeleton--title" style={{ width: 80 }} />
+          <div className="skeleton skeleton--button" style={{ width: 140 }} />
+        </div>
+        <div className="group-detail-skeleton__posts">
+          <PostCardSkeleton showImage={true} />
+          <PostCardSkeleton showImage={false} />
+        </div>
+      </div>
+    );
   }
 
   if (error && !groupData) {

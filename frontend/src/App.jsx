@@ -1,24 +1,37 @@
+import React, { Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
-import Sandbox from "./playground/Sandbox.jsx";
-import Register from "./components/auth/Register.jsx";
-import Login from "./components/auth/Login.jsx";
-import Profile from "./components/profile/Profile.jsx";
-import Home from "./components/home/Home.jsx";
-import GroupsList from "./components/groups/GroupsList.jsx";
-import GroupDetail from "./components/groups/GroupDetail.jsx";
-import PostDetail from "./pages/PostDetail.jsx";
-import AccountSettings from "./components/settings/AccountSettings.jsx";
 import Navbar from "./components/nav/Navbar.jsx";
+import NavigationProgress from "./components/nav/NavigationProgress.jsx";
 import { AuthProvider } from "./context/AuthContext.jsx";
 import { ThemeProvider } from "./context/ThemeContext.jsx";
+import { NavigationLoadingProvider } from "./context/NavigationLoadingContext.jsx";
 import GuestRoute from "./components/routes/GuestRoute.jsx";
 import PrivateRoute from "./components/routes/PrivateRoute.jsx";
+
+const Sandbox = React.lazy(() => import("./playground/Sandbox.jsx"));
+const Register = React.lazy(() => import("./components/auth/Register.jsx"));
+const Login = React.lazy(() => import("./components/auth/Login.jsx"));
+const Profile = React.lazy(() => import("./components/profile/Profile.jsx"));
+const Home = React.lazy(() => import("./components/home/Home.jsx"));
+const GroupsList = React.lazy(() => import("./components/groups/GroupsList.jsx"));
+const GroupDetail = React.lazy(() => import("./components/groups/GroupDetail.jsx"));
+const PostDetail = React.lazy(() => import("./pages/PostDetail.jsx"));
+const AccountSettings = React.lazy(() => import("./components/settings/AccountSettings.jsx"));
+
+const PageLoader = () => (
+  <div className="page-loader">
+    <div className="page-loader__spinner" />
+  </div>
+);
 
 function App() {
   return (
     <ThemeProvider>
+      <NavigationLoadingProvider>
       <AuthProvider>
         <Navbar />
+        <NavigationProgress />
+        <Suspense fallback={<PageLoader />}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route
@@ -80,7 +93,9 @@ function App() {
             }
           />
         </Routes>
+        </Suspense>
       </AuthProvider>
+      </NavigationLoadingProvider>
     </ThemeProvider>
   );
 }

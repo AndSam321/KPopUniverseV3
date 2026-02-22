@@ -5,3 +5,29 @@ body {
   background-color: #ffffff;
 }
 
+/* === Page Loader (Suspense fallback) === */
+.page-loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+}
+
+.page-loader__spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid rgba(117, 123, 200, 0.2);
+  border-top-color: #757bc8;
+  border-radius: 50%;
+  animation: pageSpinner 0.7s linear infinite;
+}
+
+@keyframes pageSpinner {
+  to { transform: rotate(360deg); }
+}
+
+:root.dark-mode .page-loader__spinner {
+  border-color: rgba(159, 160, 255, 0.2);
+  border-top-color: #9fa0ff;
+}
+
