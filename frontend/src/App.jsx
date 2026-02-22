@@ -17,6 +17,7 @@ const GroupsList = React.lazy(() => import("./components/groups/GroupsList.jsx")
 const GroupDetail = React.lazy(() => import("./components/groups/GroupDetail.jsx"));
 const PostDetail = React.lazy(() => import("./pages/PostDetail.jsx"));
 const AccountSettings = React.lazy(() => import("./components/settings/AccountSettings.jsx"));
+const NotificationsPage = React.lazy(() => import("./pages/NotificationsPage.jsx"));
 
 const PageLoader = () => (
   <div className="page-loader">
@@ -81,6 +82,14 @@ function App() {
             element={
               <PrivateRoute>
                 <Profile />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/notifications"
+            element={
+              <PrivateRoute>
+                <NotificationsPage />
               </PrivateRoute>
             }
           />
