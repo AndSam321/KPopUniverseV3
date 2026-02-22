@@ -3,13 +3,24 @@ class Like < ApplicationRecord
   belongs_to :post, counter_cache: :likes_count
 
   validates :user_id, uniqueness: {scope: :post_id}
-  after_create_commit :award_post_owner_points
+  after_create_commit :award_post_owner_points, :notify_post_owner
   after_destroy_commit :remove_post_owner_points
 
   private
 
   def award_post_owner_points
     post.user.award_points(:receive_like)
+  end
+
+  def notify_post_owner
+    return if user_id == post.user_id
+
+    Notification.create!(
+      recipient: post.user,
+      actor: user,
+      notifiable: self,
+      action: "liked"
+    )
   end
 
   def remove_post_owner_points
