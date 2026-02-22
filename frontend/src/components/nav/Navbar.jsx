@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 import { logout as logoutApi } from "../../api/authApi";
+import NotificationsDropdown from "../notifications/NotificationsDropdown";
 
 export default function Navbar() {
   const navigate = useNavigate();
@@ -110,6 +111,8 @@ export default function Navbar() {
               placeholder="search artists, groups, fans..."
             />
           </div>
+
+          {user && <NotificationsDropdown />}
 
           {loading ? (
             // Show nothing while loading to prevent flash
