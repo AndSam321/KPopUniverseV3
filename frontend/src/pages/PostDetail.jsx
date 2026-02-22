@@ -3,7 +3,9 @@ import { useParams, useNavigate } from "react-router-dom";
 import { getPost } from "../api/postsApi";
 import { getComments, createComment } from "../api/commentsApi";
 import { likePost } from "../api/postsApi";
+import { useNavigationLoading } from "../context/NavigationLoadingContext";
 import CommentItem from "../components/comments/CommentItem";
+import PostDetailSkeleton from "../components/skeletons/PostDetailSkeleton";
 import "./PostDetail.css";
 
 const FLAIRS = {
@@ -18,6 +20,7 @@ const FLAIRS = {
 const PostDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { startLoading, completeLoading } = useNavigationLoading();
   const [post, setPost] = useState(null);
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -37,6 +40,7 @@ const PostDetail = () => {
   const fetchPostAndComments = async () => {
     try {
       setLoading(true);
+      startLoading();
       const [postData, commentsResponse] = await Promise.all([
         getPost(id),
         getComments(id),
@@ -50,6 +54,7 @@ const PostDetail = () => {
       console.error("Error fetching post:", err);
     } finally {
       setLoading(false);
+      completeLoading();
     }
   };
 
@@ -131,7 +136,7 @@ const PostDetail = () => {
   };
 
   if (loading) {
-    return <div className="post-detail__loading">Loading post...</div>;
+    return <PostDetailSkeleton />;
   }
 
   if (error || !post) {

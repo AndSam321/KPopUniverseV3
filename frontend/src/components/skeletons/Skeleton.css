@@ -1,0 +1,291 @@
+/* === Skeleton Base === */
+.skeleton {
+  --skeleton-base: #ececf1;
+  --skeleton-shine: rgba(255, 255, 255, 0.6);
+  background: var(--skeleton-base);
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--skeleton-shine) 50%,
+    transparent 100%
+  );
+  animation: skeleton-shimmer 1.5s ease-in-out infinite;
+  transform: translateX(-100%);
+}
+
+@keyframes skeleton-shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Shape variants */
+.skeleton--circle {
+  border-radius: 50%;
+}
+
+.skeleton--text {
+  height: 12px;
+  border-radius: 6px;
+}
+
+.skeleton--text-sm {
+  height: 10px;
+  border-radius: 5px;
+}
+
+.skeleton--title {
+  height: 18px;
+  border-radius: 9px;
+}
+
+.skeleton--image {
+  border-radius: 12px;
+}
+
+.skeleton--button {
+  height: 32px;
+  border-radius: 8px;
+}
+
+/* === Dark Mode === */
+:root.dark-mode .skeleton {
+  --skeleton-base: #2d2d44;
+  --skeleton-shine: rgba(159, 160, 255, 0.08);
+}
+
+/* === PostCard Skeleton === */
+.post-card-skeleton {
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(117, 123, 200, 0.15);
+  border: 1px solid rgba(173, 167, 255, 0.2);
+  font-family: "Zen Kaku Gothic New", system-ui, sans-serif;
+}
+
+.post-card-skeleton__header {
+  padding: 0.75rem 1rem;
+  background: #fafbff;
+  border-bottom: 1px solid #f0f0ff;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.post-card-skeleton__avatar {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+}
+
+.post-card-skeleton__header-lines {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.post-card-skeleton__content {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.post-card-skeleton__image {
+  width: 100%;
+  height: 200px;
+  margin-top: 4px;
+}
+
+.post-card-skeleton__footer {
+  padding: 0.5rem 1rem 0.75rem;
+  display: flex;
+  gap: 1.5rem;
+}
+
+/* === PostDetail Skeleton === */
+.post-detail-skeleton {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.post-detail-skeleton__back {
+  width: 36px;
+  height: 36px;
+  margin-bottom: 1.5rem;
+}
+
+.post-detail-skeleton__group {
+  width: 120px;
+  height: 28px;
+  border-radius: 14px;
+  margin-bottom: 0.75rem;
+}
+
+.post-detail-skeleton__meta {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 1rem;
+}
+
+.post-detail-skeleton__title {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 1rem;
+}
+
+.post-detail-skeleton__image {
+  width: 100%;
+  height: 320px;
+  margin-bottom: 1rem;
+}
+
+.post-detail-skeleton__caption {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 1.5rem;
+}
+
+.post-detail-skeleton__actions {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(173, 167, 255, 0.2);
+}
+
+.post-detail-skeleton__comment-form {
+  height: 100px;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+}
+
+.post-detail-skeleton__comments-header {
+  width: 140px;
+  height: 22px;
+  border-radius: 11px;
+  margin-bottom: 1.5rem;
+}
+
+.post-detail-skeleton__comment {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.post-detail-skeleton__comment-avatar {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+}
+
+.post-detail-skeleton__comment-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* === GroupItem Skeleton === */
+.group-item-skeleton {
+  background: var(--card-bg, #ffffff);
+  border: 1px solid var(--border-color, rgba(173, 167, 255, 0.2));
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.group-item-skeleton__icon {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+}
+
+.group-item-skeleton__info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* === GroupDetail Skeleton === */
+.group-detail-skeleton {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.group-detail-skeleton__header {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(173, 167, 255, 0.2);
+}
+
+.group-detail-skeleton__logo {
+  width: 72px;
+  height: 72px;
+  flex-shrink: 0;
+}
+
+.group-detail-skeleton__info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.group-detail-skeleton__posts-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.group-detail-skeleton__posts {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* === Dark Mode overrides for skeleton containers === */
+:root.dark-mode .post-card-skeleton {
+  background: var(--dark-card, #1e1e2f);
+  border-color: rgba(159, 160, 255, 0.15);
+}
+
+:root.dark-mode .post-card-skeleton__header {
+  background: rgba(159, 160, 255, 0.05);
+  border-bottom-color: rgba(159, 160, 255, 0.1);
+}
+
+:root.dark-mode .group-item-skeleton {
+  background: var(--dark-card, #1e1e2f);
+  border-color: rgba(159, 160, 255, 0.15);
+}
+
+:root.dark-mode .post-detail-skeleton__actions {
+  border-bottom-color: rgba(159, 160, 255, 0.15);
+}
+
+:root.dark-mode .group-detail-skeleton__header {
+  border-bottom-color: rgba(159, 160, 255, 0.15);
+}
