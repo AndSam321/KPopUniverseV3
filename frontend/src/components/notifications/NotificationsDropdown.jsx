@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { Bell, CheckCheck, Heart, MessageCircle, Reply } from "lucide-react";
+import { createConsumer } from "@rails/actioncable";
 import {
   getNotifications,
-  getUnreadCount,
   markAllRead,
   markRead,
 } from "../../api/notificationsApi";
@@ -11,7 +11,7 @@ import { useAuth } from "../../context/AuthContext";
 import "./NotificationsDropdown.css";
 
 function formatNotification(notification) {
-  const { actor, action, post } = notification;
+  const { action, post } = notification;
   const postTitle = post?.title
     ? post.title.length > 40
       ? post.title.slice(0, 40) + "..."
@@ -46,9 +46,7 @@ function getActionIcon(action) {
 }
 
 function timeAgo(dateString) {
-  const seconds = Math.floor(
-    (new Date() - new Date(dateString)) / 1000
-  );
+  const seconds = Math.floor((new Date() - new Date(dateString)) / 1000);
   if (seconds < 60) return "just now";
   const minutes = Math.floor(seconds / 60);
   if (minutes < 60) return `${minutes}m`;
@@ -67,32 +65,43 @@ export default function NotificationsDropdown() {
   const [unreadCount, setUnreadCount] = useState(0);
   const [loading, setLoading] = useState(false);
   const dropdownRef = useRef(null);
+  const subscriptionRef = useRef(null);
 
-  const fetchUnreadCount = useCallback(async () => {
+  // Connect to ActionCable for real-time notifications
+  useEffect(() => {
     if (!user) return;
-    try {
-      const count = await getUnreadCount();
-      setUnreadCount(count);
-    } catch (err) {
-      // silently fail - non-critical
-    }
+
+    const token = localStorage.getItem("authToken");
+    if (!token) return;
+
+    const consumer = createConsumer(
+      `ws://localhost:9000/cable?token=${token}`
+    );
+
+    subscriptionRef.current = consumer.subscriptions.create(
+      "NotificationChannel",
+      {
+        received(data) {
+          setNotifications((prev) => [data, ...prev]);
+          setUnreadCount((prev) => prev + 1);
+        },
+      }
+    );
+
+    return () => {
+      subscriptionRef.current?.unsubscribe();
+      consumer.disconnect();
+    };
   }, [user]);
 
-  // Poll unread count every 30 seconds
-  useEffect(() => {
-    fetchUnreadCount();
-    const interval = setInterval(fetchUnreadCount, 30000);
-    return () => clearInterval(interval);
-  }, [fetchUnreadCount]);
-
-  // Fetch full notifications when dropdown opens
+  // Fetch unread notifications when dropdown opens
   useEffect(() => {
     if (!isOpen) return;
 
     const fetchNotifications = async () => {
       setLoading(true);
       try {
-        const data = await getNotifications();
+        const data = await getNotifications(1, true);
         setNotifications(data.data);
         setUnreadCount(data.unread_count);
       } catch (err) {
@@ -122,22 +131,14 @@ export default function NotificationsDropdown() {
   const handleMarkAllRead = async () => {
     await markAllRead();
     setUnreadCount(0);
-    setNotifications((prev) =>
-      prev.map((n) => ({ ...n, read_at: new Date().toISOString() }))
-    );
+    setNotifications([]);
   };
 
   const handleNotificationClick = async (notification) => {
     if (!notification.read_at) {
       await markRead(notification.id);
       setUnreadCount((prev) => Math.max(0, prev - 1));
-      setNotifications((prev) =>
-        prev.map((n) =>
-          n.id === notification.id
-            ? { ...n, read_at: new Date().toISOString() }
-            : n
-        )
-      );
+      setNotifications((prev) => prev.filter((n) => n.id !== notification.id));
     }
 
     setIsOpen(false);
@@ -187,7 +188,7 @@ export default function NotificationsDropdown() {
               notifications.map((notification) => (
                 <button
                   key={notification.id}
-                  className={`notif-item ${!notification.read_at ? "notif-item--unread" : ""}`}
+                  className="notif-item notif-item--unread"
                   onClick={() => handleNotificationClick(notification)}
                 >
                   <div className="notif-item__icon">
@@ -202,9 +203,7 @@ export default function NotificationsDropdown() {
                       {timeAgo(notification.created_at)}
                     </span>
                   </div>
-                  {!notification.read_at && (
-                    <div className="notif-item__dot" />
-                  )}
+                  <div className="notif-item__dot" />
                 </button>
               ))
             )}

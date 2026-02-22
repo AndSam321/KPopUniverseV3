@@ -1,7 +1,10 @@
 import api from "./axios";
 
-export const getNotifications = (page = 1) =>
-  api.get(`/notifications?page=${page}`).then((res) => res.data);
+export const getNotifications = (page = 1, unreadOnly = false) => {
+  const params = new URLSearchParams({ page });
+  if (unreadOnly) params.append("unread", "true");
+  return api.get(`/notifications?${params}`).then((res) => res.data);
+};
 
 export const getUnreadCount = () =>
   api.get("/notifications/unread_count").then((res) => res.data.unread_count);
