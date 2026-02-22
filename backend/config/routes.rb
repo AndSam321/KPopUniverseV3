@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  mount ActionCable.server => "/cable"
+
   get "welcome/index"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -34,6 +36,16 @@ Rails.application.routes.draw do
 
       resources :groups, only: [:index, :show, :create]
       resources :comments, only: [:update, :destroy]
+
+      resources :notifications, only: [:index] do
+        collection do
+          post :mark_all_read
+          get :unread_count
+        end
+        member do
+          patch :mark_read
+        end
+      end
     end
   end
 
