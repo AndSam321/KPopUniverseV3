@@ -156,6 +156,20 @@
   transform: translateX(28px);
 }
 
+/* === Items Stack (multiple toggles) === */
+.settings-items-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.settings-mute-hint {
+  margin: 12px 0 0;
+  font-size: 0.8rem;
+  color: #9fa0ff;
+  font-style: italic;
+}
+
 /* === Dark Mode Styles === */
 :root.dark-mode .settings-page {
   background: linear-gradient(135deg, #1a1a2e 0%, #16213e 45%, #0f3460 100%);
@@ -196,4 +210,8 @@
 
 :root.dark-mode .settings-item-description {
   color: #9fa0ff;
+}
+
+:root.dark-mode .settings-mute-hint {
+  color: #6b6b8a;
 }
