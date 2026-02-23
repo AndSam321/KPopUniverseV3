@@ -41,10 +41,20 @@ class Api::V1::UsersController < Api::V1::BaseController
     end
   end
 
+  def update_notification_preferences
+    prefs = current_user.notification_preferences.merge(notification_prefs_params.to_h)
+    current_user.update!(notification_preferences: prefs)
+    render json: {status: "success", data: user_data(current_user)}
+  end
+
   private
 
   def profile_params
     params.permit(:bio, :avatar)
+  end
+
+  def notification_prefs_params
+    params.require(:notification_preferences).permit(:likes, :comments, :replies)
   end
 
   def user_data(user)
@@ -58,6 +68,8 @@ class Api::V1::UsersController < Api::V1::BaseController
       title: user.title,
       badges: user.badges,
       points_info: user.points_info,
+      notification_preferences: user.notification_preferences,
+      muted_group_ids: user.muted_groups.pluck(:group_id),
       created_at: user.created_at
     }
   end

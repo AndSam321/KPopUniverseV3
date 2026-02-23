@@ -22,6 +22,7 @@ Rails.application.routes.draw do
         collection do
           get :my_profile
           patch :update_profile
+          patch :update_notification_preferences
         end
       end
 
@@ -34,7 +35,11 @@ Rails.application.routes.draw do
         resources :comments, only: [:index, :create]
       end
 
-      resources :groups, only: [:index, :show, :create]
+      resources :groups, only: [:index, :show, :create] do
+        member do
+          post :toggle_mute, controller: "muted_groups"
+        end
+      end
       resources :comments, only: [:update, :destroy]
 
       resources :notifications, only: [:index] do
