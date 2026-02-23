@@ -2,7 +2,7 @@ class Api::V1::MutedGroupsController < Api::V1::BaseController
   before_action :authenticate_user!
 
   def toggle
-    group = Group.find(params[:group_id])
+    group = Group.find(params[:id])
     muted = current_user.muted_groups.find_by(group: group)
 
     if muted
