@@ -16,3 +16,15 @@ export const updateProfile = async (formData) => {
   });
   return response.data.data;
 };
+
+export const updateNotificationPreferences = async (preferences) => {
+  const response = await api.patch("/users/update_notification_preferences", {
+    notification_preferences: preferences,
+  });
+  return response.data.data;
+};
+
+export const toggleMuteGroup = async (groupId) => {
+  const response = await api.post(`/groups/${groupId}/toggle_mute`);
+  return response.data;
+};
