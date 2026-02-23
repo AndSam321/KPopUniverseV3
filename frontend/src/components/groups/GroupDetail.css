@@ -52,6 +52,61 @@
   margin: 0;
 }
 
+/* Mute button */
+.group-detail__mute-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  padding: 8px 16px;
+  border: 1px solid rgba(173, 167, 255, 0.4);
+  border-radius: 10px;
+  background: rgba(245, 240, 255, 0.5);
+  color: #757bc8;
+  font-family: "Zen Kaku Gothic New", system-ui, sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.group-detail__mute-btn:hover {
+  background: rgba(237, 233, 255, 0.8);
+  border-color: #757bc8;
+}
+
+.group-detail__mute-btn--muted {
+  background: rgba(255, 111, 177, 0.08);
+  border-color: rgba(255, 111, 177, 0.3);
+  color: #ff6fb1;
+}
+
+.group-detail__mute-btn--muted:hover {
+  background: rgba(255, 111, 177, 0.15);
+  border-color: #ff6fb1;
+}
+
+:root.dark-mode .group-detail__mute-btn {
+  background: rgba(45, 45, 68, 0.5);
+  border-color: #2d2d44;
+  color: #bbadff;
+}
+
+:root.dark-mode .group-detail__mute-btn:hover {
+  background: rgba(45, 45, 68, 0.8);
+  border-color: #9fa0ff;
+}
+
+:root.dark-mode .group-detail__mute-btn--muted {
+  background: rgba(255, 111, 177, 0.1);
+  border-color: rgba(255, 111, 177, 0.3);
+  color: #ff9dc7;
+}
+
+:root.dark-mode .group-detail__mute-btn--muted:hover {
+  background: rgba(255, 111, 177, 0.2);
+}
+
 .group-detail__posts-header {
   display: flex;
   justify-content: space-between;

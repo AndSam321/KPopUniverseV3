@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { getGroup } from "../../api/groupsApi";
+import { toggleMuteGroup } from "../../api/userApi";
+import { useAuth } from "../../context/AuthContext";
 import { useNavigationLoading } from "../../context/NavigationLoadingContext";
+import { BellOff, Bell } from "lucide-react";
 import PostCard from "../posts/PostCard";
 import PostCardSkeleton from "../skeletons/PostCardSkeleton";
 import CreatePost from "../posts/CreatePost";
@@ -10,6 +13,7 @@ import "../skeletons/Skeleton.css";
 
 const GroupDetail = () => {
   const { id } = useParams();
+  const { user, updateUser } = useAuth();
   const { startLoading, completeLoading } = useNavigationLoading();
   const [groupData, setGroupData] = useState(null);
   const [posts, setPosts] = useState([]);
@@ -18,6 +22,26 @@ const GroupDetail = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [showCreatePost, setShowCreatePost] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
+
+  useEffect(() => {
+    if (user?.muted_group_ids && id) {
+      setIsMuted(user.muted_group_ids.includes(parseInt(id)));
+    }
+  }, [user, id]);
+
+  const handleToggleMute = async () => {
+    try {
+      const data = await toggleMuteGroup(id);
+      setIsMuted(data.muted);
+      const updatedMutedIds = data.muted
+        ? [...(user.muted_group_ids || []), parseInt(id)]
+        : (user.muted_group_ids || []).filter((gid) => gid !== parseInt(id));
+      updateUser({ ...user, muted_group_ids: updatedMutedIds });
+    } catch (err) {
+      console.error("Error toggling mute:", err);
+    }
+  };
 
   useEffect(() => {
     fetchGroupData(currentPage);
@@ -104,6 +128,16 @@ const GroupDetail = () => {
             <p className="group-detail__description">{groupData.description}</p>
           )}
         </div>
+        {user && (
+          <button
+            className={`group-detail__mute-btn ${isMuted ? "group-detail__mute-btn--muted" : ""}`}
+            onClick={handleToggleMute}
+            title={isMuted ? "Unmute notifications" : "Mute notifications"}
+          >
+            {isMuted ? <BellOff size={18} /> : <Bell size={18} />}
+            <span>{isMuted ? "muted" : "mute"}</span>
+          </button>
+        )}
       </div>
 
       <div className="group-detail__content">
