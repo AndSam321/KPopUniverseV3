@@ -15,6 +15,16 @@ class User < ApplicationRecord
   has_many :liked_post, through: :likes, source: :post
   has_many :comments, dependent: :destroy
   has_many :notifications, foreign_key: :recipient_id, dependent: :destroy
+  has_many :muted_groups, dependent: :destroy
+  has_many :muted_group_records, through: :muted_groups, source: :group
+
+  def notifications_enabled?(type)
+    notification_preferences&.dig(type.to_s) != false
+  end
+
+  def muted_group?(group_id)
+    muted_groups.exists?(group_id: group_id)
+  end
 
   validates :username, presence: true, uniqueness: true
   validates :email, presence: true, uniqueness: true

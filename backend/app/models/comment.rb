@@ -21,6 +21,8 @@ class Comment < ApplicationRecord
   def notify_post_owner
     return if user_id == post.user_id
     return if parent.present? && parent.user_id == post.user_id
+    return unless post.user.notifications_enabled?(:comments)
+    return if post_in_muted_group?(post.user)
 
     Notification.create!(
       recipient: post.user,
@@ -33,6 +35,8 @@ class Comment < ApplicationRecord
   def notify_parent_author
     return unless parent.present?
     return if user_id == parent.user_id
+    return unless parent.user.notifications_enabled?(:replies)
+    return if post_in_muted_group?(parent.user)
 
     Notification.create!(
       recipient: parent.user,
@@ -40,5 +44,9 @@ class Comment < ApplicationRecord
       notifiable: self,
       action: "replied"
     )
+  end
+
+  def post_in_muted_group?(recipient)
+    post.groups.any? { |group| recipient.muted_group?(group.id) }
   end
 end
