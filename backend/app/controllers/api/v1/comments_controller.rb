@@ -85,7 +85,7 @@ class Api::V1::CommentsController < Api::V1::BaseController
       user: {
         id: comment.user.id,
         username: comment.user.username,
-        avatar_url: comment.user.avatar_url
+        avatar_url: comment.user.profile_avatar_url
       },
       replies_count: comment.replies.count,
       replies: comment.replies.order(created_at: :asc).map { |reply| comment_json(reply) }

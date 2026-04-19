@@ -19,7 +19,7 @@ class Api::V1::Auth::SessionsController < Devise::SessionsController
             id: user.id,
             email: user.email,
             username: user.username,
-            avatar_url: user.avatar_url,
+            avatar_url: user.profile_avatar_url,
             title: user.title,
             idol_points: user.idol_points
           },

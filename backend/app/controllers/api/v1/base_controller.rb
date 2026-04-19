@@ -3,7 +3,17 @@ class Api::V1::BaseController < ActionController::API
 
   respond_to :json
 
+  before_action :set_active_storage_url_options
+
   private
+
+  def set_active_storage_url_options
+    ActiveStorage::Current.url_options = {
+      host: request.host,
+      port: request.port,
+      protocol: request.protocol
+    }
+  end
 
   def authenticate_user!
     token = request.headers["Authorization"]&.split(" ")&.last

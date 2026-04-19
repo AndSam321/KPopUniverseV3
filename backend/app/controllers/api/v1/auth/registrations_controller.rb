@@ -19,7 +19,7 @@ class Api::V1::Auth::RegistrationsController < Devise::RegistrationsController
             id: resource.id,
             email: resource.email,
             username: resource.username,
-            avatar_url: resource.avatar_url,
+            avatar_url: resource.profile_avatar_url,
             title: resource.title,
             idol_points: resource.idol_points
           },

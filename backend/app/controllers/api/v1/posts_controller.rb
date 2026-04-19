@@ -3,7 +3,6 @@ class Api::V1::PostsController < Api::V1::BaseController
   before_action :set_current_user_optional, only: [:index, :show]
   before_action :set_post, only: [:show, :update, :destroy, :like, :unlike]
   before_action :authorize_user!, only: [:update, :destroy]
-  before_action :set_active_storage_url_options
 
   def following
     followed_ids = current_user.following.pluck(:id) + [current_user.id]
@@ -112,10 +111,6 @@ class Api::V1::PostsController < Api::V1::BaseController
     end
   end
 
-  def set_active_storage_url_options
-    ActiveStorage::Current.url_options = {host: "localhost", port: 9000}
-  end
-
   def set_post
     @post = Post.includes(:user, :groups, images_attachments: :blob).find(params[:id])
   rescue ActiveRecord::RecordNotFound
@@ -141,10 +136,12 @@ class Api::V1::PostsController < Api::V1::BaseController
       false
     end
 
-    post.as_json(include: {
-      user: {only: [:id, :username, :avatar_url]},
-      groups: {only: [:id, :name, :slug]}
-    }).merge(
+    post.as_json(include: {groups: {only: [:id, :name, :slug]}}).merge(
+      user: {
+        id: post.user.id,
+        username: post.user.username,
+        avatar_url: post.user.profile_avatar_url
+      },
       is_liked: is_liked,
       images: post.images.map { |img| image_json(img) }
     )

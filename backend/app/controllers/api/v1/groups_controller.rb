@@ -71,7 +71,7 @@ class Api::V1::GroupsController < Api::V1::BaseController
       user: {
         id: post.user.id,
         username: post.user.username,
-        avatar_url: post.user.avatar_url
+        avatar_url: post.user.profile_avatar_url
       },
       likes_count: post.likes_count,
       comments_count: post.comments_count,

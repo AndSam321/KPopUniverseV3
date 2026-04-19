@@ -51,12 +51,14 @@ class User < ApplicationRecord
     end
   end
 
+  AVATAR_SIZE = 400
+
   def profile_avatar_url
-    if avatar.attached?
-      Rails.application.routes.url_helpers.rails_blob_url(avatar, only_path: true)
-    else
-      avatar_url
-    end
+    return avatar_url unless avatar.attached?
+
+    Rails.application.routes.url_helpers.rails_representation_url(
+      avatar.variant(resize_to_fill: [AVATAR_SIZE, AVATAR_SIZE])
+    )
   end
 
   def jwt_payload
