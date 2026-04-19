@@ -183,11 +183,21 @@
   font-size: 0.95rem;
   box-shadow: 0 4px 10px rgba(34, 21, 76, 0.4);
   transition: transform 0.15s ease, box-shadow 0.15s ease;
+  overflow: hidden;
 }
 
 .kp-nav__profile-circle:hover {
   transform: translateY(-1px);
   box-shadow: 0 6px 16px rgba(34, 21, 76, 0.6);
+}
+
+.kp-nav__profile-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 50%;
+  display: block;
 }
 
 /* Profile Dropdown */
@@ -374,7 +384,12 @@
   box-shadow: 0 4px 12px rgba(159, 160, 255, 0.3);
 }
 
-/* Responsive */
+/* === Mobile bottom tab bar (hidden on desktop) === */
+.kp-nav__mobile-tabs {
+  display: none;
+}
+
+/* === Responsive === */
 @media (max-width: 720px) {
   .kp-nav__center {
     display: none;
@@ -384,8 +399,16 @@
     height: 56px;
   }
 
+  .kp-nav__search {
+    padding: 0 14px;
+    height: 34px;
+  }
+
   .kp-nav__search-input {
-    width: 140px;
+    width: 120px;
+    font-size: 0.82rem;
+    height: 34px;
+    line-height: 34px;
   }
 
   .kp-nav__logo-text {
@@ -398,5 +421,78 @@
 
   .kp-nav__right {
     right: 12px;
+    gap: 8px;
   }
+
+  /* Bottom tab bar — native-app style */
+  .kp-nav__mobile-tabs {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 40;
+    height: 64px;
+    padding-bottom: env(safe-area-inset-bottom, 0);
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-top: 1px solid rgba(173, 167, 255, 0.3);
+    box-shadow: 0 -4px 20px rgba(45, 30, 110, 0.12);
+  }
+
+  .kp-nav__mobile-tab {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    padding: 8px 4px;
+    color: #8a83bd;
+    text-decoration: none;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    transition: color 160ms ease;
+  }
+
+  .kp-nav__mobile-tab:hover {
+    color: #757bc8;
+  }
+
+  .kp-nav__mobile-tab--active {
+    color: #757bc8;
+  }
+
+  .kp-nav__mobile-tab--active svg {
+    filter: drop-shadow(0 2px 4px rgba(117, 123, 200, 0.3));
+  }
+}
+
+@media (max-width: 480px) {
+  .kp-nav__logo-text {
+    display: none;
+  }
+
+  .kp-nav__search-input {
+    width: 90px;
+    font-size: 0.78rem;
+  }
+}
+
+/* Dark mode for mobile bottom tabs */
+:root.dark-mode .kp-nav__mobile-tabs {
+  background: rgba(20, 18, 35, 0.96);
+  border-top-color: rgba(150, 128, 255, 0.15);
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.4);
+}
+
+:root.dark-mode .kp-nav__mobile-tab {
+  color: #7e77a8;
+}
+
+:root.dark-mode .kp-nav__mobile-tab:hover,
+:root.dark-mode .kp-nav__mobile-tab--active {
+  color: #ada7ff;
 }

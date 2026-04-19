@@ -67,7 +67,7 @@ export default function Navbar() {
           <div className="kp-nav__logo-text">k-pop universe</div>
         </div>
 
-        {/* Center: Nav Links */}
+        {/* Center: Nav Links (desktop + tablet) */}
         <div className="kp-nav__center">
           <NavLink
             to="/"
@@ -101,6 +101,38 @@ export default function Navbar() {
           </NavLink>
         </div>
 
+        {/* Mobile bottom tab bar */}
+        <div className="kp-nav__mobile-tabs">
+          <NavLink
+            to="/"
+            end
+            className={({ isActive }) =>
+              isActive ? "kp-nav__mobile-tab kp-nav__mobile-tab--active" : "kp-nav__mobile-tab"
+            }
+          >
+            <TrendingUp size={22} />
+            <span>for you</span>
+          </NavLink>
+          <NavLink
+            to="/following"
+            className={({ isActive }) =>
+              isActive ? "kp-nav__mobile-tab kp-nav__mobile-tab--active" : "kp-nav__mobile-tab"
+            }
+          >
+            <ContactRound size={22} />
+            <span>following</span>
+          </NavLink>
+          <NavLink
+            to="/groups"
+            className={({ isActive }) =>
+              isActive ? "kp-nav__mobile-tab kp-nav__mobile-tab--active" : "kp-nav__mobile-tab"
+            }
+          >
+            <Users size={22} />
+            <span>groups</span>
+          </NavLink>
+        </div>
+
         {/* Right: Search + Profile */}
         <div className="kp-nav__right">
           <div className="kp-nav__search">
@@ -124,7 +156,15 @@ export default function Navbar() {
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
               >
                 <div className="kp-nav__profile-circle">
-                  {user.username?.charAt(0).toUpperCase() || "U"}
+                  {user.avatar_url ? (
+                    <img
+                      src={user.avatar_url}
+                      alt={user.username}
+                      className="kp-nav__profile-img"
+                    />
+                  ) : (
+                    user.username?.charAt(0).toUpperCase() || "U"
+                  )}
                 </div>
               </button>
 

@@ -67,3 +67,10 @@ div { display: block; }
   background: linear-gradient(135deg, var(--dark-bg-start) 0%, var(--dark-bg-mid) 45%, var(--dark-bg-end) 100%);
   background-attachment: fixed;
 }
+
+/* Reserve space for the mobile bottom tab bar */
+@media (max-width: 720px) {
+  body {
+    padding-bottom: calc(64px + env(safe-area-inset-bottom, 0));
+  }
+}
