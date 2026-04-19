@@ -8,7 +8,9 @@
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  background: linear-gradient(135deg, #e0c3fc 0%, #bbadff 45%, #757bc8 100%);
+  background:
+    radial-gradient(circle at 50% -10%, rgba(255, 255, 255, 0.25), transparent 50%),
+    linear-gradient(160deg, #c4b0ee 0%, #a697e1 45%, #6d74bd 100%);
   font-family: "Zen Kaku Gothic New", system-ui, sans-serif;
 }
 
@@ -57,8 +59,11 @@
   padding: 28px;
   border-radius: 20px;
   background: #ffffff;
-  border: 1px solid rgba(173, 167, 255, 0.4);
-  box-shadow: 0 12px 35px rgba(117, 123, 200, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow:
+    0 24px 60px -16px rgba(45, 30, 110, 0.35),
+    0 4px 12px -2px rgba(45, 30, 110, 0.12),
+    0 0 0 1px rgba(117, 90, 190, 0.08);
 }
 
 .profile-hero__grain { display: none; }
@@ -325,8 +330,8 @@
 .profile-stat__label {
   font-family: inherit;
   font-size: 0.78rem;
-  font-weight: 500;
-  color: #8a83bd;
+  font-weight: 600;
+  color: #6d66a8;
 }
 
 .profile-stat__divider {
@@ -342,8 +347,11 @@
   padding: 20px 24px;
   border-radius: 16px;
   background: #ffffff;
-  border: 1px solid rgba(173, 167, 255, 0.4);
-  box-shadow: 0 6px 20px rgba(117, 123, 200, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow:
+    0 16px 40px -14px rgba(45, 30, 110, 0.28),
+    0 2px 6px -1px rgba(45, 30, 110, 0.08),
+    0 0 0 1px rgba(117, 90, 190, 0.06);
 }
 
 .profile-block__label {
@@ -352,9 +360,11 @@
   gap: 6px;
   font-family: inherit;
   font-size: 0.8rem;
-  font-weight: 600;
-  color: #8a83bd;
+  font-weight: 700;
+  color: #6d66a8;
   margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
 }
 
 /* ---- BIO ---- */
