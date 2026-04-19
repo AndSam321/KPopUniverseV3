@@ -22,6 +22,7 @@ import {
 } from "lucide-react";
 import FollowListModal from "./FollowListModal";
 import AvatarCropper from "./AvatarCropper";
+import ProfileToast from "./ProfileToast";
 import "./Profile.css";
 
 function Profile() {
@@ -40,6 +41,7 @@ function Profile() {
   const [followError, setFollowError] = useState("");
   const [modalTab, setModalTab] = useState(null);
   const [cropSource, setCropSource] = useState(null);
+  const [toast, setToast] = useState(null);
   const fileInputRef = useRef(null);
 
   const isOwnProfile = authUser && user && authUser.id === user.id;
@@ -119,17 +121,26 @@ function Profile() {
       return;
     }
 
+    const optimisticUrl = URL.createObjectURL(croppedBlob);
+    const previousAvatarUrl = user.avatar_url;
+    setUser((prev) => ({ ...prev, avatar_url: optimisticUrl }));
+    updateUser({ ...user, avatar_url: optimisticUrl });
+
     try {
-      setSaving(true);
       const formData = new FormData();
       formData.append("avatar", croppedFile);
       const updatedUser = await updateProfile(formData);
       setUser(updatedUser);
       updateUser(updatedUser);
+      URL.revokeObjectURL(optimisticUrl);
     } catch (err) {
-      setError(err.response?.data?.message || "failed to upload avatar");
-    } finally {
-      setSaving(false);
+      setUser((prev) => ({ ...prev, avatar_url: previousAvatarUrl }));
+      updateUser({ ...user, avatar_url: previousAvatarUrl });
+      URL.revokeObjectURL(optimisticUrl);
+      setToast({
+        variant: "error",
+        message: err.response?.data?.message || "couldn't save avatar — try again",
+      });
     }
   };
 
@@ -458,6 +469,14 @@ function Profile() {
           file={cropSource}
           onSave={handleCropSave}
           onCancel={() => setCropSource(null)}
+        />
+      )}
+
+      {toast && (
+        <ProfileToast
+          message={toast.message}
+          variant={toast.variant}
+          onDismiss={() => setToast(null)}
         />
       )}
     </div>

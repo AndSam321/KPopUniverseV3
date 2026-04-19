@@ -1,0 +1,71 @@
+.profile-toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1200;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px 10px 14px;
+  border-radius: 10px;
+  font-family: "Zen Kaku Gothic New", system-ui, sans-serif;
+  font-size: 0.88rem;
+  font-weight: 600;
+  box-shadow: 0 10px 30px -8px rgba(20, 16, 38, 0.3);
+  animation: toastRise 260ms cubic-bezier(0.22, 1, 0.36, 1);
+  max-width: calc(100% - 32px);
+}
+
+@keyframes toastRise {
+  from { opacity: 0; transform: translate(-50%, 12px); }
+  to   { opacity: 1; transform: translate(-50%, 0); }
+}
+
+.profile-toast--error {
+  background: #fdecec;
+  color: #a53b3b;
+  border: 1px solid #f5c4c4;
+}
+
+.profile-toast--success {
+  background: #e8f7ef;
+  color: #1f7a4d;
+  border: 1px solid #b5e0c4;
+}
+
+.profile-toast__icon { flex-shrink: 0; }
+.profile-toast__message { line-height: 1.35; }
+
+.profile-toast__dismiss {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  border: none;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 140ms ease, background 140ms ease;
+}
+
+.profile-toast__dismiss:hover {
+  opacity: 1;
+  background: rgba(0, 0, 0, 0.05);
+}
+
+:root.dark-mode .profile-toast--error {
+  background: #3a2030;
+  color: #ff9dc7;
+  border-color: #5a3548;
+}
+
+:root.dark-mode .profile-toast--success {
+  background: #1f3a2a;
+  color: #7bd9a5;
+  border-color: #2f5540;
+}
