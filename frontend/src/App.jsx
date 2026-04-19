@@ -36,6 +36,14 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route
+            path="/following"
+            element={
+              <PrivateRoute>
+                <Home variant="following" />
+              </PrivateRoute>
+            }
+          />
+          <Route
             path="/posts/:id"
             element={
               <PrivateRoute>

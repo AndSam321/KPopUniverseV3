@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { getPosts } from "../../api/postsApi";
+import { getPosts, getFollowingFeed } from "../../api/postsApi";
 import { useNavigationLoading } from "../../context/NavigationLoadingContext";
 import PostCard from "./PostCard";
 import PostCardSkeleton from "../skeletons/PostCardSkeleton";
 import "./Feed.css";
 
-const Feed = () => {
+const Feed = ({ variant = "for-you" }) => {
   const { startLoading, completeLoading } = useNavigationLoading();
   const [posts, setPosts] = useState([]);
   const [initialLoading, setInitialLoading] = useState(true);
@@ -23,7 +23,9 @@ const Feed = () => {
         setPageLoading(true);
       }
       setError("");
-      const data = await getPosts(page);
+      const data = variant === "following"
+        ? await getFollowingFeed(page)
+        : await getPosts(page);
       setPosts(data.data);
       setCurrentPage(data.meta.current_page);
       setTotalPages(data.meta.total_pages);
@@ -35,7 +37,12 @@ const Feed = () => {
       setPageLoading(false);
       completeLoading();
     }
-  }, [posts.length, startLoading, completeLoading]);
+  }, [posts.length, variant, startLoading, completeLoading]);
+
+  useEffect(() => {
+    setPosts([]);
+    setCurrentPage(1);
+  }, [variant]);
 
   useEffect(() => {
     fetchPosts(currentPage);
@@ -58,7 +65,7 @@ const Feed = () => {
   return (
     <div className="feed">
       <div className="feed__header">
-        <h1>for you</h1>
+        <h1>{variant === "following" ? "following" : "for you"}</h1>
       </div>
 
       {initialLoading ? (
@@ -76,7 +83,11 @@ const Feed = () => {
         </div>
       ) : posts.length === 0 ? (
         <div className="feed__empty">
-          <p>No posts yet. Be the first to create one!</p>
+          <p>
+            {variant === "following"
+              ? "No posts from people you follow yet. Find users to follow!"
+              : "No posts yet. Be the first to create one!"}
+          </p>
         </div>
       ) : (
         <>
