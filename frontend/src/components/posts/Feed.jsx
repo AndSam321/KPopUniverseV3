@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { getPosts, getFollowingFeed } from "../../api/postsApi";
 import { useNavigationLoading } from "../../context/NavigationLoadingContext";
 import PostCard from "./PostCard";
@@ -8,58 +8,88 @@ import "./Feed.css";
 const Feed = ({ variant = "for-you" }) => {
   const { startLoading, completeLoading } = useNavigationLoading();
   const [posts, setPosts] = useState([]);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
   const [initialLoading, setInitialLoading] = useState(true);
-  const [pageLoading, setPageLoading] = useState(false);
+  const [loadingMore, setLoadingMore] = useState(false);
   const [error, setError] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
+  const sentinelRef = useRef(null);
 
-  const fetchPosts = useCallback(async (page) => {
-    try {
-      if (posts.length === 0) {
-        setInitialLoading(true);
-        startLoading();
-      } else {
-        setPageLoading(true);
-      }
-      setError("");
-      const data = variant === "following"
-        ? await getFollowingFeed(page)
-        : await getPosts(page);
-      setPosts(data.data);
-      setCurrentPage(data.meta.current_page);
-      setTotalPages(data.meta.total_pages);
-    } catch (err) {
-      setError("Failed to load posts. Please try again.");
-      setPosts([]);
-    } finally {
-      setInitialLoading(false);
-      setPageLoading(false);
-      completeLoading();
-    }
-  }, [posts.length, variant, startLoading, completeLoading]);
+  const fetchFn = variant === "following" ? getFollowingFeed : getPosts;
 
   useEffect(() => {
+    let cancelled = false;
     setPosts([]);
-    setCurrentPage(1);
+    setPage(1);
+    setHasMore(true);
+    setError("");
+    setInitialLoading(true);
+    startLoading();
+
+    fetchFn(1)
+      .then((data) => {
+        if (cancelled) return;
+        setPosts(data.data);
+        setHasMore(data.meta.current_page < data.meta.total_pages);
+      })
+      .catch(() => {
+        if (!cancelled) setError("Failed to load posts. Please try again.");
+      })
+      .finally(() => {
+        if (cancelled) return;
+        setInitialLoading(false);
+        completeLoading();
+      });
+
+    return () => {
+      cancelled = true;
+    };
   }, [variant]);
 
+  const loadMore = useCallback(async () => {
+    if (loadingMore || !hasMore || initialLoading) return;
+    setLoadingMore(true);
+    const nextPage = page + 1;
+    try {
+      const data = await fetchFn(nextPage);
+      setPosts((prev) => [...prev, ...data.data]);
+      setPage(nextPage);
+      setHasMore(data.meta.current_page < data.meta.total_pages);
+    } catch (err) {
+      setError("Failed to load more posts.");
+    } finally {
+      setLoadingMore(false);
+    }
+  }, [loadingMore, hasMore, initialLoading, page, fetchFn]);
+
   useEffect(() => {
-    fetchPosts(currentPage);
-  }, [currentPage, fetchPosts]);
+    if (!hasMore || initialLoading) return;
+    const el = sentinelRef.current;
+    if (!el) return;
 
-  const handlePreviousPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-  };
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) loadMore();
+      },
+      { rootMargin: "400px 0px" }
+    );
 
-  const handleNextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [hasMore, initialLoading, loadMore]);
+
+  const retry = () => {
+    setError("");
+    setPage(1);
+    setHasMore(true);
+    setInitialLoading(true);
+    fetchFn(1)
+      .then((data) => {
+        setPosts(data.data);
+        setHasMore(data.meta.current_page < data.meta.total_pages);
+      })
+      .catch(() => setError("Failed to load posts. Please try again."))
+      .finally(() => setInitialLoading(false));
   };
 
   return (
@@ -74,10 +104,10 @@ const Feed = ({ variant = "for-you" }) => {
           <PostCardSkeleton showImage={false} />
           <PostCardSkeleton showImage={true} />
         </div>
-      ) : error ? (
+      ) : error && posts.length === 0 ? (
         <div className="feed__error">
           <p>{error}</p>
-          <button onClick={() => fetchPosts(currentPage)} className="feed__retry-btn">
+          <button onClick={retry} className="feed__retry-btn">
             Retry
           </button>
         </div>
@@ -91,35 +121,32 @@ const Feed = ({ variant = "for-you" }) => {
         </div>
       ) : (
         <>
-          {pageLoading && (
-            <div className="feed__page-loading">
-              <div className="feed__page-spinner" />
-            </div>
-          )}
-          <div className={`feed__posts${pageLoading ? " feed__posts--loading" : ""}`}>
+          <div className="feed__posts">
             {posts.map((post) => (
               <PostCard key={post.id} post={post} />
             ))}
           </div>
 
-          {totalPages > 1 && (
-            <div className="feed__pagination">
-              <button
-                onClick={handlePreviousPage}
-                disabled={currentPage === 1 || pageLoading}
-                className="feed__page-btn"
-              >
-                Previous
-              </button>
-              <span className="feed__page-info">
-                Page {currentPage} of {totalPages}
-              </span>
-              <button
-                onClick={handleNextPage}
-                disabled={currentPage === totalPages || pageLoading}
-                className="feed__page-btn"
-              >
-                Next
+          {hasMore && (
+            <div ref={sentinelRef} className="feed__sentinel" aria-hidden="true">
+              {loadingMore && (
+                <div className="feed__more-loading">
+                  <div className="feed__more-spinner" />
+                  <span>loading more…</span>
+                </div>
+              )}
+            </div>
+          )}
+
+          {!hasMore && posts.length > 0 && (
+            <div className="feed__end">you're all caught up ✨</div>
+          )}
+
+          {error && posts.length > 0 && (
+            <div className="feed__more-error">
+              <span>{error}</span>
+              <button onClick={loadMore} className="feed__retry-btn">
+                retry
               </button>
             </div>
           )}
