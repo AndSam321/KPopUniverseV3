@@ -1,8 +1,27 @@
 import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
-import { getMyProfile, getUserByUsername, updateProfile, followUser, unfollowUser } from "../../api/userApi";
+import {
+  getMyProfile,
+  getUserByUsername,
+  updateProfile,
+  followUser,
+  unfollowUser,
+} from "../../api/userApi";
 import { useAuth } from "../../context/AuthContext";
-import { Camera, Star, Award, Edit3, X, Check, Trophy, UserPlus, UserCheck } from "lucide-react";
+import {
+  Star,
+  Award,
+  Edit3,
+  X,
+  Check,
+  Trophy,
+  UserPlus,
+  UserCheck,
+  Quote,
+  CalendarDays,
+} from "lucide-react";
+import FollowListModal from "./FollowListModal";
+import AvatarCropper from "./AvatarCropper";
 import "./Profile.css";
 
 function Profile() {
@@ -19,6 +38,8 @@ function Profile() {
   const [saving, setSaving] = useState(false);
   const [followPending, setFollowPending] = useState(false);
   const [followError, setFollowError] = useState("");
+  const [modalTab, setModalTab] = useState(null);
+  const [cropSource, setCropSource] = useState(null);
   const fileInputRef = useRef(null);
 
   const isOwnProfile = authUser && user && authUser.id === user.id;
@@ -48,14 +69,9 @@ function Profile() {
     const fetchProfile = async () => {
       try {
         setLoading(true);
-        let userData;
-
-        if (username) {
-          userData = await getUserByUsername(username);
-        } else {
-          userData = await getMyProfile();
-        }
-
+        const userData = username
+          ? await getUserByUsername(username)
+          : await getMyProfile();
         setUser(userData);
       } catch (err) {
         setError(err.response?.data?.message || "failed to load profile");
@@ -86,9 +102,35 @@ function Profile() {
   const handleAvatarChange = (e) => {
     const file = e.target.files[0];
     if (!file) return;
-    setAvatarFile(file);
-    if (avatarPreview) URL.revokeObjectURL(avatarPreview);
-    setAvatarPreview(URL.createObjectURL(file));
+    setCropSource(file);
+    e.target.value = "";
+  };
+
+  const handleCropSave = async (croppedBlob) => {
+    const croppedFile = new File([croppedBlob], "avatar.jpg", {
+      type: "image/jpeg",
+    });
+    setCropSource(null);
+
+    if (editing) {
+      setAvatarFile(croppedFile);
+      if (avatarPreview) URL.revokeObjectURL(avatarPreview);
+      setAvatarPreview(URL.createObjectURL(croppedBlob));
+      return;
+    }
+
+    try {
+      setSaving(true);
+      const formData = new FormData();
+      formData.append("avatar", croppedFile);
+      const updatedUser = await updateProfile(formData);
+      setUser(updatedUser);
+      updateUser(updatedUser);
+    } catch (err) {
+      setError(err.response?.data?.message || "failed to upload avatar");
+    } finally {
+      setSaving(false);
+    }
   };
 
   const handleSave = async () => {
@@ -96,9 +138,7 @@ function Profile() {
       setSaving(true);
       const formData = new FormData();
       formData.append("bio", bio);
-      if (avatarFile) {
-        formData.append("avatar", avatarFile);
-      }
+      if (avatarFile) formData.append("avatar", avatarFile);
 
       const updatedUser = await updateProfile(formData);
       setUser(updatedUser);
@@ -119,7 +159,10 @@ function Profile() {
   if (loading) {
     return (
       <div className="profile-page">
-        <div className="profile-loading">loading profile...</div>
+        <div className="profile-loading">
+          <div className="profile-loading__ring" />
+          <p>tuning in…</p>
+        </div>
       </div>
     );
   }
@@ -152,48 +195,33 @@ function Profile() {
 
   const displayAvatar = avatarPreview || user.avatar_url;
 
+  const memberSince = new Date(user.created_at).toLocaleDateString("en-US", {
+    month: "short",
+    year: "numeric",
+  });
+
   return (
     <div className="profile-page">
       <div className="profile-container">
-        <div className="profile-card">
-          {isOwnProfile && !editing && (
-            <button className="edit-profile-btn" onClick={handleEditClick}>
-              <Edit3 size={16} />
-              Edit Profile
-            </button>
-          )}
-          {!isOwnProfile && authUser && (
-            <>
-              <button
-                className={`follow-btn${user.is_following ? " follow-btn--following" : ""}`}
-                onClick={handleFollowToggle}
-                disabled={followPending}
-              >
-                {user.is_following ? <UserCheck size={16} /> : <UserPlus size={16} />}
-                {user.is_following ? "Following" : "Follow"}
-              </button>
-              {followError && (
-                <div className="follow-error">{followError}</div>
-              )}
-            </>
-          )}
-
-          <div className="profile-header">
-            <div className="profile-avatar">
-              {editing ? (
+        {/* ========== HERO ========== */}
+        <section className="profile-hero">
+          <div className="profile-hero__top">
+            <div className="profile-avatar-frame">
+              {isOwnProfile ? (
                 <div
-                  className="avatar-upload"
+                  className="profile-avatar-frame__upload"
                   onClick={() => fileInputRef.current?.click()}
                 >
                   {displayAvatar ? (
                     <img src={displayAvatar} alt={user.username} />
                   ) : (
-                    <div className="avatar-placeholder">
+                    <div className="profile-avatar-frame__placeholder">
                       {user.username.charAt(0).toUpperCase()}
                     </div>
                   )}
-                  <div className="avatar-upload-overlay">
-                    <Camera size={24} />
+                  <div className="profile-avatar-frame__overlay">
+                    <Edit3 size={18} strokeWidth={2.2} />
+                    <span>change</span>
                   </div>
                   <input
                     ref={fileInputRef}
@@ -204,156 +232,234 @@ function Profile() {
                   />
                 </div>
               ) : displayAvatar ? (
-                <img src={displayAvatar} alt={user.username} />
+                <img
+                  className="profile-avatar-frame__img"
+                  src={displayAvatar}
+                  alt={user.username}
+                />
               ) : (
-                <div className="avatar-placeholder">
+                <div className="profile-avatar-frame__placeholder">
                   {user.username.charAt(0).toUpperCase()}
                 </div>
               )}
             </div>
 
-            <div className="profile-info">
-              <h2 className="profile-username">{user.username}</h2>
-              <p className="profile-title">{user.title}</p>
-            </div>
-          </div>
-
-          <div className="profile-stats">
-            <div className="stat-item">
-              <span className="stat-label">followers</span>
-              <span className="stat-value">{user.followers_count ?? 0}</span>
-            </div>
-            <div className="stat-item">
-              <span className="stat-label">following</span>
-              <span className="stat-value">{user.following_count ?? 0}</span>
-            </div>
-            <div className="stat-item">
-              <span className="stat-label">idol points</span>
-              <span className="stat-value">{user.idol_points}</span>
-            </div>
-            <div className="stat-item">
-              <span className="stat-label">member since</span>
-              <span className="stat-value">
-                {new Date(user.created_at).toLocaleDateString("en-US", {
-                  month: "short",
-                  year: "numeric",
-                })}
-              </span>
-            </div>
-          </div>
-
-          {/* Bio Section */}
-          {editing ? (
-            <div className="profile-bio">
-              <h3>about</h3>
-              <textarea
-                className="bio-edit-textarea"
-                value={bio}
-                onChange={(e) => setBio(e.target.value.slice(0, 300))}
-                placeholder="Tell us about yourself..."
-                rows={4}
-                maxLength={300}
-              />
-              <span className="char-count">{bio.length}/300</span>
-            </div>
-          ) : (
-            user.bio && (
-              <div className="profile-bio">
-                <h3>about</h3>
-                <p>{user.bio}</p>
-              </div>
-            )
-          )}
-
-          {/* Points Tracker */}
-          {pointsInfo && (
-            <div className="points-tracker">
-              <h3>
-                <Trophy size={16} />
-                Points Progress
-              </h3>
-              {isMaxLevel ? (
-                <div className="progress-info">
-                  <span className="current-title">
-                    <Star size={14} /> {pointsInfo.current_title}
+            <div className="profile-identity">
+              <h1 className="profile-identity__name">{user.username}</h1>
+              <div className="profile-identity__titleRow">
+                <span className="profile-identity__rank">
+                  <Star size={12} strokeWidth={2.5} />
+                  {user.title}
+                  <span className="profile-identity__rankPts">
+                    · {user.idol_points} pts
                   </span>
-                  <span className="max-level">Max level reached!</span>
-                </div>
-              ) : (
+                </span>
+                <span className="profile-identity__since">
+                  <CalendarDays size={12} strokeWidth={2.2} />
+                  since {memberSince}
+                </span>
+              </div>
+            </div>
+
+            <div className="profile-hero__action">
+              {isOwnProfile && !editing && (
+                <button className="hero-btn hero-btn--edit" onClick={handleEditClick}>
+                  <Edit3 size={14} strokeWidth={2.5} />
+                  edit
+                </button>
+              )}
+              {!isOwnProfile && authUser && (
                 <>
-                  <div className="progress-info">
-                    <span className="current-title">
-                      <Star size={14} /> {pointsInfo.current_title}
-                    </span>
-                    <span className="next-title">
-                      {pointsInfo.next_title} <Star size={14} />
-                    </span>
-                  </div>
-                  <div className="progress-bar-container">
-                    <div
-                      className="progress-bar-fill"
-                      style={{ width: `${progressPercent}%` }}
-                    />
-                  </div>
-                  <p className="progress-points">
-                    {pointsInfo.current_points} / {totalNeeded} points
-                  </p>
+                  <button
+                    className={`hero-btn hero-btn--follow${
+                      user.is_following ? " hero-btn--following" : ""
+                    }`}
+                    onClick={handleFollowToggle}
+                    disabled={followPending}
+                  >
+                    {user.is_following ? (
+                      <UserCheck size={14} strokeWidth={2.5} />
+                    ) : (
+                      <UserPlus size={14} strokeWidth={2.5} />
+                    )}
+                    {user.is_following ? "following" : "follow"}
+                  </button>
+                  {followError && (
+                    <div className="hero-btn__error">{followError}</div>
+                  )}
                 </>
               )}
             </div>
-          )}
-
-          {/* Badges Section */}
-          <div className="badges-section">
-            <h3>
-              <Award size={16} />
-              Badges
-            </h3>
-            {user.badges && user.badges.length > 0 ? (
-              <div className="badge-grid">
-                {user.badges.map((badge, index) => (
-                  <div className="badge-item" key={index}>
-                    <span className="badge-icon">{badge.icon}</span>
-                    <span className="badge-name">{badge.name}</span>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <p className="badges-empty">
-                No badges earned yet. Keep posting and engaging!
-              </p>
-            )}
           </div>
 
-          {/* Edit Actions */}
-          {editing && (
-            <div className="edit-actions">
-              <button
-                className="edit-cancel-btn"
-                onClick={handleCancel}
-                disabled={saving}
-              >
-                <X size={16} />
-                Cancel
-              </button>
-              <button
-                className="edit-save-btn"
-                onClick={handleSave}
-                disabled={saving}
-              >
-                {saving ? (
-                  "Saving..."
-                ) : (
-                  <>
-                    <Check size={16} />
-                    Save
-                  </>
-                )}
-              </button>
+          {/* ========== STATS STRIP ========== */}
+          <div className="profile-stats">
+            <button
+              type="button"
+              className="profile-stat profile-stat--interactive"
+              onClick={() => setModalTab("followers")}
+            >
+              <span className="profile-stat__value">
+                {user.followers_count ?? 0}
+              </span>
+              <span className="profile-stat__label">followers</span>
+            </button>
+
+            <span className="profile-stat__divider" aria-hidden="true" />
+
+            <button
+              type="button"
+              className="profile-stat profile-stat--interactive"
+              onClick={() => setModalTab("following")}
+            >
+              <span className="profile-stat__value">
+                {user.following_count ?? 0}
+              </span>
+              <span className="profile-stat__label">following</span>
+            </button>
+          </div>
+        </section>
+
+        {/* ========== BIO CARD ========== */}
+        {(editing || user.bio) && (
+          <section className="profile-block profile-bio">
+            <div className="profile-block__label">
+              <Quote size={12} strokeWidth={2.5} />
+              <span>about</span>
             </div>
+            {editing ? (
+              <>
+                <textarea
+                  className="profile-bio__textarea"
+                  value={bio}
+                  onChange={(e) => setBio(e.target.value.slice(0, 300))}
+                  placeholder="About me..."
+                  rows={4}
+                  maxLength={300}
+                />
+                <span className="profile-bio__count">{bio.length}/300</span>
+              </>
+            ) : (
+              <p className="profile-bio__body">{user.bio}</p>
+            )}
+          </section>
+        )}
+
+        {/* ========== POINTS TRACKER ========== */}
+        {pointsInfo && (
+          <section className="profile-block profile-progress">
+            <div className="profile-block__label">
+              <Trophy size={12} strokeWidth={2.5} />
+              <span>progress</span>
+            </div>
+
+            {isMaxLevel ? (
+              <div className="profile-progress__max">
+                <div className="profile-progress__tier profile-progress__tier--current">
+                  <Star size={14} strokeWidth={2.2} fill="currentColor" />
+                  {pointsInfo.current_title}
+                </div>
+                <span className="profile-progress__maxBadge">max tier reached</span>
+              </div>
+            ) : (
+              <>
+                <div className="profile-progress__tiers">
+                  <div className="profile-progress__tier profile-progress__tier--current">
+                    <Star size={14} strokeWidth={2.2} fill="currentColor" />
+                    {pointsInfo.current_title}
+                  </div>
+                  <div className="profile-progress__tier profile-progress__tier--next">
+                    {pointsInfo.next_title}
+                    <Star size={14} strokeWidth={2.2} />
+                  </div>
+                </div>
+
+                <div className="profile-progress__bar">
+                  <div
+                    className="profile-progress__fill"
+                    style={{ width: `${progressPercent}%` }}
+                  >
+                    <span className="profile-progress__shimmer" />
+                  </div>
+                </div>
+
+                <p className="profile-progress__meta">
+                  <span>{pointsInfo.current_points}</span>
+                  <span className="profile-progress__sep">/</span>
+                  <span>{totalNeeded} idol points</span>
+                </p>
+              </>
+            )}
+          </section>
+        )}
+
+        {/* ========== BADGES ========== */}
+        <section className="profile-block profile-badges">
+          <div className="profile-block__label">
+            <Award size={12} strokeWidth={2.5} />
+            <span>badges</span>
+          </div>
+
+          {user.badges && user.badges.length > 0 ? (
+            <div className="profile-badges__grid">
+              {user.badges.map((badge, index) => (
+                <div className="profile-badge" key={index}>
+                  <span className="profile-badge__icon">{badge.icon}</span>
+                  <span className="profile-badge__name">{badge.name}</span>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="profile-badges__empty">
+              no badges yet — post, comment, and hype up the community to earn your first.
+            </p>
           )}
-        </div>
+        </section>
+
+        {/* ========== EDIT ACTION BAR ========== */}
+        {editing && (
+          <div className="profile-edit-actions">
+            <button
+              className="profile-edit-btn profile-edit-btn--cancel"
+              onClick={handleCancel}
+              disabled={saving}
+            >
+              <X size={14} strokeWidth={2.5} />
+              cancel
+            </button>
+            <button
+              className="profile-edit-btn profile-edit-btn--save"
+              onClick={handleSave}
+              disabled={saving}
+            >
+              {saving ? (
+                <>saving…</>
+              ) : (
+                <>
+                  <Check size={14} strokeWidth={2.5} />
+                  save
+                </>
+              )}
+            </button>
+          </div>
+        )}
       </div>
+
+      {modalTab && (
+        <FollowListModal
+          username={user.username}
+          initialTab={modalTab}
+          onClose={() => setModalTab(null)}
+        />
+      )}
+
+      {cropSource && (
+        <AvatarCropper
+          file={cropSource}
+          onSave={handleCropSave}
+          onCancel={() => setCropSource(null)}
+        />
+      )}
     </div>
   );
 }

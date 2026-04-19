@@ -1,0 +1,220 @@
+/* =================================================================
+   AVATAR CROPPER — simple, consistent with site
+   ================================================================= */
+
+.cropper-modal__backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+  background: rgba(20, 16, 38, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  font-family: "Zen Kaku Gothic New", system-ui, sans-serif;
+}
+
+.cropper-modal {
+  width: 100%;
+  max-width: 520px;
+  max-height: 92dvh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 20px;
+  background: #ffffff;
+  border: 1px solid rgba(173, 167, 255, 0.4);
+  box-shadow: 0 20px 60px -15px rgba(76, 50, 140, 0.4);
+}
+
+.cropper-modal__header {
+  padding: 20px 24px 10px;
+}
+
+.cropper-modal__title {
+  margin: 0;
+  font-family: inherit;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #2d2555;
+}
+
+.cropper-modal__hint {
+  margin: 4px 0 0;
+  font-size: 0.8rem;
+  color: #8a83bd;
+}
+
+/* ======= CROP STAGE ======= */
+.cropper-modal__stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  max-height: 52dvh;
+  background: #f3f0ff;
+}
+
+/* ======= CONTROLS ======= */
+.cropper-modal__controls {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 14px 24px 10px;
+}
+
+.cropper-control {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px;
+  border-radius: 10px;
+  background: #f9f9ff;
+  border: 1px solid #ada7ff;
+  color: #757bc8;
+}
+
+.cropper-control__slider {
+  flex: 1;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  background: #ada7ff;
+  border-radius: 4px;
+  outline: none;
+  cursor: pointer;
+}
+
+.cropper-control__slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #757bc8;
+  border: 2px solid #fff;
+  cursor: grab;
+}
+
+.cropper-control__slider::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #757bc8;
+  border: 2px solid #fff;
+  cursor: grab;
+}
+
+.cropper-control__rotate {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 14px;
+  border-radius: 10px;
+  border: 1px solid #ada7ff;
+  background: #f9f9ff;
+  color: #757bc8;
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 160ms ease;
+}
+
+.cropper-control__rotate:hover {
+  background: #ebe8ff;
+}
+
+/* ======= ACTIONS ======= */
+.cropper-modal__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 12px 24px 20px;
+}
+
+.cropper-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 20px;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: background 160ms ease, transform 140ms ease;
+}
+
+.cropper-btn--cancel {
+  background: #f3f0ff;
+  color: #757bc8;
+  border-color: #ada7ff;
+}
+
+.cropper-btn--cancel:hover:not(:disabled) {
+  background: #e8e6ff;
+}
+
+.cropper-btn--save {
+  color: #fff;
+  background: #757bc8;
+}
+
+.cropper-btn--save:hover:not(:disabled) {
+  background: #646acc;
+  transform: translateY(-1px);
+}
+
+.cropper-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ======= DARK MODE ======= */
+:root.dark-mode .cropper-modal {
+  background: #1e1e2f;
+  border-color: #2d2d44;
+}
+
+:root.dark-mode .cropper-modal__title { color: #e0dcff; }
+:root.dark-mode .cropper-modal__hint  { color: #9fa0ff; }
+:root.dark-mode .cropper-modal__stage { background: #252538; }
+
+:root.dark-mode .cropper-control,
+:root.dark-mode .cropper-control__rotate {
+  background: #252538;
+  border-color: #3a3a55;
+  color: #ada7ff;
+}
+
+:root.dark-mode .cropper-control__rotate:hover {
+  background: #2d2d44;
+}
+
+:root.dark-mode .cropper-btn--cancel {
+  background: #252538;
+  color: #ada7ff;
+  border-color: #3a3a55;
+}
+
+:root.dark-mode .cropper-btn--cancel:hover:not(:disabled) {
+  background: #2d2d44;
+}
+
+:root.dark-mode .cropper-btn--save {
+  background: #5a5fc8;
+}
+
+/* ======= MOBILE ======= */
+@media (max-width: 520px) {
+  .cropper-modal__backdrop { align-items: flex-end; padding: 0; }
+  .cropper-modal {
+    max-width: 100%;
+    max-height: 94dvh;
+    border-radius: 20px 20px 0 0;
+  }
+}
