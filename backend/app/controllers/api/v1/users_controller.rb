@@ -47,7 +47,31 @@ class Api::V1::UsersController < Api::V1::BaseController
     render json: {status: "success", data: user_data(current_user)}
   end
 
+  def followers
+    user = User.find_by!(username: params[:id])
+    render json: {data: user.followers.map { |u| user_card(u) }}
+  rescue ActiveRecord::RecordNotFound
+    render json: {status: "error", message: "User not found"}, status: :not_found
+  end
+
+  def following
+    user = User.find_by!(username: params[:id])
+    render json: {data: user.following.map { |u| user_card(u) }}
+  rescue ActiveRecord::RecordNotFound
+    render json: {status: "error", message: "User not found"}, status: :not_found
+  end
+
   private
+
+  def user_card(user)
+    {
+      id: user.id,
+      username: user.username,
+      avatar_url: user.profile_avatar_url,
+      title: user.title,
+      is_following: current_user.following?(user)
+    }
+  end
 
   def profile_params
     params.permit(:bio, :avatar)
@@ -70,6 +94,9 @@ class Api::V1::UsersController < Api::V1::BaseController
       points_info: user.points_info,
       notification_preferences: user.notification_preferences,
       muted_group_ids: user.muted_groups.pluck(:group_id),
+      followers_count: user.followers.count,
+      following_count: user.following.count,
+      is_following: user != current_user && current_user.following?(user),
       created_at: user.created_at
     }
   end

@@ -5,6 +5,27 @@ class Api::V1::PostsController < Api::V1::BaseController
   before_action :authorize_user!, only: [:update, :destroy]
   before_action :set_active_storage_url_options
 
+  def following
+    followed_ids = current_user.following.pluck(:id) + [current_user.id]
+    @pagy, @posts = pagy(
+      Post.includes(:user, :groups, images_attachments: :blob)
+        .where(user_id: followed_ids)
+        .order(created_at: :desc),
+      items: params[:per_page] || 10
+    )
+
+    @liked_post_ids = current_user.likes.where(post_id: @posts.map(&:id)).pluck(:post_id).to_set
+
+    render json: {
+      data: @posts.map { |post| post_json(post, @liked_post_ids) },
+      meta: {
+        current_page: @pagy.page,
+        total_pages: @pagy.pages,
+        total_count: @pagy.count
+      }
+    }, status: :ok
+  end
+
   def index
     @pagy, @posts = pagy(Post.includes(:user, :groups, images_attachments: :blob)
                               .order(created_at: :desc), items: params[:per_page] || 10)

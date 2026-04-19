@@ -24,9 +24,18 @@ Rails.application.routes.draw do
           patch :update_profile
           patch :update_notification_preferences
         end
+        member do
+          post :follow, to: "follows#create"
+          delete :follow, to: "follows#destroy"
+          get :followers, to: "users#followers"
+          get :following, to: "users#following"
+        end
       end
 
       resources :posts do
+        collection do
+          get :following
+        end
         member do
           post :like
           delete :unlike
