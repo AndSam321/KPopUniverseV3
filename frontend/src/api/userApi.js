@@ -28,3 +28,23 @@ export const toggleMuteGroup = async (groupId) => {
   const response = await api.post(`/groups/${groupId}/toggle_mute`);
   return response.data;
 };
+
+export const followUser = async (username) => {
+  const response = await api.post(`/users/${username}/follow`);
+  return response.data;
+};
+
+export const unfollowUser = async (username) => {
+  const response = await api.delete(`/users/${username}/follow`);
+  return response.data;
+};
+
+export const getFollowers = async (username) => {
+  const response = await api.get(`/users/${username}/followers`);
+  return response.data.data;
+};
+
+export const getFollowing = async (username) => {
+  const response = await api.get(`/users/${username}/following`);
+  return response.data.data;
+};

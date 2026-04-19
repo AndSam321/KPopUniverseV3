@@ -7,6 +7,13 @@ export const getPosts = async (page = 1) => {
   return response.data;
 };
 
+export const getFollowingFeed = async (page = 1) => {
+  const response = await api.get("/posts/following", {
+    params: { page },
+  });
+  return response.data;
+};
+
 export const getPost = async (postId) => {
   const response = await api.get(`/posts/${postId}`);
   return response.data;
