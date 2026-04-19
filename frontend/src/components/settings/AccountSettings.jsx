@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useTheme } from "../../context/ThemeContext";
 import { useAuth } from "../../context/AuthContext";
 import { updateNotificationPreferences } from "../../api/userApi";
-import { Moon, Sun, Heart, MessageCircle, Reply } from "lucide-react";
+import { Moon, Sun, Heart, MessageCircle, Reply, UserPlus } from "lucide-react";
 import "./AccountSettings.css";
 
 function AccountSettings() {
@@ -12,6 +12,7 @@ function AccountSettings() {
     likes: true,
     comments: true,
     replies: true,
+    follows: true,
   });
   const [saving, setSaving] = useState(false);
 
@@ -127,6 +128,26 @@ function AccountSettings() {
                 <button
                   className={`settings-toggle ${prefs.replies ? "settings-toggle--active" : ""}`}
                   onClick={() => handleTogglePref("replies")}
+                  disabled={saving}
+                >
+                  <div className="settings-toggle-slider"></div>
+                </button>
+              </div>
+
+              <div className="settings-item">
+                <div className="settings-item-info">
+                  <div className="settings-item-label">
+                    <UserPlus size={20} className="settings-icon" />
+                    <span>follows</span>
+                  </div>
+                  <p className="settings-item-description">
+                    notify me when someone follows me
+                  </p>
+                </div>
+
+                <button
+                  className={`settings-toggle ${prefs.follows !== false ? "settings-toggle--active" : ""}`}
+                  onClick={() => handleTogglePref("follows")}
                   disabled={saving}
                 >
                   <div className="settings-toggle-slider"></div>

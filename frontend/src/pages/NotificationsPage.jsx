@@ -109,7 +109,9 @@ export default function NotificationsPage() {
       );
     }
 
-    if (notification.post) {
+    if (notification.action === "followed") {
+      navigate(`/profile/${notification.actor.username}`);
+    } else if (notification.post) {
       navigate(`/posts/${notification.post.id}`);
     }
   };

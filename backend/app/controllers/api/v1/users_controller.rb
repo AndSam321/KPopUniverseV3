@@ -78,7 +78,7 @@ class Api::V1::UsersController < Api::V1::BaseController
   end
 
   def notification_prefs_params
-    params.require(:notification_preferences).permit(:likes, :comments, :replies)
+    params.require(:notification_preferences).permit(:likes, :comments, :replies, :follows)
   end
 
   def user_data(user)
