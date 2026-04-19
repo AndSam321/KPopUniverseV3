@@ -84,6 +84,26 @@
   text-overflow: ellipsis;
 }
 
+.post-card__username--link {
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.post-card__username--link:hover {
+  color: #757bc8;
+  text-decoration: underline;
+}
+
+.post-card__avatar--link {
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.post-card__avatar--link:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 0 2px #ada7ff;
+}
+
 .post-card__dot {
   color: #ada7ff;
   font-weight: 700;

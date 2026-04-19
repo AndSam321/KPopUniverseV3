@@ -179,8 +179,14 @@ const PostDetail = () => {
 
         {/* Author and time */}
         <div className="post-detail__meta">
-          Posted by @{post.user.username} •{" "}
-          {new Date(post.created_at).toLocaleString()}
+          Posted by{" "}
+          <span
+            className="post-detail__author-link"
+            onClick={() => navigate(`/profile/${post.user.username}`)}
+          >
+            @{post.user.username}
+          </span>{" "}
+          • {new Date(post.created_at).toLocaleString()}
           {post.flair && FLAIRS[post.flair] && (
             <>
               {" • "}

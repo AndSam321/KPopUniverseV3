@@ -57,6 +57,18 @@
   box-shadow: 0 2px 8px rgba(117, 123, 200, 0.3);
 }
 
+.post-detail__author-link {
+  cursor: pointer;
+  color: #757bc8;
+  font-weight: 600;
+  transition: color 0.15s ease;
+}
+
+.post-detail__author-link:hover {
+  color: #4a4b7e;
+  text-decoration: underline;
+}
+
 .post-detail__meta {
   color: #6d7093;
   font-size: 0.85rem;

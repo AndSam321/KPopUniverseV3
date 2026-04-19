@@ -167,10 +167,20 @@ const PostCard = ({ post }) => {
             <img
               src={post.user.avatar_url}
               alt={post.user.username}
-              className="post-card__avatar"
+              className="post-card__avatar post-card__avatar--link"
+              onClick={(e) => {
+                e.stopPropagation();
+                navigate(`/profile/${post.user.username}`);
+              }}
             />
           ) : (
-            <div className="post-card__avatar post-card__avatar--placeholder">
+            <div
+              className="post-card__avatar post-card__avatar--placeholder post-card__avatar--link"
+              onClick={(e) => {
+                e.stopPropagation();
+                navigate(`/profile/${post.user.username}`);
+              }}
+            >
               {post.user.username.charAt(0).toUpperCase()}
             </div>
           )}
@@ -188,7 +198,15 @@ const PostCard = ({ post }) => {
               </span>
             )}
             <div className="post-card__meta">
-              <span className="post-card__username">{post.user.username}</span>
+              <span
+                className="post-card__username post-card__username--link"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  navigate(`/profile/${post.user.username}`);
+                }}
+              >
+                {post.user.username}
+              </span>
               <span className="post-card__dot">•</span>
               <span className="post-card__timestamp">
                 {formatDate(post.created_at)}
