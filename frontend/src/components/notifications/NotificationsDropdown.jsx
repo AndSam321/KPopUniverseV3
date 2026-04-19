@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import { Bell, CheckCheck, Heart, MessageCircle, Reply } from "lucide-react";
+import { Bell, CheckCheck, Heart, MessageCircle, Reply, UserPlus } from "lucide-react";
 import { createConsumer } from "@rails/actioncable";
 import {
   getNotifications,
@@ -25,6 +25,8 @@ function formatNotification(notification) {
       return `commented on your post "${postTitle}"`;
     case "replied":
       return `replied to your comment on "${postTitle}"`;
+    case "followed":
+      return "started following you";
     default:
       return `interacted with "${postTitle}"`;
   }
@@ -40,6 +42,8 @@ function getActionIcon(action) {
       );
     case "replied":
       return <Reply size={14} className="notif-icon notif-icon--reply" />;
+    case "followed":
+      return <UserPlus size={14} className="notif-icon notif-icon--follow" />;
     default:
       return <Bell size={14} className="notif-icon" />;
   }

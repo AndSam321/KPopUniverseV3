@@ -7,6 +7,7 @@ import {
   Reply,
   CheckCheck,
   ArrowLeft,
+  UserPlus,
 } from "lucide-react";
 import { getNotifications, markAllRead, markRead } from "../api/notificationsApi";
 import "./NotificationsPage.css";
@@ -26,6 +27,8 @@ function formatNotification(notification) {
       return `commented on your post "${postTitle}"`;
     case "replied":
       return `replied to your comment on "${postTitle}"`;
+    case "followed":
+      return "started following you";
     default:
       return `interacted with "${postTitle}"`;
   }
@@ -39,6 +42,8 @@ function getActionIcon(action) {
       return <MessageCircle size={18} className="notif-page-icon notif-page-icon--comment" />;
     case "replied":
       return <Reply size={18} className="notif-page-icon notif-page-icon--reply" />;
+    case "followed":
+      return <UserPlus size={18} className="notif-page-icon notif-page-icon--follow" />;
     default:
       return <Bell size={18} className="notif-page-icon" />;
   }
