@@ -36,9 +36,8 @@ const Feed = ({ variant = "for-you" }) => {
         if (!cancelled) setError("Failed to load posts. Please try again.");
       })
       .finally(() => {
-        if (cancelled) return;
-        setInitialLoading(false);
         completeLoading();
+        if (!cancelled) setInitialLoading(false);
       });
 
     return () => {

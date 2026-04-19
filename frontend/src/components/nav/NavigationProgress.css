@@ -12,7 +12,7 @@
 
 .nav-progress--completing {
   opacity: 0;
-  transition: opacity 0.4s ease 0.1s;
+  transition: opacity 0.3s ease 0.35s;
 }
 
 .nav-progress__bar {

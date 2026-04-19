@@ -36,7 +36,7 @@ export default function NavigationProgress() {
       addTimer(() => {
         setState("idle");
         setProgress(0);
-      }, 400);
+      }, 700);
     }
   }, [isLoading, state, clearTimers, addTimer]);
 
