@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
-import { getMyProfile, getUserByUsername, updateProfile } from "../../api/userApi";
+import { getMyProfile, getUserByUsername, updateProfile, followUser, unfollowUser } from "../../api/userApi";
 import { useAuth } from "../../context/AuthContext";
-import { Camera, Star, Award, Edit3, X, Check, Trophy } from "lucide-react";
+import { Camera, Star, Award, Edit3, X, Check, Trophy, UserPlus, UserCheck } from "lucide-react";
 import "./Profile.css";
 
 function Profile() {
@@ -17,9 +17,32 @@ function Profile() {
   const [avatarFile, setAvatarFile] = useState(null);
   const [avatarPreview, setAvatarPreview] = useState(null);
   const [saving, setSaving] = useState(false);
+  const [followPending, setFollowPending] = useState(false);
+  const [followError, setFollowError] = useState("");
   const fileInputRef = useRef(null);
 
   const isOwnProfile = authUser && user && authUser.id === user.id;
+
+  const handleFollowToggle = async () => {
+    if (!user || followPending) return;
+    try {
+      setFollowPending(true);
+      setFollowError("");
+      const result = user.is_following
+        ? await unfollowUser(user.username)
+        : await followUser(user.username);
+      setUser({
+        ...user,
+        is_following: result.is_following,
+        followers_count: result.followers_count,
+        following_count: result.following_count,
+      });
+    } catch (err) {
+      setFollowError(err.response?.data?.error || "failed to update follow");
+    } finally {
+      setFollowPending(false);
+    }
+  };
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -139,6 +162,21 @@ function Profile() {
               Edit Profile
             </button>
           )}
+          {!isOwnProfile && authUser && (
+            <>
+              <button
+                className={`follow-btn${user.is_following ? " follow-btn--following" : ""}`}
+                onClick={handleFollowToggle}
+                disabled={followPending}
+              >
+                {user.is_following ? <UserCheck size={16} /> : <UserPlus size={16} />}
+                {user.is_following ? "Following" : "Follow"}
+              </button>
+              {followError && (
+                <div className="follow-error">{followError}</div>
+              )}
+            </>
+          )}
 
           <div className="profile-header">
             <div className="profile-avatar">
@@ -181,6 +219,14 @@ function Profile() {
           </div>
 
           <div className="profile-stats">
+            <div className="stat-item">
+              <span className="stat-label">followers</span>
+              <span className="stat-value">{user.followers_count ?? 0}</span>
+            </div>
+            <div className="stat-item">
+              <span className="stat-label">following</span>
+              <span className="stat-value">{user.following_count ?? 0}</span>
+            </div>
             <div className="stat-item">
               <span className="stat-label">idol points</span>
               <span className="stat-value">{user.idol_points}</span>

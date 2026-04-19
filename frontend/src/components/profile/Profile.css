@@ -115,6 +115,55 @@
   transform: translateY(-1px);
 }
 
+.follow-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: #757bc8;
+  border: 1px solid #757bc8;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.follow-btn:hover:not(:disabled) {
+  background: #646acc;
+  transform: translateY(-1px);
+}
+
+.follow-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.follow-btn--following {
+  background: transparent;
+  color: #757bc8;
+}
+
+.follow-btn--following:hover:not(:disabled) {
+  background: #fdecec;
+  border-color: #d14d4d;
+  color: #d14d4d;
+}
+
+.follow-error {
+  position: absolute;
+  top: 62px;
+  right: 20px;
+  color: #d14d4d;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
 /* === Profile Header === */
 .profile-header {
   display: flex;
