@@ -49,7 +49,12 @@ Rails.application.routes.draw do
           post :toggle_mute, controller: "muted_groups", action: "toggle"
         end
       end
-      resources :comments, only: [:update, :destroy]
+      resources :comments, only: [:update, :destroy] do
+        member do
+          post :like
+          delete :unlike
+        end
+      end
 
       resources :notifications, only: [:index] do
         collection do

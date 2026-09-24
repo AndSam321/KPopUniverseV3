@@ -20,6 +20,7 @@ class Notification < ApplicationRecord
     post = case notifiable
     when Like then notifiable.post
     when Comment then notifiable.post
+    when CommentLike then notifiable.comment.post
     end
 
     NotificationChannel.broadcast_to(recipient, {

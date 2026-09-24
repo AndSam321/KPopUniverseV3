@@ -61,6 +61,8 @@ class Api::V1::NotificationsController < Api::V1::BaseController
       post = notification.notifiable.post
     when Comment
       post = notification.notifiable.post
+    when CommentLike
+      post = notification.notifiable.comment.post
     end
 
     return nil unless post
