@@ -260,6 +260,8 @@ if users.any?
   end
 end
 
+load Rails.root.join("db/seeds/kpop_details.rb")
+
 puts "\n✓ Seeding complete!"
 puts "#{Group.count} K-pop groups in database"
 puts "#{User.count} users in database"
