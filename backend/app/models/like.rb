@@ -30,7 +30,7 @@ class Like < ApplicationRecord
   end
 
   def remove_post_owner_points
-    post.user.decrement!(:idol_points, -Pointable::POINT_VALUES[:receive_like])
+    post.user.decrement!(:idol_points, Pointable::POINT_VALUES[:receive_like])
     post.user.send(:update_title_if_needed)
   end
 end
