@@ -5,6 +5,7 @@ import { getComments, createComment } from "../api/commentsApi";
 import { likePost } from "../api/postsApi";
 import { useNavigationLoading } from "../context/NavigationLoadingContext";
 import CommentItem from "../components/comments/CommentItem";
+import CommentComposer from "../components/comments/CommentComposer";
 import PostDetailSkeleton from "../components/skeletons/PostDetailSkeleton";
 import "./PostDetail.css";
 
@@ -25,8 +26,6 @@ const PostDetail = () => {
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [newComment, setNewComment] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
   const [likesCount, setLikesCount] = useState(0);
   const [isLiking, setIsLiking] = useState(false);
@@ -58,32 +57,23 @@ const PostDetail = () => {
     }
   };
 
-  const handleSubmitComment = async (e) => {
-    e.preventDefault();
-    if (!newComment.trim()) return;
-
-    try {
-      setIsSubmitting(true);
-      const response = await createComment(id, newComment.trim());
-      setComments([response.data, ...comments]);
-      setNewComment("");
-    } catch (err) {
-      console.error("Error creating comment:", err);
-      alert("Failed to post comment. Please try again.");
-    } finally {
-      setIsSubmitting(false);
-    }
+  const handleSubmitComment = async (payload) => {
+    const response = await createComment(id, payload);
+    setComments((prev) => [response.data, ...prev]);
+    setPost((prev) => ({
+      ...prev,
+      comments_count: (prev.comments_count || 0) + 1,
+    }));
   };
 
-  const handleReply = async (parentId, content) => {
-    try {
-      const response = await createComment(id, content, parentId);
-      const commentsResponse = await getComments(id);
-      setComments(commentsResponse.data || []);
-    } catch (err) {
-      console.error("Error creating reply:", err);
-      throw err;
-    }
+  const handleReply = async (parentId, payload) => {
+    await createComment(id, { ...payload, parentId });
+    const commentsResponse = await getComments(id);
+    setComments(commentsResponse.data || []);
+    setPost((prev) => ({
+      ...prev,
+      comments_count: (prev.comments_count || 0) + 1,
+    }));
   };
 
   const handleLikeClick = async () => {
@@ -293,25 +283,13 @@ const PostDetail = () => {
       </div>
 
       {/* Comment Form */}
-      <form
-        onSubmit={handleSubmitComment}
-        className="post-detail__comment-form"
-      >
-        <textarea
-          value={newComment}
-          onChange={(e) => setNewComment(e.target.value)}
+      <div className="post-detail__comment-form">
+        <CommentComposer
+          onSubmit={handleSubmitComment}
           placeholder="What are your thoughts?"
-          className="post-detail__comment-input"
-          rows="3"
+          submitLabel="Comment"
         />
-        <button
-          type="submit"
-          disabled={isSubmitting || !newComment.trim()}
-          className="post-detail__comment-submit"
-        >
-          {isSubmitting ? "Posting..." : "Comment"}
-        </button>
-      </form>
+      </div>
 
       {/* Comments Section */}
       <div className="post-detail__comments">

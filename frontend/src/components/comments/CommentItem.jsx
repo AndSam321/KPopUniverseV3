@@ -1,43 +1,59 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { Heart } from "lucide-react";
+import { likeComment } from "../../api/commentsApi";
+import CommentComposer from "./CommentComposer";
+import ImageLightbox from "./ImageLightbox";
 import "./CommentItem.css";
 
 const CommentItem = ({ comment, onReply, depth = 0 }) => {
   const [showReplyForm, setShowReplyForm] = useState(false);
-  const [replyText, setReplyText] = useState("");
   const [showReplies, setShowReplies] = useState(true);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isLiked, setIsLiked] = useState(comment.is_liked || false);
+  const [likesCount, setLikesCount] = useState(comment.likes_count || 0);
+  const [isLiking, setIsLiking] = useState(false);
+  const [showLightbox, setShowLightbox] = useState(false);
+
+  useEffect(() => {
+    setIsLiked(comment.is_liked || false);
+    setLikesCount(comment.likes_count || 0);
+  }, [comment.is_liked, comment.likes_count]);
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    const now = new Date();
-    const diffInSeconds = Math.floor((now - date) / 1000);
+    const diffInSeconds = Math.floor((new Date() - date) / 1000);
 
     if (diffInSeconds < 60) return "just now";
     if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)}m ago`;
-    if (diffInSeconds < 86400)
-      return `${Math.floor(diffInSeconds / 3600)}h ago`;
-    if (diffInSeconds < 604800)
-      return `${Math.floor(diffInSeconds / 86400)}d ago`;
-
+    if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds / 3600)}h ago`;
+    if (diffInSeconds < 604800) return `${Math.floor(diffInSeconds / 86400)}d ago`;
     return date.toLocaleDateString();
   };
 
-  const handleSubmitReply = async (e) => {
-    e.preventDefault();
-    if (!replyText.trim()) return;
+  const handleLike = async () => {
+    if (isLiking) return;
 
-    setIsSubmitting(true);
+    const prevLiked = isLiked;
+    const prevCount = likesCount;
+    setIsLiked(!isLiked);
+    setLikesCount(isLiked ? likesCount - 1 : likesCount + 1);
+    setIsLiking(true);
+
     try {
-      await onReply(comment.id, replyText.trim());
-      setReplyText("");
-      setShowReplyForm(false);
-      setShowReplies(true);
-    } catch (error) {
-      console.error("Error posting reply:", error);
-      alert("Failed to post reply. Please try again.");
+      const res = await likeComment(comment.id);
+      setIsLiked(res.liked);
+      setLikesCount(res.likes_count);
+    } catch {
+      setIsLiked(prevLiked);
+      setLikesCount(prevCount);
     } finally {
-      setIsSubmitting(false);
+      setIsLiking(false);
     }
+  };
+
+  const handleReplySubmit = async (payload) => {
+    await onReply(comment.id, payload);
+    setShowReplyForm(false);
+    setShowReplies(true);
   };
 
   const hasReplies = comment.replies && comment.replies.length > 0;
@@ -61,18 +77,49 @@ const CommentItem = ({ comment, onReply, depth = 0 }) => {
 
         <div className="comment-item__body">
           <div className="comment-item__header">
-            <span className="comment-item__username">
-              {comment.user.username}
-            </span>
+            <span className="comment-item__username">{comment.user.username}</span>
             <span className="comment-item__dot">•</span>
             <span className="comment-item__timestamp">
               {formatDate(comment.created_at)}
             </span>
           </div>
 
-          <p className="comment-item__text">{comment.content}</p>
+          {(comment.content || comment.reply_to) && (
+            <p className="comment-item__text">
+              {comment.reply_to && (
+                <span className="comment-item__mention">
+                  @{comment.reply_to.username}{" "}
+                </span>
+              )}
+              {comment.content}
+            </p>
+          )}
+
+          {comment.image && (
+            <button
+              type="button"
+              className="comment-item__media"
+              onClick={() => setShowLightbox(true)}
+            >
+              <img
+                src={comment.image.thumbnail_url}
+                alt="comment attachment"
+                loading="lazy"
+              />
+            </button>
+          )}
 
           <div className="comment-item__actions">
+            <button
+              className={`comment-item__like ${isLiked ? "comment-item__like--active" : ""}`}
+              onClick={handleLike}
+              disabled={isLiking}
+              aria-label={isLiked ? "Unlike comment" : "Like comment"}
+            >
+              <Heart size={15} fill={isLiked ? "currentColor" : "none"} />
+              {likesCount > 0 && <span>{likesCount}</span>}
+            </button>
+
             <button
               className="comment-item__action-btn"
               onClick={() => setShowReplyForm(!showReplyForm)}
@@ -92,43 +139,20 @@ const CommentItem = ({ comment, onReply, depth = 0 }) => {
           </div>
 
           {showReplyForm && (
-            <form
-              onSubmit={handleSubmitReply}
-              className="comment-item__reply-form"
-            >
-              <textarea
-                value={replyText}
-                onChange={(e) => setReplyText(e.target.value)}
+            <div className="comment-item__reply-form">
+              <CommentComposer
+                onSubmit={handleReplySubmit}
                 placeholder={`Reply to ${comment.user.username}...`}
-                className="comment-item__reply-input"
-                rows="2"
-                maxLength={5000}
+                submitLabel="Reply"
+                onCancel={() => setShowReplyForm(false)}
+                autoFocus
+                compact
               />
-              <div className="comment-item__reply-actions">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setShowReplyForm(false);
-                    setReplyText("");
-                  }}
-                  className="comment-item__reply-cancel"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  disabled={isSubmitting || !replyText.trim()}
-                  className="comment-item__reply-submit"
-                >
-                  {isSubmitting ? "Posting..." : "Reply"}
-                </button>
-              </div>
-            </form>
+            </div>
           )}
         </div>
       </div>
 
-      {/* Nested Replies */}
       {hasReplies && showReplies && (
         <div className="comment-item__replies">
           {comment.replies.map((reply) => (
@@ -140,6 +164,14 @@ const CommentItem = ({ comment, onReply, depth = 0 }) => {
             />
           ))}
         </div>
+      )}
+
+      {showLightbox && comment.image && (
+        <ImageLightbox
+          src={comment.image.url}
+          alt="comment attachment"
+          onClose={() => setShowLightbox(false)}
+        />
       )}
     </div>
   );

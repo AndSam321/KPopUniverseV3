@@ -21,6 +21,8 @@ function formatNotification(notification) {
   switch (action) {
     case "liked":
       return `liked your post "${postTitle}"`;
+    case "liked_comment":
+      return `liked your comment on "${postTitle}"`;
     case "commented":
       return `commented on your post "${postTitle}"`;
     case "replied":
@@ -35,6 +37,7 @@ function formatNotification(notification) {
 function getActionIcon(action) {
   switch (action) {
     case "liked":
+    case "liked_comment":
       return <Heart size={14} className="notif-icon notif-icon--like" />;
     case "commented":
       return (
