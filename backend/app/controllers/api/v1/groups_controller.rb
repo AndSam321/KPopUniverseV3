@@ -16,7 +16,7 @@ class Api::V1::GroupsController < Api::V1::BaseController
 
     render json: {
       data: {
-        group: group_json(@group),
+        group: group_detail_json(@group),
         posts: @posts.map { |post| post_summary_json(post) },
         meta: {
           current_page: @pagy.page,
@@ -52,7 +52,42 @@ class Api::V1::GroupsController < Api::V1::BaseController
       slug: group.slug,
       description: group.description,
       logo_url: group.logo_url,
+      korean_name: group.korean_name,
+      company: group.company,
+      debut_date: group.debut_date,
+      group_type: group.group_type,
+      status: group.status,
+      fandom_name: group.fandom_name,
       user_id: group.user_id
+    }
+  end
+
+  def group_detail_json(group)
+    group_json(group).merge(
+      members: group.members.ordered.map { |member| member_json(member) },
+      albums: group.albums.newest_first.map { |album| album_json(album) }
+    )
+  end
+
+  def member_json(member)
+    {
+      id: member.id,
+      stage_name: member.stage_name,
+      full_name: member.full_name,
+      birth_date: member.birth_date,
+      position: member.position,
+      photo_url: member.photo_url
+    }
+  end
+
+  def album_json(album)
+    {
+      id: album.id,
+      title: album.title,
+      album_type: album.album_type,
+      release_date: album.release_date,
+      cover_url: album.cover_url,
+      external_url: album.external_url
     }
   end
 
