@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_09_24_155211) do
+ActiveRecord::Schema[8.0].define(version: 2026_09_24_210218) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -40,6 +40,18 @@ ActiveRecord::Schema[8.0].define(version: 2026_09_24_155211) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "albums", force: :cascade do |t|
+    t.bigint "group_id", null: false
+    t.string "title", null: false
+    t.string "album_type"
+    t.date "release_date"
+    t.string "cover_url"
+    t.string "external_url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_id"], name: "index_albums_on_group_id"
   end
 
   create_table "comment_likes", force: :cascade do |t|
@@ -88,6 +100,12 @@ ActiveRecord::Schema[8.0].define(version: 2026_09_24_155211) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id"
+    t.string "korean_name"
+    t.string "company"
+    t.date "debut_date"
+    t.string "group_type"
+    t.string "status", default: "active", null: false
+    t.string "fandom_name"
     t.index ["name"], name: "index_groups_on_name"
     t.index ["slug"], name: "index_groups_on_slug", unique: true
     t.index ["user_id"], name: "index_groups_on_user_id"
@@ -109,6 +127,19 @@ ActiveRecord::Schema[8.0].define(version: 2026_09_24_155211) do
     t.index ["post_id"], name: "index_likes_on_post_id"
     t.index ["user_id", "post_id"], name: "index_likes_on_user_id_and_post_id", unique: true
     t.index ["user_id"], name: "index_likes_on_user_id"
+  end
+
+  create_table "members", force: :cascade do |t|
+    t.bigint "group_id", null: false
+    t.string "stage_name", null: false
+    t.string "full_name"
+    t.date "birth_date"
+    t.string "position"
+    t.string "photo_url"
+    t.integer "sort_order", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_id"], name: "index_members_on_group_id"
   end
 
   create_table "muted_groups", force: :cascade do |t|
@@ -193,6 +224,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_09_24_155211) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "albums", "groups"
   add_foreign_key "comment_likes", "comments"
   add_foreign_key "comment_likes", "users"
   add_foreign_key "comments", "comments", column: "parent_id"
@@ -204,6 +236,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_09_24_155211) do
   add_foreign_key "groups", "users"
   add_foreign_key "likes", "posts"
   add_foreign_key "likes", "users"
+  add_foreign_key "members", "groups"
   add_foreign_key "muted_groups", "groups"
   add_foreign_key "muted_groups", "users"
   add_foreign_key "notifications", "users", column: "actor_id"
