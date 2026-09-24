@@ -112,3 +112,13 @@
   border-color: #9fa0ff;
   box-shadow: 0 0 0 3px rgba(159, 160, 255, 0.2);
 }
+
+@media (max-width: 600px) {
+  .create-group {
+    padding: 1.25rem;
+  }
+
+  .create-group__form {
+    gap: 1.1rem;
+  }
+}

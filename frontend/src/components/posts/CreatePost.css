@@ -234,3 +234,25 @@
   cursor: not-allowed;
   transform: none;
 }
+
+@media (max-width: 600px) {
+  .create-post {
+    margin: 1rem auto;
+    padding: 1.25rem;
+    border-radius: 12px;
+  }
+
+  .create-post h2 {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+  }
+
+  .create-post__form {
+    gap: 1.1rem;
+  }
+
+  .create-post__previews {
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    gap: 0.6rem;
+  }
+}
