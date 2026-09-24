@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { ImagePlus, Film, X } from "lucide-react";
+import { ImagePlus, X } from "lucide-react";
 import GifPicker from "./GifPicker";
 import "./CommentComposer.css";
 
@@ -135,7 +135,7 @@ const CommentComposer = ({
               title="Add GIF"
               aria-label="Add GIF"
             >
-              <Film size={18} />
+              <span className="comment-composer__gif-label">GIF</span>
             </button>
             {showGifPicker && (
               <GifPicker

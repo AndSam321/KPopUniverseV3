@@ -96,6 +96,16 @@
   cursor: not-allowed;
 }
 
+.comment-composer__gif-label {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  line-height: 1;
+  border: 1.5px solid currentColor;
+  border-radius: 5px;
+  padding: 0.18rem 0.28rem;
+}
+
 .comment-composer__actions {
   display: flex;
   align-items: center;
