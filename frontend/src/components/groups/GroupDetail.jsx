@@ -11,6 +11,22 @@ import CreatePost from "../posts/CreatePost";
 import "./GroupDetail.css";
 import "../skeletons/Skeleton.css";
 
+const GROUP_TYPE_LABELS = {
+  boy_group: "Boy Group",
+  girl_group: "Girl Group",
+  solo: "Soloist",
+  coed: "Co-ed Group",
+};
+
+const ALBUM_TYPE_LABELS = {
+  album: "Album",
+  ep: "EP",
+  single: "Single",
+  compilation: "Compilation",
+};
+
+const formatYear = (date) => (date ? String(date).slice(0, 4) : "");
+
 const GroupDetail = () => {
   const { id } = useParams();
   const { user, updateUser } = useAuth();
@@ -124,9 +140,32 @@ const GroupDetail = () => {
         )}
         <div className="group-detail__info">
           <h1>{groupData.name}</h1>
+          {groupData.korean_name && (
+            <span className="group-detail__korean">{groupData.korean_name}</span>
+          )}
           {groupData.description && (
             <p className="group-detail__description">{groupData.description}</p>
           )}
+          <div className="group-detail__meta">
+            {groupData.group_type && (
+              <span className="group-detail__tag">
+                {GROUP_TYPE_LABELS[groupData.group_type] || groupData.group_type}
+              </span>
+            )}
+            {groupData.company && (
+              <span className="group-detail__tag">{groupData.company}</span>
+            )}
+            {groupData.debut_date && (
+              <span className="group-detail__tag">
+                Debuted {formatYear(groupData.debut_date)}
+              </span>
+            )}
+            {groupData.fandom_name && (
+              <span className="group-detail__tag group-detail__tag--fandom">
+                {groupData.fandom_name}
+              </span>
+            )}
+          </div>
         </div>
         {user && (
           <button
@@ -139,6 +178,54 @@ const GroupDetail = () => {
           </button>
         )}
       </div>
+
+      {groupData.members?.length > 0 && (
+        <section className="group-detail__section">
+          <h2 className="group-detail__section-title">Members</h2>
+          <div className="group-detail__members">
+            {groupData.members.map((member) => (
+              <div key={member.id} className="member-card">
+                <div className="member-card__photo">
+                  {member.photo_url ? (
+                    <img src={member.photo_url} alt={member.stage_name} />
+                  ) : (
+                    <span>{member.stage_name.charAt(0).toUpperCase()}</span>
+                  )}
+                </div>
+                <div className="member-card__name">{member.stage_name}</div>
+                {member.position && (
+                  <div className="member-card__position">{member.position}</div>
+                )}
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {groupData.albums?.length > 0 && (
+        <section className="group-detail__section">
+          <h2 className="group-detail__section-title">Discography</h2>
+          <div className="group-detail__albums">
+            {groupData.albums.map((album) => (
+              <div key={album.id} className="album-card">
+                <div className="album-card__cover">
+                  {album.cover_url ? (
+                    <img src={album.cover_url} alt={album.title} />
+                  ) : (
+                    <span>♪</span>
+                  )}
+                </div>
+                <div className="album-card__title">{album.title}</div>
+                <div className="album-card__meta">
+                  {[ALBUM_TYPE_LABELS[album.album_type] || album.album_type, formatYear(album.release_date)]
+                    .filter(Boolean)
+                    .join(" · ")}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
       <div className="group-detail__content">
         <div className="group-detail__posts-header">

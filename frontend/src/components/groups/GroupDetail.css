@@ -269,3 +269,159 @@
     width: 100%;
   }
 }
+
+/* === Enriched header meta === */
+.group-detail__korean {
+  display: block;
+  color: var(--text-secondary);
+  font-size: 1rem;
+  margin: -0.5rem 0 0.75rem;
+}
+
+.group-detail__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.9rem;
+}
+
+.group-detail__tag {
+  padding: 0.25rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(187, 173, 255, 0.15);
+  border: 1px solid var(--border-color);
+  color: #757bc8;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.group-detail__tag--fandom {
+  background: rgba(255, 111, 177, 0.12);
+  border-color: rgba(255, 111, 177, 0.35);
+  color: #e0498b;
+}
+
+/* === Members / Discography sections === */
+.group-detail__section {
+  background: var(--card-bg);
+  border: 2px solid var(--border-color);
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 12px rgba(117, 123, 200, 0.1);
+}
+
+.group-detail__section-title {
+  color: #4a4b7e;
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0 0 1.25rem;
+}
+
+.group-detail__members {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+  gap: 1.25rem;
+}
+
+.member-card {
+  text-align: center;
+}
+
+.member-card__photo {
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 0.5rem;
+  border-radius: 50%;
+  overflow: hidden;
+  background: linear-gradient(135deg, #757bc8, #9fa0ff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 700;
+  font-size: 1.6rem;
+}
+
+.member-card__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.member-card__name {
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+}
+
+.member-card__position {
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  margin-top: 0.15rem;
+}
+
+.group-detail__albums {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 1.25rem;
+}
+
+.album-card__cover {
+  aspect-ratio: 1;
+  border-radius: 10px;
+  overflow: hidden;
+  background: rgba(187, 173, 255, 0.15);
+  border: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ada7ff;
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.album-card__cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.album-card__title {
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 0.88rem;
+  line-height: 1.3;
+}
+
+.album-card__meta {
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  margin-top: 0.15rem;
+}
+
+@media (max-width: 600px) {
+  .group-detail__section {
+    padding: 1.1rem;
+  }
+
+  .group-detail__members {
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 1rem;
+  }
+
+  .member-card__photo {
+    width: 60px;
+    height: 60px;
+    font-size: 1.3rem;
+  }
+
+  .group-detail__albums {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 1rem;
+  }
+
+  .group-detail__meta {
+    justify-content: center;
+  }
+}
