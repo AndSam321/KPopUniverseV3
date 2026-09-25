@@ -9,4 +9,19 @@ namespace :kpop do
       sleep 1
     end
   end
+
+  desc "Backfill members from Wikidata for groups that have none"
+  task sync_members: :environment do
+    sync = GroupMemberSync.new
+    Group.find_each do |group|
+      print "Members for #{group.name}... "
+      begin
+        filled = sync.call(group)
+        puts filled ? "added #{group.members.count}" : "skipped"
+      rescue => e
+        puts "error: #{e.message}"
+      end
+      sleep 1
+    end
+  end
 end
