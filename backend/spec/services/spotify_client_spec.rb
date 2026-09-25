@@ -39,6 +39,19 @@ RSpec.describe SpotifyClient do
     end
   end
 
+  describe "rate limiting" do
+    it "retries after a 429 and then succeeds" do
+      allow_any_instance_of(described_class).to receive(:sleep)
+      stub_request(:get, %r{/v1/artists/abc$})
+        .to_return(
+          {status: 429, headers: {"Retry-After" => "0"}},
+          {status: 200, body: {id: "abc"}.to_json, headers: json}
+        )
+
+      expect(client.artist("abc")["id"]).to eq("abc")
+    end
+  end
+
   describe "token caching" do
     it "fetches the token only once across calls" do
       allow(Rails).to receive(:cache).and_return(ActiveSupport::Cache::MemoryStore.new)

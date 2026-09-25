@@ -7,6 +7,10 @@ class SpotifyClient
   TOKEN_URL = "https://accounts.spotify.com/api/token"
   API_BASE = "https://api.spotify.com/v1"
   TOKEN_CACHE_KEY = "spotify:access_token"
+  ALBUM_PAGE_SIZE = 10
+  MAX_ALBUMS = 50
+  MAX_RETRIES = 3
+  MAX_BACKOFF = 20
 
   def search_artist(name)
     data = get("/search", q: name, type: "artist", limit: 1, market: "US")
@@ -18,8 +22,19 @@ class SpotifyClient
   end
 
   def artist_albums(spotify_id)
-    data = get("/artists/#{spotify_id}/albums", include_groups: "album,single,compilation", limit: 50, market: "US")
-    data["items"] || []
+    albums = []
+    offset = 0
+
+    loop do
+      items = get("/artists/#{spotify_id}/albums",
+        include_groups: "album,single,compilation", limit: ALBUM_PAGE_SIZE, offset: offset, market: "US")["items"] || []
+      albums.concat(items)
+      break if items.size < ALBUM_PAGE_SIZE || albums.size >= MAX_ALBUMS
+
+      offset += ALBUM_PAGE_SIZE
+    end
+
+    albums.first(MAX_ALBUMS)
   end
 
   private
@@ -44,10 +59,21 @@ class SpotifyClient
     perform(request, uri).fetch("access_token")
   end
 
-  def perform(request, uri)
+  def perform(request, uri, attempt = 1)
     response = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) { |http| http.request(request) }
-    raise Error, "Spotify #{response.code}: #{response.body}" unless response.is_a?(Net::HTTPSuccess)
+    return JSON.parse(response.body) if response.is_a?(Net::HTTPSuccess)
 
-    JSON.parse(response.body)
+    if response.code == "429" && attempt <= MAX_RETRIES
+      sleep(backoff_seconds(response))
+      return perform(request, uri, attempt + 1)
+    end
+
+    raise Error, "Spotify #{response.code}: #{response.body}"
+  end
+
+  def backoff_seconds(response)
+    seconds = response["Retry-After"].to_i
+    seconds = 1 if seconds <= 0
+    [seconds, MAX_BACKOFF].min
   end
 end
