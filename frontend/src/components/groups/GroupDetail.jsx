@@ -4,7 +4,7 @@ import { getGroup } from "../../api/groupsApi";
 import { toggleMuteGroup } from "../../api/userApi";
 import { useAuth } from "../../context/AuthContext";
 import { useNavigationLoading } from "../../context/NavigationLoadingContext";
-import { BellOff, Bell, ChevronDown } from "lucide-react";
+import { BellOff, Bell, ChevronDown, ChevronUp } from "lucide-react";
 import PostCard from "../posts/PostCard";
 import PostCardSkeleton from "../skeletons/PostCardSkeleton";
 import CreatePost from "../posts/CreatePost";
@@ -45,6 +45,7 @@ const GroupDetail = () => {
   const [albumsShown, setAlbumsShown] = useState(INITIAL_ALBUMS);
   const [albumsExpanded, setAlbumsExpanded] = useState(false);
   const albumSentinelRef = useRef(null);
+  const discographyRef = useRef(null);
 
   useEffect(() => {
     if (user?.muted_group_ids && id) {
@@ -98,6 +99,12 @@ const GroupDetail = () => {
     setAlbumsShown((count) =>
       Math.min(count + ALBUM_BATCH, groupData.albums.length)
     );
+  };
+
+  const handleCollapseAlbums = () => {
+    setAlbumsExpanded(false);
+    setAlbumsShown(INITIAL_ALBUMS);
+    discographyRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   const fetchGroupData = async (page) => {
@@ -244,7 +251,7 @@ const GroupDetail = () => {
       )}
 
       {albums.length > 0 && (
-        <section className="group-detail__section">
+        <section className="group-detail__section" ref={discographyRef}>
           <h2 className="group-detail__section-title">Discography</h2>
           <div className="group-detail__albums">
             {visibleAlbums.map((album) => (
@@ -278,6 +285,16 @@ const GroupDetail = () => {
 
           {albumsExpanded && hasMoreAlbums && (
             <div ref={albumSentinelRef} className="group-detail__albums-sentinel" />
+          )}
+
+          {albumsExpanded && (
+            <button
+              className="group-detail__show-more"
+              onClick={handleCollapseAlbums}
+            >
+              Show less
+              <ChevronUp size={16} />
+            </button>
           )}
         </section>
       )}
