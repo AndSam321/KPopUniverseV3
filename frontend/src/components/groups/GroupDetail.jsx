@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { getGroup } from "../../api/groupsApi";
 import { toggleMuteGroup } from "../../api/userApi";
 import { useAuth } from "../../context/AuthContext";
 import { useNavigationLoading } from "../../context/NavigationLoadingContext";
-import { BellOff, Bell } from "lucide-react";
+import { BellOff, Bell, ChevronDown } from "lucide-react";
 import PostCard from "../posts/PostCard";
 import PostCardSkeleton from "../skeletons/PostCardSkeleton";
 import CreatePost from "../posts/CreatePost";
@@ -27,6 +27,9 @@ const ALBUM_TYPE_LABELS = {
 
 const formatYear = (date) => (date ? String(date).slice(0, 4) : "");
 
+const INITIAL_ALBUMS = 5;
+const ALBUM_BATCH = 10;
+
 const GroupDetail = () => {
   const { id } = useParams();
   const { user, updateUser } = useAuth();
@@ -39,6 +42,9 @@ const GroupDetail = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [showCreatePost, setShowCreatePost] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
+  const [albumsShown, setAlbumsShown] = useState(INITIAL_ALBUMS);
+  const [albumsExpanded, setAlbumsExpanded] = useState(false);
+  const albumSentinelRef = useRef(null);
 
   useEffect(() => {
     if (user?.muted_group_ids && id) {
@@ -62,6 +68,37 @@ const GroupDetail = () => {
   useEffect(() => {
     fetchGroupData(currentPage);
   }, [id, currentPage]);
+
+  useEffect(() => {
+    setAlbumsShown(INITIAL_ALBUMS);
+    setAlbumsExpanded(false);
+  }, [id]);
+
+  useEffect(() => {
+    if (!albumsExpanded) return;
+    const total = groupData?.albums?.length || 0;
+    if (albumsShown >= total) return;
+    const sentinel = albumSentinelRef.current;
+    if (!sentinel) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setAlbumsShown((count) => Math.min(count + ALBUM_BATCH, total));
+        }
+      },
+      { rootMargin: "200px" }
+    );
+    observer.observe(sentinel);
+    return () => observer.disconnect();
+  }, [albumsExpanded, albumsShown, groupData]);
+
+  const handleShowMoreAlbums = () => {
+    setAlbumsExpanded(true);
+    setAlbumsShown((count) =>
+      Math.min(count + ALBUM_BATCH, groupData.albums.length)
+    );
+  };
 
   const fetchGroupData = async (page) => {
     try {
@@ -129,6 +166,10 @@ const GroupDetail = () => {
   if (error && !groupData) {
     return <div className="group-detail__error">{error}</div>;
   }
+
+  const albums = groupData.albums || [];
+  const visibleAlbums = albums.slice(0, albumsShown);
+  const hasMoreAlbums = albumsShown < albums.length;
 
   return (
     <div className="group-detail">
@@ -202,15 +243,15 @@ const GroupDetail = () => {
         </section>
       )}
 
-      {groupData.albums?.length > 0 && (
+      {albums.length > 0 && (
         <section className="group-detail__section">
           <h2 className="group-detail__section-title">Discography</h2>
           <div className="group-detail__albums">
-            {groupData.albums.map((album) => (
+            {visibleAlbums.map((album) => (
               <div key={album.id} className="album-card">
                 <div className="album-card__cover">
                   {album.cover_url ? (
-                    <img src={album.cover_url} alt={album.title} />
+                    <img src={album.cover_url} alt={album.title} loading="lazy" />
                   ) : (
                     <span>♪</span>
                   )}
@@ -224,6 +265,20 @@ const GroupDetail = () => {
               </div>
             ))}
           </div>
+
+          {hasMoreAlbums && !albumsExpanded && (
+            <button
+              className="group-detail__show-more"
+              onClick={handleShowMoreAlbums}
+            >
+              Show all {albums.length} releases
+              <ChevronDown size={16} />
+            </button>
+          )}
+
+          {albumsExpanded && hasMoreAlbums && (
+            <div ref={albumSentinelRef} className="group-detail__albums-sentinel" />
+          )}
         </section>
       )}
 

@@ -400,6 +400,31 @@
   margin-top: 0.15rem;
 }
 
+.group-detail__show-more {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin: 1.25rem auto 0;
+  padding: 0.5rem 1.1rem;
+  background: rgba(187, 173, 255, 0.15);
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  color: #757bc8;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.group-detail__show-more:hover {
+  background: rgba(117, 123, 200, 0.15);
+  transform: translateY(-1px);
+}
+
+.group-detail__albums-sentinel {
+  height: 1px;
+}
+
 @media (max-width: 600px) {
   .group-detail__section {
     padding: 1.1rem;
