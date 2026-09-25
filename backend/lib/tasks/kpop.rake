@@ -6,6 +6,7 @@ namespace :kpop do
       SyncGroupDataJob.perform_now(group.id)
       group.reload
       puts "#{group.sync_status} (#{group.albums.count} albums)"
+      sleep 1
     end
   end
 end
