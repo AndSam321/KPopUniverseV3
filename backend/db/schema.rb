@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_09_24_212707) do
+ActiveRecord::Schema[8.0].define(version: 2026_09_25_145207) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -52,8 +52,8 @@ ActiveRecord::Schema[8.0].define(version: 2026_09_24_212707) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "spotify_id"
+    t.index ["group_id", "spotify_id"], name: "index_albums_on_group_id_and_spotify_id", unique: true
     t.index ["group_id"], name: "index_albums_on_group_id"
-    t.index ["spotify_id"], name: "index_albums_on_spotify_id", unique: true
   end
 
   create_table "comment_likes", force: :cascade do |t|
