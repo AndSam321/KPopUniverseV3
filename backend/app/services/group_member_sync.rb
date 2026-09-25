@@ -3,9 +3,10 @@ class GroupMemberSync
     @client = client
   end
 
-  # Only fills groups with no members yet; never clobbers a curated roster.
+  # Fills/refreshes Wikidata-sourced rosters; never touches a curated one
+  # (curated members carry a position; Wikidata ones do not).
   def call(group)
-    return false if group.members.exists?
+    return false if group.members.where.not(position: nil).exists?
 
     entity_id = client.find_entity_id(group.name)
     return false unless entity_id
@@ -14,10 +15,11 @@ class GroupMemberSync
     return false if members.empty?
 
     members.each_with_index do |member, index|
-      group.members.find_or_initialize_by(stage_name: member[:stage_name]).update!(
-        birth_date: member[:birth_date],
-        sort_order: index
-      )
+      record = group.members.find_or_initialize_by(stage_name: member[:stage_name])
+      record.birth_date = member[:birth_date]
+      record.sort_order = index
+      record.photo_url = member[:photo_url] if member[:photo_url].present?
+      record.save!
     end
     true
   end

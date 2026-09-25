@@ -7,16 +7,17 @@ RSpec.describe GroupMemberSync do
   it "creates members from Wikidata for a group with none" do
     allow(client).to receive(:find_entity_id).with("NewJeans").and_return("Q123")
     allow(client).to receive(:group_members).with("Q123").and_return([
-      {stage_name: "Minji", birth_date: Date.new(2004, 5, 7)},
-      {stage_name: "Hanni", birth_date: Date.new(2004, 10, 6)}
+      {stage_name: "Minji", birth_date: Date.new(2004, 5, 7), photo_url: "https://img/minji.jpg?width=400"},
+      {stage_name: "Hanni", birth_date: Date.new(2004, 10, 6), photo_url: nil}
     ])
 
     expect(described_class.new(client).call(group)).to be(true)
     expect(group.members.ordered.map(&:stage_name)).to eq(%w[Minji Hanni])
     expect(group.members.find_by(stage_name: "Minji").birth_date).to eq(Date.new(2004, 5, 7))
+    expect(group.members.find_by(stage_name: "Minji").photo_url).to eq("https://img/minji.jpg?width=400")
   end
 
-  it "skips groups that already have members (no clobbering curated data)" do
+  it "skips groups with a curated roster (members that carry a position)" do
     create(:member, group: group, stage_name: "Curated", position: "Leader")
     allow(client).to receive(:find_entity_id)
 

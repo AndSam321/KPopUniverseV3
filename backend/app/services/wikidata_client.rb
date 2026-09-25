@@ -19,7 +19,11 @@ class WikidataClient
       stage_name = clean_label(row.dig("memberLabel", "value"))
       next if stage_name.blank?
 
-      {stage_name: stage_name, birth_date: parse_date(row.dig("dob", "value"))}
+      {
+        stage_name: stage_name,
+        birth_date: parse_date(row.dig("dob", "value")),
+        photo_url: image_url(row.dig("image", "value"))
+      }
     end
   end
 
@@ -27,12 +31,13 @@ class WikidataClient
 
   def members_query(entity_id)
     <<~SPARQL
-      SELECT ?member ?memberLabel ?dob WHERE {
+      SELECT ?member ?memberLabel ?dob ?image WHERE {
         wd:#{entity_id} p:P527 ?statement .
         ?statement ps:P527 ?member .
         FILTER NOT EXISTS { ?statement pq:P582 ?endTime. }
         ?member wdt:P31 wd:Q5 .
         OPTIONAL { ?member wdt:P569 ?dob. }
+        OPTIONAL { ?member wdt:P18 ?image. }
         SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
       }
     SPARQL
@@ -64,6 +69,13 @@ class WikidataClient
       (sleep(attempts) && retry) if attempts <= max
       raise
     end
+  end
+
+  def image_url(raw)
+    return nil if raw.blank?
+
+    url = raw.sub(/\Ahttp:/, "https:")
+    "#{url}#{url.include?("?") ? "&" : "?"}width=400"
   end
 
   def clean_label(label)
