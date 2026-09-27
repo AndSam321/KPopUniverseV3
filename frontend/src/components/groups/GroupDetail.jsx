@@ -6,6 +6,7 @@ import { useAuth } from "../../context/AuthContext";
 import { useNavigationLoading } from "../../context/NavigationLoadingContext";
 import { BellOff, Bell, ChevronDown, ChevronUp } from "lucide-react";
 import PostCard from "../posts/PostCard";
+import FadeImage from "../common/FadeImage";
 import PostCardSkeleton from "../skeletons/PostCardSkeleton";
 import CreatePost from "../posts/CreatePost";
 import "./GroupDetail.css";
@@ -235,7 +236,7 @@ const GroupDetail = () => {
               <div key={member.id} className="member-card">
                 <div className="member-card__photo">
                   {member.photo_url ? (
-                    <img src={member.photo_url} alt={member.stage_name} />
+                    <FadeImage src={member.photo_url} alt={member.stage_name} />
                   ) : (
                     <span>{member.stage_name.charAt(0).toUpperCase()}</span>
                   )}
@@ -258,7 +259,7 @@ const GroupDetail = () => {
               <div key={album.id} className="album-card">
                 <div className="album-card__cover">
                   {album.cover_url ? (
-                    <img src={album.cover_url} alt={album.title} loading="lazy" />
+                    <FadeImage src={album.cover_url} alt={album.title} />
                   ) : (
                     <span>♪</span>
                   )}
