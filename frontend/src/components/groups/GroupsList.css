@@ -4,37 +4,16 @@
   padding: 2rem 1rem;
 }
 
-/* === Vibrant hero block === */
+/* === Pastel hero block === */
 .groups-list__hero {
-  position: relative;
-  overflow: hidden;
   border-radius: 24px;
   padding: 2.75rem 2.5rem;
   margin-bottom: 2.75rem;
-  background: linear-gradient(135deg, var(--vibe-purple) 0%, #9333ea 45%, var(--vibe-pink) 130%);
-  box-shadow: 0 20px 44px rgba(124, 58, 237, 0.35);
-}
-
-.groups-list__hero-pattern {
-  position: absolute;
-  inset: -20%;
-  pointer-events: none;
-  opacity: 0.5;
-  background-image:
-    radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.18) 0 2px, transparent 3px),
-    radial-gradient(circle at 75% 65%, rgba(255, 255, 255, 0.12) 0 2px, transparent 3px);
-  background-size: 46px 46px, 60px 60px;
-  animation: vibePan 22s linear infinite;
-}
-
-@keyframes vibePan {
-  to {
-    background-position: 230px 230px, -300px 200px;
-  }
+  background: var(--pastel-orchid);
+  box-shadow: 0 12px 30px rgba(205, 180, 219, 0.5);
 }
 
 .groups-list__header {
-  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -43,18 +22,17 @@
 }
 
 .groups-list__title-section h1 {
-  color: #ffffff;
+  color: var(--pastel-ink);
   font-family: "DynaPuff", "Zen Kaku Gothic New", sans-serif;
   font-size: 2.9rem;
   line-height: 1.05;
   font-weight: 800;
   margin: 0 0 0.4rem 0;
   letter-spacing: -0.5px;
-  text-shadow: 0 2px 12px rgba(76, 29, 149, 0.4);
 }
 
 .groups-list__subtitle {
-  color: rgba(255, 255, 255, 0.88);
+  color: #5a4a73;
   font-size: 1.1rem;
   font-weight: 500;
   margin: 0;
@@ -63,27 +41,26 @@
 .groups-list__create-btn {
   flex-shrink: 0;
   padding: 0.9rem 1.6rem;
-  background: #ffffff;
-  color: var(--vibe-purple);
+  background: var(--pastel-sky);
+  color: #1f2a44;
   border: none;
   border-radius: 12px;
   font-size: 1rem;
   font-weight: 800;
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, color 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
   white-space: nowrap;
-  box-shadow: 0 8px 20px rgba(76, 29, 149, 0.3);
+  box-shadow: 0 6px 16px rgba(93, 150, 214, 0.45);
 }
 
 .groups-list__create-btn:hover {
   transform: translateY(-2px);
-  background: #f5f0ff;
-  color: #6d28d9;
-  box-shadow: 0 12px 26px rgba(76, 29, 149, 0.42);
+  background: #8ec3ff;
+  box-shadow: 0 10px 22px rgba(93, 150, 214, 0.55);
 }
 
 .groups-list__create-btn:focus-visible {
-  outline: 3px solid rgba(255, 255, 255, 0.9);
+  outline: 3px solid var(--pastel-ink);
   outline-offset: 2px;
 }
 
@@ -94,19 +71,19 @@
 .groups-list__search-input {
   width: 100%;
   padding: 1rem 1.5rem;
-  background: rgba(255, 255, 255, 0.95);
+  background: #ffffff;
   border: 2px solid transparent;
   border-radius: 14px;
   color: var(--text-primary);
   font-size: 1rem;
   transition: box-shadow 0.2s ease, border-color 0.2s ease;
-  box-shadow: 0 6px 18px rgba(76, 29, 149, 0.18);
+  box-shadow: 0 6px 16px rgba(120, 110, 150, 0.18);
 }
 
 .groups-list__search-input:focus {
   outline: none;
-  border-color: #ffffff;
-  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.4);
+  border-color: var(--pastel-sky);
+  box-shadow: 0 0 0 4px rgba(162, 210, 255, 0.5);
 }
 
 .groups-list__search-input::placeholder {
@@ -114,8 +91,8 @@
 }
 
 .groups-list__error {
-  background: var(--vibe-pink);
-  color: white;
+  background: var(--pastel-blush);
+  color: #5a1f3a;
   padding: 1rem;
   border-radius: 12px;
   margin-bottom: 2rem;
@@ -139,7 +116,7 @@
   margin: 0;
 }
 
-/* === Category sections (block-based) === */
+/* === Category sections === */
 .groups-list__section {
   margin-bottom: 3rem;
 }
@@ -152,11 +129,10 @@
 }
 
 .groups-list__section-title {
-  position: relative;
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  color: #3b2d6b;
+  color: var(--pastel-ink);
   font-family: "DynaPuff", "Zen Kaku Gothic New", sans-serif;
   font-size: 1.9rem;
   font-weight: 800;
@@ -169,7 +145,7 @@
   width: 8px;
   height: 1.7rem;
   border-radius: 6px;
-  background: linear-gradient(180deg, var(--vibe-purple), var(--vibe-pink));
+  background: var(--pastel-blush);
 }
 
 .groups-list__section-count {
@@ -180,11 +156,10 @@
   height: 1.8rem;
   padding: 0 0.6rem;
   border-radius: 999px;
-  background: linear-gradient(135deg, var(--vibe-purple), var(--vibe-pink));
-  color: white;
+  background: var(--pastel-ice);
+  color: #1f3a5a;
   font-size: 0.85rem;
   font-weight: 800;
-  box-shadow: 0 4px 10px rgba(124, 58, 237, 0.35);
 }
 
 .groups-list__grid {
@@ -193,7 +168,7 @@
   gap: 1.75rem;
 }
 
-/* === Group card (block, bold hover color-shift) === */
+/* === Group card === */
 .group-card {
   position: relative;
   display: flex;
@@ -210,16 +185,15 @@
 }
 
 .group-card:hover {
-  transform: translateY(-6px);
-  border-color: transparent;
-  box-shadow: 0 16px 34px rgba(124, 58, 237, 0.3),
-    0 0 0 3px var(--vibe-purple);
+  transform: translateY(-4px);
+  border-color: var(--pastel-sky);
+  box-shadow: 0 14px 30px rgba(162, 210, 255, 0.45);
 }
 
 .group-card:focus-visible {
   outline: none;
-  border-color: transparent;
-  box-shadow: 0 0 0 4px var(--vibe-pink);
+  border-color: var(--pastel-blush);
+  box-shadow: 0 0 0 4px rgba(255, 175, 204, 0.55);
 }
 
 .group-card__cover {
@@ -228,7 +202,7 @@
   aspect-ratio: 1;
   border-radius: 14px;
   overflow: hidden;
-  background: rgba(187, 173, 255, 0.15);
+  background: rgba(205, 180, 219, 0.25);
   margin-bottom: 0.85rem;
 }
 
@@ -240,7 +214,7 @@
 }
 
 .group-card:hover .group-card__cover img {
-  transform: scale(1.06);
+  transform: scale(1.05);
 }
 
 .group-card__cover-placeholder {
@@ -249,8 +223,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, var(--vibe-purple), var(--vibe-pink));
-  color: white;
+  background: var(--pastel-orchid);
+  color: var(--pastel-ink);
   font-size: 2.6rem;
   font-weight: 800;
 }
@@ -260,14 +234,13 @@
   top: 0.55rem;
   left: 0.55rem;
   padding: 0.22rem 0.65rem;
-  background: linear-gradient(135deg, var(--vibe-purple), var(--vibe-pink));
-  color: white;
+  background: var(--pastel-blush);
+  color: #5a1f3a;
   border-radius: 999px;
   font-size: 0.65rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  box-shadow: 0 3px 8px rgba(124, 58, 237, 0.4);
 }
 
 .group-card__body {
@@ -292,21 +265,7 @@
   overflow-wrap: anywhere;
 }
 
-/* === Dark mode === */
-:root.dark-mode .groups-list__hero {
-  background: linear-gradient(135deg, #4c1d95 0%, #6d28d9 50%, #be185d 130%);
-  box-shadow: 0 20px 44px rgba(0, 0, 0, 0.45);
-}
-
-:root.dark-mode .groups-list__search-input {
-  background: rgba(24, 23, 43, 0.92);
-  color: var(--dark-text);
-}
-
-:root.dark-mode .groups-list__search-input::placeholder {
-  color: #8b8bb5;
-}
-
+/* === Dark mode (hero + accents stay pastel; page-level elements adapt) === */
 :root.dark-mode .groups-list__section-title {
   color: #e7e2ff;
 }
@@ -317,13 +276,8 @@
 }
 
 :root.dark-mode .group-card:hover {
-  border-color: transparent;
-  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.5),
-    0 0 0 3px var(--vibe-purple-soft);
-}
-
-:root.dark-mode .group-card:focus-visible {
-  box-shadow: 0 0 0 4px var(--vibe-pink);
+  border-color: var(--pastel-sky);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.5);
 }
 
 :root.dark-mode .groups-list__empty {
@@ -371,10 +325,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .groups-list__hero-pattern {
-    animation: none;
-  }
-
   .group-card,
   .group-card__cover img,
   .groups-list__create-btn,

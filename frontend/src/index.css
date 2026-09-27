@@ -31,10 +31,13 @@
   --dark-card: #26254a;
   --dark-text: #f0eeff;
 
-  /* Vibrant & Block-based accents (brand purple/pink identity) */
-  --vibe-purple: #7c3aed;
-  --vibe-purple-soft: #a78bfa;
-  --vibe-pink: #ff1493;
+  /* Pastel Dreamland palette */
+  --pastel-orchid: #cdb4db;
+  --pastel-petal: #ffc8dd;
+  --pastel-blush: #ffafcc;
+  --pastel-ice: #bde0fe;
+  --pastel-sky: #a2d2ff;
+  --pastel-ink: #3b2d6b;
 }
 
 * {

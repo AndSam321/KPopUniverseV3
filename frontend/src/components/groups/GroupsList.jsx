@@ -90,7 +90,6 @@ const GroupsList = () => {
   return (
     <div className="groups-list">
       <div className="groups-list__hero">
-        <div className="groups-list__hero-pattern" aria-hidden="true" />
         <div className="groups-list__header">
           <div className="groups-list__title-section">
             <h1>Communities</h1>
