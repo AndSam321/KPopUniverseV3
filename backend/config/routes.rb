@@ -44,6 +44,8 @@ Rails.application.routes.draw do
         resources :comments, only: [:index, :create]
       end
 
+      get "search", to: "search#index"
+
       resources :groups, only: [:index, :show, :create] do
         member do
           post :toggle_mute, controller: "muted_groups", action: "toggle"
