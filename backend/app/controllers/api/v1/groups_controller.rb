@@ -1,6 +1,5 @@
 class Api::V1::GroupsController < Api::V1::BaseController
   before_action :authenticate_user!, only: [:create]
-  before_action :set_active_storage_url_options
 
   def index
     @groups = Group.alphabetical
@@ -89,10 +88,6 @@ class Api::V1::GroupsController < Api::V1::BaseController
       cover_url: album.cover_url,
       external_url: album.external_url
     }
-  end
-
-  def set_active_storage_url_options
-    ActiveStorage::Current.url_options = {host: "localhost", port: 9000}
   end
 
   def post_summary_json(post)
