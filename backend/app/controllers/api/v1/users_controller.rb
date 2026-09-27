@@ -1,6 +1,4 @@
 class Api::V1::UsersController < Api::V1::BaseController
-  include Devise::Controllers::Helpers
-
   # Routes for this:
   # GET /api/v1/users/my_profile
   # GET /api/v1/users/:id
