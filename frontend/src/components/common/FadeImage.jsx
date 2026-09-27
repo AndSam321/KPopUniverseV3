@@ -15,6 +15,7 @@ const FadeImage = ({ src, alt = "", className }) => {
       alt={alt}
       className={className}
       loading="lazy"
+      referrerPolicy="no-referrer"
       onLoad={() => setLoaded(true)}
       style={{ opacity: loaded ? 1 : 0, transition: "opacity 0.35s ease" }}
     />
