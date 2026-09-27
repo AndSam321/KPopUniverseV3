@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_09_27_060341) do
+ActiveRecord::Schema[8.0].define(version: 2026_09_27_060857) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -151,8 +151,12 @@ ActiveRecord::Schema[8.0].define(version: 2026_09_27_060341) do
     t.integer "sort_order", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.virtual "stage_name_search", type: :string, as: "regexp_replace(lower((stage_name)::text), '[^a-z0-9]'::text, ''::text, 'g'::text)", stored: true
+    t.virtual "full_name_search", type: :string, as: "regexp_replace(lower((COALESCE(full_name, ''::character varying))::text), '[^a-z0-9]'::text, ''::text, 'g'::text)", stored: true
+    t.index ["full_name_search"], name: "index_members_on_full_name_search_trgm", opclass: :gin_trgm_ops, using: :gin
     t.index ["group_id"], name: "index_members_on_group_id"
     t.index ["stage_name"], name: "index_members_on_stage_name_trgm", opclass: :gin_trgm_ops, using: :gin
+    t.index ["stage_name_search"], name: "index_members_on_stage_name_search_trgm", opclass: :gin_trgm_ops, using: :gin
   end
 
   create_table "muted_groups", force: :cascade do |t|

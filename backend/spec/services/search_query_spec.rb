@@ -66,6 +66,20 @@ RSpec.describe SearchQuery do
 
       expect(described_class.new("karin").members).to contain_exactly(karina)
     end
+
+    it "matches a member's real name, ignoring punctuation" do
+      rm = create(:member, stage_name: "RM", full_name: "Kim Nam-joon")
+      create(:member, stage_name: "Jin", full_name: "Kim Seok-jin")
+
+      expect(described_class.new("namjoon").members).to contain_exactly(rm)
+      expect(described_class.new("nam-joon").members).to contain_exactly(rm)
+    end
+
+    it "matches a stage name whose spelling includes punctuation" do
+      jhope = create(:member, stage_name: "j-hope", full_name: "Jung Ho-seok")
+
+      expect(described_class.new("jhope").members).to include(jhope)
+    end
   end
 
   describe "#users" do
