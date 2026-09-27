@@ -68,6 +68,19 @@ div { display: block; }
   background-attachment: fixed;
 }
 
+/* #root spans the full content height; body/html stay at viewport height, so
+   the page background must live here to cover everything when scrolling. */
+#root {
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-mid) 45%, var(--gradient-end) 100%);
+  background-attachment: fixed;
+}
+
+:root.dark-mode #root {
+  background: linear-gradient(135deg, var(--dark-bg-start) 0%, var(--dark-bg-mid) 45%, var(--dark-bg-end) 100%);
+  background-attachment: fixed;
+}
+
 /* Reserve space for the mobile bottom tab bar */
 @media (max-width: 720px) {
   body {
