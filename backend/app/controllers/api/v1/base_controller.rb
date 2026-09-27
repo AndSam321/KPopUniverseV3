@@ -16,15 +16,24 @@ class Api::V1::BaseController < ActionController::API
   end
 
   def authenticate_user!
-    token = request.headers["Authorization"]&.split(" ")&.last
-    return render json: {error: "Unauthorized"}, status: :unauthorized unless token
+    @current_user = user_from_token
+    render json: {error: "Unauthorized"}, status: :unauthorized unless @current_user
+  end
 
-    begin
-      payload = JWT.decode(token, ENV["DEVISE_JWT_SECRET_KEY"]).first
-      @current_user = User.find(payload["sub"])
-    rescue JWT::DecodeError, ActiveRecord::RecordNotFound
-      render json: {error: "Unauthorized"}, status: :unauthorized
-    end
+  # Sets current_user when a valid token is present, but allows the request
+  # through for guests (used by publicly readable endpoints).
+  def set_current_user_optional
+    @current_user = user_from_token
+  end
+
+  def user_from_token
+    token = request.headers["Authorization"]&.split(" ")&.last
+    return unless token
+
+    payload = JWT.decode(token, ENV["DEVISE_JWT_SECRET_KEY"]).first
+    User.find(payload["sub"])
+  rescue JWT::DecodeError, ActiveRecord::RecordNotFound
+    nil
   end
 
   attr_reader :current_user

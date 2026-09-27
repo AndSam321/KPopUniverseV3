@@ -61,18 +61,6 @@ class Api::V1::CommentsController < Api::V1::BaseController
 
   private
 
-  def set_current_user_optional
-    token = request.headers["Authorization"]&.split(" ")&.last
-    return unless token
-
-    begin
-      payload = JWT.decode(token, ENV["DEVISE_JWT_SECRET_KEY"]).first
-      @current_user = User.find(payload["sub"])
-    rescue JWT::DecodeError, ActiveRecord::RecordNotFound
-      @current_user = nil
-    end
-  end
-
   def set_post
     @post = Post.find(params[:post_id])
   rescue ActiveRecord::RecordNotFound
@@ -100,14 +88,10 @@ class Api::V1::CommentsController < Api::V1::BaseController
   end
 
   def liked_comment_ids(top_level)
-    return Set.new unless current_user_for_read
+    return Set.new unless current_user
 
     ids = top_level.flat_map { |comment| [comment.id] + comment.replies.map(&:id) }
-    current_user_for_read.comment_likes.where(comment_id: ids).pluck(:comment_id).to_set
-  end
-
-  def current_user_for_read
-    @current_user || current_user
+    current_user.comment_likes.where(comment_id: ids).pluck(:comment_id).to_set
   end
 
   def comment_params

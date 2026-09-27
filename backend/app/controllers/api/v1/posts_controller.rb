@@ -94,22 +94,11 @@ class Api::V1::PostsController < Api::V1::BaseController
   end
 
   def unlike
-    like
+    current_user.likes.find_by(post: @post)&.destroy
+    render json: {liked: false, likes_count: @post.reload.likes_count}, status: :ok
   end
 
   private
-
-  def set_current_user_optional # This sets the current user if the token is present, to make sure the current user is available
-    token = request.headers["Authorization"]&.split(" ")&.last
-    return unless token
-
-    begin
-      payload = JWT.decode(token, ENV["DEVISE_JWT_SECRET_KEY"]).first
-      @current_user = User.find(payload["sub"])
-    rescue JWT::DecodeError, ActiveRecord::RecordNotFound
-      @current_user = nil
-    end
-  end
 
   def set_post
     @post = Post.includes(:user, :groups, images_attachments: :blob).find(params[:id])
