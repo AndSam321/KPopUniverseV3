@@ -1,0 +1,212 @@
+.kp-search {
+  position: relative;
+}
+
+.kp-search__field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 16px;
+  height: 38px;
+  border-radius: 999px;
+  background: rgba(120, 110, 150, 0.08);
+  border: 1px solid var(--border-color);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.kp-search__field:focus-within {
+  border-color: var(--pastel-sky);
+  box-shadow: 0 0 0 3px rgba(162, 210, 255, 0.35);
+}
+
+.kp-search__icon {
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.kp-search__input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  outline: none;
+  width: 220px;
+  height: 38px;
+  font-family: "Zen Kaku Gothic New", system-ui, sans-serif;
+}
+
+.kp-search__input::placeholder {
+  color: var(--text-muted);
+}
+
+.kp-search__dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 380px;
+  max-width: calc(100vw - 24px);
+  max-height: 70vh;
+  overflow-y: auto;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  box-shadow: 0 12px 28px rgba(120, 110, 150, 0.22);
+  padding: 6px;
+  z-index: 60;
+}
+
+.kp-search__status {
+  padding: 16px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.kp-search__section {
+  padding: 4px 0;
+}
+
+.kp-search__section-title {
+  padding: 6px 12px 4px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+}
+
+.kp-search__item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 8px 12px;
+  border: none;
+  background: transparent;
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+}
+
+.kp-search__item--active {
+  background: rgba(162, 210, 255, 0.18);
+}
+
+.kp-search__thumb {
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: rgba(205, 180, 219, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--pastel-ink);
+}
+
+.kp-search__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.kp-search__item-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.kp-search__item-title {
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.kp-search__item-subtitle {
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.kp-search__see-all {
+  display: block;
+  width: 100%;
+  margin-top: 4px;
+  padding: 10px 12px;
+  border: none;
+  border-top: 1px solid var(--border-color);
+  background: transparent;
+  color: var(--pastel-ink);
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: center;
+  border-radius: 0 0 10px 10px;
+}
+
+.kp-search__see-all.kp-search__item--active {
+  background: rgba(162, 210, 255, 0.18);
+}
+
+/* Dark mode */
+:root.dark-mode .kp-search__field {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(159, 160, 255, 0.18);
+}
+
+:root.dark-mode .kp-search__input {
+  color: var(--dark-text);
+}
+
+:root.dark-mode .kp-search__dropdown {
+  background: var(--dark-card);
+  border-color: rgba(159, 160, 255, 0.18);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.5);
+}
+
+:root.dark-mode .kp-search__item--active,
+:root.dark-mode .kp-search__see-all.kp-search__item--active {
+  background: rgba(162, 210, 255, 0.12);
+}
+
+:root.dark-mode .kp-search__item-title {
+  color: #e7e2ff;
+}
+
+:root.dark-mode .kp-search__see-all {
+  color: #cfe6ff;
+  border-top-color: rgba(159, 160, 255, 0.18);
+}
+
+@media (max-width: 720px) {
+  .kp-search__input {
+    width: 120px;
+    font-size: 0.82rem;
+  }
+
+  .kp-search__field {
+    height: 34px;
+    padding: 0 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .kp-search__input {
+    width: 90px;
+    font-size: 0.78rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kp-search__field {
+    transition: none;
+  }
+}

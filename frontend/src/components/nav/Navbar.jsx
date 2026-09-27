@@ -5,7 +5,6 @@ import {
   TrendingUp,
   ContactRound,
   Users,
-  Search,
   User,
   Settings,
   LogOut,
@@ -13,6 +12,7 @@ import {
 import { useAuth } from "../../context/AuthContext";
 import { logout as logoutApi } from "../../api/authApi";
 import NotificationsDropdown from "../notifications/NotificationsDropdown";
+import SearchBar from "../search/SearchBar";
 
 export default function Navbar() {
   const navigate = useNavigate();
@@ -135,14 +135,7 @@ export default function Navbar() {
 
         {/* Right: Search + Profile */}
         <div className="kp-nav__right">
-          <div className="kp-nav__search">
-            <Search size={18} color="#2a214c" />
-            <input
-              type="text"
-              className="kp-nav__search-input"
-              placeholder="search artists, groups, fans..."
-            />
-          </div>
+          <SearchBar />
 
           {user && <NotificationsDropdown />}
 
