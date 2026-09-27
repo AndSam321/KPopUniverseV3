@@ -21,6 +21,12 @@ module Pointable
     update_title_if_needed
   end
 
+  def revoke_points(action)
+    points = POINT_VALUES[action] || 0
+    decrement!(:idol_points, [points, idol_points].min)
+    update_title_if_needed
+  end
+
   def points_info
     current = TITLE_THRESHOLDS.find { |t| idol_points >= t[:min] && idol_points < t[:max] }
     current_index = TITLE_THRESHOLDS.index(current)

@@ -36,6 +36,15 @@ RSpec.describe "Comments API", type: :request do
 
       expect(response).to have_http_status(:unauthorized)
     end
+
+    it "awards the commenter points and notifies the post author" do
+      expect {
+        post "/api/v1/posts/#{post_record.id}/comments",
+          params: {content: "nice"}, headers: auth_headers(author)
+      }.to change { author.reload.idol_points }.by(Pointable::POINT_VALUES[:create_comment])
+
+      expect(Notification.where(action: "commented", recipient: post_record.user).count).to eq(1)
+    end
   end
 
   describe "flattened threading" do
@@ -60,6 +69,15 @@ RSpec.describe "Comments API", type: :request do
 
       expect(json_response["data"]["parent_id"]).to eq(root.id)
       expect(json_response["data"]["reply_to"]["username"]).to eq(replier.username)
+    end
+
+    it "notifies the user being replied to" do
+      reply = create(:comment, post: post_record, user: replier, parent: root)
+
+      expect {
+        post "/api/v1/posts/#{post_record.id}/comments",
+          params: {content: "nested", parent_id: reply.id}, headers: auth_headers(nested_replier)
+      }.to change { Notification.where(action: "replied", recipient: replier).count }.by(1)
     end
   end
 
@@ -90,6 +108,30 @@ RSpec.describe "Comments API", type: :request do
 
       expect(json_response["liked"]).to be(false)
       expect(json_response["likes_count"]).to eq(0)
+    end
+
+    it "awards the comment author a point and notifies them" do
+      expect {
+        post "/api/v1/comments/#{comment.id}/like", headers: auth_headers(liker)
+      }.to change { author.reload.idol_points }.by(Pointable::POINT_VALUES[:receive_like])
+
+      expect(Notification.where(action: "liked_comment", recipient: author).count).to eq(1)
+    end
+
+    it "revokes the point when the like is toggled off" do
+      post "/api/v1/comments/#{comment.id}/like", headers: auth_headers(liker)
+
+      expect {
+        delete "/api/v1/comments/#{comment.id}/unlike", headers: auth_headers(liker)
+      }.to change { author.reload.idol_points }.by(-Pointable::POINT_VALUES[:receive_like])
+    end
+
+    it "does not award points or notify when liking your own comment" do
+      expect {
+        post "/api/v1/comments/#{comment.id}/like", headers: auth_headers(author)
+      }.not_to change { author.reload.idol_points }
+
+      expect(Notification.count).to eq(0)
     end
   end
 

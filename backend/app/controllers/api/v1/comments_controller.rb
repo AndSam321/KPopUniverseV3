@@ -22,6 +22,7 @@ class Api::V1::CommentsController < Api::V1::BaseController
     assign_thread_target
 
     if @comment.save
+      CommentCreation.new(@comment).call
       render json: { data: comment_json(@comment) }, status: :created
     else
       render json: { errors: @comment.errors.full_messages }, status: :unprocessable_entity
@@ -46,16 +47,22 @@ class Api::V1::CommentsController < Api::V1::BaseController
 
     liked = if comment_like.persisted?
       comment_like.destroy
+      revoke_comment_author_points
       false
-    else
-      comment_like.save
+    elsif comment_like.save
+      award_comment_author_points
+      notify_comment_author(comment_like)
       true
+    else
+      false
     end
     render json: { liked: liked, likes_count: @comment.reload.likes_count }, status: :ok
   end
 
   def unlike
-    current_user.comment_likes.find_by(comment: @comment)&.destroy
+    if current_user.comment_likes.find_by(comment: @comment)&.destroy
+      revoke_comment_author_points
+    end
     render json: { liked: false, likes_count: @comment.reload.likes_count }, status: :ok
   end
 
@@ -77,6 +84,29 @@ class Api::V1::CommentsController < Api::V1::BaseController
     unless @comment.user_id == current_user.id
       render json: { error: "You are not authorized to modify this comment" }, status: :forbidden
     end
+  end
+
+  def award_comment_author_points
+    return if current_user.id == @comment.user_id
+
+    @comment.user.award_points(:receive_like)
+  end
+
+  def revoke_comment_author_points
+    return if current_user.id == @comment.user_id
+
+    @comment.user.revoke_points(:receive_like)
+  end
+
+  def notify_comment_author(comment_like)
+    ActivityNotifier.call(
+      recipient: @comment.user,
+      actor: current_user,
+      notifiable: comment_like,
+      action: "liked_comment",
+      preference: :likes,
+      muted_check_post: @comment.post
+    )
   end
 
   def assign_thread_target

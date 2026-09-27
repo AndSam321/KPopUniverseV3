@@ -5,7 +5,10 @@ class Api::V1::FollowsController < Api::V1::BaseController
   def create
     follow = current_user.active_follows.find_or_initialize_by(followed: @target)
 
-    if follow.persisted? || follow.save
+    if follow.persisted?
+      render json: follow_state_json, status: :ok
+    elsif follow.save
+      notify_followed(follow)
       render json: follow_state_json, status: :ok
     else
       render json: {errors: follow.errors.full_messages}, status: :unprocessable_entity
@@ -19,6 +22,16 @@ class Api::V1::FollowsController < Api::V1::BaseController
   end
 
   private
+
+  def notify_followed(follow)
+    ActivityNotifier.call(
+      recipient: @target,
+      actor: current_user,
+      notifiable: follow,
+      action: "followed",
+      preference: :follows
+    )
+  end
 
   def set_target_user
     @target = User.find_by!(username: params[:id])

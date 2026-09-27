@@ -30,32 +30,4 @@ RSpec.describe CommentLike, type: :model do
       expect { like.destroy }.to change { comment.reload.likes_count }.by(-1)
     end
   end
-
-  describe "side effects" do
-    let(:author) { create(:user) }
-    let(:liker) { create(:user) }
-    let!(:comment) { create(:comment, user: author) }
-
-    it "awards the comment author points" do
-      expect { create(:comment_like, comment: comment, user: liker) }
-        .to change { author.reload.idol_points }.by(Pointable::POINT_VALUES[:receive_like])
-    end
-
-    it "removes the awarded points when unliked" do
-      like = create(:comment_like, comment: comment, user: liker)
-
-      expect { like.destroy }
-        .to change { author.reload.idol_points }.by(-Pointable::POINT_VALUES[:receive_like])
-    end
-
-    it "notifies the comment author" do
-      expect { create(:comment_like, comment: comment, user: liker) }
-        .to change { Notification.where(action: "liked_comment", recipient: author).count }.by(1)
-    end
-
-    it "does not notify when liking your own comment" do
-      expect { create(:comment_like, comment: comment, user: author) }
-        .not_to change(Notification, :count)
-    end
-  end
 end

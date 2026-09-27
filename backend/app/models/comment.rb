@@ -21,8 +21,6 @@ class Comment < ApplicationRecord
   scope :top_level, -> { where(parent_id: nil) }
   scope :recent, -> { order(created_at: :desc) }
 
-  after_create_commit :award_commenter_points, :notify_post_owner, :notify_parent_author, :process_image
-
   def gif?
     image_url.present? || (image.attached? && image.content_type == "image/gif")
   end
@@ -51,49 +49,5 @@ class Comment < ApplicationRecord
     if image.byte_size > 5.megabytes
       errors.add(:image, "must be less than 5MB")
     end
-  end
-
-  def process_image
-    return unless image.attached? && !gif?
-
-    ProcessCommentImageJob.perform_later(id)
-  end
-
-  def award_commenter_points
-    user.award_points(:create_comment)
-  end
-
-  def notify_post_owner
-    return if user_id == post.user_id
-    return if parent.present? && parent.user_id == post.user_id
-    return unless post.user.notifications_enabled?(:comments)
-    return if post_in_muted_group?(post.user)
-
-    Notification.create!(
-      recipient: post.user,
-      actor: user,
-      notifiable: self,
-      action: "commented"
-    )
-  end
-
-  def notify_parent_author
-    return unless parent.present?
-
-    recipient = reply_to_user || parent.user
-    return if user_id == recipient.id
-    return unless recipient.notifications_enabled?(:replies)
-    return if post_in_muted_group?(recipient)
-
-    Notification.create!(
-      recipient: recipient,
-      actor: user,
-      notifiable: self,
-      action: "replied"
-    )
-  end
-
-  def post_in_muted_group?(recipient)
-    post.groups.any? { |group| recipient.muted_group?(group.id) }
   end
 end

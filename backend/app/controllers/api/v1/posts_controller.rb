@@ -57,6 +57,7 @@ class Api::V1::PostsController < Api::V1::BaseController
     end
 
     if @post.save
+      @post.user.award_points(:create_post)
       render json: {data: post_json(@post)}, status: :created
     else
       render json: {errors: @post.errors.full_messages}, status: :unprocessable_entity
@@ -85,20 +86,37 @@ class Api::V1::PostsController < Api::V1::BaseController
 
     liked = if like.persisted?
       like.destroy
+      @post.user.revoke_points(:receive_like)
       false
-    else
-      like.save
+    elsif like.save
+      @post.user.award_points(:receive_like)
+      notify_post_owner(like)
       true
+    else
+      false
     end
     render json: {liked: liked, likes_count: @post.reload.likes_count}, status: :ok
   end
 
   def unlike
-    current_user.likes.find_by(post: @post)&.destroy
+    if current_user.likes.find_by(post: @post)&.destroy
+      @post.user.revoke_points(:receive_like)
+    end
     render json: {liked: false, likes_count: @post.reload.likes_count}, status: :ok
   end
 
   private
+
+  def notify_post_owner(like)
+    ActivityNotifier.call(
+      recipient: @post.user,
+      actor: current_user,
+      notifiable: like,
+      action: "liked",
+      preference: :likes,
+      muted_check_post: @post
+    )
+  end
 
   def set_post
     @post = Post.includes(:user, :groups, images_attachments: :blob).find(params[:id])

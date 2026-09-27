@@ -23,7 +23,6 @@ class Post < ApplicationRecord
   scope :with_associations, -> { includes(:user, :groups, images_attachments: :blob) }
 
   after_commit :generate_image_variants, on: [:create, :update]
-  after_create_commit :award_creator_points
 
   private
 
@@ -54,9 +53,5 @@ class Post < ApplicationRecord
     rescue => e
       Rails.logger.error("Failed to generate variants for image #{image.id}: #{e.message}")
     end
-  end
-
-  def award_creator_points
-    user.award_points(:create_post)
   end
 end
