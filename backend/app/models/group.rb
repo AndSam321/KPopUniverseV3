@@ -2,7 +2,7 @@ class Group < ApplicationRecord
   include PgSearch::Model
 
   pg_search_scope :search,
-    against: [:name, :korean_name],
+    against: [:name, :korean_name, :name_search],
     using: {tsearch: {prefix: true}, trigram: {threshold: 0.3}}
 
   belongs_to :user, optional: true

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_09_27_044546) do
+ActiveRecord::Schema[8.0].define(version: 2026_09_27_060341) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -113,9 +113,11 @@ ActiveRecord::Schema[8.0].define(version: 2026_09_27_044546) do
     t.datetime "last_synced_at"
     t.string "sync_status", default: "pending", null: false
     t.text "sync_error"
+    t.virtual "name_search", type: :string, as: "regexp_replace(lower((name)::text), '[^a-z0-9]'::text, ''::text, 'g'::text)", stored: true
     t.index ["korean_name"], name: "index_groups_on_korean_name_trgm", opclass: :gin_trgm_ops, using: :gin
     t.index ["name"], name: "index_groups_on_name"
     t.index ["name"], name: "index_groups_on_name_trgm", opclass: :gin_trgm_ops, using: :gin
+    t.index ["name_search"], name: "index_groups_on_name_search_trgm", opclass: :gin_trgm_ops, using: :gin
     t.index ["slug"], name: "index_groups_on_slug", unique: true
     t.index ["spotify_id"], name: "index_groups_on_spotify_id", unique: true
     t.index ["user_id"], name: "index_groups_on_user_id"

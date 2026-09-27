@@ -49,6 +49,13 @@ RSpec.describe SearchQuery do
 
       expect(described_class.new("a_c").groups).to be_empty
     end
+
+    it "matches names with punctuation when the query omits it" do
+      match = create(:group, name: "(G)I-DLE")
+
+      expect(described_class.new("gidle").groups).to contain_exactly(match)
+      expect(described_class.new("gi-dle").groups).to contain_exactly(match)
+    end
   end
 
   describe "#members" do
