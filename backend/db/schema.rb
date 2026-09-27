@@ -10,9 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_09_25_145207) do
+ActiveRecord::Schema[8.0].define(version: 2026_09_27_044546) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+  enable_extension "pg_trgm"
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -112,7 +113,9 @@ ActiveRecord::Schema[8.0].define(version: 2026_09_25_145207) do
     t.datetime "last_synced_at"
     t.string "sync_status", default: "pending", null: false
     t.text "sync_error"
+    t.index ["korean_name"], name: "index_groups_on_korean_name_trgm", opclass: :gin_trgm_ops, using: :gin
     t.index ["name"], name: "index_groups_on_name"
+    t.index ["name"], name: "index_groups_on_name_trgm", opclass: :gin_trgm_ops, using: :gin
     t.index ["slug"], name: "index_groups_on_slug", unique: true
     t.index ["spotify_id"], name: "index_groups_on_spotify_id", unique: true
     t.index ["user_id"], name: "index_groups_on_user_id"
@@ -147,6 +150,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_09_25_145207) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["group_id"], name: "index_members_on_group_id"
+    t.index ["stage_name"], name: "index_members_on_stage_name_trgm", opclass: :gin_trgm_ops, using: :gin
   end
 
   create_table "muted_groups", force: :cascade do |t|
@@ -194,7 +198,9 @@ ActiveRecord::Schema[8.0].define(version: 2026_09_25_145207) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "flair"
+    t.index ["caption"], name: "index_posts_on_caption_trgm", opclass: :gin_trgm_ops, using: :gin
     t.index ["created_at"], name: "index_posts_on_created_at"
+    t.index ["title"], name: "index_posts_on_title_trgm", opclass: :gin_trgm_ops, using: :gin
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
@@ -227,6 +233,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_09_25_145207) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["title"], name: "index_users_on_title"
     t.index ["username"], name: "index_users_on_username", unique: true
+    t.index ["username"], name: "index_users_on_username_trgm", opclass: :gin_trgm_ops, using: :gin
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
