@@ -76,7 +76,7 @@ class Api::V1::GroupsController < Api::V1::BaseController
       full_name: member.full_name,
       birth_date: member.birth_date,
       position: member.position,
-      photo_url: member.photo_url
+      photo_url: FandomImage.thumbnail(member.photo_url, width: 300)
     }
   end
 
