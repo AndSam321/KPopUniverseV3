@@ -200,28 +200,21 @@
   gap: 6px;
 }
 
-/* === GroupItem Skeleton === */
-.group-item-skeleton {
+/* === GroupCard Skeleton === */
+.group-card-skeleton {
   background: var(--card-bg, #ffffff);
   border: 1px solid var(--border-color, rgba(173, 167, 255, 0.2));
-  border-radius: 12px;
-  padding: 1rem 1.25rem;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.group-item-skeleton__icon {
-  width: 48px;
-  height: 48px;
-  flex-shrink: 0;
-}
-
-.group-item-skeleton__info {
-  flex: 1;
+  border-radius: 16px;
+  padding: 0.75rem;
   display: flex;
   flex-direction: column;
   gap: 8px;
+}
+
+.group-card-skeleton__cover {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 12px;
 }
 
 /* === GroupDetail Skeleton === */
@@ -277,7 +270,7 @@
   border-bottom-color: rgba(159, 160, 255, 0.1);
 }
 
-:root.dark-mode .group-item-skeleton {
+:root.dark-mode .group-card-skeleton {
   background: var(--dark-card, #1e1e2f);
   border-color: rgba(159, 160, 255, 0.15);
 }

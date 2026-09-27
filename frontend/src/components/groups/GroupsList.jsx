@@ -1,11 +1,28 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { getGroups } from "../../api/groupsApi";
 import { useNavigationLoading } from "../../context/NavigationLoadingContext";
 import CreateGroup from "./CreateGroup";
 import { useAuth } from "../../context/AuthContext";
-import GroupItemSkeleton from "../skeletons/GroupItemSkeleton";
+import FadeImage from "../common/FadeImage";
+import GroupCardSkeleton from "../skeletons/GroupCardSkeleton";
 import "./GroupsList.css";
+
+const CATEGORIES = [
+  { key: "girl_group", label: "Girl Groups" },
+  { key: "boy_group", label: "Boy Groups" },
+  { key: "coed", label: "Co-ed Groups" },
+  { key: "solo", label: "Soloists" },
+  { key: "community", label: "Community" },
+  { key: "other", label: "Other" },
+];
+
+const categoryFor = (group) => {
+  if (group.user_id) return "community";
+  return CATEGORIES.some((c) => c.key === group.group_type)
+    ? group.group_type
+    : "other";
+};
 
 const GroupsList = () => {
   const navigate = useNavigate();
@@ -16,7 +33,6 @@ const GroupsList = () => {
   const [error, setError] = useState("");
   const [showCreateGroup, setShowCreateGroup] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const [filter, setFilter] = useState("all");
 
   useEffect(() => {
     fetchGroups();
@@ -43,22 +59,33 @@ const GroupsList = () => {
     setShowCreateGroup(false);
   };
 
-  const officialGroups = groups.filter(group => !group.user_id);
-  const userGroups = groups.filter(group => group.user_id);
+  const handleOpenGroup = (group) => {
+    if (!user) {
+      navigate("/login");
+      return;
+    }
+    navigate(`/groups/${group.id}`);
+  };
 
-  const filteredGroups = groups.filter(group => {
-    const searchLower = searchTerm.toLowerCase();
+  const searchLower = searchTerm.toLowerCase();
+  const filteredGroups = groups.filter((group) => {
+    if (!searchLower) return true;
     const nameLower = group.name.toLowerCase();
-    const nameWithoutSpecialChars = group.name.replace(/[^a-zA-Z0-9\s]/g, '').toLowerCase();
-
-    const matchesSearch = nameLower.includes(searchLower) ||
-                         nameWithoutSpecialChars.includes(searchLower) ||
-                         group.description?.toLowerCase().includes(searchLower);
-    const matchesFilter = filter === "all" ||
-                         (filter === "official" && !group.user_id) ||
-                         (filter === "community" && group.user_id);
-    return matchesSearch && matchesFilter;
+    const nameWithoutSpecialChars = group.name
+      .replace(/[^a-zA-Z0-9\s]/g, "")
+      .toLowerCase();
+    return (
+      nameLower.includes(searchLower) ||
+      nameWithoutSpecialChars.includes(searchLower) ||
+      group.korean_name?.toLowerCase().includes(searchLower) ||
+      group.description?.toLowerCase().includes(searchLower)
+    );
   });
+
+  const sections = CATEGORIES.map((category) => ({
+    ...category,
+    groups: filteredGroups.filter((group) => categoryFor(group) === category.key),
+  })).filter((section) => section.groups.length > 0);
 
   return (
     <div className="groups-list">
@@ -87,26 +114,6 @@ const GroupsList = () => {
             className="groups-list__search-input"
           />
         </div>
-        <div className="groups-list__filters">
-          <button
-            onClick={() => setFilter("all")}
-            className={`groups-list__filter ${filter === "all" ? "active" : ""}`}
-          >
-            All ({groups.length})
-          </button>
-          <button
-            onClick={() => setFilter("official")}
-            className={`groups-list__filter ${filter === "official" ? "active" : ""}`}
-          >
-            Official ({officialGroups.length})
-          </button>
-          <button
-            onClick={() => setFilter("community")}
-            className={`groups-list__filter ${filter === "community" ? "active" : ""}`}
-          >
-            User Communities ({userGroups.length})
-          </button>
-        </div>
       </div>
 
       {showCreateGroup && <CreateGroup onGroupCreated={handleGroupCreated} />}
@@ -114,12 +121,12 @@ const GroupsList = () => {
       {error && <div className="groups-list__error">{error}</div>}
 
       {loading ? (
-        <div className="groups-list__content">
+        <div className="groups-list__grid">
           {[1, 2, 3, 4, 5, 6].map((i) => (
-            <GroupItemSkeleton key={i} />
+            <GroupCardSkeleton key={i} />
           ))}
         </div>
-      ) : filteredGroups.length === 0 ? (
+      ) : sections.length === 0 ? (
         <div className="groups-list__empty">
           <p>
             {searchTerm
@@ -128,44 +135,46 @@ const GroupsList = () => {
           </p>
         </div>
       ) : (
-        <div className="groups-list__content">
-          {filteredGroups.map((group) => (
-            <div
-              key={group.id}
-              className="group-item"
-              onClick={() => {
-                if (!user) {
-                  navigate('/login');
-                  return;
-                }
-                navigate(`/groups/${group.id}`);
-              }}
-              style={{ cursor: 'pointer' }}
-            >
-              <div className="group-item__icon">
-                {group.logo_url ? (
-                  <img src={group.logo_url} alt={group.name} />
-                ) : (
-                  <div className="group-item__icon-placeholder">
-                    {group.name.charAt(0).toUpperCase()}
-                  </div>
-                )}
-              </div>
-              <div className="group-item__info">
-                <div className="group-item__header">
-                  <h3 className="group-item__name">{group.name}</h3>
-                  {!group.user_id && (
-                    <span className="group-item__badge">Official</span>
-                  )}
-                </div>
-                {group.description && (
-                  <p className="group-item__description">{group.description}</p>
-                )}
-              </div>
-              <div className="group-item__arrow">›</div>
+        sections.map((section) => (
+          <section key={section.key} className="groups-list__section">
+            <div className="groups-list__section-header">
+              <h2 className="groups-list__section-title">{section.label}</h2>
+              <span className="groups-list__section-count">
+                {section.groups.length}
+              </span>
             </div>
-          ))}
-        </div>
+            <div className="groups-list__grid">
+              {section.groups.map((group) => (
+                <button
+                  key={group.id}
+                  className="group-card"
+                  onClick={() => handleOpenGroup(group)}
+                >
+                  <div className="group-card__cover">
+                    {group.logo_url ? (
+                      <FadeImage src={group.logo_url} alt={group.name} />
+                    ) : (
+                      <div className="group-card__cover-placeholder">
+                        {group.name.charAt(0).toUpperCase()}
+                      </div>
+                    )}
+                    {!group.user_id && (
+                      <span className="group-card__badge">Official</span>
+                    )}
+                  </div>
+                  <div className="group-card__body">
+                    <h3 className="group-card__name">{group.name}</h3>
+                    {group.korean_name && (
+                      <span className="group-card__korean">
+                        {group.korean_name}
+                      </span>
+                    )}
+                  </div>
+                </button>
+              ))}
+            </div>
+          </section>
+        ))
       )}
     </div>
   );
