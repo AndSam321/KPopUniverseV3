@@ -117,3 +117,17 @@ GROUP_DETAILS.each do |detail|
 
   puts "  Enriched: #{group.name} (#{group.members.count} members, #{group.albums.count} albums)"
 end
+
+GROUP_TYPES = {
+  "girl_group" => ["(G)I-DLE", "BLACKPINK", "ITZY", "IVE", "KATSEYE", "Kep1er", "LE SSERAFIM", "MAMAMOO", "NMIXX", "Red Velvet", "TWICE"],
+  "boy_group" => ["ATEEZ", "ENHYPEN", "EXO", "GOT7", "Monsta X", "NCT", "SEVENTEEN", "Stray Kids", "TXT"]
+}
+
+GROUP_TYPES.each do |type, names|
+  names.each do |name|
+    group = Group.find_by(name: name)
+    group&.update!(group_type: type)
+  end
+end
+
+puts "  Classified #{GROUP_TYPES.values.sum(&:size)} groups by type"
