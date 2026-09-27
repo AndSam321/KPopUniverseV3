@@ -89,23 +89,24 @@ const GroupsList = () => {
 
   return (
     <div className="groups-list">
-      <div className="groups-list__header">
-        <div className="groups-list__title-section">
-          <h1>Communities</h1>
-          <p className="groups-list__subtitle">
-            Discover and join K-pop communities
-          </p>
+      <div className="groups-list__hero">
+        <div className="groups-list__hero-pattern" aria-hidden="true" />
+        <div className="groups-list__header">
+          <div className="groups-list__title-section">
+            <h1>Communities</h1>
+            <p className="groups-list__subtitle">
+              Discover and join K-pop communities
+            </p>
+          </div>
+          <button
+            onClick={() => setShowCreateGroup(!showCreateGroup)}
+            className="groups-list__create-btn"
+          >
+            {showCreateGroup ? "Cancel" : "+ Create Community"}
+          </button>
         </div>
-        <button
-          onClick={() => setShowCreateGroup(!showCreateGroup)}
-          className="groups-list__create-btn"
-        >
-          {showCreateGroup ? "Cancel" : "+ Create Community"}
-        </button>
-      </div>
 
-      <div className="groups-list__controls">
-        <div className="groups-list__search">
+        <div className="groups-list__controls">
           <input
             type="text"
             placeholder="Search communities..."

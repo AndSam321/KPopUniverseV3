@@ -30,6 +30,11 @@
   --dark-bg-end: #0f3460;
   --dark-card: #26254a;
   --dark-text: #f0eeff;
+
+  /* Vibrant & Block-based accents (brand purple/pink identity) */
+  --vibe-purple: #7c3aed;
+  --vibe-purple-soft: #a78bfa;
+  --vibe-pink: #ff1493;
 }
 
 * {
