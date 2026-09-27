@@ -29,13 +29,4 @@ class SearchQuery
     return Post.none unless valid?
     Post.search(@term).includes(:user, :groups)
   end
-
-  def preview
-    {
-      groups: groups.limit(PREVIEW_LIMIT),
-      members: members.limit(PREVIEW_LIMIT),
-      users: users.limit(PREVIEW_LIMIT),
-      posts: posts.limit(PREVIEW_LIMIT)
-    }
-  end
 end

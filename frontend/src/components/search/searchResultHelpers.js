@@ -1,3 +1,5 @@
+export const MIN_LENGTH = 2;
+
 export const SECTIONS = [
   { key: "groups", label: "Groups" },
   { key: "members", label: "Artists" },

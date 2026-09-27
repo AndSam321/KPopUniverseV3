@@ -3,6 +3,7 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 import { search as searchApi } from "../api/searchApi";
 import FadeImage from "../components/common/FadeImage";
 import {
+  MIN_LENGTH,
   SECTIONS,
   targetFor,
   imageFor,
@@ -64,7 +65,7 @@ const SearchResults = () => {
 
   // Grouped preview (also provides per-tab counts)
   useEffect(() => {
-    if (q.length < 2) return;
+    if (q.length < MIN_LENGTH) return;
     let active = true;
     setLoading(true);
     searchApi(q)
@@ -81,7 +82,7 @@ const SearchResults = () => {
 
   // Typed, paginated results for a specific tab
   useEffect(() => {
-    if (tab === "all" || q.length < 2) return;
+    if (tab === "all" || q.length < MIN_LENGTH) return;
     let active = true;
     setLoading(true);
     searchApi(q, { type: tab, page })
@@ -95,10 +96,10 @@ const SearchResults = () => {
     };
   }, [q, tab, page]);
 
-  if (q.length < 2) {
+  if (q.length < MIN_LENGTH) {
     return (
       <div className="search-results">
-        <p className="search-results__empty">Type at least 2 characters to search.</p>
+        <p className="search-results__empty">Type at least {MIN_LENGTH} characters to search.</p>
       </div>
     );
   }

@@ -3,18 +3,17 @@ import { useNavigate } from "react-router-dom";
 import { Search, Users, Mic2, User, FileText } from "lucide-react";
 import { search as searchApi } from "../../api/searchApi";
 import FadeImage from "../common/FadeImage";
-import { targetFor, imageFor, titleFor, subtitleFor } from "./searchResultHelpers";
+import { MIN_LENGTH, SECTIONS, targetFor, imageFor, titleFor, subtitleFor } from "./searchResultHelpers";
 import "./SearchBar.css";
 
-const MIN_LENGTH = 2;
 const DEBOUNCE_MS = 250;
 
-const SECTIONS = [
-  { key: "groups", label: "Groups", icon: Users },
-  { key: "members", label: "Artists", icon: Mic2 },
-  { key: "users", label: "Fans", icon: User },
-  { key: "posts", label: "Posts", icon: FileText },
-];
+const SECTION_ICONS = {
+  groups: Users,
+  members: Mic2,
+  users: User,
+  posts: FileText,
+};
 
 const SearchBar = () => {
   const navigate = useNavigate();
@@ -151,7 +150,7 @@ const SearchBar = () => {
           {SECTIONS.map((section) => {
             const items = results?.[section.key] || [];
             if (items.length === 0) return null;
-            const SectionIcon = section.icon;
+            const SectionIcon = SECTION_ICONS[section.key];
             return (
               <div className="kp-search__section" key={section.key}>
                 <div className="kp-search__section-title">{section.label}</div>
