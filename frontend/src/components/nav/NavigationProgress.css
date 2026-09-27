@@ -17,9 +17,9 @@
 
 .nav-progress__bar {
   height: 100%;
-  background: linear-gradient(90deg, #9fa0ff, #e0c3fc, #ff8ccf);
+  background: var(--pastel-sky);
   border-radius: 0 2px 2px 0;
-  box-shadow: 0 0 8px rgba(159, 160, 255, 0.6);
+  box-shadow: 0 0 8px rgba(162, 210, 255, 0.7);
   transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
 }
@@ -38,8 +38,8 @@
 
 /* === Dark Mode === */
 :root.dark-mode .nav-progress__bar {
-  background: linear-gradient(90deg, #757bc8, #9fa0ff, #e0c3fc);
-  box-shadow: 0 0 12px rgba(159, 160, 255, 0.8);
+  background: var(--pastel-sky);
+  box-shadow: 0 0 12px rgba(162, 210, 255, 0.8);
 }
 
 :root.dark-mode .nav-progress__bar::after {
