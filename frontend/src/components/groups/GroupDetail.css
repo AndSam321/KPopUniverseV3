@@ -6,14 +6,13 @@
 
 .group-detail__header {
   background: var(--card-bg);
-  border: 2px solid var(--border-color);
-  border-radius: 16px;
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
   padding: 2rem;
   margin-bottom: 2rem;
   display: flex;
   gap: 2rem;
   align-items: center;
-  box-shadow: 0 4px 12px rgba(117, 123, 200, 0.1);
 }
 
 .group-detail__logo {
@@ -22,8 +21,8 @@
   flex-shrink: 0;
   border-radius: 12px;
   overflow: hidden;
-  background: rgba(187, 173, 255, 0.15);
-  border: 2px solid var(--border-color);
+  background: rgba(205, 180, 219, 0.2);
+  border: 1px solid var(--border-color);
 }
 
 .group-detail__logo img {
@@ -37,12 +36,11 @@
 }
 
 .group-detail__info h1 {
-  color: #4a4b7e;
+  color: var(--pastel-ink);
   font-family: "DynaPuff", cursive;
   font-size: 2rem;
   margin: 0 0 1rem 0;
   font-weight: 700;
-  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
 }
 
 .group-detail__description {
@@ -59,10 +57,10 @@
   gap: 6px;
   flex-shrink: 0;
   padding: 8px 16px;
-  border: 1px solid rgba(173, 167, 255, 0.4);
-  border-radius: 10px;
-  background: rgba(245, 240, 255, 0.5);
-  color: #757bc8;
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-secondary);
   font-family: "Zen Kaku Gothic New", system-ui, sans-serif;
   font-size: 0.85rem;
   font-weight: 500;
@@ -71,8 +69,8 @@
 }
 
 .group-detail__mute-btn:hover {
-  background: rgba(237, 233, 255, 0.8);
-  border-color: #757bc8;
+  border-color: var(--pastel-sky);
+  color: var(--pastel-ink);
 }
 
 .group-detail__mute-btn--muted {
@@ -87,14 +85,14 @@
 }
 
 :root.dark-mode .group-detail__mute-btn {
-  background: rgba(45, 45, 68, 0.5);
-  border-color: #2d2d44;
-  color: #bbadff;
+  background: transparent;
+  border-color: rgba(159, 160, 255, 0.15);
+  color: #a9a3cc;
 }
 
 :root.dark-mode .group-detail__mute-btn:hover {
-  background: rgba(45, 45, 68, 0.8);
-  border-color: #9fa0ff;
+  border-color: var(--pastel-sky);
+  color: #e7e2ff;
 }
 
 :root.dark-mode .group-detail__mute-btn--muted {
@@ -115,29 +113,27 @@
 }
 
 .group-detail__posts-header h2 {
-  color: #4a4b7e;
+  color: var(--pastel-ink);
   font-size: 1.5rem;
   margin: 0;
   font-weight: 700;
-  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
 }
 
 .group-detail__create-btn {
   padding: 0.75rem 1.5rem;
-  background: #757bc8;
-  color: white;
+  background: var(--pastel-sky);
+  color: #1f2a44;
   border: none;
-  border-radius: 8px;
+  border-radius: 999px;
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: transform 0.15s ease, background 0.15s ease;
 }
 
 .group-detail__create-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(117, 123, 200, 0.4);
-  background: #6b70b8;
+  transform: translateY(-1px);
+  background: #8ec3ff;
 }
 
 .group-detail__loading {
@@ -192,20 +188,18 @@
   padding: 0.75rem 1.5rem;
   background: var(--card-bg);
   color: var(--text-primary);
-  border: 2px solid var(--border-color);
-  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: border-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
 }
 
 .group-detail__page-btn:hover:not(:disabled) {
-  background: #757bc8;
-  color: white;
-  border-color: #757bc8;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(117, 123, 200, 0.3);
+  border-color: var(--pastel-sky);
+  color: var(--pastel-ink);
+  transform: translateY(-1px);
 }
 
 .group-detail__page-btn:disabled {
@@ -226,19 +220,28 @@
 }
 
 :root.dark-mode .group-detail__info h1 {
-  color: #9fa0ff;
+  color: #e7e2ff;
 }
 
 :root.dark-mode .group-detail__page-btn {
   background: var(--dark-card);
-  color: var(--dark-text-primary);
+  color: var(--dark-text);
   border-color: rgba(159, 160, 255, 0.15);
 }
 
 :root.dark-mode .group-detail__page-btn:hover:not(:disabled) {
-  background: #757bc8;
-  color: white;
-  border-color: #757bc8;
+  border-color: var(--pastel-sky);
+  color: #e7e2ff;
+}
+
+:root.dark-mode .group-detail__section-title,
+:root.dark-mode .group-detail__posts-header h2 {
+  color: #e7e2ff;
+}
+
+:root.dark-mode .group-detail__tag {
+  background: rgba(162, 210, 255, 0.12);
+  color: #cfe6ff;
 }
 
 @media (max-width: 768px) {
@@ -288,9 +291,9 @@
 .group-detail__tag {
   padding: 0.25rem 0.7rem;
   border-radius: 999px;
-  background: rgba(187, 173, 255, 0.15);
+  background: rgba(162, 210, 255, 0.18);
   border: 1px solid var(--border-color);
-  color: #757bc8;
+  color: var(--pastel-ink);
   font-size: 0.8rem;
   font-weight: 600;
 }
@@ -304,15 +307,14 @@
 /* === Members / Discography sections === */
 .group-detail__section {
   background: var(--card-bg);
-  border: 2px solid var(--border-color);
-  border-radius: 16px;
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
   padding: 1.5rem;
   margin-bottom: 2rem;
-  box-shadow: 0 4px 12px rgba(117, 123, 200, 0.1);
 }
 
 .group-detail__section-title {
-  color: #4a4b7e;
+  color: var(--pastel-ink);
   font-size: 1.25rem;
   font-weight: 700;
   margin: 0 0 1.25rem;
@@ -334,11 +336,11 @@
   margin: 0 auto 0.5rem;
   border-radius: 50%;
   overflow: hidden;
-  background: linear-gradient(135deg, #757bc8, #9fa0ff);
+  background: var(--pastel-orchid);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  color: var(--pastel-ink);
   font-weight: 700;
   font-size: 1.6rem;
 }
@@ -372,12 +374,12 @@
   aspect-ratio: 1;
   border-radius: 10px;
   overflow: hidden;
-  background: rgba(187, 173, 255, 0.15);
+  background: rgba(205, 180, 219, 0.2);
   border: 1px solid var(--border-color);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #ada7ff;
+  color: var(--pastel-ink);
   font-size: 2rem;
   margin-bottom: 0.5rem;
 }
@@ -407,18 +409,18 @@
   gap: 0.35rem;
   margin: 1.25rem auto 0;
   padding: 0.5rem 1.1rem;
-  background: rgba(187, 173, 255, 0.15);
+  background: rgba(162, 210, 255, 0.18);
   border: 1px solid var(--border-color);
   border-radius: 999px;
-  color: #757bc8;
+  color: var(--pastel-ink);
   font-weight: 600;
   font-size: 0.85rem;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: border-color 0.15s ease, transform 0.15s ease;
 }
 
 .group-detail__show-more:hover {
-  background: rgba(117, 123, 200, 0.15);
+  border-color: var(--pastel-sky);
   transform: translateY(-1px);
 }
 
