@@ -3,23 +3,23 @@
   margin: 0 auto 2rem;
   padding: 2rem;
   background: var(--card-bg);
-  border: 2px solid var(--border-color);
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(117, 123, 200, 0.15);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  box-shadow: 0 1px 2px rgba(120, 110, 150, 0.08);
 }
 
 .create-group h2 {
-  color: #757bc8;
+  color: var(--pastel-ink);
   margin-bottom: 1.5rem;
   font-family: "DynaPuff", cursive;
   font-weight: 700;
 }
 
 .create-group__error {
-  background: #ff4444;
+  background: var(--accent-pink);
   color: white;
   padding: 0.75rem;
-  border-radius: 6px;
+  border-radius: 12px;
   margin-bottom: 1rem;
 }
 
@@ -42,41 +42,50 @@
 }
 
 .create-group__field input[type="text"],
-.create-group__field input[type="url"],
-.create-group__field textarea {
+.create-group__field input[type="url"] {
   padding: 0.75rem;
-  background: white;
-  border: 2px solid var(--border-color);
-  border-radius: 8px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
   color: var(--text-primary);
   font-size: 1rem;
-  transition: border-color 0.2s ease;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.create-group__field textarea {
+  padding: 0.75rem;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  color: var(--text-primary);
+  font-size: 1rem;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 .create-group__field input[type="text"]:focus,
 .create-group__field input[type="url"]:focus,
 .create-group__field textarea:focus {
   outline: none;
-  border-color: #757bc8;
-  box-shadow: 0 0 0 3px rgba(117, 123, 200, 0.15);
+  border-color: var(--pastel-sky);
+  box-shadow: 0 0 0 3px rgba(162, 210, 255, 0.35);
 }
 
 .create-group__submit {
   padding: 1rem;
-  background: #757bc8;
-  color: white;
+  background: var(--pastel-sky);
+  color: #1f2a44;
   border: none;
-  border-radius: 8px;
+  border-radius: 999px;
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
 }
 
 .create-group__submit:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(117, 123, 200, 0.4);
-  background: #6b70b8;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(120, 110, 150, 0.15);
+  background: #8ec3ff;
 }
 
 .create-group__submit:disabled {
@@ -91,26 +100,26 @@
 }
 
 :root.dark-mode .create-group h2 {
-  color: #9fa0ff;
+  color: #e7e2ff;
 }
 
 :root.dark-mode .create-group__field label {
-  color: var(--dark-text-primary);
+  color: var(--dark-text);
 }
 
 :root.dark-mode .create-group__field input[type="text"],
 :root.dark-mode .create-group__field input[type="url"],
 :root.dark-mode .create-group__field textarea {
-  background: rgba(38, 37, 74, 0.5);
+  background: var(--dark-card);
   border-color: rgba(159, 160, 255, 0.15);
-  color: var(--dark-text-primary);
+  color: var(--dark-text);
 }
 
 :root.dark-mode .create-group__field input[type="text"]:focus,
 :root.dark-mode .create-group__field input[type="url"]:focus,
 :root.dark-mode .create-group__field textarea:focus {
-  border-color: #9fa0ff;
-  box-shadow: 0 0 0 3px rgba(159, 160, 255, 0.2);
+  border-color: var(--pastel-sky);
+  box-shadow: 0 0 0 3px rgba(162, 210, 255, 0.35);
 }
 
 @media (max-width: 600px) {
@@ -120,5 +129,18 @@
 
   .create-group__form {
     gap: 1.1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .create-group__field input[type="text"],
+  .create-group__field input[type="url"],
+  .create-group__field textarea,
+  .create-group__submit {
+    transition: none;
+  }
+
+  .create-group__submit:hover:not(:disabled) {
+    transform: none;
   }
 }

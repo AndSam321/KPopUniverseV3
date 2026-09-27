@@ -3,13 +3,13 @@
   margin: 2rem auto;
   padding: 2rem;
   background: var(--card-bg);
-  border-radius: 16px;
+  border-radius: 14px;
   border: 1px solid var(--border-color);
-  box-shadow: 0 8px 24px rgba(117, 123, 200, 0.15);
+  box-shadow: 0 1px 2px rgba(120, 110, 150, 0.08);
 }
 
 .create-post h2 {
-  color: #757bc8;
+  color: var(--pastel-ink);
   margin-bottom: 1.5rem;
   font-family: "Zen Kaku Gothic New", sans-serif;
   font-weight: 700;
@@ -17,10 +17,10 @@
 }
 
 .create-post__error {
-  background: #ff4444;
+  background: var(--accent-pink);
   color: white;
   padding: 0.75rem;
-  border-radius: 6px;
+  border-radius: 12px;
   margin-bottom: 1rem;
 }
 
@@ -42,37 +42,46 @@
   font-size: 0.95rem;
 }
 
-.create-post__field input[type="text"],
-.create-post__field textarea {
+.create-post__field input[type="text"] {
   padding: 0.875rem;
-  background: white;
-  border: 2px solid var(--border-color);
-  border-radius: 10px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
   color: var(--text-primary);
   font-size: 1rem;
-  transition: all 0.3s ease;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.create-post__field textarea {
+  padding: 0.875rem;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  color: var(--text-primary);
+  font-size: 1rem;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 .create-post__field input[type="text"]:focus,
 .create-post__field textarea:focus {
   outline: none;
-  border-color: #757bc8;
-  box-shadow: 0 0 0 3px rgba(117, 123, 200, 0.1);
+  border-color: var(--pastel-sky);
+  box-shadow: 0 0 0 3px rgba(162, 210, 255, 0.35);
 }
 
 .create-post__field input[type="file"] {
   padding: 0.875rem;
-  background: white;
-  border: 2px dashed var(--border-color);
-  border-radius: 10px;
+  background: var(--card-bg);
+  border: 1px dashed var(--border-color);
+  border-radius: 12px;
   color: var(--text-secondary);
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: border-color 0.15s ease, background 0.15s ease;
 }
 
 .create-post__field input[type="file"]:hover {
-  border-color: #757bc8;
-  background: rgba(117, 123, 200, 0.05);
+  border-color: var(--pastel-sky);
+  background: rgba(162, 210, 255, 0.18);
 }
 
 .create-post__previews {
@@ -85,7 +94,7 @@
 .create-post__preview {
   position: relative;
   aspect-ratio: 1;
-  border-radius: 8px;
+  border-radius: 12px;
   overflow: hidden;
 }
 
@@ -111,11 +120,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.3s;
+  transition: background 0.15s ease;
 }
 
 .create-post__remove-image:hover {
-  background: #ff4444;
+  background: #e0498b;
 }
 
 .create-post__groups {
@@ -125,9 +134,9 @@
   max-height: 200px;
   overflow-y: auto;
   padding: 1rem;
-  background: white;
-  border: 2px solid var(--border-color);
-  border-radius: 10px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
 }
 
 .create-post__group-tag {
@@ -135,27 +144,27 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.625rem 1rem;
-  background: rgba(187, 173, 255, 0.15);
-  border: 2px solid var(--border-color);
-  border-radius: 24px;
+  background: rgba(162, 210, 255, 0.18);
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
   cursor: pointer;
-  transition: all 0.25s ease;
+  transition: all 0.15s ease;
   user-select: none;
 }
 
 .create-post__group-tag:hover {
-  border-color: #757bc8;
-  background: rgba(117, 123, 200, 0.1);
+  border-color: var(--pastel-sky);
+  background: rgba(162, 210, 255, 0.18);
   transform: translateY(-1px);
 }
 
 .create-post__group-tag input[type="checkbox"] {
   cursor: pointer;
-  accent-color: #757bc8;
+  accent-color: var(--pastel-sky);
 }
 
 .create-post__group-tag input[type="checkbox"]:checked + span {
-  color: #757bc8;
+  color: var(--pastel-ink);
   font-weight: 700;
 }
 
@@ -171,9 +180,9 @@
   flex-wrap: wrap;
   gap: 0.75rem;
   padding: 1rem;
-  background: white;
-  border: 2px solid var(--border-color);
-  border-radius: 10px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
 }
 
 .create-post__flair-tag {
@@ -181,27 +190,27 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.625rem 1rem;
-  background: rgba(187, 173, 255, 0.05);
-  border: 2px solid var(--border-color);
-  border-radius: 24px;
+  background: rgba(162, 210, 255, 0.18);
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
   cursor: pointer;
-  transition: all 0.25s ease;
+  transition: all 0.15s ease;
   user-select: none;
 }
 
 .create-post__flair-tag:hover {
   transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(117, 123, 200, 0.1);
+  box-shadow: 0 1px 2px rgba(120, 110, 150, 0.08);
 }
 
 .create-post__flair-tag.selected {
   transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(117, 123, 200, 0.2);
+  box-shadow: 0 1px 2px rgba(120, 110, 150, 0.08);
 }
 
 .create-post__flair-tag input[type="radio"] {
   cursor: pointer;
-  accent-color: #757bc8;
+  accent-color: var(--pastel-sky);
 }
 
 .create-post__flair-tag span {
@@ -212,21 +221,21 @@
 
 .create-post__submit {
   padding: 1rem 1.5rem;
-  background: #757bc8;
-  color: white;
+  background: var(--pastel-sky);
+  color: #1f2a44;
   border: none;
-  border-radius: 10px;
+  border-radius: 999px;
   font-size: 1.05rem;
   font-weight: 700;
   cursor: pointer;
-  transition: all 0.25s ease;
-  box-shadow: 0 4px 12px rgba(117, 123, 200, 0.25);
+  transition: all 0.15s ease;
+  box-shadow: 0 1px 2px rgba(120, 110, 150, 0.08);
 }
 
 .create-post__submit:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(117, 123, 200, 0.4);
-  background: #6b70b8;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(120, 110, 150, 0.15);
+  background: #8ec3ff;
 }
 
 .create-post__submit:disabled {
@@ -254,5 +263,32 @@
   .create-post__previews {
     grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
     gap: 0.6rem;
+  }
+}
+
+:root.dark-mode .create-post h2 {
+  color: #e7e2ff;
+}
+
+:root.dark-mode .create-post__group-tag input[type="checkbox"]:checked + span {
+  color: #cfe6ff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .create-post__field input[type="text"],
+  .create-post__field textarea,
+  .create-post__field input[type="file"],
+  .create-post__remove-image,
+  .create-post__group-tag,
+  .create-post__flair-tag,
+  .create-post__submit {
+    transition: none;
+  }
+
+  .create-post__group-tag:hover,
+  .create-post__flair-tag:hover,
+  .create-post__flair-tag.selected,
+  .create-post__submit:hover:not(:disabled) {
+    transform: none;
   }
 }

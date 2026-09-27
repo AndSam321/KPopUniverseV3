@@ -33,7 +33,7 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background 0.15s ease;
 }
 
 .image-lightbox__close:hover {
@@ -48,5 +48,11 @@
   .image-lightbox__img {
     max-width: 96vw;
     max-height: 80vh;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .image-lightbox__close {
+    transition: none;
   }
 }

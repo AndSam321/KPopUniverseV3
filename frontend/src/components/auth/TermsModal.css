@@ -26,15 +26,15 @@
 
 /* Modal Content */
 .modal-content {
-  background: #ffffff;
-  border-radius: 24px;
+  background: var(--card-bg);
+  border-radius: 14px;
   width: 100%;
   max-width: 700px;
   max-height: 85vh;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 20px 60px rgba(105, 111, 199, 0.35);
-  border: 1px solid rgba(167, 170, 225, 0.4);
+  box-shadow: 0 8px 20px rgba(120, 110, 150, 0.15);
+  border: 1px solid var(--border-color);
   position: relative;
   animation: slideUp 0.3s ease;
 }
@@ -58,20 +58,20 @@
   width: 36px;
   height: 36px;
   border: none;
-  background: rgba(167, 170, 225, 0.15);
-  color: #696fc7;
+  background: rgba(162, 210, 255, 0.18);
+  color: var(--pastel-ink);
   font-size: 1.5rem;
   border-radius: 50%;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
   z-index: 10;
 }
 
 .modal-close:hover:not(:disabled) {
-  background: rgba(167, 170, 225, 0.25);
+  background: rgba(162, 210, 255, 0.28);
   transform: rotate(90deg);
 }
 
@@ -83,21 +83,21 @@
 /* Modal Header */
 .modal-header {
   padding: 32px 32px 20px;
-  border-bottom: 1px solid rgba(167, 170, 225, 0.2);
+  border-bottom: 1px solid var(--border-color);
 }
 
 .modal-title {
   margin: 0;
   font-size: 1.8rem;
   font-weight: 700;
-  color: #696fc7;
+  color: var(--pastel-ink);
   padding-right: 40px; /* space for close button */
 }
 
 .modal-subtitle {
   margin-top: 6px;
   font-size: 0.9rem;
-  color: #8a8dd9;
+  color: var(--text-secondary);
 }
 
 /* Modal Body (Scrollable) */
@@ -113,17 +113,17 @@
 }
 
 .modal-body::-webkit-scrollbar-track {
-  background: #f9f9ff;
+  background: transparent;
   border-radius: 10px;
 }
 
 .modal-body::-webkit-scrollbar-thumb {
-  background: #a7aae1;
+  background: var(--border-color);
   border-radius: 10px;
 }
 
 .modal-body::-webkit-scrollbar-thumb:hover {
-  background: #696fc7;
+  background: var(--text-muted);
 }
 
 /* Terms Sections */
@@ -134,13 +134,13 @@
 .terms-heading {
   font-size: 1.1rem;
   font-weight: 600;
-  color: #696fc7;
+  color: var(--pastel-ink);
   margin: 0 0 10px 0;
 }
 
 .terms-text {
   font-size: 0.95rem;
-  color: #55557a;
+  color: var(--text-primary);
   line-height: 1.7;
   margin: 0;
 }
@@ -148,7 +148,7 @@
 /* Modal Footer */
 .modal-footer {
   padding: 20px 32px;
-  border-top: 1px solid rgba(167, 170, 225, 0.2);
+  border-top: 1px solid var(--border-color);
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -161,7 +161,7 @@
   gap: 10px;
   cursor: pointer;
   font-size: 0.95rem;
-  color: #55557a;
+  color: var(--text-secondary);
   width: 100%;
 }
 
@@ -170,7 +170,7 @@
   width: 20px;
   height: 20px;
   cursor: pointer;
-  accent-color: #696fc7;
+  accent-color: var(--pastel-sky);
   flex-shrink: 0;
 }
 
@@ -182,20 +182,20 @@
 .modal-button {
   padding: 12px 40px;
   border: none;
-  border-radius: 12px;
-  background: linear-gradient(135deg, #696fc7, #a7aae1);
-  color: #ffffff;
+  border-radius: 999px;
+  background: var(--pastel-sky);
+  color: #1f2a44;
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 6px 20px rgba(105, 111, 199, 0.35);
+  transition: all 0.15s ease;
+  box-shadow: 0 1px 2px rgba(120, 110, 150, 0.08);
 }
 
 .modal-button:hover:not(:disabled) {
-  background: linear-gradient(135deg, #5d63b3, #989bd9);
-  box-shadow: 0 10px 25px rgba(105, 111, 199, 0.45);
-  transform: translateY(-2px);
+  background: #8ec3ff;
+  box-shadow: 0 8px 20px rgba(120, 110, 150, 0.15);
+  transform: translateY(-1px);
 }
 
 .modal-button:disabled {
@@ -226,5 +226,31 @@
     right: 16px;
     width: 32px;
     height: 32px;
+  }
+}
+
+:root.dark-mode .modal-title,
+:root.dark-mode .terms-heading {
+  color: #e7e2ff;
+}
+
+:root.dark-mode .modal-close {
+  color: #cfe6ff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .modal-overlay,
+  .modal-content {
+    animation: none;
+  }
+
+  .modal-close,
+  .modal-button {
+    transition: none;
+  }
+
+  .modal-close:hover:not(:disabled),
+  .modal-button:hover:not(:disabled) {
+    transform: none;
   }
 }

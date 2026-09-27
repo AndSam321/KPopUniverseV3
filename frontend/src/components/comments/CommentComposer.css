@@ -2,9 +2,9 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  background: #f8f8ff;
-  border: 1px solid #e0e0ff;
-  border-radius: 12px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
   padding: 0.75rem;
 }
 
@@ -19,7 +19,7 @@
   resize: vertical;
   font-family: inherit;
   font-size: 0.92rem;
-  color: #3d3d5c;
+  color: var(--text-primary);
   outline: none;
 }
 
@@ -32,7 +32,7 @@
 .comment-composer__preview img {
   max-width: 160px;
   max-height: 160px;
-  border-radius: 10px;
+  border-radius: 12px;
   display: block;
   object-fit: cover;
 }
@@ -45,7 +45,7 @@
   height: 24px;
   border-radius: 50%;
   border: 2px solid #ffffff;
-  background: #3d3d5c;
+  background: var(--accent-pink);
   color: white;
   display: flex;
   align-items: center;
@@ -54,7 +54,7 @@
 }
 
 .comment-composer__error {
-  color: #e0498b;
+  color: var(--accent-pink);
   font-size: 0.8rem;
 }
 
@@ -79,16 +79,16 @@
 .comment-composer__tool {
   background: none;
   border: none;
-  color: #757bc8;
+  color: var(--pastel-ink);
   cursor: pointer;
   padding: 0.4rem;
-  border-radius: 8px;
+  border-radius: 999px;
   display: flex;
-  transition: background 0.2s;
+  transition: background 0.15s ease;
 }
 
 .comment-composer__tool:hover:not(:disabled) {
-  background: #ececff;
+  background: rgba(162, 210, 255, 0.18);
 }
 
 .comment-composer__tool:disabled {
@@ -113,30 +113,30 @@
 }
 
 .comment-composer__cancel {
-  background: none;
-  border: 1px solid #d0d0e0;
-  color: #6d7093;
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
   padding: 0.4rem 1rem;
-  border-radius: 8px;
+  border-radius: 999px;
   font-weight: 600;
   cursor: pointer;
   font-size: 0.85rem;
 }
 
 .comment-composer__submit {
-  background: #757bc8;
-  color: white;
+  background: var(--pastel-sky);
+  color: #1f2a44;
   border: none;
   padding: 0.45rem 1.2rem;
-  border-radius: 8px;
-  font-weight: 600;
+  border-radius: 999px;
+  font-weight: 700;
   cursor: pointer;
   font-size: 0.85rem;
-  transition: background 0.2s;
+  transition: background 0.15s ease;
 }
 
 .comment-composer__submit:hover:not(:disabled) {
-  background: #6b70b8;
+  background: #8ec3ff;
 }
 
 .comment-composer__submit:disabled {
@@ -145,16 +145,20 @@
 }
 
 :root.dark-mode .comment-composer {
-  background: #22223a;
-  border-color: #3d3d5c;
+  background: var(--dark-card);
+  border-color: rgba(159, 160, 255, 0.15);
 }
 
 :root.dark-mode .comment-composer__input {
-  color: #e0e0f0;
+  color: var(--dark-text);
+}
+
+:root.dark-mode .comment-composer__tool {
+  color: #cfe6ff;
 }
 
 :root.dark-mode .comment-composer__tool:hover:not(:disabled) {
-  background: #34345020;
+  background: rgba(162, 210, 255, 0.12);
 }
 
 @media (max-width: 480px) {
@@ -169,5 +173,12 @@
   .comment-composer__submit,
   .comment-composer__cancel {
     padding: 0.5rem 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .comment-composer__tool,
+  .comment-composer__submit {
+    transition: none;
   }
 }

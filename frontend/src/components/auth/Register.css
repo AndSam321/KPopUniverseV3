@@ -6,7 +6,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg, #e0c3fc 0%, #bbadff 45%, #757bc8 100%);
+  background: transparent;
   font-family: "Zen Kaku Gothic New", system-ui, -apple-system,
     BlinkMacSystemFont, sans-serif;
   overflow: hidden;
@@ -30,13 +30,8 @@
   font-family: "DynaPuff", system-ui, cursive;
   font-size: 3rem;
   font-weight: 700;
-  color: #ffffff;
+  color: var(--pastel-ink);
   letter-spacing: 1px;
-
-  /* Outline-ish effect + glow using text-shadow */
-  text-shadow: -2px 0 #757bc8, 2px 0 #757bc8, 0 -2px #757bc8, 0 2px #757bc8,
-    0 0 10px rgba(117, 123, 200, 0.6), 0 0 18px rgba(159, 160, 255, 0.6),
-    0 0 24px rgba(187, 173, 255, 0.5);
 
   animation: titleFloat 3s ease-in-out infinite;
 }
@@ -61,22 +56,23 @@
 .register-card {
   width: 100%;
   max-width: 540px;
-  background: #ffffff;
-  border-radius: 24px;
+  background: var(--card-bg);
+  border-radius: 14px;
   padding: 32px 28px 26px;
-  box-shadow: 0 12px 35px rgba(117, 123, 200, 0.25);
-  border: 1px solid rgba(173, 167, 255, 0.4);
-  transition: transform 0.2s ease;
+  box-shadow: 0 1px 2px rgba(120, 110, 150, 0.08);
+  border: 1px solid var(--border-color);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
 .register-card:hover {
-  transform: translateY(-2px);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(120, 110, 150, 0.15);
 }
 
 @media (max-width: 640px) {
   .register-card {
     padding: 24px 18px 20px;
-    border-radius: 18px;
+    border-radius: 14px;
   }
 }
 
@@ -90,13 +86,13 @@
   margin: 0;
   font-size: 1.6rem;
   font-weight: 400;
-  color: #757bc8;
+  color: var(--pastel-ink);
 }
 
 .register-subtitle {
   margin-top: 6px;
   font-size: 0.9rem;
-  color: #6d7093;
+  color: var(--text-secondary);
 }
 
 .emoji-small {
@@ -107,10 +103,10 @@
 .register-error {
   margin-bottom: 16px;
   padding: 10px 12px;
-  border-radius: 10px;
-  background-color: rgba(218, 182, 252, 0.15);
-  border: 1px solid #dab6fc;
-  color: #6b3d8c;
+  border-radius: 12px;
+  background-color: rgba(255, 175, 204, 0.18);
+  border: 1px solid var(--pastel-blush);
+  color: #5a1f3a;
   text-align: center;
   font-size: 0.85rem;
 }
@@ -148,27 +144,27 @@
 .form-label {
   font-size: 0.85rem;
   font-weight: 600;
-  color: #757bc8;
+  color: var(--pastel-ink);
 }
 
 /* === Inputs === */
 .form-input {
   padding: 10px 12px;
-  border-radius: 10px;
-  border: 1px solid #ada7ff;
-  background: #f9f9ff;
-  color: #1e1e2f;
+  border-radius: 999px;
+  border: 1px solid var(--border-color);
+  background: var(--card-bg);
+  color: var(--text-primary);
   font-size: 0.95rem;
-  transition: all 0.2s ease;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 .form-input::placeholder {
-  color: #ada7ff;
+  color: var(--text-muted);
 }
 
 .form-input:focus {
-  border-color: #757bc8;
-  box-shadow: 0 0 0 3px rgba(117, 123, 200, 0.2);
+  border-color: var(--pastel-sky);
+  box-shadow: 0 0 0 3px rgba(162, 210, 255, 0.35);
   outline: none;
 }
 
@@ -194,17 +190,17 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #ada7ff;
-  transition: color 0.2s ease;
+  color: var(--text-muted);
+  transition: color 0.15s ease;
 }
 
 .password-toggle:hover {
-  color: #757bc8;
+  color: var(--pastel-ink);
 }
 
 .password-toggle:focus {
   outline: none;
-  color: #757bc8;
+  color: var(--pastel-ink);
 }
 
 /* === Button === */
@@ -213,20 +209,20 @@
   width: 100%;
   padding: 12px 16px;
   border: none;
-  border-radius: 12px;
-  background: linear-gradient(135deg, #757bc8, #ada7ff);
-  color: #ffffff;
+  border-radius: 999px;
+  background: var(--pastel-sky);
+  color: #1f2a44;
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 6px 20px rgba(117, 123, 200, 0.35);
+  transition: all 0.15s ease;
+  box-shadow: 0 1px 2px rgba(120, 110, 150, 0.08);
 }
 
 .register-button:hover:not(:disabled) {
-  background: linear-gradient(135deg, #6b70b8, #9fa0ff);
-  box-shadow: 0 10px 25px rgba(117, 123, 200, 0.45);
-  transform: translateY(-2px);
+  background: #8ec3ff;
+  box-shadow: 0 8px 20px rgba(120, 110, 150, 0.15);
+  transform: translateY(-1px);
 }
 
 .register-button:disabled {
@@ -239,11 +235,11 @@
   margin-top: 18px;
   text-align: center;
   font-size: 0.9rem;
-  color: #55557a;
+  color: var(--text-secondary);
 }
 
 .register-footer-link {
-  color: #9fa0ff;
+  color: var(--pastel-ink);
   font-weight: 600;
   text-decoration: none;
 }
@@ -257,7 +253,7 @@
   background: none;
   border: none;
   padding: 0;
-  color: #9fa0ff;
+  color: var(--pastel-ink);
   font-weight: 600;
   text-decoration: none;
   cursor: pointer;
@@ -273,7 +269,7 @@
   margin-top: 8px;
   margin-bottom: 4px;
   font-size: 0.9rem;
-  color: #55557a;
+  color: var(--text-secondary);
   line-height: 1.5;
   text-align: center;
 }
@@ -282,7 +278,36 @@
   opacity: 0.5;
   cursor: not-allowed;
   pointer-events: none;
-  background: linear-gradient(135deg, #cbb2fe, #ddbdfc) !important;
+  background: var(--border-color) !important;
   box-shadow: none !important;
   transform: none !important;
+}
+
+:root.dark-mode .register-site-title,
+:root.dark-mode .register-title,
+:root.dark-mode .form-label {
+  color: #e7e2ff;
+}
+
+:root.dark-mode .register-footer-link,
+:root.dark-mode .terms-link-button {
+  color: #cfe6ff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .register-site-title {
+    animation: none;
+  }
+
+  .register-card,
+  .form-input,
+  .password-toggle,
+  .register-button {
+    transition: none;
+  }
+
+  .register-card:hover,
+  .register-button:hover:not(:disabled) {
+    transform: none;
+  }
 }
