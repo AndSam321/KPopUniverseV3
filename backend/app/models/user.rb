@@ -1,5 +1,10 @@
 class User < ApplicationRecord
   include Pointable
+  include PgSearch::Model
+
+  pg_search_scope :search,
+    against: [:username],
+    using: {tsearch: {prefix: true}, trigram: {threshold: 0.3}}
 
   devise :database_authenticatable, :registerable,
            :recoverable, :rememberable, :validatable, :trackable,

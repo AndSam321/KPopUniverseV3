@@ -1,4 +1,10 @@
 class Post < ApplicationRecord
+  include PgSearch::Model
+
+  pg_search_scope :search,
+    against: [:title, :caption],
+    using: {tsearch: {prefix: true}, trigram: {threshold: 0.3}}
+
   belongs_to :user
   has_many :post_tags, dependent: :destroy
   has_many :likes, dependent: :destroy

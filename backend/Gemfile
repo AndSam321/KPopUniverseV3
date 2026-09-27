@@ -65,6 +65,9 @@ gem "aws-sdk-s3", require: false
 # Pagination
 gem "pagy", "~> 9.0"
 
+# Full-text / fuzzy search over PostgreSQL
+gem "pg_search", "~> 2.3"
+
 # ViewComponents
 gem "view_component", "~> 3.0"
 

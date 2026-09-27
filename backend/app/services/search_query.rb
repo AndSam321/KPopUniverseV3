@@ -11,19 +11,23 @@ class SearchQuery
   end
 
   def groups
-    fuzzy(Group.all, %w[groups.name groups.korean_name])
+    return Group.none unless valid?
+    Group.search(@term)
   end
 
   def members
-    fuzzy(Member.includes(:group), %w[members.stage_name])
+    return Member.none unless valid?
+    Member.search(@term).includes(:group)
   end
 
   def users
-    fuzzy(User.all, %w[users.username])
+    return User.none unless valid?
+    User.search(@term)
   end
 
   def posts
-    fuzzy(Post.includes(:user, :groups), %w[posts.title posts.caption])
+    return Post.none unless valid?
+    Post.search(@term).includes(:user, :groups)
   end
 
   def preview
@@ -33,37 +37,5 @@ class SearchQuery
       users: users.limit(PREVIEW_LIMIT),
       posts: posts.limit(PREVIEW_LIMIT)
     }
-  end
-
-  private
-
-  # Matches substrings (ILIKE, index-backed by pg_trgm) OR fuzzy trigram
-  # similarity (the % operator, for typos), ranked by best similarity with a
-  # prefix-match boost.
-  def fuzzy(scope, columns)
-    return scope.none unless valid?
-
-    like = connection.quote("%#{escape_like(@term)}%")
-    prefix = connection.quote("#{escape_like(@term)}%")
-    term = connection.quote(@term)
-
-    cols = columns.map { |c| "COALESCE(#{c}::text, '')" }
-    matches = cols.map { |c| "#{c} ILIKE #{like} OR #{c} % #{term}" }.join(" OR ")
-    starts_with = cols.map { |c| "#{c} ILIKE #{prefix}" }.join(" OR ")
-    similarity = cols.map { |c| "similarity(#{c}, #{term})" }.join(", ")
-
-    scope
-      .where(Arel.sql(matches))
-      .order(Arel.sql("(#{starts_with}) DESC"))
-      .order(Arel.sql("GREATEST(#{similarity}) DESC"))
-      .order(id: :desc)
-  end
-
-  def escape_like(term)
-    term.gsub(/[\\%_]/) { |char| "\\#{char}" }
-  end
-
-  def connection
-    ActiveRecord::Base.connection
   end
 end

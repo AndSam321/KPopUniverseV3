@@ -327,6 +327,9 @@ GEM
     pg (1.6.2-x64-mingw-ucrt)
     pg (1.6.2-x86_64-linux)
     pg (1.6.2-x86_64-linux-musl)
+    pg_search (2.4.0)
+      activerecord (>= 8.0)
+      activesupport (>= 8.0)
     pp (0.6.3)
       prettyprint
     prettyprint (0.2.0)
@@ -593,6 +596,7 @@ DEPENDENCIES
   omniauth-rails_csrf_protection (~> 1.0)
   pagy (~> 9.0)
   pg (~> 1.1)
+  pg_search (~> 2.3)
   propshaft
   puma (>= 5.0)
   pundit (~> 2.3)

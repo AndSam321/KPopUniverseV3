@@ -1,4 +1,10 @@
 class Group < ApplicationRecord
+  include PgSearch::Model
+
+  pg_search_scope :search,
+    against: [:name, :korean_name],
+    using: {tsearch: {prefix: true}, trigram: {threshold: 0.3}}
+
   belongs_to :user, optional: true
   has_many :post_tags, dependent: :destroy
   has_many :posts, through: :post_tags
