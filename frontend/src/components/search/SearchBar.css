@@ -196,6 +196,16 @@
     height: 34px;
     padding: 0 12px;
   }
+
+  /* Anchor to the viewport so the wide dropdown doesn't clip off-screen */
+  .kp-search__dropdown {
+    position: fixed;
+    top: 62px;
+    left: 12px;
+    right: 12px;
+    width: auto;
+    max-width: none;
+  }
 }
 
 @media (max-width: 480px) {
