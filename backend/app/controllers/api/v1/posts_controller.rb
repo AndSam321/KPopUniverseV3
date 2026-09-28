@@ -59,6 +59,7 @@ class Api::V1::PostsController < Api::V1::BaseController
     if @post.save
       @post.user.award_points(:create_post)
       BadgeAwarder.new(@post.user).check_fandom_badges(@post.groups)
+      ProfileBroadcaster.call(@post.user)
       render json: {data: post_json(@post)}, status: :created
     else
       render json: {errors: @post.errors.full_messages}, status: :unprocessable_entity
@@ -72,6 +73,7 @@ class Api::V1::PostsController < Api::V1::BaseController
 
     if @post.update(post_params)
       BadgeAwarder.new(@post.user).check_fandom_badges(@post.groups)
+      ProfileBroadcaster.call(@post.user)
       render json: {data: post_json(@post)}
     else
       render json: {errors: @post.errors.full_messages}, status: :unprocessable_entity
@@ -97,6 +99,7 @@ class Api::V1::PostsController < Api::V1::BaseController
     else
       false
     end
+    ProfileBroadcaster.call(@post.user)
     render json: {liked: liked, likes_count: @post.reload.likes_count}, status: :ok
   end
 
@@ -104,6 +107,7 @@ class Api::V1::PostsController < Api::V1::BaseController
     if current_user.likes.find_by(post: @post)&.destroy
       revoke_post_author_points
     end
+    ProfileBroadcaster.call(@post.user)
     render json: {liked: false, likes_count: @post.reload.likes_count}, status: :ok
   end
 

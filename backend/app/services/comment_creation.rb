@@ -9,6 +9,7 @@ class CommentCreation
     notify_parent_author
     enqueue_image_processing
     award_fandom_badges
+    ProfileBroadcaster.call(comment.user)
     comment
   end
 

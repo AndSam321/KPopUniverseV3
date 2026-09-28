@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { Bell, CheckCheck, Heart, MessageCircle, Reply, UserPlus } from "lucide-react";
-import { createConsumer } from "@rails/actioncable";
+import { getConsumer } from "../../api/cable";
 import {
   getNotifications,
   markAllRead,
@@ -74,18 +74,11 @@ export default function NotificationsDropdown() {
   const dropdownRef = useRef(null);
   const subscriptionRef = useRef(null);
 
-  // Connect to ActionCable for real-time notifications
+  // Connect to ActionCable for real-time notifications (shared consumer)
   useEffect(() => {
     if (!user) return;
 
-    const token = localStorage.getItem("authToken");
-    if (!token) return;
-
-    const consumer = createConsumer(
-      `ws://localhost:9000/cable?token=${token}`
-    );
-
-    subscriptionRef.current = consumer.subscriptions.create(
+    subscriptionRef.current = getConsumer().subscriptions.create(
       "NotificationChannel",
       {
         received(data) {
@@ -97,7 +90,6 @@ export default function NotificationsDropdown() {
 
     return () => {
       subscriptionRef.current?.unsubscribe();
-      consumer.disconnect();
     };
   }, [user]);
 

@@ -56,6 +56,7 @@ class Api::V1::CommentsController < Api::V1::BaseController
     else
       false
     end
+    ProfileBroadcaster.call(@comment.user)
     render json: { liked: liked, likes_count: @comment.reload.likes_count }, status: :ok
   end
 
@@ -63,6 +64,7 @@ class Api::V1::CommentsController < Api::V1::BaseController
     if current_user.comment_likes.find_by(comment: @comment)&.destroy
       revoke_comment_author_points
     end
+    ProfileBroadcaster.call(@comment.user)
     render json: { liked: false, likes_count: @comment.reload.likes_count }, status: :ok
   end
 

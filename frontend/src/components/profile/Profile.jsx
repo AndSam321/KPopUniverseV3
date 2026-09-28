@@ -85,6 +85,22 @@ function Profile() {
     fetchProfile();
   }, [username]);
 
+  // Reflect live progression (points/title/badges) pushed into AuthContext
+  useEffect(() => {
+    if (!isOwnProfile || !authUser) return;
+    setUser((prev) =>
+      prev
+        ? {
+            ...prev,
+            idol_points: authUser.idol_points,
+            title: authUser.title,
+            points_info: authUser.points_info,
+            badges: authUser.badges,
+          }
+        : prev
+    );
+  }, [isOwnProfile, authUser?.idol_points, authUser?.title, authUser?.badges]);
+
   const handleEditClick = () => {
     setBio(user.bio || "");
     setAvatarFile(null);

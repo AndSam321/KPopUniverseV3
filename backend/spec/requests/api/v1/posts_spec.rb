@@ -62,6 +62,12 @@ RSpec.describe "Posts API", type: :request do
         post "/api/v1/posts/#{own_post.id}/like", headers: auth_headers(user)
       }.not_to change { user.reload.idol_points }
     end
+
+    it "broadcasts a profile update to the post author" do
+      expect {
+        post "/api/v1/posts/#{post_record.id}/like", headers: auth_headers(user)
+      }.to have_broadcasted_to(post_record.user).from_channel(ProfileChannel)
+    end
   end
 
   describe "DELETE /api/v1/posts/:id/unlike" do
