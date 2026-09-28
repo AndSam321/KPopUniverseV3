@@ -5,6 +5,11 @@ export const getGroupCommunities = async (groupId) => {
   return response.data.data;
 };
 
+export const createCommunity = async (groupId, attributes) => {
+  const response = await api.post(`/groups/${groupId}/communities`, attributes);
+  return response.data.data;
+};
+
 export const joinCommunity = async (communityId) => {
   const response = await api.post(`/communities/${communityId}/join`);
   return response.data.data;
