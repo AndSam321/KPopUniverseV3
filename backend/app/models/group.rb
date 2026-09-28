@@ -8,6 +8,7 @@ class Group < ApplicationRecord
   belongs_to :user, optional: true
   has_many :post_tags, dependent: :destroy
   has_many :posts, through: :post_tags
+  has_many :communities, dependent: :destroy
   has_many :members, dependent: :destroy
   has_many :albums, dependent: :destroy
 

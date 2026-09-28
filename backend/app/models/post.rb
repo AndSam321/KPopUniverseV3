@@ -6,6 +6,7 @@ class Post < ApplicationRecord
     using: {tsearch: {prefix: true}, trigram: {threshold: 0.3}}
 
   belongs_to :user
+  belongs_to :community, optional: true
   has_many :post_tags, dependent: :destroy
   has_many :likes, dependent: :destroy
   has_many :comments, dependent: :destroy

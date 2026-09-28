@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_09_27_060857) do
+ActiveRecord::Schema[8.0].define(version: 2026_09_28_151610) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -83,6 +83,31 @@ ActiveRecord::Schema[8.0].define(version: 2026_09_27_060857) do
     t.index ["post_id"], name: "index_comments_on_post_id"
     t.index ["reply_to_user_id"], name: "index_comments_on_reply_to_user_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "communities", force: :cascade do |t|
+    t.bigint "group_id", null: false
+    t.bigint "creator_id"
+    t.string "name", null: false
+    t.string "slug", null: false
+    t.text "description"
+    t.boolean "official", default: false, null: false
+    t.integer "member_count", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["creator_id"], name: "index_communities_on_creator_id"
+    t.index ["group_id"], name: "index_communities_on_group_id"
+    t.index ["slug"], name: "index_communities_on_slug", unique: true
+  end
+
+  create_table "community_memberships", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "community_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["community_id"], name: "index_community_memberships_on_community_id"
+    t.index ["user_id", "community_id"], name: "index_community_memberships_on_user_id_and_community_id", unique: true
+    t.index ["user_id"], name: "index_community_memberships_on_user_id"
   end
 
   create_table "follows", force: :cascade do |t|
@@ -204,7 +229,9 @@ ActiveRecord::Schema[8.0].define(version: 2026_09_27_060857) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "flair"
+    t.bigint "community_id"
     t.index ["caption"], name: "index_posts_on_caption_trgm", opclass: :gin_trgm_ops, using: :gin
+    t.index ["community_id"], name: "index_posts_on_community_id"
     t.index ["created_at"], name: "index_posts_on_created_at"
     t.index ["title"], name: "index_posts_on_title_trgm", opclass: :gin_trgm_ops, using: :gin
     t.index ["user_id"], name: "index_posts_on_user_id"
@@ -251,6 +278,10 @@ ActiveRecord::Schema[8.0].define(version: 2026_09_27_060857) do
   add_foreign_key "comments", "posts"
   add_foreign_key "comments", "users"
   add_foreign_key "comments", "users", column: "reply_to_user_id"
+  add_foreign_key "communities", "groups"
+  add_foreign_key "communities", "users", column: "creator_id"
+  add_foreign_key "community_memberships", "communities"
+  add_foreign_key "community_memberships", "users"
   add_foreign_key "follows", "users", column: "followed_id"
   add_foreign_key "follows", "users", column: "follower_id"
   add_foreign_key "groups", "users"
@@ -263,5 +294,6 @@ ActiveRecord::Schema[8.0].define(version: 2026_09_27_060857) do
   add_foreign_key "notifications", "users", column: "recipient_id"
   add_foreign_key "post_tags", "groups"
   add_foreign_key "post_tags", "posts"
+  add_foreign_key "posts", "communities"
   add_foreign_key "posts", "users"
 end

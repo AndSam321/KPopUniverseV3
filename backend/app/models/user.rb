@@ -24,6 +24,10 @@ class User < ApplicationRecord
   has_many :muted_groups, dependent: :destroy
   has_many :muted_group_records, through: :muted_groups, source: :group
 
+  has_many :community_memberships, dependent: :destroy
+  has_many :joined_communities, through: :community_memberships, source: :community
+  has_many :created_communities, class_name: "Community", foreign_key: :creator_id, dependent: :nullify
+
   has_many :active_follows, class_name: "Follow", foreign_key: :follower_id, dependent: :destroy
   has_many :passive_follows, class_name: "Follow", foreign_key: :followed_id, dependent: :destroy
   has_many :following, through: :active_follows, source: :followed
