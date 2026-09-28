@@ -6,6 +6,7 @@ import { useAuth } from "../../context/AuthContext";
 import { useNavigationLoading } from "../../context/NavigationLoadingContext";
 import { BellOff, Bell, ChevronDown, ChevronUp } from "lucide-react";
 import PostCard from "../posts/PostCard";
+import CommunitiesSection from "../communities/CommunitiesSection";
 import FadeImage from "../common/FadeImage";
 import PostCardSkeleton from "../skeletons/PostCardSkeleton";
 import CreatePost from "../posts/CreatePost";
@@ -299,6 +300,8 @@ const GroupDetail = () => {
           )}
         </section>
       )}
+
+      <CommunitiesSection groupId={id} />
 
       <div className="group-detail__content">
         <div className="group-detail__posts-header">
