@@ -19,6 +19,7 @@ module Pointable
     points = POINT_VALUES[action] || 0
     increment!(:idol_points, points)
     update_title_if_needed
+    BadgeAwarder.new(self).sync_title_badge
   end
 
   def revoke_points(action)

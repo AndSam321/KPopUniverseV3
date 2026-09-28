@@ -8,6 +8,7 @@ class CommentCreation
     notify_post_author
     notify_parent_author
     enqueue_image_processing
+    award_fandom_badges
     comment
   end
 
@@ -49,5 +50,9 @@ class CommentCreation
     return unless comment.image.attached? && !comment.gif?
 
     ProcessCommentImageJob.perform_later(comment.id)
+  end
+
+  def award_fandom_badges
+    BadgeAwarder.new(comment.user).check_fandom_badges(comment.post.groups)
   end
 end

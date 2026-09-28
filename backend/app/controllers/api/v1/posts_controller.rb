@@ -58,6 +58,7 @@ class Api::V1::PostsController < Api::V1::BaseController
 
     if @post.save
       @post.user.award_points(:create_post)
+      BadgeAwarder.new(@post.user).check_fandom_badges(@post.groups)
       render json: {data: post_json(@post)}, status: :created
     else
       render json: {errors: @post.errors.full_messages}, status: :unprocessable_entity
@@ -70,6 +71,7 @@ class Api::V1::PostsController < Api::V1::BaseController
     end
 
     if @post.update(post_params)
+      BadgeAwarder.new(@post.user).check_fandom_badges(@post.groups)
       render json: {data: post_json(@post)}
     else
       render json: {errors: @post.errors.full_messages}, status: :unprocessable_entity
@@ -86,10 +88,10 @@ class Api::V1::PostsController < Api::V1::BaseController
 
     liked = if like.persisted?
       like.destroy
-      @post.user.revoke_points(:receive_like)
+      revoke_post_author_points
       false
     elsif like.save
-      @post.user.award_points(:receive_like)
+      award_post_author_points
       notify_post_owner(like)
       true
     else
@@ -100,12 +102,24 @@ class Api::V1::PostsController < Api::V1::BaseController
 
   def unlike
     if current_user.likes.find_by(post: @post)&.destroy
-      @post.user.revoke_points(:receive_like)
+      revoke_post_author_points
     end
     render json: {liked: false, likes_count: @post.reload.likes_count}, status: :ok
   end
 
   private
+
+  def award_post_author_points
+    return if current_user.id == @post.user_id
+
+    @post.user.award_points(:receive_like)
+  end
+
+  def revoke_post_author_points
+    return if current_user.id == @post.user_id
+
+    @post.user.revoke_points(:receive_like)
+  end
 
   def notify_post_owner(like)
     ActivityNotifier.call(

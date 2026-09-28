@@ -12,6 +12,14 @@ RSpec.describe "Posts API", type: :request do
 
       expect(response).to have_http_status(:created)
     end
+
+    it "awards a title badge when a post pushes the user into a new tier" do
+      user.update!(idol_points: 95)
+
+      post "/api/v1/posts", params: {title: "Comeback!"}, headers: auth_headers(user)
+
+      expect(user.reload.badges.map { |badge| badge["name"] }).to include("Rising Star")
+    end
   end
 
   describe "POST /api/v1/posts/:id/like" do
@@ -45,6 +53,14 @@ RSpec.describe "Posts API", type: :request do
       expect {
         post "/api/v1/posts/#{post_record.id}/like", headers: auth_headers(user)
       }.to change { post_record.user.reload.idol_points }.by(-Pointable::POINT_VALUES[:receive_like])
+    end
+
+    it "does not award a point for liking your own post" do
+      own_post = create(:post, user: user)
+
+      expect {
+        post "/api/v1/posts/#{own_post.id}/like", headers: auth_headers(user)
+      }.not_to change { user.reload.idol_points }
     end
   end
 
