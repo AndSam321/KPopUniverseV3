@@ -4,6 +4,7 @@ import { Bell, CheckCheck, Heart, MessageCircle, Reply, UserPlus } from "lucide-
 import { getConsumer } from "../../api/cable";
 import {
   getNotifications,
+  getUnreadCount,
   markAllRead,
   markRead,
 } from "../../api/notificationsApi";
@@ -72,13 +73,29 @@ export default function NotificationsDropdown() {
   const [unreadCount, setUnreadCount] = useState(0);
   const [loading, setLoading] = useState(false);
   const dropdownRef = useRef(null);
-  const subscriptionRef = useRef(null);
 
-  // Connect to ActionCable for real-time notifications (shared consumer)
+  // Sync the bell count with the server on load
   useEffect(() => {
-    if (!user) return;
+    if (!user?.id) return;
 
-    subscriptionRef.current = getConsumer().subscriptions.create(
+    let active = true;
+    getUnreadCount()
+      .then((count) => {
+        if (active) setUnreadCount(count);
+      })
+      .catch(() => {});
+
+    return () => {
+      active = false;
+    };
+  }, [user?.id]);
+
+  // Connect to ActionCable for real-time notifications (shared consumer).
+  // Keyed on user id so profile broadcasts don't churn the subscription.
+  useEffect(() => {
+    if (!user?.id) return;
+
+    const subscription = getConsumer().subscriptions.create(
       "NotificationChannel",
       {
         received(data) {
@@ -88,10 +105,8 @@ export default function NotificationsDropdown() {
       }
     );
 
-    return () => {
-      subscriptionRef.current?.unsubscribe();
-    };
-  }, [user]);
+    return () => subscription.unsubscribe();
+  }, [user?.id]);
 
   // Fetch unread notifications when dropdown opens
   useEffect(() => {
