@@ -63,9 +63,19 @@
   transition: color 0.15s ease;
 }
 
-.post-card__group-name:hover {
+.post-card__crumb-link {
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.post-card__crumb-link:hover {
   color: var(--pastel-ink);
   text-decoration: underline;
+}
+
+.post-card__crumb-sep {
+  color: var(--text-muted);
+  font-weight: 400;
 }
 
 .post-card__meta {

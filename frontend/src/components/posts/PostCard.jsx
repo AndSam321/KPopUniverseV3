@@ -185,16 +185,35 @@ const PostCard = ({ post }) => {
             </div>
           )}
           <div className="post-card__user-info">
-            {post.groups && post.groups.length > 0 && (
-              <span
-                className="post-card__group-name"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  navigate(`/groups/${post.groups[0].id}`);
-                }}
-                style={{ cursor: "pointer" }}
-              >
-                {post.groups[0].name}
+            {(post.groups?.[0] || post.community) && (
+              <span className="post-card__group-name">
+                {post.groups?.[0] && (
+                  <span
+                    className="post-card__crumb-link"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      navigate(`/groups/${post.groups[0].id}`);
+                    }}
+                  >
+                    {post.groups[0].name}
+                  </span>
+                )}
+                {post.community && (
+                  <>
+                    {post.groups?.[0] && (
+                      <span className="post-card__crumb-sep"> › </span>
+                    )}
+                    <span
+                      className="post-card__crumb-link"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        navigate(`/communities/${post.community.id}`);
+                      }}
+                    >
+                      {post.community.name}
+                    </span>
+                  </>
+                )}
               </span>
             )}
             <div className="post-card__meta">
@@ -232,16 +251,6 @@ const PostCard = ({ post }) => {
       </div>
 
       <div className="post-card__content">
-        {/* Tags */}
-        {post.groups && post.groups.length > 1 && (
-          <div className="post-card__tags">
-            {post.groups.slice(1).map((group) => (
-              <span key={group.id} className="post-card__tag">
-                {group.name}
-              </span>
-            ))}
-          </div>
-        )}
 
         {/* Title */}
         <h3 className="post-card__title">{post.title}</h3>

@@ -305,7 +305,7 @@ const GroupDetail = () => {
 
       <div className="group-detail__content">
         <div className="group-detail__posts-header">
-          <h2>Posts</h2>
+          <h2>Recent posts</h2>
           <button
             onClick={() => setShowCreatePost(!showCreatePost)}
             className="group-detail__create-btn"
