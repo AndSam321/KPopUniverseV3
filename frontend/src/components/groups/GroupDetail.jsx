@@ -9,7 +9,6 @@ import PostCard from "../posts/PostCard";
 import CommunitiesSection from "../communities/CommunitiesSection";
 import FadeImage from "../common/FadeImage";
 import PostCardSkeleton from "../skeletons/PostCardSkeleton";
-import CreatePost from "../posts/CreatePost";
 import "./GroupDetail.css";
 import "../skeletons/Skeleton.css";
 
@@ -42,7 +41,6 @@ const GroupDetail = () => {
   const [error, setError] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [showCreatePost, setShowCreatePost] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [albumsShown, setAlbumsShown] = useState(INITIAL_ALBUMS);
   const [albumsExpanded, setAlbumsExpanded] = useState(false);
@@ -140,13 +138,6 @@ const GroupDetail = () => {
       setCurrentPage(currentPage + 1);
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
-  };
-
-  const handlePostCreated = (newPost) => {
-    setPosts([newPost, ...posts]);
-    setShowCreatePost(false);
-    setError("");
-    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   if (loading && !groupData) {
@@ -306,20 +297,7 @@ const GroupDetail = () => {
       <div className="group-detail__content">
         <div className="group-detail__posts-header">
           <h2>Recent posts</h2>
-          <button
-            onClick={() => setShowCreatePost(!showCreatePost)}
-            className="group-detail__create-btn"
-          >
-            {showCreatePost ? 'Cancel' : '+ Create Post'}
-          </button>
         </div>
-
-        {showCreatePost && (
-          <CreatePost
-            onPostCreated={handlePostCreated}
-            groupId={parseInt(id)}
-          />
-        )}
 
         {loading ? (
           <div className="group-detail__loading">Loading posts...</div>

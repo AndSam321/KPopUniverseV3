@@ -46,6 +46,17 @@ RSpec.describe "Communities API", type: :request do
       expect(names).to include("TWICE Theories")
       expect(names).not_to include("BTS Memes")
     end
+
+    it "excludes official communities from the browse" do
+      create(:community, name: "General", official: true)
+      create(:community, name: "Fan Zone")
+
+      get "/api/v1/communities", headers: auth_headers(user)
+
+      names = json_response["data"].map { |c| c["name"] }
+      expect(names).to include("Fan Zone")
+      expect(names).not_to include("General")
+    end
   end
 
   describe "POST /api/v1/groups/:group_id/communities" do

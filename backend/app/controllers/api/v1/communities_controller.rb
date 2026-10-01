@@ -55,10 +55,11 @@ class Api::V1::CommunitiesController < Api::V1::BaseController
   end
 
   def browse_communities
-    return Community.includes(:group).search(params[:q]) if params[:q].present?
-    return Community.includes(:group).order(created_at: :desc) if params[:sort] == "new"
+    scope = Community.where(official: false).includes(:group)
+    return scope.search(params[:q]) if params[:q].present?
+    return scope.order(created_at: :desc) if params[:sort] == "new"
 
-    Community.includes(:group).popular
+    scope.popular
   end
 
   def community_params
