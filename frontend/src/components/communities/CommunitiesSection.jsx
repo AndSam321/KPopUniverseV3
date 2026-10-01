@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { Users, Check, Plus, X } from "lucide-react";
 import {
   getGroupCommunities,
@@ -131,7 +132,10 @@ export default function CommunitiesSection({ groupId }) {
       <div className="communities-grid">
         {communities.map((community) => (
           <div key={community.id} className="community-card">
-            <div className="community-card__body">
+            <Link
+              to={`/communities/${community.id}`}
+              className="community-card__body"
+            >
               <div className="community-card__title-row">
                 <span className="community-card__name">{community.name}</span>
                 {community.official && (
@@ -146,7 +150,7 @@ export default function CommunitiesSection({ groupId }) {
                 {community.member_count}{" "}
                 {community.member_count === 1 ? "member" : "members"}
               </span>
-            </div>
+            </Link>
             {user && (
               <button
                 type="button"

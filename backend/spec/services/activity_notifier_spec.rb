@@ -33,9 +33,9 @@ RSpec.describe ActivityNotifier do
 
   it "does not notify when the post is in a group the recipient muted" do
     group = create(:group)
-    post_record.groups << group
+    muted_post = create(:post, user: recipient, community: create(:community, group: group))
     recipient.muted_groups.create!(group: group)
 
-    expect { notify(muted_check_post: post_record) }.not_to change(Notification, :count)
+    expect { notify(muted_check_post: muted_post) }.not_to change(Notification, :count)
   end
 end

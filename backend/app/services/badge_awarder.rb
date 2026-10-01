@@ -35,8 +35,8 @@ class BadgeAwarder
   end
 
   def community_activity(group)
-    posts = user.posts.joins(:groups).where(groups: {id: group.id}).count
-    comments = Comment.where(user: user).joins(post: :groups).where(groups: {id: group.id}).count
+    posts = user.posts.joins(:community).where(communities: {group_id: group.id}).count
+    comments = Comment.where(user: user).joins(post: :community).where(communities: {group_id: group.id}).count
     posts + comments
   end
 

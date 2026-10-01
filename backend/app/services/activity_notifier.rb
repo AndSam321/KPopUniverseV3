@@ -15,7 +15,8 @@ class ActivityNotifier
   end
 
   def self.muted?(recipient, post)
-    post.groups.any? { |group| recipient.muted_group?(group.id) }
+    group_id = post.community&.group_id
+    group_id.present? && recipient.muted_group?(group_id)
   end
   private_class_method :muted?
 

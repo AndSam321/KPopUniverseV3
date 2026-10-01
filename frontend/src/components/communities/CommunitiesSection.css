@@ -118,6 +118,12 @@
   flex-direction: column;
   gap: 6px;
   min-width: 0;
+  text-decoration: none;
+  color: inherit;
+}
+
+.community-card__body:hover .community-card__name {
+  text-decoration: underline;
 }
 
 .community-card__title-row {

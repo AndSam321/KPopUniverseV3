@@ -27,6 +27,6 @@ class SearchQuery
 
   def posts
     return Post.none unless valid?
-    Post.search(@term).includes(:user, :groups)
+    Post.search(@term).includes(:user, community: :group)
   end
 end

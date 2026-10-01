@@ -15,6 +15,7 @@ const Profile = React.lazy(() => import("./components/profile/Profile.jsx"));
 const Home = React.lazy(() => import("./components/home/Home.jsx"));
 const GroupsList = React.lazy(() => import("./components/groups/GroupsList.jsx"));
 const GroupDetail = React.lazy(() => import("./components/groups/GroupDetail.jsx"));
+const CommunityPage = React.lazy(() => import("./pages/CommunityPage.jsx"));
 const PostDetail = React.lazy(() => import("./pages/PostDetail.jsx"));
 const AccountSettings = React.lazy(() => import("./components/settings/AccountSettings.jsx"));
 const NotificationsPage = React.lazy(() => import("./pages/NotificationsPage.jsx"));
@@ -59,6 +60,14 @@ function App() {
             element={
               <PrivateRoute>
                 <GroupDetail />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/communities/:id"
+            element={
+              <PrivateRoute>
+                <CommunityPage />
               </PrivateRoute>
             }
           />

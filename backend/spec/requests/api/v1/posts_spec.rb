@@ -2,21 +2,30 @@ require "rails_helper"
 
 RSpec.describe "Posts API", type: :request do
   let(:user) { create(:user) }
+  let(:community) { create(:community) }
   let(:post_record) { create(:post) }
 
   describe "POST /api/v1/posts" do
     it "awards the author creator points" do
       expect {
-        post "/api/v1/posts", params: {title: "Comeback!"}, headers: auth_headers(user)
+        post "/api/v1/posts",
+          params: {title: "Comeback!", community_id: community.id}, headers: auth_headers(user)
       }.to change { user.reload.idol_points }.by(Pointable::POINT_VALUES[:create_post])
 
       expect(response).to have_http_status(:created)
     end
 
+    it "requires a community" do
+      post "/api/v1/posts", params: {title: "Comeback!"}, headers: auth_headers(user)
+
+      expect(response).to have_http_status(:unprocessable_entity)
+    end
+
     it "awards a title badge when a post pushes the user into a new tier" do
       user.update!(idol_points: 95)
 
-      post "/api/v1/posts", params: {title: "Comeback!"}, headers: auth_headers(user)
+      post "/api/v1/posts",
+        params: {title: "Comeback!", community_id: community.id}, headers: auth_headers(user)
 
       expect(user.reload.badges.map { |badge| badge["name"] }).to include("Rising Star")
     end

@@ -97,7 +97,8 @@ class Api::V1::GroupsController < Api::V1::BaseController
       caption: post.caption,
       flair: post.flair,
       images: post.images.attached? ? post.images.map { |img| image_json(img) } : [],
-      groups: post.groups.map { |g| {id: g.id, name: g.name, slug: g.slug} },
+      groups: post.community&.group ? [{id: post.community.group.id, name: post.community.group.name, slug: post.community.group.slug}] : [],
+      community: post.community ? {id: post.community.id, name: post.community.name, slug: post.community.slug, official: post.community.official} : nil,
       user: {
         id: post.user.id,
         username: post.user.username,

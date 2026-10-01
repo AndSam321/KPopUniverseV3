@@ -7,7 +7,7 @@ class Api::V1::PostsController < Api::V1::BaseController
   def following
     followed_ids = current_user.following.pluck(:id) + [current_user.id]
     @pagy, @posts = pagy(
-      Post.includes(:user, :groups, images_attachments: :blob)
+      Post.includes(:user, community: :group, images_attachments: :blob)
         .where(user_id: followed_ids)
         .order(created_at: :desc),
       items: params[:per_page] || 10
@@ -26,8 +26,9 @@ class Api::V1::PostsController < Api::V1::BaseController
   end
 
   def index
-    @pagy, @posts = pagy(Post.includes(:user, :groups, images_attachments: :blob)
-                              .order(created_at: :desc), items: params[:per_page] || 10)
+    scope = Post.includes(:user, community: :group, images_attachments: :blob).order(created_at: :desc)
+    scope = scope.where(community_id: params[:community_id]) if params[:community_id].present?
+    @pagy, @posts = pagy(scope, items: params[:per_page] || 10)
 
     @liked_post_ids = if current_user
       current_user.likes.where(post_id: @posts.map(&:id)).pluck(:post_id).to_set
@@ -52,13 +53,9 @@ class Api::V1::PostsController < Api::V1::BaseController
   def create
     @post = current_user.posts.build(post_params)
 
-    if params[:group_ids].present?
-      @post.group_ids = params[:group_ids]
-    end
-
     if @post.save
       @post.user.award_points(:create_post)
-      BadgeAwarder.new(@post.user).check_fandom_badges(@post.groups)
+      BadgeAwarder.new(@post.user).check_fandom_badges([@post.community&.group].compact)
       ProfileBroadcaster.call(@post.user)
       render json: {data: post_json(@post)}, status: :created
     else
@@ -67,13 +64,7 @@ class Api::V1::PostsController < Api::V1::BaseController
   end
 
   def update
-    if params[:group_ids].present?
-      @post.group_ids = params[:group_ids]
-    end
-
-    if @post.update(post_params)
-      BadgeAwarder.new(@post.user).check_fandom_badges(@post.groups)
-      ProfileBroadcaster.call(@post.user)
+    if @post.update(post_params.except(:community_id))
       render json: {data: post_json(@post)}
     else
       render json: {errors: @post.errors.full_messages}, status: :unprocessable_entity
@@ -137,7 +128,7 @@ class Api::V1::PostsController < Api::V1::BaseController
   end
 
   def set_post
-    @post = Post.includes(:user, :groups, images_attachments: :blob).find(params[:id])
+    @post = Post.includes(:user, community: :group, images_attachments: :blob).find(params[:id])
   rescue ActiveRecord::RecordNotFound
     render json: {error: "Post not found"}, status: :not_found
   end
@@ -149,7 +140,7 @@ class Api::V1::PostsController < Api::V1::BaseController
   end
 
   def post_params
-    params.permit(:title, :caption, :flair, images: [])
+    params.permit(:title, :caption, :flair, :community_id, images: [])
   end
 
   def post_json(post, liked_post_ids = nil)
@@ -161,15 +152,29 @@ class Api::V1::PostsController < Api::V1::BaseController
       false
     end
 
-    post.as_json(include: {groups: {only: [:id, :name, :slug]}}).merge(
+    post.as_json.merge(
       user: {
         id: post.user.id,
         username: post.user.username,
         avatar_url: post.user.profile_avatar_url
       },
+      groups: group_json(post.community&.group),
+      community: community_json(post.community),
       is_liked: is_liked,
       images: post.images.map { |img| image_json(img) }
     )
+  end
+
+  def community_json(community)
+    return nil unless community
+
+    {id: community.id, name: community.name, slug: community.slug, official: community.official}
+  end
+
+  def group_json(group)
+    return [] unless group
+
+    [{id: group.id, name: group.name, slug: group.slug}]
   end
 
   def image_json(image)

@@ -1,5 +1,10 @@
 import api from "./axios";
 
+export const getCommunity = async (communityId) => {
+  const response = await api.get(`/communities/${communityId}`);
+  return response.data.data;
+};
+
 export const getGroupCommunities = async (groupId) => {
   const response = await api.get(`/groups/${groupId}/communities`);
   return response.data.data;

@@ -91,7 +91,7 @@ class Api::V1::SearchController < Api::V1::BaseController
       caption: post.caption&.truncate(140),
       created_at: post.created_at,
       user: {id: post.user.id, username: post.user.username},
-      groups: post.groups.map { |g| {id: g.id, name: g.name, slug: g.slug} }
+      groups: post.community&.group ? [{id: post.community.group.id, name: post.community.group.name, slug: post.community.group.slug}] : []
     }
   end
 end

@@ -54,6 +54,6 @@ class CommentCreation
   end
 
   def award_fandom_badges
-    BadgeAwarder.new(comment.user).check_fandom_badges(comment.post.groups)
+    BadgeAwarder.new(comment.user).check_fandom_badges([comment.post.community&.group].compact)
   end
 end

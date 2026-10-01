@@ -1,9 +1,9 @@
 import api from "./axios";
 
-export const getPosts = async (page = 1) => {
-  const response = await api.get("/posts", {
-    params: { page },
-  });
+export const getPosts = async (page = 1, { communityId } = {}) => {
+  const params = { page };
+  if (communityId) params.community_id = communityId;
+  const response = await api.get("/posts", { params });
   return response.data;
 };
 
@@ -37,10 +37,8 @@ export const createPost = async (postData) => {
     });
   }
 
-  if (postData.groupIds && postData.groupIds.length > 0) {
-    postData.groupIds.forEach((groupId) => {
-      formData.append("group_ids[]", groupId);
-    });
+  if (postData.communityId) {
+    formData.append("community_id", postData.communityId);
   }
 
   const response = await api.post("/posts", formData, {
@@ -65,12 +63,6 @@ export const updatePost = async (postId, postData) => {
   if (postData.images && postData.images.length > 0) {
     postData.images.forEach((image) => {
       formData.append("images[]", image);
-    });
-  }
-
-  if (postData.groupIds && postData.groupIds.length > 0) {
-    postData.groupIds.forEach((groupId) => {
-      formData.append("group_ids[]", groupId);
     });
   }
 

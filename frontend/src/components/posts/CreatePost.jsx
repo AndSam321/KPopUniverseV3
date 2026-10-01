@@ -1,57 +1,47 @@
 import React, { useState, useEffect } from "react";
 import { createPost } from "../../api/postsApi";
-import { getGroups } from "../../api/groupsApi";
+import { getGroupCommunities } from "../../api/communitiesApi";
 import "./CreatePost.css";
 
-const CreatePost = ({ onPostCreated, defaultGroupId }) => {
+const FLAIRS = [
+  { value: "discussion", label: "Discussion", color: "#757bc8" },
+  { value: "question", label: "Question", color: "#6ee7d8" },
+  { value: "music", label: "Music", color: "#ff6fb1" },
+  { value: "news", label: "News", color: "#ffd166" },
+  { value: "media", label: "Media/Photos", color: "#9fa0ff" },
+  { value: "fan-content", label: "Fan Content", color: "#ff8ccf" },
+];
+
+const CreatePost = ({ onPostCreated, groupId, community }) => {
   const [title, setTitle] = useState("");
   const [caption, setCaption] = useState("");
   const [images, setImages] = useState([]);
-  const [selectedGroups, setSelectedGroups] = useState(
-    defaultGroupId ? [defaultGroupId] : []
-  );
+  const [imagePreviews, setImagePreviews] = useState([]);
   const [selectedFlair, setSelectedFlair] = useState("");
-  const [groups, setGroups] = useState([]);
+  const [communities, setCommunities] = useState(community ? [community] : []);
+  const [communityId, setCommunityId] = useState(community?.id || "");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [imagePreviews, setImagePreviews] = useState([]);
 
-  const flairs = [
-    { value: "discussion", label: "Discussion", color: "#757bc8" },
-    { value: "question", label: "Question", color: "#6ee7d8" },
-    { value: "music", label: "Music", color: "#ff6fb1" },
-    { value: "news", label: "News", color: "#ffd166" },
-    { value: "media", label: "Media/Photos", color: "#9fa0ff" },
-    { value: "fan-content", label: "Fan Content", color: "#ff8ccf" },
-  ];
+  const locked = Boolean(community);
 
   useEffect(() => {
-    fetchGroups();
-  }, []);
-
-  useEffect(() => {
-    if (defaultGroupId && !selectedGroups.includes(defaultGroupId)) {
-      setSelectedGroups([defaultGroupId]);
-    }
-  }, [defaultGroupId]);
-
-  const fetchGroups = async () => {
-    try {
-      const data = await getGroups();
-      setGroups(data);
-    } catch (err) {
-      console.error("Failed to fetch groups:", err);
-    }
-  };
+    if (locked || !groupId) return;
+    getGroupCommunities(groupId)
+      .then((data) => {
+        setCommunities(data);
+        const preferred = data.find((c) => c.official) || data[0];
+        if (preferred) setCommunityId(preferred.id);
+      })
+      .catch(() => setError("Could not load communities to post in"));
+  }, [groupId, locked]);
 
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
-
     if (files.length + images.length > 10) {
       setError("You can only upload up to 10 images");
       return;
     }
-
     const validFiles = files.filter((file) => {
       if (file.size > 5 * 1024 * 1024) {
         setError("Each image must be less than 5MB");
@@ -59,58 +49,42 @@ const CreatePost = ({ onPostCreated, defaultGroupId }) => {
       }
       return true;
     });
-
     setImages([...images, ...validFiles]);
-
-    const newPreviews = validFiles.map((file) => URL.createObjectURL(file));
-    setImagePreviews([...imagePreviews, ...newPreviews]);
+    setImagePreviews([
+      ...imagePreviews,
+      ...validFiles.map((file) => URL.createObjectURL(file)),
+    ]);
   };
 
   const removeImage = (index) => {
-    const newImages = images.filter((_, i) => i !== index);
-    const newPreviews = imagePreviews.filter((_, i) => i !== index);
-
     URL.revokeObjectURL(imagePreviews[index]);
-
-    setImages(newImages);
-    setImagePreviews(newPreviews);
-  };
-
-  const handleGroupToggle = (groupId) => {
-    if (selectedGroups.includes(groupId)) {
-      setSelectedGroups(selectedGroups.filter((id) => id !== groupId));
-    } else {
-      setSelectedGroups([...selectedGroups, groupId]);
-    }
+    setImages(images.filter((_, i) => i !== index));
+    setImagePreviews(imagePreviews.filter((_, i) => i !== index));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!communityId) {
+      setError("Pick a community to post in");
+      return;
+    }
     setError("");
     setLoading(true);
-
     try {
-      const postData = {
+      const newPost = await createPost({
         title,
         caption,
         images,
-        groupIds: selectedGroups,
         flair: selectedFlair,
-      };
-
-      const newPost = await createPost(postData);
-
+        communityId,
+      });
       setTitle("");
       setCaption("");
       setImages([]);
-      setSelectedGroups([]);
-      setSelectedFlair("");
       imagePreviews.forEach((preview) => URL.revokeObjectURL(preview));
       setImagePreviews([]);
-
-      if (onPostCreated) {
-        onPostCreated(newPost);
-      }
+      setSelectedFlair("");
+      if (onPostCreated) onPostCreated(newPost);
     } catch (err) {
       setError(
         err.response?.data?.errors?.join(", ") || "Failed to create post"
@@ -127,6 +101,28 @@ const CreatePost = ({ onPostCreated, defaultGroupId }) => {
       {error && <div className="create-post__error">{error}</div>}
 
       <form onSubmit={handleSubmit} className="create-post__form">
+        <div className="create-post__field">
+          <label htmlFor="community">Community *</label>
+          {locked ? (
+            <div className="create-post__community-locked">{community.name}</div>
+          ) : (
+            <select
+              id="community"
+              className="create-post__select"
+              value={communityId}
+              onChange={(e) => setCommunityId(Number(e.target.value))}
+              required
+            >
+              {communities.map((c) => (
+                <option key={c.id} value={c.id}>
+                  {c.name}
+                  {c.official ? " (General)" : ""}
+                </option>
+              ))}
+            </select>
+          )}
+        </div>
+
         <div className="create-post__field">
           <label htmlFor="title">Title *</label>
           <input
@@ -180,66 +176,45 @@ const CreatePost = ({ onPostCreated, defaultGroupId }) => {
           </div>
         )}
 
-        {defaultGroupId ? (
-          <div className="create-post__field">
-            <label>Select Flair</label>
-            <div className="create-post__flairs">
-              {flairs.map((flair) => (
-                <label
-                  key={flair.value}
-                  className={`create-post__flair-tag ${
-                    selectedFlair === flair.value ? "selected" : ""
-                  }`}
+        <div className="create-post__field">
+          <label>Select Flair</label>
+          <div className="create-post__flairs">
+            {FLAIRS.map((flair) => (
+              <label
+                key={flair.value}
+                className={`create-post__flair-tag ${
+                  selectedFlair === flair.value ? "selected" : ""
+                }`}
+                style={{
+                  borderColor:
+                    selectedFlair === flair.value ? flair.color : undefined,
+                  background:
+                    selectedFlair === flair.value ? `${flair.color}15` : undefined,
+                }}
+              >
+                <input
+                  type="radio"
+                  name="flair"
+                  value={flair.value}
+                  checked={selectedFlair === flair.value}
+                  onChange={(e) => setSelectedFlair(e.target.value)}
+                />
+                <span
                   style={{
-                    borderColor:
+                    color:
                       selectedFlair === flair.value ? flair.color : undefined,
-                    background:
-                      selectedFlair === flair.value
-                        ? `${flair.color}15`
-                        : undefined,
                   }}
                 >
-                  <input
-                    type="radio"
-                    name="flair"
-                    value={flair.value}
-                    checked={selectedFlair === flair.value}
-                    onChange={(e) => setSelectedFlair(e.target.value)}
-                  />
-                  <span
-                    style={{
-                      color:
-                        selectedFlair === flair.value ? flair.color : undefined,
-                    }}
-                  >
-                    {flair.label}
-                  </span>
-                </label>
-              ))}
-            </div>
+                  {flair.label}
+                </span>
+              </label>
+            ))}
           </div>
-        ) : (
-          // Show group selector when posting from main feed
-          <div className="create-post__field">
-            <label>Tag K-pop Groups</label>
-            <div className="create-post__groups">
-              {groups.map((group) => (
-                <label key={group.id} className="create-post__group-tag">
-                  <input
-                    type="checkbox"
-                    checked={selectedGroups.includes(group.id)}
-                    onChange={() => handleGroupToggle(group.id)}
-                  />
-                  <span>{group.name}</span>
-                </label>
-              ))}
-            </div>
-          </div>
-        )}
+        </div>
 
         <button
           type="submit"
-          disabled={loading || !title}
+          disabled={loading || !title || !communityId}
           className="create-post__submit"
         >
           {loading ? "Creating..." : "Create Post"}

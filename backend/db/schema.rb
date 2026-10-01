@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_09_28_161650) do
+ActiveRecord::Schema[8.0].define(version: 2026_10_01_180404) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -210,16 +210,6 @@ ActiveRecord::Schema[8.0].define(version: 2026_09_28_161650) do
     t.index ["recipient_id"], name: "index_notifications_on_recipient_id"
   end
 
-  create_table "post_tags", force: :cascade do |t|
-    t.bigint "post_id", null: false
-    t.bigint "group_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["group_id"], name: "index_post_tags_on_group_id"
-    t.index ["post_id", "group_id"], name: "index_post_tags_on_post_id_and_group_id", unique: true
-    t.index ["post_id"], name: "index_post_tags_on_post_id"
-  end
-
   create_table "posts", force: :cascade do |t|
     t.string "title", null: false
     t.text "caption"
@@ -292,8 +282,6 @@ ActiveRecord::Schema[8.0].define(version: 2026_09_28_161650) do
   add_foreign_key "muted_groups", "users"
   add_foreign_key "notifications", "users", column: "actor_id"
   add_foreign_key "notifications", "users", column: "recipient_id"
-  add_foreign_key "post_tags", "groups"
-  add_foreign_key "post_tags", "posts"
   add_foreign_key "posts", "communities"
   add_foreign_key "posts", "users"
 end

@@ -31,7 +31,8 @@ RSpec.describe BadgeAwarder do
     let(:group) { create(:group, fandom_name: "ONCE") }
 
     def contribute(count, to:)
-      count.times { create(:post, user: user).groups << to }
+      community = create(:community, group: to)
+      count.times { create(:post, user: user, community: community) }
     end
 
     it "awards the fandom badge once activity crosses the threshold" do

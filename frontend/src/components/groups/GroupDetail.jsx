@@ -317,7 +317,7 @@ const GroupDetail = () => {
         {showCreatePost && (
           <CreatePost
             onPostCreated={handlePostCreated}
-            defaultGroupId={parseInt(id)}
+            groupId={parseInt(id)}
           />
         )}
 
