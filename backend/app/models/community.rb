@@ -1,4 +1,10 @@
 class Community < ApplicationRecord
+  include PgSearch::Model
+
+  pg_search_scope :search,
+    against: :name,
+    using: {tsearch: {prefix: true}, trigram: {threshold: 0.3}}
+
   belongs_to :group
   belongs_to :creator, class_name: "User", optional: true
 

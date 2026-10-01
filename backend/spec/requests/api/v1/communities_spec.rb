@@ -26,6 +26,28 @@ RSpec.describe "Communities API", type: :request do
     end
   end
 
+  describe "GET /api/v1/communities" do
+    it "browses all communities sorted by popularity" do
+      create(:community, name: "Quiet Corner", member_count: 1)
+      create(:community, name: "Busy Hub", member_count: 50)
+
+      get "/api/v1/communities", headers: auth_headers(user)
+
+      expect(json_response["data"].first["name"]).to eq("Busy Hub")
+    end
+
+    it "searches communities by name" do
+      create(:community, name: "TWICE Theories")
+      create(:community, name: "BTS Memes")
+
+      get "/api/v1/communities?q=theories", headers: auth_headers(user)
+
+      names = json_response["data"].map { |c| c["name"] }
+      expect(names).to include("TWICE Theories")
+      expect(names).not_to include("BTS Memes")
+    end
+  end
+
   describe "POST /api/v1/groups/:group_id/communities" do
     it "creates a community and auto-joins the creator" do
       expect {

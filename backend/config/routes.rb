@@ -53,7 +53,7 @@ Rails.application.routes.draw do
         resources :communities, only: [:index, :create]
       end
 
-      resources :communities, only: [:show] do
+      resources :communities, only: [:index, :show] do
         member do
           post :join
           delete :leave

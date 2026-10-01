@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import { Users } from "lucide-react";
 import { getGroups } from "../../api/groupsApi";
+import { getCommunities } from "../../api/communitiesApi";
 import { useNavigationLoading } from "../../context/NavigationLoadingContext";
 import { useAuth } from "../../context/AuthContext";
 import FadeImage from "../common/FadeImage";
@@ -31,10 +33,21 @@ const GroupsList = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
+  const [communities, setCommunities] = useState([]);
+  const [communitySort, setCommunitySort] = useState("popular");
 
   useEffect(() => {
     fetchGroups();
   }, []);
+
+  useEffect(() => {
+    const handle = setTimeout(() => {
+      getCommunities({ q: searchTerm.trim(), sort: communitySort })
+        .then(setCommunities)
+        .catch(() => {});
+    }, 250);
+    return () => clearTimeout(handle);
+  }, [searchTerm, communitySort]);
 
   const fetchGroups = async () => {
     try {
@@ -94,7 +107,7 @@ const GroupsList = () => {
       <div className="groups-list__controls">
         <input
           type="text"
-          placeholder="Search groups..."
+          placeholder="Search groups and communities..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           className="groups-list__search-input"
@@ -159,6 +172,63 @@ const GroupsList = () => {
           </section>
         ))
       )}
+
+      <section className="groups-list__section">
+        <div className="groups-list__section-header">
+          <h2 className="groups-list__section-title">Communities</h2>
+          <div className="explore-sort">
+            <button
+              className={`explore-sort__btn ${communitySort === "popular" ? "explore-sort__btn--active" : ""}`}
+              onClick={() => setCommunitySort("popular")}
+            >
+              Popular
+            </button>
+            <button
+              className={`explore-sort__btn ${communitySort === "new" ? "explore-sort__btn--active" : ""}`}
+              onClick={() => setCommunitySort("new")}
+            >
+              New
+            </button>
+          </div>
+        </div>
+
+        {communities.length === 0 ? (
+          <div className="groups-list__empty">
+            <p>
+              {searchTerm
+                ? `No communities found matching "${searchTerm}"`
+                : "No communities yet."}
+            </p>
+          </div>
+        ) : (
+          <div className="explore-communities">
+            {communities.map((community) => (
+              <Link
+                key={community.id}
+                to={`/communities/${community.id}`}
+                className="explore-community"
+              >
+                <div className="explore-community__top">
+                  <span className="explore-community__name">
+                    {community.name}
+                  </span>
+                  {community.official && (
+                    <span className="explore-community__badge">Official</span>
+                  )}
+                </div>
+                <span className="explore-community__group">
+                  in {community.group.name}
+                </span>
+                <span className="explore-community__members">
+                  <Users size={13} strokeWidth={2.5} />
+                  {community.member_count}{" "}
+                  {community.member_count === 1 ? "member" : "members"}
+                </span>
+              </Link>
+            ))}
+          </div>
+        )}
+      </section>
     </div>
   );
 };

@@ -7,8 +7,7 @@ class Api::V1::CommunitiesController < Api::V1::BaseController
   end
 
   def index
-    group = Group.find(params[:group_id])
-    communities = group.communities.includes(:group).order(official: :desc).popular
+    communities = params[:group_id] ? group_communities : browse_communities
     render json: {data: serialize(communities)}
   end
 
@@ -50,6 +49,17 @@ class Api::V1::CommunitiesController < Api::V1::BaseController
   end
 
   private
+
+  def group_communities
+    Group.find(params[:group_id]).communities.includes(:group).order(official: :desc).popular
+  end
+
+  def browse_communities
+    return Community.includes(:group).search(params[:q]) if params[:q].present?
+    return Community.includes(:group).order(created_at: :desc) if params[:sort] == "new"
+
+    Community.includes(:group).popular
+  end
 
   def community_params
     params.permit(:name, :description)
