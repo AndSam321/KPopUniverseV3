@@ -31,6 +31,22 @@ RSpec.describe "Posts API", type: :request do
     end
   end
 
+  describe "GET /api/v1/posts/following" do
+    it "returns posts from communities the user has joined" do
+      joined = create(:community)
+      other = create(:community)
+      create(:community_membership, user: user, community: joined)
+      mine = create(:post, community: joined)
+      theirs = create(:post, community: other)
+
+      get "/api/v1/posts/following", headers: auth_headers(user)
+
+      ids = json_response["data"].map { |post| post["id"] }
+      expect(ids).to include(mine.id)
+      expect(ids).not_to include(theirs.id)
+    end
+  end
+
   describe "POST /api/v1/posts/:id/like" do
     it "likes the post and reports the count" do
       post "/api/v1/posts/#{post_record.id}/like", headers: auth_headers(user)

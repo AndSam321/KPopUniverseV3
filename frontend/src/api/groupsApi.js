@@ -11,8 +11,3 @@ export const getGroup = async (groupId, page = 1) => {
   });
   return response.data.data;
 };
-
-export const createGroup = async (groupData) => {
-  const response = await api.post("/groups", groupData);
-  return response.data.data;
-};

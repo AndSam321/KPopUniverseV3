@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getGroups } from "../../api/groupsApi";
 import { useNavigationLoading } from "../../context/NavigationLoadingContext";
-import CreateGroup from "./CreateGroup";
 import { useAuth } from "../../context/AuthContext";
 import FadeImage from "../common/FadeImage";
 import GroupCardSkeleton from "../skeletons/GroupCardSkeleton";
@@ -31,7 +30,6 @@ const GroupsList = () => {
   const [groups, setGroups] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [showCreateGroup, setShowCreateGroup] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
@@ -52,11 +50,6 @@ const GroupsList = () => {
       setLoading(false);
       completeLoading();
     }
-  };
-
-  const handleGroupCreated = (newGroup) => {
-    setGroups([newGroup, ...groups]);
-    setShowCreateGroup(false);
   };
 
   const handleOpenGroup = (group) => {
@@ -91,30 +84,22 @@ const GroupsList = () => {
     <div className="groups-list">
       <div className="groups-list__header">
         <div className="groups-list__title-section">
-          <h1>Communities</h1>
+          <h1>Explore</h1>
           <p className="groups-list__subtitle">
-            Discover and join K-pop communities
+            Browse K-pop groups and their communities
           </p>
         </div>
-        <button
-          onClick={() => setShowCreateGroup(!showCreateGroup)}
-          className="groups-list__create-btn"
-        >
-          {showCreateGroup ? "Cancel" : "+ Create Community"}
-        </button>
       </div>
 
       <div className="groups-list__controls">
         <input
           type="text"
-          placeholder="Search communities..."
+          placeholder="Search groups..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           className="groups-list__search-input"
         />
       </div>
-
-      {showCreateGroup && <CreateGroup onGroupCreated={handleGroupCreated} />}
 
       {error && <div className="groups-list__error">{error}</div>}
 

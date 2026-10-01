@@ -97,7 +97,7 @@ export default function Navbar() {
             }
           >
             <Users className="kp-nav__icon" />
-            <span className="kp-nav__label">groups</span>
+            <span className="kp-nav__label">explore</span>
           </NavLink>
         </div>
 
@@ -129,7 +129,7 @@ export default function Navbar() {
             }
           >
             <Users size={22} />
-            <span>groups</span>
+            <span>explore</span>
           </NavLink>
         </div>
 

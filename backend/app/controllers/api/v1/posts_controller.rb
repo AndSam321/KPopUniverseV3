@@ -5,10 +5,10 @@ class Api::V1::PostsController < Api::V1::BaseController
   before_action :authorize_user!, only: [:update, :destroy]
 
   def following
-    followed_ids = current_user.following.pluck(:id) + [current_user.id]
+    community_ids = current_user.joined_communities.ids
     @pagy, @posts = pagy(
       Post.includes(:user, community: :group, images_attachments: :blob)
-        .where(user_id: followed_ids)
+        .where(community_id: community_ids)
         .order(created_at: :desc),
       items: params[:per_page] || 10
     )

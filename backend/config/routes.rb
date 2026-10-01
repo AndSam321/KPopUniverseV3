@@ -46,7 +46,7 @@ Rails.application.routes.draw do
 
       get "search", to: "search#index"
 
-      resources :groups, only: [:index, :show, :create] do
+      resources :groups, only: [:index, :show] do
         member do
           post :toggle_mute, controller: "muted_groups", action: "toggle"
         end

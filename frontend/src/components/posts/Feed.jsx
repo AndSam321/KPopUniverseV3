@@ -114,7 +114,7 @@ const Feed = ({ variant = "for-you" }) => {
         <div className="feed__empty">
           <p>
             {variant === "following"
-              ? "No posts from people you follow yet. Find users to follow!"
+              ? "No posts from your communities yet. Join communities to fill this feed!"
               : "No posts yet. Be the first to create one!"}
           </p>
         </div>

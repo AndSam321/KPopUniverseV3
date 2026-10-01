@@ -1,6 +1,4 @@
 class Api::V1::GroupsController < Api::V1::BaseController
-  before_action :authenticate_user!, only: [:create]
-
   def index
     @groups = Group.alphabetical
 
@@ -28,21 +26,7 @@ class Api::V1::GroupsController < Api::V1::BaseController
     render json: {error: "Group not found"}, status: :not_found
   end
 
-  def create
-    @group = current_user.groups.build(group_params)
-
-    if @group.save
-      render json: {data: group_json(@group)}, status: :created
-    else
-      render json: {errors: @group.errors.full_messages}, status: :unprocessable_entity
-    end
-  end
-
   private
-
-  def group_params
-    params.permit(:name, :description, :logo_url)
-  end
 
   def group_json(group)
     {
