@@ -10,6 +10,11 @@ const prefersReducedMotion = () =>
 
 const slug = (label) => label.toLowerCase().replace(/\s+/g, "-");
 
+const youtubeSearchUrl = (comeback) => {
+  const query = `${comeback.artist_name} ${comeback.title_track || comeback.title}`;
+  return `https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`;
+};
+
 const MONTHS = [
   "Jan", "Feb", "Mar", "Apr", "May", "Jun",
   "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
@@ -121,16 +126,14 @@ const ComebackRow = ({ comeback, showCountdown }) => {
       {comeback.release_type && (
         <span className="cb-row__type-chip">{comeback.release_type}</span>
       )}
-      {comeback.source_url && (
-        <a
-          href={comeback.source_url}
-          target="_blank"
-          rel="noreferrer"
-          className="cb-row__source"
-        >
-          Details
-        </a>
-      )}
+      <a
+        href={youtubeSearchUrl(comeback)}
+        target="_blank"
+        rel="noreferrer"
+        className="cb-row__source"
+      >
+        View
+      </a>
     </span>
   </div>
   );
