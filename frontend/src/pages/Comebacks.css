@@ -20,115 +20,120 @@
   font-size: 14px;
 }
 
-.comebacks__filters {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 20px;
-}
-
-.comebacks__filter {
-  padding: 7px 16px;
-  border-radius: 999px;
-  border: 1px solid var(--border-color);
-  background: transparent;
-  color: var(--text-secondary);
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.comebacks__filter--active {
-  background: var(--pastel-sky);
-  border-color: transparent;
-  color: var(--pastel-ink);
-}
-
-.comebacks__status {
-  text-align: center;
-  color: var(--text-muted);
-  padding: 40px 0;
-}
-
-.comebacks__month {
+.comebacks__search {
+  position: relative;
   margin-bottom: 24px;
 }
 
-.comebacks__month-label {
-  position: sticky;
-  top: 62px;
-  margin: 0 0 10px;
-  padding: 6px 0;
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: var(--text-secondary);
-  background: var(--bg-color, transparent);
-  backdrop-filter: blur(6px);
+.comebacks__search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
 }
 
-.comebacks__list {
+.comebacks__search-input {
+  width: 100%;
+  padding: 11px 14px 11px 38px;
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  background: var(--card-bg);
+  color: var(--text-primary);
+  font-size: 14px;
+}
+
+.comebacks__search-input:focus {
+  outline: none;
+  border-color: var(--pastel-sky);
+}
+
+.comebacks__section {
+  margin-bottom: 28px;
+}
+
+.comebacks__section-title {
+  margin: 0 0 12px;
+  font-size: 1.1rem;
+  color: var(--text-primary);
+}
+
+.comebacks__status,
+.comebacks__empty {
+  color: var(--text-muted);
+  font-size: 14px;
+  padding: 8px 0;
+}
+
+.cb-list {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-.release-row {
+.cb-row {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 10px 14px;
+  gap: 14px;
+  padding: 12px 16px;
   background: var(--card-bg);
   border: 1px solid var(--border-color);
   border-radius: 14px;
 }
 
-.release-row__date {
+.cb-row__dday {
   flex-shrink: 0;
-  width: 52px;
-  font-size: 12px;
+  width: 54px;
+  text-align: center;
+  font-size: 13px;
   font-weight: 700;
   color: var(--pastel-ink);
-}
-
-.release-row__cover {
-  flex-shrink: 0;
-  width: 44px;
-  height: 44px;
-  border-radius: 8px;
-  overflow: hidden;
   background: var(--pastel-ice);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  border-radius: 8px;
+  padding: 6px 0;
 }
 
-.release-row__cover img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.cb-row__dday--past {
+  color: var(--text-muted);
+  background: transparent;
+  font-weight: 600;
 }
 
-.release-row__cover-fallback {
-  font-weight: 700;
-  color: var(--pastel-ink);
-}
-
-.release-row__info {
+.cb-row__info {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 3px;
   min-width: 0;
   flex: 1;
 }
 
-.release-row__title {
-  font-weight: 600;
-  color: var(--text-primary);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+.cb-row__line {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
 }
 
-.release-row__meta {
+.cb-row__artist {
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.cb-row__artist--link {
+  color: var(--pastel-sky);
+  text-decoration: none;
+}
+
+.cb-row__artist--link:hover {
+  text-decoration: underline;
+}
+
+.cb-row__title {
+  color: var(--text-secondary);
+  overflow-wrap: anywhere;
+}
+
+.cb-row__meta {
   display: flex;
   align-items: center;
   gap: 6px;
@@ -136,21 +141,11 @@
   color: var(--text-muted);
 }
 
-.release-row__group {
-  font-weight: 600;
-  color: var(--pastel-sky);
-  text-decoration: none;
-}
-
-.release-row__group:hover {
-  text-decoration: underline;
-}
-
-.release-row__type {
+.cb-row__type {
   text-transform: capitalize;
 }
 
-.release-row__listen {
+.cb-row__source {
   flex-shrink: 0;
   font-size: 12px;
   font-weight: 600;
@@ -161,14 +156,8 @@
   text-decoration: none;
 }
 
-.comebacks__load-more {
-  display: block;
-  margin: 8px auto 0;
-  padding: 9px 20px;
-  border-radius: 999px;
-  border: 1px solid var(--border-color);
-  background: transparent;
-  color: var(--text-secondary);
-  font-weight: 600;
-  cursor: pointer;
+.comebacks--embedded {
+  max-width: none;
+  margin: 0;
+  padding: 0;
 }

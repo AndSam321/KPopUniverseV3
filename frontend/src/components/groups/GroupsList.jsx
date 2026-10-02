@@ -3,6 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { Users } from "lucide-react";
 import { getGroups } from "../../api/groupsApi";
 import { getCommunities } from "../../api/communitiesApi";
+import Comebacks from "../../pages/Comebacks";
 import { useNavigationLoading } from "../../context/NavigationLoadingContext";
 import { useAuth } from "../../context/AuthContext";
 import FadeImage from "../common/FadeImage";
@@ -35,6 +36,7 @@ const GroupsList = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [communities, setCommunities] = useState([]);
   const [communitySort, setCommunitySort] = useState("popular");
+  const [exploreTab, setExploreTab] = useState("browse");
 
   useEffect(() => {
     fetchGroups();
@@ -104,6 +106,27 @@ const GroupsList = () => {
         </div>
       </div>
 
+      <div className="explore-tabs">
+        <button
+          type="button"
+          className={`explore-tab ${exploreTab === "browse" ? "explore-tab--active" : ""}`}
+          onClick={() => setExploreTab("browse")}
+        >
+          Browse
+        </button>
+        <button
+          type="button"
+          className={`explore-tab ${exploreTab === "comebacks" ? "explore-tab--active" : ""}`}
+          onClick={() => setExploreTab("comebacks")}
+        >
+          Comebacks
+        </button>
+      </div>
+
+      {exploreTab === "comebacks" && <Comebacks embedded />}
+
+      {exploreTab === "browse" && (
+      <>
       <div className="groups-list__controls">
         <input
           type="text"
@@ -229,6 +252,8 @@ const GroupsList = () => {
           </div>
         )}
       </section>
+      </>
+      )}
     </div>
   );
 };

@@ -386,3 +386,26 @@
   font-size: 12px;
   color: var(--text-muted);
 }
+
+.explore-tabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+
+.explore-tab {
+  padding: 8px 18px;
+  border-radius: 999px;
+  border: 1px solid var(--border-color);
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.explore-tab--active {
+  background: var(--pastel-sky);
+  border-color: transparent;
+  color: var(--pastel-ink);
+}

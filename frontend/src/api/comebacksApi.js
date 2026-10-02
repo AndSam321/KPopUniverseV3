@@ -1,8 +1,8 @@
 import api from "./axios";
 
-export const getComebacks = async ({ page = 1, groupType } = {}) => {
-  const params = { page };
-  if (groupType) params.group_type = groupType;
+export const getComebacks = async ({ q } = {}) => {
+  const params = {};
+  if (q) params.q = q;
   const response = await api.get("/comebacks", { params });
   return response.data;
 };
