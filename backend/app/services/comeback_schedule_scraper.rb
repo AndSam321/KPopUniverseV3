@@ -1,9 +1,11 @@
 require "net/http"
 require "json"
+require "cgi"
 
 class ComebackScheduleScraper
   BASE_URL = "https://www.kpopcomebacks.com"
   MONTHS_AHEAD = 2
+  KEEP_REGION = "KR"
 
   def self.call
     new.call
@@ -25,7 +27,24 @@ class ComebackScheduleScraper
     body = fetch(url)
     return 0 unless body
 
-    releases(body).count { |item| upsert(item, url) }
+    region_map = regions(body)
+    releases(body).count { |item| upsert(item, url, region_map) }
+  end
+
+  def regions(body)
+    body.scan(%r{<article[^>]*data-region="([A-Z]{2})"[^>]*>(.*?)</article>}m).each_with_object({}) do |(region, inner), map|
+      artist = inner[%r{class="artist">(.*?)<}m, 1]
+      title = inner[%r{class="release">(.*?)<}m, 1]
+      map[region_key(artist, title)] = region if artist && title
+    end
+  end
+
+  def region_key(artist, title)
+    [normalize(artist), normalize(title)]
+  end
+
+  def normalize(text)
+    CGI.unescapeHTML(text.to_s).strip.downcase
   end
 
   def fetch(url)
@@ -54,11 +73,14 @@ class ComebackScheduleScraper
     nil
   end
 
-  def upsert(item, source_url)
+  def upsert(item, source_url, region_map)
     artist = item.dig("byArtist", "name").to_s.strip
     title = item["name"].to_s.strip
     date = item["datePublished"]
     return false if artist.blank? || title.blank? || date.blank?
+
+    region = region_map[region_key(artist, title)]
+    return drop(date, artist, title) if region && region != KEEP_REGION
 
     record = Comeback.find_or_initialize_by(comeback_date: date, artist_name: artist, title: title)
     record.title_track = item.dig("track", "name")
@@ -66,6 +88,11 @@ class ComebackScheduleScraper
     record.source_url = source_url
     record.group = Group.find_by("LOWER(name) = ?", artist.downcase)
     record.save
+  end
+
+  def drop(date, artist, title)
+    Comeback.where(comeback_date: date, artist_name: artist, title: title).delete_all
+    false
   end
 
   def release_type(schema_url)
