@@ -3,38 +3,44 @@ require "rails_helper"
 RSpec.describe "Comebacks API", type: :request do
   let(:user) { create(:user) }
 
-  it "returns releases newest first with their group" do
-    group = create(:group, group_type: "girl_group")
-    create(:album, group: group, title: "Older", release_date: "2024-01-01")
-    create(:album, group: group, title: "Newer", release_date: "2025-01-01")
+  it "splits comebacks into upcoming and recent" do
+    create(:comeback, title: "Soon", comeback_date: Date.current + 7)
+    create(:comeback, title: "Past", comeback_date: Date.current - 7)
 
     get "/api/v1/comebacks", headers: auth_headers(user)
 
     expect(response).to have_http_status(:ok)
-    titles = json_response["data"].map { |release| release["title"] }
-    expect(titles.first).to eq("Newer")
-    expect(json_response["data"].first["group"]["name"]).to eq(group.name)
+    expect(json_response["upcoming"].map { |c| c["title"] }).to include("Soon")
+    expect(json_response["recent"].map { |c| c["title"] }).to include("Past")
+    expect(json_response["upcoming"].map { |c| c["title"] }).not_to include("Past")
   end
 
-  it "filters by group type" do
-    girl = create(:group, group_type: "girl_group")
-    boy = create(:group, group_type: "boy_group")
-    create(:album, group: girl, title: "Girl Release", release_date: "2025-01-01")
-    create(:album, group: boy, title: "Boy Release", release_date: "2025-01-01")
-
-    get "/api/v1/comebacks?group_type=girl_group", headers: auth_headers(user)
-
-    titles = json_response["data"].map { |release| release["title"] }
-    expect(titles).to include("Girl Release")
-    expect(titles).not_to include("Boy Release")
-  end
-
-  it "omits releases without a date" do
-    group = create(:group)
-    create(:album, group: group, title: "Undated", release_date: nil)
+  it "orders upcoming soonest first" do
+    create(:comeback, title: "Later", comeback_date: Date.current + 30)
+    create(:comeback, title: "Sooner", comeback_date: Date.current + 3)
 
     get "/api/v1/comebacks", headers: auth_headers(user)
 
-    expect(json_response["data"].map { |r| r["title"] }).not_to include("Undated")
+    expect(json_response["upcoming"].map { |c| c["title"] }).to eq(["Sooner", "Later"])
+  end
+
+  it "includes the matched group when present" do
+    group = create(:group, name: "TWICE")
+    create(:comeback, artist_name: "TWICE", group: group, comeback_date: Date.current + 2)
+
+    get "/api/v1/comebacks", headers: auth_headers(user)
+
+    expect(json_response["upcoming"].first["group"]["name"]).to eq("TWICE")
+  end
+
+  it "searches by artist or title" do
+    create(:comeback, artist_name: "TWICE", title: "Strategy", comeback_date: Date.current + 1)
+    create(:comeback, artist_name: "BTS", title: "Proof", comeback_date: Date.current + 1)
+
+    get "/api/v1/comebacks?q=twice", headers: auth_headers(user)
+
+    names = json_response["upcoming"].map { |c| c["artist_name"] }
+    expect(names).to include("TWICE")
+    expect(names).not_to include("BTS")
   end
 end

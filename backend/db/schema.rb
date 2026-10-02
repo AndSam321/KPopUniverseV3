@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_10_01_180404) do
+ActiveRecord::Schema[8.0].define(version: 2026_10_02_031933) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -55,6 +55,21 @@ ActiveRecord::Schema[8.0].define(version: 2026_10_01_180404) do
     t.string "spotify_id"
     t.index ["group_id", "spotify_id"], name: "index_albums_on_group_id_and_spotify_id", unique: true
     t.index ["group_id"], name: "index_albums_on_group_id"
+  end
+
+  create_table "comebacks", force: :cascade do |t|
+    t.string "artist_name", null: false
+    t.bigint "group_id"
+    t.string "title", null: false
+    t.string "title_track"
+    t.string "release_type"
+    t.date "comeback_date", null: false
+    t.string "source_url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["comeback_date", "artist_name", "title"], name: "index_comebacks_on_date_artist_title", unique: true
+    t.index ["comeback_date"], name: "index_comebacks_on_comeback_date"
+    t.index ["group_id"], name: "index_comebacks_on_group_id"
   end
 
   create_table "comment_likes", force: :cascade do |t|
@@ -262,6 +277,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_10_01_180404) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "albums", "groups"
+  add_foreign_key "comebacks", "groups"
   add_foreign_key "comment_likes", "comments"
   add_foreign_key "comment_likes", "users"
   add_foreign_key "comments", "comments", column: "parent_id"

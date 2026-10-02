@@ -1,39 +1,29 @@
 class Api::V1::ComebacksController < Api::V1::BaseController
   def index
-    scope = Album.released.includes(:group).chronological
+    scope = Comeback.includes(:group)
 
-    if params[:group_type].present?
-      scope = scope.where(groups: {group_type: params[:group_type]}).references(:group)
+    if params[:q].present?
+      scope = scope.where("artist_name ILIKE :q OR title ILIKE :q", q: "%#{params[:q]}%")
     end
 
-    @pagy, @albums = pagy(scope, items: params[:per_page] || 30)
-
     render json: {
-      data: @albums.map { |album| release_json(album) },
-      meta: {
-        current_page: @pagy.page,
-        total_pages: @pagy.pages,
-        total_count: @pagy.count
-      }
+      upcoming: scope.upcoming.map { |comeback| comeback_json(comeback) },
+      recent: scope.recent.limit(60).map { |comeback| comeback_json(comeback) }
     }
   end
 
   private
 
-  def release_json(album)
+  def comeback_json(comeback)
     {
-      id: album.id,
-      title: album.title,
-      album_type: album.album_type,
-      release_date: album.release_date,
-      cover_url: album.cover_url,
-      external_url: album.external_url,
-      group: {
-        id: album.group.id,
-        name: album.group.name,
-        slug: album.group.slug,
-        group_type: album.group.group_type
-      }
+      id: comeback.id,
+      artist_name: comeback.artist_name,
+      title: comeback.title,
+      title_track: comeback.title_track,
+      release_type: comeback.release_type,
+      comeback_date: comeback.comeback_date,
+      source_url: comeback.source_url,
+      group: comeback.group ? {id: comeback.group.id, name: comeback.group.name, slug: comeback.group.slug} : nil
     }
   end
 end

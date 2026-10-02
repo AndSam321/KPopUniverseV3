@@ -18,3 +18,8 @@ production:
     class: EnqueueGroupSyncsJob
     queue: default
     schedule: every sunday at 4am
+
+  daily_comeback_scrape:
+    class: ScrapeComebacksJob
+    queue: default
+    schedule: every day at 5am
