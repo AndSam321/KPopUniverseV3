@@ -5,6 +5,7 @@ import {
   TrendingUp,
   ContactRound,
   Users,
+  CalendarDays,
   User,
   Settings,
   LogOut,
@@ -99,6 +100,16 @@ export default function Navbar() {
             <Users className="kp-nav__icon" />
             <span className="kp-nav__label">explore</span>
           </NavLink>
+
+          <NavLink
+            to="/comebacks"
+            className={({ isActive }) =>
+              isActive ? "kp-nav__link kp-nav__link--active" : "kp-nav__link"
+            }
+          >
+            <CalendarDays className="kp-nav__icon" />
+            <span className="kp-nav__label">comebacks</span>
+          </NavLink>
         </div>
 
         {/* Mobile bottom tab bar */}
@@ -130,6 +141,15 @@ export default function Navbar() {
           >
             <Users size={22} />
             <span>explore</span>
+          </NavLink>
+          <NavLink
+            to="/comebacks"
+            className={({ isActive }) =>
+              isActive ? "kp-nav__mobile-tab kp-nav__mobile-tab--active" : "kp-nav__mobile-tab"
+            }
+          >
+            <CalendarDays size={22} />
+            <span>comebacks</span>
           </NavLink>
         </div>
 

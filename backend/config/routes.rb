@@ -45,6 +45,7 @@ Rails.application.routes.draw do
       end
 
       get "search", to: "search#index"
+      resources :comebacks, only: [:index]
 
       resources :groups, only: [:index, :show] do
         member do
