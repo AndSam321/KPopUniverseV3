@@ -28,7 +28,7 @@
 
 .comebacks__subtitle {
   margin: 4px 0 0;
-  color: var(--text-muted);
+  color: var(--text-secondary);
   font-size: 14px;
 }
 
@@ -63,7 +63,7 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: var(--text-muted);
+  color: var(--text-secondary);
 }
 
 .comebacks__more {

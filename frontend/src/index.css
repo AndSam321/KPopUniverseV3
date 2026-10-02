@@ -8,7 +8,7 @@
   /* Core UI Neutrals */
   --text-primary: #1f1f2e;
   --text-secondary: #4b4b6a;
-  --text-muted: #8b8bb5;
+  --text-muted: #60608a;
   --card-bg: #f7f5ff;
   --border-color: #d6d3f0;
 
@@ -16,7 +16,7 @@
   --accent-primary: #ffd6ff;      /* Pink - K-pop energy */
   --accent-secondary: #6ee7d8;    /* Mint - success/active */
   --accent-highlight: #ffd166;    /* Warm yellow - hover */
-  --accent-link: #5b6cff;         /* Purple-blue - links */
+  --accent-link: #4d5ae8;         /* Purple-blue - links (AA on light cards) */
   --accent-pink: #ff4da6;         /* Standardized pink for likes/hearts */
   --accent-error: #ff4444;        /* Error red */
 
@@ -67,6 +67,7 @@ div { display: block; }
   --text-muted: #8b8bb5;
   --card-bg: var(--dark-card);
   --border-color: #3a3960;
+  --accent-link: #8f9bff;         /* lighter link for dark cards (AA) */
 }
 
 :root.dark-mode body,
