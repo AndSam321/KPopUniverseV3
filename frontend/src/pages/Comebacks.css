@@ -53,14 +53,14 @@
 
 .cb-row__dday {
   flex-shrink: 0;
-  width: 54px;
+  width: 68px;
   text-align: center;
   font-size: 13px;
   font-weight: 700;
   color: var(--pastel-ink);
   background: var(--pastel-ice);
   border-radius: 8px;
-  padding: 6px 0;
+  padding: 6px 4px;
 }
 
 .cb-row__dday--past {

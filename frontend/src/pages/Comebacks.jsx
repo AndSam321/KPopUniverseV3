@@ -24,8 +24,9 @@ const ddays = (dateStr) => {
 
 const ddayLabel = (dateStr) => {
   const diff = ddays(dateStr);
-  if (diff === 0) return "D-DAY";
-  return diff > 0 ? `D-${diff}` : `${-diff}d`;
+  if (diff <= 0) return "Today";
+  if (diff === 1) return "1 day";
+  return `${diff} days`;
 };
 
 const ComebackRow = ({ comeback, showCountdown }) => (
