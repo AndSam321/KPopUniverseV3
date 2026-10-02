@@ -4,7 +4,7 @@
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  font-family: "Zen Kaku Gothic New", system-ui, -apple-system, sans-serif;
+  font-family: var(--font-content);
 }
 
 .notif-page__container {

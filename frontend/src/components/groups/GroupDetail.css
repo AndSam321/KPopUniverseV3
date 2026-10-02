@@ -37,7 +37,7 @@
 
 .group-detail__info h1 {
   color: var(--pastel-ink);
-  font-family: "DynaPuff", cursive;
+  font-family: var(--font-display);
   font-size: 2rem;
   margin: 0 0 1rem 0;
   font-weight: 700;
@@ -61,7 +61,7 @@
   border-radius: 999px;
   background: transparent;
   color: var(--text-secondary);
-  font-family: "Zen Kaku Gothic New", system-ui, sans-serif;
+  font-family: var(--font-content);
   font-size: 0.85rem;
   font-weight: 500;
   cursor: pointer;

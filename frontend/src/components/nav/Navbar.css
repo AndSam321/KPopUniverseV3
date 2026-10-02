@@ -16,7 +16,7 @@
   display: flex;
   align-items: center;
   justify-content: center; /* center middle links */
-  font-family: "Zen Kaku Gothic New", system-ui, -apple-system, sans-serif;
+  font-family: var(--font-content);
 }
 
 /* Left cluster */
@@ -46,7 +46,7 @@
 }
 
 .kp-nav__logo-text {
-  font-family: "Dynapuff", system-ui, cursive;
+  font-family: var(--font-display);
   font-size: 1.5rem;
   font-weight: 700;
   letter-spacing: 0.02em;
@@ -188,7 +188,7 @@
   border: none;
   background: transparent;
   color: var(--text-secondary);
-  font-family: "Zen Kaku Gothic New", system-ui, sans-serif;
+  font-family: var(--font-content);
   font-size: 0.9rem;
   font-weight: 500;
   text-align: left;
@@ -228,7 +228,7 @@
   border-radius: 999px;
   background: var(--pastel-sky);
   color: #1f2a44;
-  font-family: "Zen Kaku Gothic New", system-ui, sans-serif;
+  font-family: var(--font-content);
   font-size: 0.9rem;
   font-weight: 700;
   cursor: pointer;

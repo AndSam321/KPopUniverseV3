@@ -6,7 +6,7 @@
 
 .search-results__heading {
   color: var(--pastel-ink);
-  font-family: "DynaPuff", "Zen Kaku Gothic New", sans-serif;
+  font-family: var(--font-display);
   font-size: 1.6rem;
   font-weight: 800;
   margin: 0 0 1.25rem;

@@ -13,7 +13,7 @@
   background: rgba(20, 16, 38, 0.7);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  font-family: "Zen Kaku Gothic New", system-ui, sans-serif;
+  font-family: var(--font-content);
 }
 
 .cropper-modal {

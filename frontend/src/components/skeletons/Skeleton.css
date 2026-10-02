@@ -70,7 +70,7 @@
   overflow: hidden;
   box-shadow: 0 2px 8px rgba(117, 123, 200, 0.15);
   border: 1px solid var(--border-color);
-  font-family: "Zen Kaku Gothic New", system-ui, sans-serif;
+  font-family: var(--font-content);
 }
 
 .post-card-skeleton__header {

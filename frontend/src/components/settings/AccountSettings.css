@@ -7,8 +7,7 @@
   justify-content: center;
   align-items: flex-start;
   background: transparent;
-  font-family: "Zen Kaku Gothic New", system-ui, -apple-system,
-    BlinkMacSystemFont, sans-serif;
+  font-family: var(--font-content);
 }
 
 /* === Container === */
@@ -50,7 +49,7 @@
   font-weight: 700;
   color: var(--pastel-ink);
   margin: 0 0 2rem 0;
-  font-family: "DynaPuff", system-ui, cursive;
+  font-family: var(--font-display);
 }
 
 /* === Section === */

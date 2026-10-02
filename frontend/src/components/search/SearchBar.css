@@ -33,7 +33,7 @@
   outline: none;
   width: 220px;
   height: 38px;
-  font-family: "Zen Kaku Gothic New", system-ui, sans-serif;
+  font-family: var(--font-content);
 }
 
 .kp-search__input::placeholder {

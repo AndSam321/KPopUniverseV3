@@ -31,9 +31,10 @@
   --dark-card: #26254a;
   --dark-text: #f0eeff;
 
-  /* Content reading font (posts & comments) — sturdier than the UI font */
+  /* Fonts: --font-content for all regular text, --font-display for bubble headings */
   --font-content: "Inter", system-ui, -apple-system, BlinkMacSystemFont,
     "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-display: "DynaPuff", "Inter", system-ui, cursive;
 
   /* Pastel Dreamland palette */
   --pastel-orchid: #cdb4db;
@@ -56,8 +57,7 @@ body, html {
   background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-mid) 45%, var(--gradient-end) 100%);
   background-attachment: fixed;
   color: var(--text-primary);
-  font-family: "Zen Kaku Gothic New", system-ui, -apple-system, BlinkMacSystemFont,
-    'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+  font-family: var(--font-content);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -102,7 +102,7 @@ div { display: block; }
 
 /* ===== Shared page primitives (consistent across pages) ===== */
 .page-title {
-  font-family: "DynaPuff", "Zen Kaku Gothic New", sans-serif;
+  font-family: var(--font-display);
   font-size: 2rem;
   line-height: 1.1;
   font-weight: 700;

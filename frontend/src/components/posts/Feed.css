@@ -3,7 +3,7 @@
   margin: 0 auto;
   padding: 2rem 1rem;
   min-height: 100vh;
-  font-family: "Zen Kaku Gothic New", system-ui, sans-serif;
+  font-family: var(--font-content);
 }
 
 .feed__header {
