@@ -1,8 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Search } from "lucide-react";
 import { getComebacks } from "../api/comebacksApi";
 import "./Comebacks.css";
+
+const prefersReducedMotion = () =>
+  typeof window !== "undefined" &&
+  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+const slug = (label) => label.toLowerCase().replace(/\s+/g, "-");
 
 const MONTHS = [
   "Jan", "Feb", "Mar", "Apr", "May", "Jun",
@@ -112,9 +118,9 @@ const ComebackRow = ({ comeback, showCountdown }) => (
   </div>
 );
 
-const Bucket = ({ label, items }) =>
+const Bucket = ({ id, label, items }) =>
   items.length > 0 && (
-    <div className="comebacks__bucket">
+    <div className="comebacks__bucket" id={id}>
       <h3 className="comebacks__bucket-title">{label}</h3>
       <div className="cb-list">
         {items.map((cb) => (
@@ -130,6 +136,9 @@ export default function Comebacks({ embedded = false }) {
   const [recent, setRecent] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showAll, setShowAll] = useState(false);
+  const [activeId, setActiveId] = useState("");
+  const [animate] = useState(() => !prefersReducedMotion());
+  const contentRef = useRef(null);
 
   useEffect(() => {
     const handle = setTimeout(() => {
@@ -149,6 +158,62 @@ export default function Comebacks({ embedded = false }) {
   const expanded = showAll || searching;
   const { thisWeek, nextWeek, later } = bucketUpcoming(upcoming);
   const laterCount = later.reduce((sum, group) => sum + group.items.length, 0);
+
+  const sections = [];
+  if (thisWeek.length) sections.push({ id: "this-week", label: "This week" });
+  if (nextWeek.length) sections.push({ id: "next-week", label: "Next week" });
+  if (expanded) later.forEach((g) => sections.push({ id: slug(g.label), label: g.label }));
+  if (recent.length) sections.push({ id: "recent", label: "Recent" });
+
+  const sectionKey = sections.map((s) => s.id).join("|");
+  const activeIndex = Math.max(0, sections.findIndex((s) => s.id === activeId));
+
+  useEffect(() => {
+    if (loading || !animate || !contentRef.current) return;
+    const rows = contentRef.current.querySelectorAll(".cb-row");
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-in");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { rootMargin: "0px 0px -8% 0px", threshold: 0.05 }
+    );
+    rows.forEach((row) => observer.observe(row));
+    return () => observer.disconnect();
+  }, [loading, animate, upcoming, recent, expanded]);
+
+  useEffect(() => {
+    if (loading || !sectionKey) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+        if (visible[0]) setActiveId(visible[0].target.id);
+      },
+      { rootMargin: "-90px 0px -70% 0px", threshold: 0 }
+    );
+    sectionKey.split("|").forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
+  }, [loading, sectionKey]);
+
+  const jumpTo = (event, id) => {
+    event.preventDefault();
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.scrollIntoView({
+      behavior: prefersReducedMotion() ? "auto" : "smooth",
+      block: "start",
+    });
+    setActiveId(id);
+  };
 
   return (
     <div className={`comebacks ${embedded ? "comebacks--embedded" : ""}`}>
@@ -173,43 +238,77 @@ export default function Comebacks({ embedded = false }) {
       {loading ? (
         <p className="comebacks__status">Loading...</p>
       ) : (
-        <>
-          <section className="comebacks__section">
-            <h2 className="comebacks__section-title">Upcoming</h2>
-            {upcoming.length === 0 ? (
-              <p className="comebacks__empty">No upcoming comebacks found.</p>
-            ) : (
-              <>
-                <Bucket label="This week" items={thisWeek} />
-                <Bucket label="Next week" items={nextWeek} />
-                {expanded &&
-                  later.map((group) => (
-                    <Bucket key={group.label} label={group.label} items={group.items} />
-                  ))}
-                {laterCount > 0 && !searching && (
-                  <button
-                    type="button"
-                    className="comebacks__more"
-                    onClick={() => setShowAll((prev) => !prev)}
+        <div className="comebacks__layout">
+          {sections.length > 1 && (
+            <nav className="comebacks__outline" aria-label="Comeback sections">
+              <div className="comebacks__outline-inner">
+                <span
+                  className="comebacks__outline-thumb"
+                  style={{ transform: `translateY(${activeIndex * 34}px)` }}
+                  aria-hidden="true"
+                />
+                {sections.map((section) => (
+                  <a
+                    key={section.id}
+                    href={`#${section.id}`}
+                    className={`comebacks__outline-link ${
+                      activeId === section.id ? "is-active" : ""
+                    }`}
+                    onClick={(event) => jumpTo(event, section.id)}
                   >
-                    {showAll ? "Show less" : `Show ${laterCount} more upcoming`}
-                  </button>
-                )}
-              </>
-            )}
-          </section>
-
-          {recent.length > 0 && (
-            <section className="comebacks__section">
-              <h2 className="comebacks__section-title">Recent</h2>
-              <div className="cb-list">
-                {recent.map((cb) => (
-                  <ComebackRow key={cb.id} comeback={cb} showCountdown={false} />
+                    {section.label}
+                  </a>
                 ))}
               </div>
-            </section>
+            </nav>
           )}
-        </>
+
+          <div
+            ref={contentRef}
+            className={`comebacks__content ${animate ? "cb-animate" : ""}`}
+          >
+            <section className="comebacks__section">
+              <h2 className="comebacks__section-title">Upcoming</h2>
+              {upcoming.length === 0 ? (
+                <p className="comebacks__empty">No upcoming comebacks found.</p>
+              ) : (
+                <>
+                  <Bucket id="this-week" label="This week" items={thisWeek} />
+                  <Bucket id="next-week" label="Next week" items={nextWeek} />
+                  {expanded &&
+                    later.map((group) => (
+                      <Bucket
+                        key={group.label}
+                        id={slug(group.label)}
+                        label={group.label}
+                        items={group.items}
+                      />
+                    ))}
+                  {laterCount > 0 && !searching && (
+                    <button
+                      type="button"
+                      className="comebacks__more"
+                      onClick={() => setShowAll((prev) => !prev)}
+                    >
+                      {showAll ? "Show less" : `Show ${laterCount} more upcoming`}
+                    </button>
+                  )}
+                </>
+              )}
+            </section>
+
+            {recent.length > 0 && (
+              <section id="recent" className="comebacks__section">
+                <h2 className="comebacks__section-title">Recent</h2>
+                <div className="cb-list">
+                  {recent.map((cb) => (
+                    <ComebackRow key={cb.id} comeback={cb} showCountdown={false} />
+                  ))}
+                </div>
+              </section>
+            )}
+          </div>
+        </div>
       )}
     </div>
   );
