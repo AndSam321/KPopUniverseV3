@@ -35,6 +35,37 @@
   padding: 8px 0;
 }
 
+.comebacks__bucket {
+  margin-bottom: 20px;
+}
+
+.comebacks__bucket-title {
+  margin: 0 0 8px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+}
+
+.comebacks__more {
+  display: block;
+  width: 100%;
+  padding: 11px;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  background: var(--card-bg);
+  color: var(--pastel-ink);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.15s ease;
+}
+
+.comebacks__more:hover {
+  border-color: var(--pastel-sky);
+}
+
 .cb-list {
   display: flex;
   flex-direction: column;

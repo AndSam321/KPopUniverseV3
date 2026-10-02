@@ -9,9 +9,45 @@ const MONTHS = [
   "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
 ];
 
+const FULL_MONTHS = [
+  "January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December",
+];
+
 const dateLabel = (dateStr) => {
   const [, month, day] = dateStr.split("-");
   return `${MONTHS[parseInt(month, 10) - 1]} ${parseInt(day, 10)}`;
+};
+
+const monthLabel = (dateStr) => {
+  const [, month] = dateStr.split("-").map(Number);
+  return FULL_MONTHS[month - 1];
+};
+
+const bucketUpcoming = (list) => {
+  const thisWeek = [];
+  const nextWeek = [];
+  const later = [];
+  const laterByMonth = new Map();
+
+  list.forEach((cb) => {
+    const diff = ddays(cb.comeback_date);
+    if (diff <= 6) {
+      thisWeek.push(cb);
+    } else if (diff <= 13) {
+      nextWeek.push(cb);
+    } else {
+      const label = monthLabel(cb.comeback_date);
+      if (!laterByMonth.has(label)) {
+        const group = { label, items: [] };
+        laterByMonth.set(label, group);
+        later.push(group);
+      }
+      laterByMonth.get(label).items.push(cb);
+    }
+  });
+
+  return { thisWeek, nextWeek, later };
 };
 
 const ddays = (dateStr) => {
@@ -76,11 +112,24 @@ const ComebackRow = ({ comeback, showCountdown }) => (
   </div>
 );
 
+const Bucket = ({ label, items }) =>
+  items.length > 0 && (
+    <div className="comebacks__bucket">
+      <h3 className="comebacks__bucket-title">{label}</h3>
+      <div className="cb-list">
+        {items.map((cb) => (
+          <ComebackRow key={cb.id} comeback={cb} showCountdown />
+        ))}
+      </div>
+    </div>
+  );
+
 export default function Comebacks({ embedded = false }) {
   const [query, setQuery] = useState("");
   const [upcoming, setUpcoming] = useState([]);
   const [recent, setRecent] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showAll, setShowAll] = useState(false);
 
   useEffect(() => {
     const handle = setTimeout(() => {
@@ -95,6 +144,11 @@ export default function Comebacks({ embedded = false }) {
     }, 250);
     return () => clearTimeout(handle);
   }, [query]);
+
+  const searching = query.trim() !== "";
+  const expanded = showAll || searching;
+  const { thisWeek, nextWeek, later } = bucketUpcoming(upcoming);
+  const laterCount = later.reduce((sum, group) => sum + group.items.length, 0);
 
   return (
     <div className={`comebacks ${embedded ? "comebacks--embedded" : ""}`}>
@@ -125,11 +179,23 @@ export default function Comebacks({ embedded = false }) {
             {upcoming.length === 0 ? (
               <p className="comebacks__empty">No upcoming comebacks found.</p>
             ) : (
-              <div className="cb-list">
-                {upcoming.map((cb) => (
-                  <ComebackRow key={cb.id} comeback={cb} showCountdown />
-                ))}
-              </div>
+              <>
+                <Bucket label="This week" items={thisWeek} />
+                <Bucket label="Next week" items={nextWeek} />
+                {expanded &&
+                  later.map((group) => (
+                    <Bucket key={group.label} label={group.label} items={group.items} />
+                  ))}
+                {laterCount > 0 && !searching && (
+                  <button
+                    type="button"
+                    className="comebacks__more"
+                    onClick={() => setShowAll((prev) => !prev)}
+                  >
+                    {showAll ? "Show less" : `Show ${laterCount} more upcoming`}
+                  </button>
+                )}
+              </>
             )}
           </section>
 
