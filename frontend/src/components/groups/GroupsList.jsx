@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { Users } from "lucide-react";
+import { Users, Search } from "lucide-react";
 import { getGroups } from "../../api/groupsApi";
 import { getCommunities } from "../../api/communitiesApi";
 import Comebacks from "../../pages/Comebacks";
@@ -99,7 +99,7 @@ const GroupsList = () => {
     <div className="groups-list">
       <div className="groups-list__header">
         <div className="groups-list__title-section">
-          <h1>Explore</h1>
+          <h1 className="page-title">Explore</h1>
           <p className="groups-list__subtitle">
             Browse K-pop groups and their communities
           </p>
@@ -128,13 +128,16 @@ const GroupsList = () => {
       {exploreTab === "browse" && (
       <>
       <div className="groups-list__controls">
-        <input
-          type="text"
-          placeholder="Search groups and communities..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="groups-list__search-input"
-        />
+        <div className="app-search">
+          <Search size={18} className="app-search__icon" />
+          <input
+            type="text"
+            placeholder="Search groups and communities..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="app-search__input"
+          />
+        </div>
       </div>
 
       {error && <div className="groups-list__error">{error}</div>}

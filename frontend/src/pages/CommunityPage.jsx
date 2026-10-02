@@ -60,7 +60,7 @@ export default function CommunityPage() {
     <div className="community-page">
       <div className="community-page__header">
         <div className="community-page__heading">
-          <h1>{community.name}</h1>
+          <h1 className="page-title">{community.name}</h1>
           {community.official && (
             <span className="community-page__badge">Official</span>
           )}

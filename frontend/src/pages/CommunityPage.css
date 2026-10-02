@@ -26,11 +26,6 @@
   gap: 10px;
 }
 
-.community-page__heading h1 {
-  margin: 0;
-  font-size: 1.5rem;
-  color: var(--text-primary);
-}
 
 .community-page__badge {
   font-size: 10px;

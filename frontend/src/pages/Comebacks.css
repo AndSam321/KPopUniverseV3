@@ -8,12 +8,6 @@
   margin-bottom: 16px;
 }
 
-.comebacks__header h1 {
-  margin: 0;
-  font-size: 1.6rem;
-  color: var(--text-primary);
-}
-
 .comebacks__subtitle {
   margin: 4px 0 0;
   color: var(--text-muted);
@@ -21,31 +15,7 @@
 }
 
 .comebacks__search {
-  position: relative;
   margin-bottom: 24px;
-}
-
-.comebacks__search-icon {
-  position: absolute;
-  left: 14px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--text-muted);
-}
-
-.comebacks__search-input {
-  width: 100%;
-  padding: 11px 14px 11px 38px;
-  border: 1px solid var(--border-color);
-  border-radius: 999px;
-  background: var(--card-bg);
-  color: var(--text-primary);
-  font-size: 14px;
-}
-
-.comebacks__search-input:focus {
-  outline: none;
-  border-color: var(--pastel-sky);
 }
 
 .comebacks__section {

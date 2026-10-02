@@ -94,7 +94,7 @@ const Feed = ({ variant = "for-you" }) => {
   return (
     <div className="feed">
       <div className="feed__header">
-        <h1>{variant === "following" ? "following" : "for you"}</h1>
+        <h1 className="page-title">{variant === "following" ? "following" : "for you"}</h1>
       </div>
 
       {initialLoading ? (

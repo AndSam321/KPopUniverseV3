@@ -99,19 +99,19 @@ export default function Comebacks({ embedded = false }) {
     <div className={`comebacks ${embedded ? "comebacks--embedded" : ""}`}>
       {!embedded && (
         <div className="comebacks__header">
-          <h1>Comebacks</h1>
+          <h1 className="page-title">Comebacks</h1>
           <p className="comebacks__subtitle">Upcoming and recent K-pop releases</p>
         </div>
       )}
 
-      <div className="comebacks__search">
-        <Search size={16} className="comebacks__search-icon" />
+      <div className="app-search comebacks__search">
+        <Search size={18} className="app-search__icon" />
         <input
           type="text"
           placeholder="Search by artist or title..."
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          className="comebacks__search-input"
+          className="app-search__input"
         />
       </div>
 
