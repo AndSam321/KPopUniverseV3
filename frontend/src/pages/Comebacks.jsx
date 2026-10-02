@@ -71,11 +71,31 @@ const ddayLabel = (dateStr) => {
   return `${diff} days`;
 };
 
-const ComebackRow = ({ comeback, showCountdown }) => (
+const ddayTone = (diff) => {
+  if (diff <= 0) return "now";
+  if (diff <= 3) return "urgent";
+  if (diff <= 7) return "soon";
+  return "later";
+};
+
+const ComebackRow = ({ comeback, showCountdown }) => {
+  const diff = ddays(comeback.comeback_date);
+  return (
   <div className="cb-row">
-    <span className={`cb-row__dday ${showCountdown ? "" : "cb-row__dday--past"}`}>
-      {showCountdown ? ddayLabel(comeback.comeback_date) : dateLabel(comeback.comeback_date)}
-    </span>
+    {showCountdown ? (
+      <span className={`cb-row__dday cb-row__dday--${ddayTone(diff)}`}>
+        {diff <= 0 ? (
+          <strong className="cb-row__dday-now">Today</strong>
+        ) : (
+          <>
+            <strong className="cb-row__dday-num">{diff}</strong>
+            <span className="cb-row__dday-unit">{diff === 1 ? "day" : "days"}</span>
+          </>
+        )}
+      </span>
+    ) : (
+      <span className="cb-row__date">{dateLabel(comeback.comeback_date)}</span>
+    )}
     <span className="cb-row__info">
       <span className="cb-row__line">
         {comeback.group ? (
@@ -88,35 +108,33 @@ const ComebackRow = ({ comeback, showCountdown }) => (
         <span className="cb-row__title">{comeback.title}</span>
       </span>
       <span className="cb-row__meta">
-        {showCountdown && (
-          <>
-            <span>{dateLabel(comeback.comeback_date)}</span>
-            <span className="cb-row__dot">·</span>
-          </>
-        )}
-        {comeback.release_type && (
-          <span className="cb-row__type">{comeback.release_type}</span>
+        {showCountdown && <span>{dateLabel(comeback.comeback_date)}</span>}
+        {showCountdown && comeback.title_track && (
+          <span className="cb-row__dot">·</span>
         )}
         {comeback.title_track && (
-          <>
-            <span className="cb-row__dot">·</span>
-            <span className="cb-row__track">{comeback.title_track}</span>
-          </>
+          <span className="cb-row__track">{comeback.title_track}</span>
         )}
       </span>
     </span>
-    {comeback.source_url && (
-      <a
-        href={comeback.source_url}
-        target="_blank"
-        rel="noreferrer"
-        className="cb-row__source"
-      >
-        Details
-      </a>
-    )}
+    <span className="cb-row__end">
+      {comeback.release_type && (
+        <span className="cb-row__type-chip">{comeback.release_type}</span>
+      )}
+      {comeback.source_url && (
+        <a
+          href={comeback.source_url}
+          target="_blank"
+          rel="noreferrer"
+          className="cb-row__source"
+        >
+          Details
+        </a>
+      )}
+    </span>
   </div>
-);
+  );
+};
 
 const Bucket = ({ id, label, items }) =>
   items.length > 0 && (
@@ -244,7 +262,7 @@ export default function Comebacks({ embedded = false }) {
               <div className="comebacks__outline-inner">
                 <span
                   className="comebacks__outline-thumb"
-                  style={{ transform: `translateY(${activeIndex * 34}px)` }}
+                  style={{ transform: `translateY(${activeIndex * 36}px)` }}
                   aria-hidden="true"
                 />
                 {sections.map((section) => (
