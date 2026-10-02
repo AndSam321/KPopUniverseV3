@@ -31,6 +31,10 @@
   --dark-card: #26254a;
   --dark-text: #f0eeff;
 
+  /* Content reading font (posts & comments) — sturdier than the UI font */
+  --font-content: "Inter", system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
   /* Pastel Dreamland palette */
   --pastel-orchid: #cdb4db;
   --pastel-petal: #ffc8dd;
