@@ -2,14 +2,18 @@ class Api::V1::ConversationsController < Api::V1::BaseController
   before_action :authenticate_user!
 
   def index
-    conversations = Conversation.for_user(current_user).recent_first
-      .includes(user_one: {avatar_attachment: :blob}, user_two: {avatar_attachment: :blob}).to_a
+    pagy, conversations = pagy(
+      Conversation.for_user(current_user).with_activity.recent_first
+        .includes(user_one: {avatar_attachment: :blob}, user_two: {avatar_attachment: :blob}),
+      items: 20
+    )
     ids = conversations.map(&:id)
 
     render json: {
       status: "success",
       data: conversations.map { |conversation| serialize(conversation, ids) },
-      unread_count: Message.unread_count_for(current_user)
+      unread_count: Message.unread_count_for(current_user),
+      pagination: {current_page: pagy.page, total_pages: pagy.pages, total_count: pagy.count}
     }
   end
 

@@ -1,7 +1,7 @@
 import api from "./axios";
 
-export const getConversations = () =>
-  api.get("/conversations").then((res) => res.data);
+export const getConversations = (page = 1) =>
+  api.get(`/conversations?page=${page}`).then((res) => res.data);
 
 export const getUnreadMessageCount = () =>
   api.get("/conversations/unread_count").then((res) => res.data.unread_count);

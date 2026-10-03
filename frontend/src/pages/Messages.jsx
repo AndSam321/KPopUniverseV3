@@ -33,6 +33,20 @@ function Avatar({ user }) {
 const appendUnique = (list, message) =>
   list.some((m) => m.id === message.id) ? list : [...list, message];
 
+const upsertConversation = (list, convId, message, openId, myId) => {
+  const existing = list.find((c) => c.id === convId);
+  if (!existing) return list;
+  const isOpen = String(convId) === String(openId);
+  const fromMe = message.sender_id === myId;
+  const updated = {
+    ...existing,
+    last_message: message,
+    last_message_at: message.created_at,
+    unread_count: isOpen || fromMe ? existing.unread_count : (existing.unread_count || 0) + 1,
+  };
+  return [updated, ...list.filter((c) => c.id !== convId)];
+};
+
 export default function Messages() {
   const { conversationId } = useParams();
   const navigate = useNavigate();
@@ -40,22 +54,67 @@ export default function Messages() {
   const { lastEvent, setUnreadCount } = useMessages();
 
   const [conversations, setConversations] = useState([]);
+  const [convPage, setConvPage] = useState(1);
+  const [convHasMore, setConvHasMore] = useState(false);
+
   const [messages, setMessages] = useState([]);
   const [activeConversation, setActiveConversation] = useState(null);
   const [loadingThread, setLoadingThread] = useState(false);
+  const [threadPage, setThreadPage] = useState(1);
+  const [threadHasMore, setThreadHasMore] = useState(false);
+  const [loadingOlder, setLoadingOlder] = useState(false);
+
   const [body, setBody] = useState("");
   const [sending, setSending] = useState(false);
-  const endRef = useRef(null);
 
-  const fetchConversations = useCallback(() => {
-    getConversations().then((res) => setConversations(res.data)).catch(() => {});
+  const messagesRef = useRef(null);
+  const endRef = useRef(null);
+  const listSentinelRef = useRef(null);
+  const conversationsRef = useRef([]);
+  const conversationIdRef = useRef(conversationId);
+
+  useEffect(() => {
+    conversationsRef.current = conversations;
+  }, [conversations]);
+  useEffect(() => {
+    conversationIdRef.current = conversationId;
+  }, [conversationId]);
+
+  const scrollToBottom = () =>
+    requestAnimationFrame(() => endRef.current?.scrollIntoView({ block: "end" }));
+
+  // --- Conversation list (paginated) ---
+  const loadConversations = useCallback((page) => {
+    return getConversations(page).then((res) => {
+      setConversations((prev) =>
+        page === 1
+          ? res.data
+          : [...prev, ...res.data.filter((c) => !prev.some((p) => p.id === c.id))]
+      );
+      setConvPage(res.pagination.current_page);
+      setConvHasMore(res.pagination.current_page < res.pagination.total_pages);
+    });
   }, []);
 
   useEffect(() => {
-    fetchConversations();
-  }, [fetchConversations]);
+    loadConversations(1).catch(() => {});
+  }, [loadConversations]);
 
-  // Load the open thread
+  useEffect(() => {
+    if (!convHasMore) return;
+    const el = listSentinelRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) loadConversations(convPage + 1).catch(() => {});
+      },
+      { rootMargin: "120px" }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [convHasMore, convPage, loadConversations]);
+
+  // --- Open thread (latest page) ---
   useEffect(() => {
     if (!conversationId) {
       setActiveConversation(null);
@@ -63,35 +122,73 @@ export default function Messages() {
       return;
     }
     setLoadingThread(true);
-    getMessages(conversationId)
+    getMessages(conversationId, 1)
       .then((res) => {
         setMessages(res.data);
         setActiveConversation(res.conversation);
+        setThreadPage(res.pagination.current_page);
+        setThreadHasMore(res.pagination.current_page < res.pagination.total_pages);
         setConversations((prev) =>
           prev.map((c) => (String(c.id) === String(conversationId) ? { ...c, unread_count: 0 } : c))
         );
+        scrollToBottom();
       })
       .catch(() => navigate("/messages"))
       .finally(() => setLoadingThread(false));
   }, [conversationId, navigate]);
 
-  // React to live inbox events
+  const loadOlder = () => {
+    if (!threadHasMore || loadingOlder) return;
+    setLoadingOlder(true);
+    const container = messagesRef.current;
+    const prevHeight = container?.scrollHeight ?? 0;
+    getMessages(conversationId, threadPage + 1)
+      .then((res) => {
+        setMessages((prev) => [...res.data, ...prev]);
+        setThreadPage(res.pagination.current_page);
+        setThreadHasMore(res.pagination.current_page < res.pagination.total_pages);
+        requestAnimationFrame(() => {
+          if (container) container.scrollTop = container.scrollHeight - prevHeight;
+        });
+      })
+      .catch(() => {})
+      .finally(() => setLoadingOlder(false));
+  };
+
+  const handleThreadScroll = (event) => {
+    if (event.target.scrollTop < 60) loadOlder();
+  };
+
+  // --- Live inbox events (targeted, keeps pagination intact) ---
   useEffect(() => {
     if (!lastEvent) return;
-    fetchConversations();
-    if (lastEvent.type === "message" && String(lastEvent.conversation_id) === String(conversationId)) {
-      setMessages((prev) => appendUnique(prev, lastEvent.message));
-      if (lastEvent.message.sender_id !== user?.id) {
-        markConversationRead(conversationId)
+    const openId = conversationIdRef.current;
+
+    if (lastEvent.type === "read") {
+      setConversations((prev) =>
+        prev.map((c) => (c.id === lastEvent.conversation_id ? { ...c, unread_count: 0 } : c))
+      );
+      return;
+    }
+    if (lastEvent.type !== "message") return;
+
+    const { conversation_id: convId, message } = lastEvent;
+    if (conversationsRef.current.some((c) => c.id === convId)) {
+      setConversations((prev) => upsertConversation(prev, convId, message, openId, user?.id));
+    } else {
+      loadConversations(1).catch(() => {}); // a brand-new conversation surfaced
+    }
+
+    if (String(convId) === String(openId)) {
+      setMessages((prev) => appendUnique(prev, message));
+      scrollToBottom();
+      if (message.sender_id !== user?.id) {
+        markConversationRead(convId)
           .then((res) => setUnreadCount(res.unread_count))
           .catch(() => {});
       }
     }
   }, [lastEvent]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  useEffect(() => {
-    endRef.current?.scrollIntoView({ block: "end" });
-  }, [messages]);
 
   const handleSend = async (event) => {
     event.preventDefault();
@@ -101,8 +198,9 @@ export default function Messages() {
     try {
       const message = await sendMessage(conversationId, text);
       setMessages((prev) => appendUnique(prev, message));
+      setConversations((prev) => upsertConversation(prev, message.conversation_id, message, conversationId, user?.id));
       setBody("");
-      fetchConversations();
+      scrollToBottom();
     } catch {
       // keep the draft so the user can retry
     } finally {
@@ -144,6 +242,7 @@ export default function Messages() {
                 </Link>
               </li>
             ))}
+            {convHasMore && <li ref={listSentinelRef} className="dm__list-sentinel" aria-hidden="true" />}
           </ul>
         )}
       </aside>
@@ -165,7 +264,8 @@ export default function Messages() {
               )}
             </header>
 
-            <div className="dm__messages">
+            <div className="dm__messages" ref={messagesRef} onScroll={handleThreadScroll}>
+              {loadingOlder && <p className="dm__loading">Loading earlier messages…</p>}
               {loadingThread ? (
                 <p className="dm__loading">Loading…</p>
               ) : messages.length === 0 ? (

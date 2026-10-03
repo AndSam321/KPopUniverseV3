@@ -6,6 +6,7 @@ class Conversation < ApplicationRecord
   validate :distinct_participants
 
   scope :for_user, ->(user) { where(user_one: user).or(where(user_two: user)) }
+  scope :with_activity, -> { where.not(last_message_at: nil) }
   scope :recent_first, -> { order(Arel.sql("last_message_at DESC NULLS LAST")) }
 
   def self.between(user_a, user_b)

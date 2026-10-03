@@ -22,6 +22,15 @@ RSpec.describe "Api::V1::Conversations", type: :request do
       expect(json_response["data"].first["other_user"]["username"]).to eq(bob.username)
       expect(json_response["data"].first["last_message"]["body"]).to eq("Hey Alice")
       expect(json_response["unread_count"]).to eq(1)
+      expect(json_response["pagination"]["current_page"]).to eq(1)
+    end
+
+    it "excludes conversations that have no messages yet" do
+      Conversation.between(alice, bob)
+
+      get "/api/v1/conversations", headers: auth_headers(alice)
+
+      expect(json_response["data"]).to be_empty
     end
   end
 
