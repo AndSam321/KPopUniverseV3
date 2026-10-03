@@ -55,7 +55,14 @@ function App() {
             }
           />
           <Route path="/groups" element={<GroupsList />} />
-          <Route path="/comebacks" element={<Comebacks />} />
+          <Route
+            path="/comebacks"
+            element={
+              <PrivateRoute>
+                <Comebacks />
+              </PrivateRoute>
+            }
+          />
           <Route path="/search" element={<SearchResults />} />
           <Route
             path="/groups/:id"

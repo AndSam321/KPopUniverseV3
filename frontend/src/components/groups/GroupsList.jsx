@@ -117,7 +117,7 @@ const GroupsList = () => {
         <button
           type="button"
           className={`explore-tab ${exploreTab === "comebacks" ? "explore-tab--active" : ""}`}
-          onClick={() => setExploreTab("comebacks")}
+          onClick={() => (user ? setExploreTab("comebacks") : navigate("/login"))}
         >
           Comebacks
         </button>
