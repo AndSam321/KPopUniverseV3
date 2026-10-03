@@ -3,7 +3,7 @@ require "json"
 require "cgi"
 
 class ComebackScheduleScraper
-  BASE_URL = "https://www.kpopcomebacks.com"
+  BASE_URL = ENV.fetch("COMEBACK_SCRAPER_BASE_URL", "https://www.kpopcomebacks.com")
   MONTHS_AHEAD = 2
   DEFAULT_REGION = "KR"
 
