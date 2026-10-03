@@ -33,7 +33,36 @@
 }
 
 .comebacks__search {
+  margin-bottom: 16px;
+}
+
+.comebacks__filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
   margin-bottom: 24px;
+}
+
+.comebacks__filter {
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--border-color);
+  background: var(--card-bg);
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.15s ease;
+}
+
+.comebacks__filter:hover {
+  border-color: var(--pastel-sky);
+}
+
+.comebacks__filter.is-active {
+  background: var(--pastel-sky);
+  border-color: transparent;
+  color: var(--pastel-ink);
 }
 
 .comebacks__section {
@@ -281,6 +310,11 @@
   align-items: baseline;
   gap: 8px;
   flex-wrap: wrap;
+}
+
+.cb-row__flag {
+  font-size: 14px;
+  line-height: 1;
 }
 
 .cb-row__artist {

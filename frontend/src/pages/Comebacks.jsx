@@ -15,6 +15,19 @@ const youtubeSearchUrl = (comeback) => {
   return `https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`;
 };
 
+const REGION_FLAG = { KR: "🇰🇷", JP: "🇯🇵", US: "🇺🇸" };
+
+const REGION_FILTERS = [
+  { key: "all", label: "All" },
+  { key: "KR", label: "🇰🇷 Korea" },
+  { key: "JP", label: "🇯🇵 Japan" },
+];
+
+const koreaFirst = (a, b) => {
+  const rank = (c) => (c.region === "KR" ? 0 : 1);
+  return rank(a) - rank(b) || a.comeback_date.localeCompare(b.comeback_date);
+};
+
 const MONTHS = [
   "Jan", "Feb", "Mar", "Apr", "May", "Jun",
   "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
@@ -103,6 +116,11 @@ const ComebackRow = ({ comeback, showCountdown }) => {
     )}
     <span className="cb-row__info">
       <span className="cb-row__line">
+        {comeback.region && comeback.region !== "KR" && (
+          <span className="cb-row__flag" title={comeback.region}>
+            {REGION_FLAG[comeback.region] || "🌐"}
+          </span>
+        )}
         {comeback.group ? (
           <Link to={`/groups/${comeback.group.id}`} className="cb-row__artist cb-row__artist--link">
             {comeback.artist_name}
@@ -158,6 +176,7 @@ export default function Comebacks({ embedded = false }) {
   const [loading, setLoading] = useState(true);
   const [showAll, setShowAll] = useState(false);
   const [activeId, setActiveId] = useState("");
+  const [region, setRegion] = useState("all");
   const [animate] = useState(() => !prefersReducedMotion());
   const contentRef = useRef(null);
 
@@ -177,14 +196,20 @@ export default function Comebacks({ embedded = false }) {
 
   const searching = query.trim() !== "";
   const expanded = showAll || searching;
-  const { thisWeek, nextWeek, later } = bucketUpcoming(upcoming);
+
+  const byRegion = (list) =>
+    region === "all" ? [...list].sort(koreaFirst) : list.filter((c) => c.region === region);
+  const visibleUpcoming = byRegion(upcoming);
+  const visibleRecent = byRegion(recent);
+
+  const { thisWeek, nextWeek, later } = bucketUpcoming(visibleUpcoming);
   const laterCount = later.reduce((sum, group) => sum + group.items.length, 0);
 
   const sections = [];
   if (thisWeek.length) sections.push({ id: "this-week", label: "This week" });
   if (nextWeek.length) sections.push({ id: "next-week", label: "Next week" });
   if (expanded) later.forEach((g) => sections.push({ id: slug(g.label), label: g.label }));
-  if (recent.length) sections.push({ id: "recent", label: "Recent" });
+  if (visibleRecent.length) sections.push({ id: "recent", label: "Recent" });
 
   const sectionKey = sections.map((s) => s.id).join("|");
   const activeIndex = Math.max(0, sections.findIndex((s) => s.id === activeId));
@@ -205,7 +230,7 @@ export default function Comebacks({ embedded = false }) {
     );
     rows.forEach((row) => observer.observe(row));
     return () => observer.disconnect();
-  }, [loading, animate, upcoming, recent, expanded]);
+  }, [loading, animate, upcoming, recent, expanded, region]);
 
   useEffect(() => {
     if (loading || !sectionKey) return;
@@ -256,6 +281,19 @@ export default function Comebacks({ embedded = false }) {
         />
       </div>
 
+      <div className="comebacks__filters">
+        {REGION_FILTERS.map((filter) => (
+          <button
+            key={filter.key}
+            type="button"
+            className={`comebacks__filter ${region === filter.key ? "is-active" : ""}`}
+            onClick={() => setRegion(filter.key)}
+          >
+            {filter.label}
+          </button>
+        ))}
+      </div>
+
       {loading ? (
         <p className="comebacks__status">Loading...</p>
       ) : (
@@ -290,7 +328,7 @@ export default function Comebacks({ embedded = false }) {
           >
             <section className="comebacks__section">
               <h2 className="comebacks__section-title">Upcoming</h2>
-              {upcoming.length === 0 ? (
+              {visibleUpcoming.length === 0 ? (
                 <p className="comebacks__empty">No upcoming comebacks found.</p>
               ) : (
                 <>
@@ -318,11 +356,11 @@ export default function Comebacks({ embedded = false }) {
               )}
             </section>
 
-            {recent.length > 0 && (
+            {visibleRecent.length > 0 && (
               <section id="recent" className="comebacks__section">
                 <h2 className="comebacks__section-title">Recent</h2>
                 <div className="cb-list">
-                  {recent.map((cb) => (
+                  {visibleRecent.map((cb) => (
                     <ComebackRow key={cb.id} comeback={cb} showCountdown={false} />
                   ))}
                 </div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_10_02_031933) do
+ActiveRecord::Schema[8.0].define(version: 2026_10_03_025138) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -67,6 +67,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_10_02_031933) do
     t.string "source_url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "region"
     t.index ["comeback_date", "artist_name", "title"], name: "index_comebacks_on_date_artist_title", unique: true
     t.index ["comeback_date"], name: "index_comebacks_on_comeback_date"
     t.index ["group_id"], name: "index_comebacks_on_group_id"

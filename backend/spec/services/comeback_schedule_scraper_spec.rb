@@ -32,8 +32,8 @@ RSpec.describe ComebackScheduleScraper do
     stub_request(:get, %r{kpopcomebacks\.com/calendar/}).to_return(status: 200, body: sample_html)
   end
 
-  it "creates comebacks from the parsed JSON-LD" do
-    expect { described_class.call }.to change(Comeback, :count).by(1)
+  it "creates a comeback for every parsed release" do
+    expect { described_class.call }.to change(Comeback, :count).by(2)
 
     comeback = Comeback.find_by(title: "Strategy")
     expect(comeback.artist_name).to eq("TWICE")
@@ -42,18 +42,11 @@ RSpec.describe ComebackScheduleScraper do
     expect(comeback.comeback_date.to_s).to eq("2026-11-15")
   end
 
-  it "excludes releases outside the Korean market" do
+  it "stores each release's market region" do
     described_class.call
 
-    expect(Comeback.find_by(artist_name: "tripleS")).to be_nil
-  end
-
-  it "removes a previously stored non-Korean release on the next run" do
-    stale = create(:comeback, artist_name: "tripleS", title: "Welcome to Heaven", comeback_date: "2026-11-20")
-
-    described_class.call
-
-    expect(Comeback.exists?(stale.id)).to be(false)
+    expect(Comeback.find_by(title: "Strategy").region).to eq("KR")
+    expect(Comeback.find_by(title: "Welcome to Heaven").region).to eq("JP")
   end
 
   context "when a release has no matching region article" do
@@ -72,9 +65,9 @@ RSpec.describe ComebackScheduleScraper do
       HTML
     end
 
-    it "keeps it (fails open rather than dropping)" do
+    it "keeps it and defaults the region to Korea" do
       expect { described_class.call }.to change(Comeback, :count).by(1)
-      expect(Comeback.find_by(title: "Strategy")).to be_present
+      expect(Comeback.find_by(title: "Strategy").region).to eq("KR")
     end
   end
 
@@ -90,16 +83,17 @@ RSpec.describe ComebackScheduleScraper do
            "albumReleaseType":"https://schema.org/EPRelease"}}
         ]}
         </script>
-        <article class="cb-card" data-region="KR">
+        <article class="cb-card" data-region="JP">
           <div class="artist">HYOJUNG</div><div class="release">Lost&amp;Found</div>
         </article>
         </body></html>
       HTML
     end
 
-    it "matches the region despite the encoding and keeps the Korean release" do
-      expect { described_class.call }.to change(Comeback, :count).by(1)
-      expect(Comeback.find_by(title: "Lost&Found")).to be_present
+    it "matches the region despite the encoding" do
+      described_class.call
+
+      expect(Comeback.find_by(title: "Lost&Found").region).to eq("JP")
     end
   end
 

@@ -5,7 +5,7 @@ require "cgi"
 class ComebackScheduleScraper
   BASE_URL = "https://www.kpopcomebacks.com"
   MONTHS_AHEAD = 2
-  KEEP_REGION = "KR"
+  DEFAULT_REGION = "KR"
 
   def self.call
     new.call
@@ -79,20 +79,13 @@ class ComebackScheduleScraper
     date = item["datePublished"]
     return false if artist.blank? || title.blank? || date.blank?
 
-    region = region_map[region_key(artist, title)]
-    return drop(date, artist, title) if region && region != KEEP_REGION
-
     record = Comeback.find_or_initialize_by(comeback_date: date, artist_name: artist, title: title)
     record.title_track = item.dig("track", "name")
     record.release_type = release_type(item["albumReleaseType"])
+    record.region = region_map[region_key(artist, title)] || DEFAULT_REGION
     record.source_url = source_url
     record.group = Group.find_by("LOWER(name) = ?", artist.downcase)
     record.save
-  end
-
-  def drop(date, artist, title)
-    Comeback.where(comeback_date: date, artist_name: artist, title: title).delete_all
-    false
   end
 
   def release_type(schema_url)
