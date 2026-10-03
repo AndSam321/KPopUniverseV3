@@ -79,6 +79,16 @@ Rails.application.routes.draw do
           patch :mark_read
         end
       end
+
+      resources :conversations, only: [:index, :create] do
+        collection do
+          get :unread_count
+        end
+        member do
+          post :read
+        end
+        resources :messages, only: [:index, :create]
+      end
     end
   end
 
