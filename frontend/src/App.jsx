@@ -5,6 +5,7 @@ import NavigationProgress from "./components/nav/NavigationProgress.jsx";
 import { AuthProvider } from "./context/AuthContext.jsx";
 import { ThemeProvider } from "./context/ThemeContext.jsx";
 import { NavigationLoadingProvider } from "./context/NavigationLoadingContext.jsx";
+import { MessagesProvider } from "./context/MessagesContext.jsx";
 import GuestRoute from "./components/routes/GuestRoute.jsx";
 import PrivateRoute from "./components/routes/PrivateRoute.jsx";
 
@@ -21,6 +22,7 @@ const PostDetail = React.lazy(() => import("./pages/PostDetail.jsx"));
 const AccountSettings = React.lazy(() => import("./components/settings/AccountSettings.jsx"));
 const NotificationsPage = React.lazy(() => import("./pages/NotificationsPage.jsx"));
 const SearchResults = React.lazy(() => import("./pages/SearchResults.jsx"));
+const Messages = React.lazy(() => import("./pages/Messages.jsx"));
 
 const PageLoader = () => (
   <div className="page-loader">
@@ -33,6 +35,7 @@ function App() {
     <ThemeProvider>
       <NavigationLoadingProvider>
       <AuthProvider>
+        <MessagesProvider>
         <Navbar />
         <NavigationProgress />
         <Suspense fallback={<PageLoader />}>
@@ -129,8 +132,25 @@ function App() {
               </PrivateRoute>
             }
           />
+          <Route
+            path="/messages"
+            element={
+              <PrivateRoute>
+                <Messages />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/messages/:conversationId"
+            element={
+              <PrivateRoute>
+                <Messages />
+              </PrivateRoute>
+            }
+          />
         </Routes>
         </Suspense>
+        </MessagesProvider>
       </AuthProvider>
       </NavigationLoadingProvider>
     </ThemeProvider>

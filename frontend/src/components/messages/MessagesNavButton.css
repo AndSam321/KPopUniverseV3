@@ -1,0 +1,47 @@
+.msg-nav {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.msg-nav:hover {
+  background: rgba(162, 210, 255, 0.18);
+  color: var(--text-primary);
+}
+
+.msg-nav.active {
+  color: var(--pastel-ink);
+}
+
+.msg-nav__badge {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  border-radius: 999px;
+  background: var(--accent-pink);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+:root.dark-mode .msg-nav:hover {
+  background: rgba(159, 160, 255, 0.15);
+}
+
+:root.dark-mode .msg-nav.active {
+  color: #e7e2ff;
+}

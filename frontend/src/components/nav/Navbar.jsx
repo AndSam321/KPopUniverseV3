@@ -12,6 +12,7 @@ import {
 import { useAuth } from "../../context/AuthContext";
 import { logout as logoutApi } from "../../api/authApi";
 import NotificationsDropdown from "../notifications/NotificationsDropdown";
+import MessagesNavButton from "../messages/MessagesNavButton";
 import SearchBar from "../search/SearchBar";
 
 export default function Navbar() {
@@ -137,6 +138,7 @@ export default function Navbar() {
         <div className="kp-nav__right">
           <SearchBar />
 
+          {user && <MessagesNavButton />}
           {user && <NotificationsDropdown />}
 
           {loading ? (

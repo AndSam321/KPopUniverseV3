@@ -258,6 +258,23 @@
   cursor: not-allowed;
 }
 
+.hero-btn--message {
+  background: transparent;
+  color: var(--text-secondary);
+  border-color: var(--border-color);
+}
+
+.hero-btn--message:hover:not(:disabled) {
+  background: rgba(162, 210, 255, 0.18);
+  color: var(--text-primary);
+  border-color: var(--pastel-sky);
+}
+
+.hero-btn--message:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
 .hero-btn--following {
   background: transparent;
   color: var(--text-secondary);

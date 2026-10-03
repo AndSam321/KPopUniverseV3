@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import {
   getMyProfile,
   getUserByUsername,
@@ -19,7 +19,9 @@ import {
   UserCheck,
   Quote,
   CalendarDays,
+  Mail,
 } from "lucide-react";
+import { createConversation } from "../../api/messagesApi";
 import FollowListModal from "./FollowListModal";
 import AvatarCropper from "./AvatarCropper";
 import ProfileToast from "./ProfileToast";
@@ -39,12 +41,25 @@ function Profile() {
   const [saving, setSaving] = useState(false);
   const [followPending, setFollowPending] = useState(false);
   const [followError, setFollowError] = useState("");
+  const [messagePending, setMessagePending] = useState(false);
+  const navigate = useNavigate();
   const [modalTab, setModalTab] = useState(null);
   const [cropSource, setCropSource] = useState(null);
   const [toast, setToast] = useState(null);
   const fileInputRef = useRef(null);
 
   const isOwnProfile = authUser && user && authUser.id === user.id;
+
+  const handleMessage = async () => {
+    if (!user || messagePending) return;
+    setMessagePending(true);
+    try {
+      const conversation = await createConversation(user.id);
+      navigate(`/messages/${conversation.id}`);
+    } catch {
+      setMessagePending(false);
+    }
+  };
 
   const handleFollowToggle = async () => {
     if (!user || followPending) return;
@@ -310,6 +325,14 @@ function Profile() {
                       <UserPlus size={14} strokeWidth={2.5} />
                     )}
                     {user.is_following ? "following" : "follow"}
+                  </button>
+                  <button
+                    className="hero-btn hero-btn--message"
+                    onClick={handleMessage}
+                    disabled={messagePending}
+                  >
+                    <Mail size={14} strokeWidth={2.5} />
+                    message
                   </button>
                   {followError && (
                     <div className="hero-btn__error">{followError}</div>
