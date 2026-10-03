@@ -6,7 +6,8 @@
 
 .comebacks__layout {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 720px);
+  justify-content: center;
   gap: 28px;
 }
 
@@ -15,9 +16,8 @@
 }
 
 @media (min-width: 960px) {
-  .comebacks__layout {
+  .comebacks__layout--rail {
     grid-template-columns: 168px minmax(0, 620px);
-    justify-content: center;
     align-items: start;
   }
 }

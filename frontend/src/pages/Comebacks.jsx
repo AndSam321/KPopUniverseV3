@@ -259,7 +259,7 @@ export default function Comebacks({ embedded = false }) {
       {loading ? (
         <p className="comebacks__status">Loading...</p>
       ) : (
-        <div className="comebacks__layout">
+        <div className={`comebacks__layout ${sections.length > 1 ? "comebacks__layout--rail" : ""}`}>
           {sections.length > 1 && (
             <nav className="comebacks__outline" aria-label="Comeback sections">
               <div className="comebacks__outline-inner">
