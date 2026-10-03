@@ -1,6 +1,6 @@
 import { createConsumer } from "@rails/actioncable";
 
-const CABLE_URL = "ws://localhost:9000/cable";
+const CABLE_URL = import.meta.env.VITE_CABLE_URL || "ws://localhost:9000/cable";
 
 let consumer = null;
 

@@ -10,7 +10,7 @@ class Comment < ApplicationRecord
     attachable.variant :thumb, resize_to_limit: [400, 400]
   end
 
-  GIPHY_URL = %r{\Ahttps://[\w.-]*giphy\.com/}
+  GIPHY_URL = %r{\Ahttps://([\w-]+\.)*giphy\.com/\S*\z}
 
   validates :content, length: {maximum: 5000}
   validates :image_url, format: {with: GIPHY_URL, message: "must be a Giphy URL"}, allow_blank: true

@@ -40,8 +40,6 @@ export default function Register() {
         username,
       });
 
-      console.log("Registered user:", data.user);
-
       // Update auth context with user data
       setUser(data.user);
 

@@ -26,7 +26,6 @@ export default function Login() {
         password,
       });
 
-      console.log("Logged in user:", data.user);
       setUser(data.user);
       navigate("/");
     } catch (err) {
