@@ -65,6 +65,8 @@ production:
   primary: &primary_production
     <<: *default
     url: <%= ENV["DATABASE_URL"] %>
+    # Neon's pooled connection runs PgBouncer in transaction mode.
+    prepared_statements: false
   cache:
     <<: *primary_production
     migrations_paths: db/cache_migrate
