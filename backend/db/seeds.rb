@@ -142,20 +142,20 @@ end
 puts "\nCreating baseline users..."
 
 baseline_users = [
-  { email: "test1@kpop.com", username: "moonlight_mina", bio: "multistan 🌙 ONCE & STAY forever", idol_points: 340, title: "Rising Star" },
-  { email: "test2@kpop.com", username: "biaswrecked_again", bio: "collecting photocards since 2019 📸", idol_points: 120, title: "Rising Star" },
-  { email: "test3@kpop.com", username: "seoul_sonyeondan", bio: "ot7 forever 💜 ARMY", idol_points: 870, title: "Idol" },
-  { email: "dev1@kpop.com", username: "comeback_szn", bio: "always ready for the next comeback", idol_points: 60, title: "Trainee" },
-  { email: "dev2@kpop.com", username: "woozi_vocalline", bio: "CARAT 💎 SVT vocal line enjoyer", idol_points: 210, title: "Rising Star" },
-  { email: "aria@kpop.com", username: "aria_aurora", bio: "aespa's #1 MY ✨ synk dive", idol_points: 45, title: "Trainee" },
-  { email: "noah@kpop.com", username: "newjeans_daily", bio: "bunnies 🐰 Minji bias wrecker", idol_points: 530, title: "Idol" },
-  { email: "kai@kpop.com", username: "danceline_kai", bio: "here for the choreo 🕺 dance practice connoisseur", idol_points: 95, title: "Trainee" },
-  { email: "luna@kpop.com", username: "lunar_eclipse97", bio: "97-liner supremacy | multifandom", idol_points: 160, title: "Rising Star" },
-  { email: "remy@kpop.com", username: "remy_reacts", bio: "hot takes & reaction threads 🎧", idol_points: 25, title: "Trainee" },
-  { email: "jiwon@kpop.com", username: "melon_charts_daily", bio: "i live on the charts 📊 | gg enthusiast", idol_points: 410, title: "Rising Star" },
-  { email: "theo@kpop.com", username: "vocalpositions", bio: "vocal analysis & live stage appreciation", idol_points: 150, title: "Rising Star" },
-  { email: "mimi@kpop.com", username: "fourthgen_itgirl", bio: "4th & 5th gen gg stan 💅", idol_points: 80, title: "Trainee" },
-  { email: "dae@kpop.com", username: "butterfly_93", bio: "been here since 2nd gen, i'm old lol", idol_points: 620, title: "Idol" }
+  { email: "test1@kpop.com", username: "Specific_Banana772", idol_points: 340, title: "Rising Star" },
+  { email: "test2@kpop.com", username: "quietstorm87", idol_points: 120, title: "Rising Star" },
+  { email: "test3@kpop.com", username: "Ok-Dragonfly-3321", idol_points: 870, title: "Idol" },
+  { email: "dev1@kpop.com", username: "mattcanread", idol_points: 60, title: "Trainee" },
+  { email: "dev2@kpop.com", username: "No-Permission4402", idol_points: 210, title: "Rising Star" },
+  { email: "aria@kpop.com", username: "lavenderdusk", idol_points: 45, title: "Trainee" },
+  { email: "noah@kpop.com", username: "throwaway_fan99", idol_points: 530, title: "Idol" },
+  { email: "kai@kpop.com", username: "Cheerful-Yogurt18", idol_points: 95, title: "Trainee" },
+  { email: "luna@kpop.com", username: "kimchi_friedrice", idol_points: 160, title: "Rising Star" },
+  { email: "remy@kpop.com", username: "Aggressive_Toast640", idol_points: 25, title: "Trainee" },
+  { email: "jiwon@kpop.com", username: "notmain_alt", idol_points: 410, title: "Rising Star" },
+  { email: "theo@kpop.com", username: "Puzzled-Meringue221", idol_points: 150, title: "Rising Star" },
+  { email: "mimi@kpop.com", username: "velvet_echoes", idol_points: 80, title: "Trainee" },
+  { email: "dae@kpop.com", username: "danbo9471", idol_points: 620, title: "Idol" }
 ]
 
 baseline_users.each do |user_data|
@@ -165,7 +165,7 @@ baseline_users.each do |user_data|
     user.password_confirmation = "password123"
   end
   user.username = user_data[:username]
-  user.bio = user_data[:bio]
+  user.bio = nil
   user.idol_points = user_data[:idol_points]
   user.title = user_data[:title]
   user.save!
@@ -183,18 +183,18 @@ Post.joins(:user).where(users: {username: seed_usernames}).destroy_all
 # Topics reflect real Oct 2026 happenings for our groups (researched); each post
 # has a unique author.
 sample_posts = [
-  { author: "moonlight_mina", group: "TWICE", title: "TWICE comeback on the 16th!!", caption: "we are so back, a full group cb at last. only a week and a half out — what sound are we expecting this time? praying for a more & more type title", hours_ago: 2 },
-  { author: "woozi_vocalline", group: "SEVENTEEN", title: "JxJ (jeonghan x joshua) debut is coming", caption: "the vocal unit dropping DREAMSCAPE on the 19th… their tones layered together is going to be unreal. so ready for this", hours_ago: 6 },
-  { author: "aria_aurora", group: "aespa", title: "SYNK: COMPLæXITY tour was actually unreal", caption: "caught the LA show, the setlist and production were insane. if you're near oakland on the 6th GO. best tour they've done imo", hours_ago: 11 },
-  { author: "lunar_eclipse97", group: "IVE", title: "IVE 'Looks Can Kill' era incoming", caption: "pre-release on the 19th then the EP on the 26th?? they are not giving us a break and i'm here for it. the title alone is so them", hours_ago: 16 },
-  { author: "fourthgen_itgirl", group: "NMIXX", title: "NMIXX 'Strange Muse' with Birthday Wish", caption: "their title tracks are always so experimental, genuinely never know what we're getting. the 19th cannot come fast enough", hours_ago: 21 },
-  { author: "seoul_sonyeondan", group: "BTS", title: "ARIRANG tour cine fest in theaters oct 24-31", caption: "if you couldn't make the actual tour the cinema broadcast is the next best thing. gonna cry in a theater with other armys lol", hours_ago: 29 },
-  { author: "comeback_szn", group: "Stray Kids", title: "skz japanese comeback nov 25", caption: "another JP release locked in. their japanese title tracks go so hard though. who else is already counting down", hours_ago: 37 },
-  { author: "biaswrecked_again", group: "LE SSERAFIM", title: "le sserafim finally back after 7 months", caption: "the hiatus felt so long. hoping this one leans back into the harder sound. fearnot we survived the drought", hours_ago: 44 },
-  { author: "danceline_kai", group: "ENHYPEN", title: "enhypen comeback confirmed for november", caption: "the choreo teasers alone are going to end me. their nov releases always slap. engene assemble", hours_ago: 52 },
-  { author: "melon_charts_daily", group: "TXT", title: "txt's b-sides are so consistently underrated", caption: "everyone talks about the title tracks but half their albums are b-side gold. put some respect on the deep cuts", hours_ago: 63 },
-  { author: "remy_reacts", group: "(G)I-DLE", title: "soyeon's producing run is genuinely insane", caption: "she writes and produces this much of their catalog and it all slaps? name a more consistent idol-producer, i'll wait", hours_ago: 74 },
-  { author: "vocalpositions", group: "ATEEZ", title: "ateez comeback rumors for q4?", caption: "seeing whispers of a comeback but nothing confirmed yet. their live vocals and stamina doing that choreo is unmatched regardless", hours_ago: 88 }
+  { author: "Specific_Banana772", group: "TWICE", title: "TWICE comeback on the 16th!!", caption: "we are so back, a full group cb at last. only a week and a half out — what sound are we expecting this time? praying for a more & more type title", hours_ago: 2 },
+  { author: "No-Permission4402", group: "SEVENTEEN", title: "JxJ (jeonghan x joshua) debut is coming", caption: "the vocal unit dropping DREAMSCAPE on the 19th… their tones layered together is going to be unreal. so ready for this", hours_ago: 6 },
+  { author: "lavenderdusk", group: "aespa", title: "SYNK: COMPLæXITY tour was actually unreal", caption: "caught the LA show, the setlist and production were insane. if you're near oakland on the 6th GO. best tour they've done imo", hours_ago: 11 },
+  { author: "kimchi_friedrice", group: "IVE", title: "IVE 'Looks Can Kill' era incoming", caption: "pre-release on the 19th then the EP on the 26th?? they are not giving us a break and i'm here for it. the title alone is so them", hours_ago: 16 },
+  { author: "velvet_echoes", group: "NMIXX", title: "NMIXX 'Strange Muse' with Birthday Wish", caption: "their title tracks are always so experimental, genuinely never know what we're getting. the 19th cannot come fast enough", hours_ago: 21 },
+  { author: "Ok-Dragonfly-3321", group: "BTS", title: "ARIRANG tour cine fest in theaters oct 24-31", caption: "if you couldn't make the actual tour the cinema broadcast is the next best thing. gonna cry in a theater with other armys lol", hours_ago: 29 },
+  { author: "mattcanread", group: "Stray Kids", title: "skz japanese comeback nov 25", caption: "another JP release locked in. their japanese title tracks go so hard though. who else is already counting down", hours_ago: 37 },
+  { author: "quietstorm87", group: "LE SSERAFIM", title: "le sserafim finally back after 7 months", caption: "the hiatus felt so long. hoping this one leans back into the harder sound. fearnot we survived the drought", hours_ago: 44 },
+  { author: "Cheerful-Yogurt18", group: "ENHYPEN", title: "enhypen comeback confirmed for november", caption: "the choreo teasers alone are going to end me. their nov releases always slap. engene assemble", hours_ago: 52 },
+  { author: "notmain_alt", group: "TXT", title: "txt's b-sides are so consistently underrated", caption: "everyone talks about the title tracks but half their albums are b-side gold. put some respect on the deep cuts", hours_ago: 63 },
+  { author: "Aggressive_Toast640", group: "(G)I-DLE", title: "soyeon's producing run is genuinely insane", caption: "she writes and produces this much of their catalog and it all slaps? name a more consistent idol-producer, i'll wait", hours_ago: 74 },
+  { author: "Puzzled-Meringue221", group: "ATEEZ", title: "ateez comeback rumors for q4?", caption: "seeing whispers of a comeback but nothing confirmed yet. their live vocals and stamina doing that choreo is unmatched regardless", hours_ago: 88 }
 ]
 
 # Every group needs its official "General" community — users post into these.
