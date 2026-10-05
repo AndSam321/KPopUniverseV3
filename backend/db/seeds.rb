@@ -142,103 +142,60 @@ end
 puts "\nCreating baseline users..."
 
 baseline_users = [
-  {
-    email: "test1@kpop.com",
-    username: "kpop_fan_1",
-    password: "password123",
-    bio: "Just a K-pop enthusiast",
-    title: "Trainee",
-    idol_points: 0
-  },
-  {
-    email: "test2@kpop.com",
-    username: "idol_lover_2",
-    password: "password123",
-    bio: "Momo's biggest fan",
-    title: "Trainee",
-    idol_points: 0
-  },
-  {
-    email: "test3@kpop.com",
-    username: "lightstick_collector",
-    password: "password123",
-    bio: "jungkookie",
-    title: "Trainee",
-    idol_points: 0
-  },
-  {
-    email: "dev1@kpop.com",
-    username: "developer_1",
-    password: "password123",
-    bio: "andrew",
-    title: "Trainee",
-    idol_points: 0
-  },
-  {
-    email: "dev2@kpop.com",
-    username: "developer_2",
-    password: "password123",
-    bio: "kevin",
-    title: "Trainee",
-    idol_points: 0
-  }
+  { email: "test1@kpop.com", username: "moonlight_mina", bio: "multistan 🌙 ONCE & STAY forever", idol_points: 340, title: "Rising Star" },
+  { email: "test2@kpop.com", username: "biaswrecked_again", bio: "collecting photocards since 2019 📸", idol_points: 120, title: "Rising Star" },
+  { email: "test3@kpop.com", username: "seoul_sonyeondan", bio: "ot7 forever 💜 ARMY", idol_points: 870, title: "Idol" },
+  { email: "dev1@kpop.com", username: "comeback_szn", bio: "always ready for the next comeback", idol_points: 60, title: "Trainee" },
+  { email: "dev2@kpop.com", username: "woozi_vocalline", bio: "CARAT 💎 SVT vocal line enjoyer", idol_points: 210, title: "Rising Star" },
+  { email: "aria@kpop.com", username: "aria_aurora", bio: "aespa's #1 MY ✨ synk dive", idol_points: 45, title: "Trainee" },
+  { email: "noah@kpop.com", username: "newjeans_daily", bio: "bunnies 🐰 Minji bias wrecker", idol_points: 530, title: "Idol" },
+  { email: "kai@kpop.com", username: "danceline_kai", bio: "here for the choreo 🕺 dance practice connoisseur", idol_points: 95, title: "Trainee" },
+  { email: "luna@kpop.com", username: "lunar_eclipse97", bio: "97-liner supremacy | multifandom", idol_points: 160, title: "Rising Star" },
+  { email: "remy@kpop.com", username: "remy_reacts", bio: "hot takes & reaction threads 🎧", idol_points: 25, title: "Trainee" }
 ]
 
 baseline_users.each do |user_data|
-  user = User.find_or_create_by!(email: user_data[:email]) do |u|
-    u.username = user_data[:username]
-    u.password = user_data[:password]
-    u.password_confirmation = user_data[:password]
-    u.bio = user_data[:bio]
-    u.title = user_data[:title]
-    u.idol_points = user_data[:idol_points]
+  user = User.find_or_initialize_by(email: user_data[:email])
+  if user.new_record?
+    user.password = "password123"
+    user.password_confirmation = "password123"
   end
-  puts "  Created/Found: #{user.username} (#{user.email})"
+  user.username = user_data[:username]
+  user.bio = user_data[:bio]
+  user.idol_points = user_data[:idol_points]
+  user.title = user_data[:title]
+  user.save!
+  puts "  Upserted: #{user.username} (#{user.email})"
 end
 
 puts "\nCreating sample posts..."
 
+# Remove the earlier generic sample posts so the seeded feed reads realistically.
+OLD_SAMPLE_TITLES = [
+  "BTS just announced their comeback!",
+  "BLACKPINK's new music video is amazing",
+  "Just got into Stray Kids",
+  "NewJeans performance was incredible",
+  "TWICE concert experience",
+  "My favorite K-pop groups",
+  "aespa's concept is so unique",
+  "ITZY's new album thoughts?"
+]
+Post.where(title: OLD_SAMPLE_TITLES).destroy_all
+
 sample_posts = [
-  {
-    title: "BTS just announced their comeback!",
-    caption: "I'm so excited for the new album! Who else is ready for this? 💜",
-    group_names: ["BTS"]
-  },
-  {
-    title: "BLACKPINK's new music video is amazing",
-    caption: "The visuals, the choreography, everything is perfect! 🖤💗",
-    group_names: ["BLACKPINK"]
-  },
-  {
-    title: "Just got into Stray Kids",
-    caption: "Any song recommendations for a new STAY? I've been obsessed with God's Menu!",
-    group_names: ["Stray Kids"]
-  },
-  {
-    title: "NewJeans performance was incredible",
-    caption: "Their stage presence is unmatched! Rookie of the year for sure 🐰",
-    group_names: ["NewJeans"]
-  },
-  {
-    title: "TWICE concert experience",
-    caption: "Just came back from their concert and I'm still crying. Best night of my life! 🍭",
-    group_names: ["TWICE"]
-  },
-  {
-    title: "My favorite K-pop groups",
-    caption: "Can't decide between BTS, SEVENTEEN, and ATEEZ. All three are incredible!",
-    group_names: ["BTS", "SEVENTEEN", "ATEEZ"]
-  },
-  {
-    title: "aespa's concept is so unique",
-    caption: "The whole AI concept and their music style is revolutionary in K-pop 🤖",
-    group_names: ["aespa"]
-  },
-  {
-    title: "ITZY's new album thoughts?",
-    caption: "What's everyone's favorite track? Mine is definitely the title track!",
-    group_names: ["ITZY"]
-  }
+  { author: "seoul_sonyeondan", group: "BTS", title: "Jin's solo era is treating us so well", caption: "the vocals on this title track?? ending me. what's everyone's fav b-side so far 💜" },
+  { author: "comeback_szn", group: "Stray Kids", title: "new STAY here — where do I start?", caption: "just fell down the rabbit hole with God's Menu and Thunderous. drop your must-listen albums 🙏" },
+  { author: "newjeans_daily", group: "NewJeans", title: "the choreo detail in their latest stage", caption: "the formations are insane, been rewatching on loop. rookies of the gen fr 🐰" },
+  { author: "woozi_vocalline", group: "SEVENTEEN", title: "13 members and not one weak link", caption: "self-producing idols stay winning. Woozi really is the backbone of this group 💎" },
+  { author: "aria_aurora", group: "aespa", title: "aespa's KWANGYA lore is actually elite", caption: "the whole universe they built is so detailed. nobody's doing it like them ✨" },
+  { author: "moonlight_mina", group: "TWICE", title: "11 years of TWICE 🥹", caption: "from rookie days to now... the anniversary pop-up looks gorgeous. ONCE forever 🍭" },
+  { author: "biaswrecked_again", group: "LE SSERAFIM", title: "the b-sides on this mini are underrated", caption: "everyone sleeps on the non-title tracks but they go so hard. FEARNOT rise up" },
+  { author: "lunar_eclipse97", group: "IVE", title: "IVE's vocal growth this era is real", caption: "you can actually hear the improvement live. so proud of them, DIVE stand up" },
+  { author: "danceline_kai", group: "ENHYPEN", title: "dance practice >>> the MV sometimes", caption: "the raw dance practice hits different. the synchronization is unreal 🕺" },
+  { author: "remy_reacts", group: "(G)I-DLE", title: "hot take: (G)I-DLE has no skips", caption: "Soyeon producing bangers back to back. fight me in the replies 🎧" },
+  { author: "seoul_sonyeondan", group: "BTS", title: "comeback season predictions?", caption: "manifesting an OT7 comeback soon. what concept are you hoping for next?" },
+  { author: "danceline_kai", group: "ATEEZ", title: "ATEEZ live vocals are no joke", caption: "they perform like it's their last stage every time. ATINY where you at 🔥" }
 ]
 
 # Every group needs its official "General" community — users post into these.
@@ -252,12 +209,14 @@ puts "Ensured General communities (#{Community.where(official: true).count} tota
 users = User.all
 if users.any?
   sample_posts.each do |post_data|
-    group = Group.find_by(name: post_data[:group_names].first)
+    group = Group.find_by(name: post_data[:group])
     community = group&.communities&.find_by(official: true)
     next unless community
 
+    author = User.find_by(username: post_data[:author]) || users.sample
+
     Post.find_or_create_by!(title: post_data[:title]) do |post|
-      post.user = users.sample
+      post.user = author
       post.caption = post_data[:caption]
       post.community = community
     end

@@ -73,12 +73,21 @@ class User < ApplicationRecord
 
   AVATAR_SIZE = 400
 
-  def profile_avatar_url
-    return avatar_url unless avatar.attached?
+  DEFAULT_AVATAR_COUNT = 8
 
-    Rails.application.routes.url_helpers.rails_representation_url(
-      avatar.variant(resize_to_fill: [AVATAR_SIZE, AVATAR_SIZE])
-    )
+  def profile_avatar_url
+    if avatar.attached?
+      return Rails.application.routes.url_helpers.rails_representation_url(
+        avatar.variant(resize_to_fill: [AVATAR_SIZE, AVATAR_SIZE])
+      )
+    end
+
+    avatar_url.presence || default_avatar_url
+  end
+
+  # Deterministic fallback so every user has a branded avatar (frontend-hosted).
+  def default_avatar_url
+    "/avatars/avatar-#{(id || 0) % DEFAULT_AVATAR_COUNT + 1}.png"
   end
 
   def jwt_payload
