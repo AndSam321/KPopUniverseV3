@@ -52,9 +52,7 @@
 }
 
 body, html {
-  height: 100%;
   min-height: 100vh;
-  min-height: 100dvh;
   overflow-x: clip;
   overscroll-behavior-x: none;
   background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-mid) 45%, var(--gradient-end) 100%);
@@ -87,7 +85,6 @@ div { display: block; }
    the page background must live here to cover everything when scrolling. */
 #root {
   min-height: 100vh;
-  min-height: 100dvh;
   overflow-x: clip;
   background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-mid) 45%, var(--gradient-end) 100%);
   background-attachment: fixed;

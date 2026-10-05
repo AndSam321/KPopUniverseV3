@@ -1,7 +1,7 @@
 .dm {
   max-width: 1000px;
   margin: 0 auto;
-  height: calc(100dvh - 72px);
+  height: calc(100vh - 72px);
   display: grid;
   grid-template-columns: 320px 1fr;
   gap: 0;
@@ -442,7 +442,7 @@
     grid-template-columns: 1fr;
     border: none;
     /* top nav (56) + fixed bottom tab bar (64) + safe area */
-    height: calc(100dvh - 56px - 64px - env(safe-area-inset-bottom, 0px));
+    height: calc(100vh - 56px - 64px - env(safe-area-inset-bottom, 0px));
   }
 
   .dm__list {

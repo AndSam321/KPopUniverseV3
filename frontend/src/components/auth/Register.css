@@ -1,6 +1,6 @@
 /* === Full-page layout (no scroll) === */
 .register-page {
-  height: 100dvh;
+  height: 100vh;
   margin: 0;
   padding: 0;
   display: flex;

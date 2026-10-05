@@ -1,6 +1,6 @@
 /* === Full-page layout === */
 .settings-page {
-  min-height: 100dvh;
+  min-height: 100vh;
   margin: 0;
   padding: 32px 16px;
   display: flex;

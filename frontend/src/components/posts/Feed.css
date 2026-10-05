@@ -3,7 +3,6 @@
   margin: 0 auto;
   padding: 2rem 1rem;
   min-height: 100vh;
-  min-height: 100dvh;
   font-family: var(--font-content);
 }
 

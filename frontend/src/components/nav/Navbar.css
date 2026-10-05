@@ -317,19 +317,47 @@
 
   .kp-nav__inner {
     height: 56px;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 0 12px;
   }
 
   .kp-nav__logo-text {
     font-size: 1rem;
   }
 
+  /* Flex row instead of absolute clusters so nothing can overflow the viewport */
+  .kp-nav__left,
+  .kp-nav__right {
+    position: static;
+    transform: none;
+    left: auto;
+    right: auto;
+  }
+
   .kp-nav__left {
-    left: 12px;
+    flex-shrink: 0;
   }
 
   .kp-nav__right {
-    right: 12px;
+    flex: 1;
+    min-width: 0;
+    justify-content: flex-end;
     gap: 8px;
+  }
+
+  .kp-nav__right .kp-search {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .kp-nav__right .kp-search__field {
+    width: 100%;
+  }
+
+  .kp-nav__right .kp-search__input {
+    width: 100%;
+    min-width: 0;
   }
 
   /* Bottom tab bar — native-app style */
