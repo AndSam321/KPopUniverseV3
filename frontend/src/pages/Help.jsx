@@ -46,10 +46,6 @@ const FAQS = [
     q: "How do I message someone?",
     a: "Open a profile and tap Message, or use the compose button in your inbox. Group chats are available between friends (people you follow who follow you back).",
   },
-  {
-    q: "Where do upcoming comebacks come from?",
-    a: "The comeback calendar under Explore is updated automatically from a daily scrape of scheduled K-pop releases.",
-  },
 ];
 
 export default function Help() {
