@@ -10,6 +10,7 @@ import GuestRoute from "./components/routes/GuestRoute.jsx";
 import PrivateRoute from "./components/routes/PrivateRoute.jsx";
 import BetaToast from "./components/common/BetaToast.jsx";
 import ScrollToTop from "./components/common/ScrollToTop.jsx";
+import AddToHomeScreen from "./components/common/AddToHomeScreen.jsx";
 
 const Sandbox = React.lazy(() => import("./playground/Sandbox.jsx"));
 const Register = React.lazy(() => import("./components/auth/Register.jsx"));
@@ -154,6 +155,7 @@ function App() {
         </Routes>
         </Suspense>
         <BetaToast />
+        <AddToHomeScreen />
         </MessagesProvider>
       </AuthProvider>
       </NavigationLoadingProvider>
