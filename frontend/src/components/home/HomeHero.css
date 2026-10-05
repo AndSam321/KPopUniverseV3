@@ -1,0 +1,138 @@
+.home-hero {
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 20px;
+  padding: 28px 28px 30px;
+  border-radius: 22px;
+  background:
+    radial-gradient(120% 140% at 0% 0%, rgba(255, 214, 255, 0.55), transparent 55%),
+    radial-gradient(120% 140% at 100% 0%, rgba(162, 210, 255, 0.5), transparent 55%),
+    var(--card-bg);
+  border: 1px solid rgba(117, 123, 200, 0.18);
+  box-shadow: 0 10px 30px rgba(120, 110, 150, 0.12);
+}
+
+.home-hero__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 11px;
+  border-radius: 999px;
+  background: rgba(117, 123, 200, 0.12);
+  color: var(--accent-link);
+  font-family: var(--font-content);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.home-hero__title {
+  margin: 14px 0 0;
+  font-family: var(--font-display);
+  font-size: 2.4rem;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--pastel-ink);
+}
+
+.home-hero__tagline {
+  margin: 10px 0 0;
+  max-width: 48ch;
+  font-family: var(--font-content);
+  font-size: 1.02rem;
+  line-height: 1.55;
+  color: var(--text-secondary);
+}
+
+.home-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.home-hero__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 22px;
+  border-radius: 999px;
+  font-family: var(--font-content);
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.home-hero__cta--primary {
+  background: var(--gradient-end);
+  color: #fff;
+  box-shadow: 0 6px 16px rgba(117, 123, 200, 0.35);
+}
+
+.home-hero__cta--primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 9px 20px rgba(117, 123, 200, 0.45);
+}
+
+.home-hero__cta--ghost {
+  background: transparent;
+  color: var(--accent-link);
+  border: 1.5px solid rgba(117, 123, 200, 0.4);
+}
+
+.home-hero__cta--ghost:hover {
+  background: rgba(117, 123, 200, 0.08);
+}
+
+:root.dark-mode .home-hero {
+  background:
+    radial-gradient(120% 140% at 0% 0%, rgba(255, 214, 255, 0.12), transparent 55%),
+    radial-gradient(120% 140% at 100% 0%, rgba(162, 210, 255, 0.12), transparent 55%),
+    var(--card-bg);
+  border-color: rgba(159, 160, 255, 0.22);
+}
+
+:root.dark-mode .home-hero__title {
+  color: #efeaff;
+}
+
+:root.dark-mode .home-hero__badge {
+  background: rgba(159, 160, 255, 0.16);
+  color: var(--accent-link);
+}
+
+@media (max-width: 600px) {
+  .home-hero {
+    padding: 22px 18px 24px;
+    border-radius: 18px;
+  }
+
+  .home-hero__title {
+    font-size: 1.95rem;
+  }
+
+  .home-hero__tagline {
+    font-size: 0.95rem;
+  }
+
+  .home-hero__actions {
+    gap: 10px;
+  }
+
+  .home-hero__cta {
+    flex: 1 1 auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-hero__cta {
+    transition: none;
+  }
+
+  .home-hero__cta--primary:hover {
+    transform: none;
+  }
+}

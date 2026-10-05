@@ -8,6 +8,7 @@ import { NavigationLoadingProvider } from "./context/NavigationLoadingContext.js
 import { MessagesProvider } from "./context/MessagesContext.jsx";
 import GuestRoute from "./components/routes/GuestRoute.jsx";
 import PrivateRoute from "./components/routes/PrivateRoute.jsx";
+import BetaToast from "./components/common/BetaToast.jsx";
 
 const Sandbox = React.lazy(() => import("./playground/Sandbox.jsx"));
 const Register = React.lazy(() => import("./components/auth/Register.jsx"));
@@ -150,6 +151,7 @@ function App() {
           />
         </Routes>
         </Suspense>
+        <BetaToast />
         </MessagesProvider>
       </AuthProvider>
       </NavigationLoadingProvider>
