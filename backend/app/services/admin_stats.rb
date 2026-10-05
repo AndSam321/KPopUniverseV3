@@ -6,6 +6,7 @@ class AdminStats
       totals: totals,
       active_users: active_users,
       signups_by_day: series(User),
+      recent_users: recent_users,
       posts_by_day: series(Post),
       top_groups: top_groups,
       top_posters: top_posters
@@ -42,6 +43,18 @@ class AdminStats
     (0...DAYS).map do |offset|
       date = (DAYS - 1 - offset).days.ago.to_date
       {date: date.iso8601, count: counts[date] || 0}
+    end
+  end
+
+  def recent_users
+    User.with_attached_avatar.order(created_at: :desc).limit(8).map do |user|
+      {
+        id: user.id,
+        username: user.username,
+        email: user.email,
+        avatar_url: user.profile_avatar_url,
+        created_at: user.created_at.iso8601
+      }
     end
   end
 

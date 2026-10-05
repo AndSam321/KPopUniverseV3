@@ -71,6 +71,14 @@ export default function AdminAnalytics() {
   const fmtDate = (iso) =>
     new Date(iso).toLocaleDateString(undefined, { month: "short", day: "numeric" });
 
+  const timeAgo = (iso) => {
+    const s = Math.floor((Date.now() - new Date(iso)) / 1000);
+    if (s < 60) return "just now";
+    if (s < 3600) return `${Math.floor(s / 60)}m ago`;
+    if (s < 86400) return `${Math.floor(s / 3600)}h ago`;
+    return `${Math.floor(s / 86400)}d ago`;
+  };
+
   return (
     <div className="admin">
       <header className="admin__header">
@@ -115,6 +123,20 @@ export default function AdminAnalytics() {
             <div className="admin__axis">
               <span>{fmtDate(stats.signups_by_day[0].date)}</span>
               <span>{fmtDate(stats.signups_by_day.at(-1).date)}</span>
+            </div>
+
+            <div className="admin__recent">
+              <div className="admin__recent-title">Newest members</div>
+              {stats.recent_users.map((u) => (
+                <div className="admin__recent-row" key={u.id}>
+                  <img className="admin__recent-avatar" src={u.avatar_url} alt="" />
+                  <div className="admin__recent-info">
+                    <span className="admin__recent-name">{u.username}</span>
+                    <span className="admin__recent-email">{u.email}</span>
+                  </div>
+                  <span className="admin__recent-time">{timeAgo(u.created_at)}</span>
+                </div>
+              ))}
             </div>
           </div>
 
