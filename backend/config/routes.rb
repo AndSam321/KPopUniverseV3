@@ -21,6 +21,7 @@ Rails.application.routes.draw do
       resources :users, only: [:show] do
         collection do
           get :my_profile
+          get :friends
           patch :update_profile
           patch :update_notification_preferences
         end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_10_05_031228) do
+ActiveRecord::Schema[8.0].define(version: 2026_10_05_033458) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -126,12 +126,27 @@ ActiveRecord::Schema[8.0].define(version: 2026_10_05_031228) do
     t.index ["user_id"], name: "index_community_memberships_on_user_id"
   end
 
+  create_table "conversation_participants", force: :cascade do |t|
+    t.bigint "conversation_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "last_read_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["conversation_id", "user_id"], name: "index_conversation_participants_on_conversation_id_and_user_id", unique: true
+    t.index ["conversation_id"], name: "index_conversation_participants_on_conversation_id"
+    t.index ["user_id"], name: "index_conversation_participants_on_user_id"
+  end
+
   create_table "conversations", force: :cascade do |t|
-    t.bigint "user_one_id", null: false
-    t.bigint "user_two_id", null: false
+    t.bigint "user_one_id"
+    t.bigint "user_two_id"
     t.datetime "last_message_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "name"
+    t.boolean "group", default: false, null: false
+    t.bigint "creator_id"
+    t.index ["creator_id"], name: "index_conversations_on_creator_id"
     t.index ["last_message_at"], name: "index_conversations_on_last_message_at"
     t.index ["user_one_id", "user_two_id"], name: "index_conversations_on_user_one_id_and_user_two_id", unique: true
     t.index ["user_one_id"], name: "index_conversations_on_user_one_id"
@@ -315,6 +330,9 @@ ActiveRecord::Schema[8.0].define(version: 2026_10_05_031228) do
   add_foreign_key "communities", "users", column: "creator_id"
   add_foreign_key "community_memberships", "communities"
   add_foreign_key "community_memberships", "users"
+  add_foreign_key "conversation_participants", "conversations"
+  add_foreign_key "conversation_participants", "users"
+  add_foreign_key "conversations", "users", column: "creator_id"
   add_foreign_key "conversations", "users", column: "user_one_id"
   add_foreign_key "conversations", "users", column: "user_two_id"
   add_foreign_key "follows", "users", column: "followed_id"

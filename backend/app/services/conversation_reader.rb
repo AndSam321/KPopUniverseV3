@@ -1,8 +1,10 @@
 class ConversationReader
   def self.call(conversation:, user:)
-    count = conversation.messages.where.not(sender_id: user.id).unread.update_all(read_at: Time.current)
-    broadcast(conversation, user) if count.positive?
-    count
+    return unless conversation.participant?(user)
+
+    had_unread = conversation.unread_count_for(user).positive?
+    conversation.mark_read_for(user)
+    broadcast(conversation, user) if had_unread
   end
 
   def self.broadcast(conversation, user)

@@ -58,6 +58,50 @@ RSpec.describe "Api::V1::Conversations", type: :request do
     end
   end
 
+  describe "POST /api/v1/conversations (group)" do
+    def befriend(user_a, user_b)
+      Follow.create!(follower: user_a, followed: user_b)
+      Follow.create!(follower: user_b, followed: user_a)
+    end
+
+    it "creates a group conversation from friends" do
+      carol = create(:user)
+      befriend(alice, bob)
+      befriend(alice, carol)
+
+      post "/api/v1/conversations",
+        params: {member_ids: [bob.id, carol.id], name: "Besties"}, headers: auth_headers(alice)
+
+      expect(response).to have_http_status(:created)
+      expect(json_response["data"]["group"]).to be(true)
+      expect(json_response["data"]["title"]).to eq("Besties")
+    end
+
+    it "rejects adding a non-friend to a group" do
+      carol = create(:user)
+      befriend(alice, bob) # alice and carol are NOT friends
+
+      post "/api/v1/conversations",
+        params: {member_ids: [bob.id, carol.id]}, headers: auth_headers(alice)
+
+      expect(response).to have_http_status(422)
+    end
+  end
+
+  describe "GET /api/v1/users/friends" do
+    it "returns mutual-follow friends" do
+      friend = create(:user)
+      Follow.create!(follower: alice, followed: friend)
+      Follow.create!(follower: friend, followed: alice)
+      Follow.create!(follower: alice, followed: bob) # one-way, not a friend
+
+      get "/api/v1/users/friends", headers: auth_headers(alice)
+
+      expect(response).to have_http_status(:ok)
+      expect(json_response["data"].map { |u| u["username"] }).to contain_exactly(friend.username)
+    end
+  end
+
   describe "GET /api/v1/conversations/unread_count" do
     it "returns the total unread message count" do
       conversation = Conversation.between(alice, bob)

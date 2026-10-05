@@ -4,12 +4,17 @@ class MessageSerializer
       id: message.id,
       conversation_id: message.conversation_id,
       sender_id: message.sender_id,
+      sender: sender_json(message.sender),
       body: message.body,
       image: image_json(message),
-      read_at: message.read_at,
       created_at: message.created_at
     }
   end
+
+  def self.sender_json(user)
+    {id: user.id, username: user.username, avatar_url: user.profile_avatar_url}
+  end
+  private_class_method :sender_json
 
   def self.image_json(message)
     return {url: message.image_url, thumbnail_url: message.image_url, is_gif: true} if message.image_url.present?

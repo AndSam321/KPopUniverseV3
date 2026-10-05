@@ -16,29 +16,24 @@ class Message < ApplicationRecord
   validate :acceptable_image
 
   scope :chronological, -> { order(:created_at) }
-  scope :unread, -> { where(read_at: nil) }
 
   def gif?
     image_url.present? || (image.attached? && image.content_type == "image/gif")
   end
 
   def self.unread_count_for(user)
-    joins(:conversation)
-      .where("conversations.user_one_id = :id OR conversations.user_two_id = :id", id: user.id)
+    joins(conversation: :conversation_participants)
+      .where(conversation_participants: {user_id: user.id})
       .where.not(sender_id: user.id)
-      .unread
+      .where("messages.created_at > COALESCE(conversation_participants.last_read_at, to_timestamp(0))")
       .count
-  end
-
-  def recipient
-    conversation.other_participant(sender)
   end
 
   private
 
   def sender_is_participant
     return if conversation.blank? || sender_id.nil?
-    return if [conversation.user_one_id, conversation.user_two_id].include?(sender_id)
+    return if conversation.participant?(sender)
 
     errors.add(:sender, "must be a conversation participant")
   end

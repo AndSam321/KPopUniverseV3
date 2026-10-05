@@ -46,23 +46,13 @@ RSpec.describe Message do
     expect(build(:message, conversation:, sender: outsider)).not_to be_valid
   end
 
-  describe "#recipient" do
-    it "is the participant who did not send the message" do
-      conversation = create(:conversation)
-      message = create(:message, conversation:, sender: conversation.user_one)
-
-      expect(message.recipient).to eq(conversation.user_two)
-    end
-  end
-
   describe "scopes" do
-    it "orders chronologically and filters unread" do
+    it "orders chronologically" do
       conversation = create(:conversation)
-      older = create(:message, conversation:, created_at: 1.hour.ago, read_at: Time.current)
-      newer = create(:message, conversation:, created_at: Time.current, read_at: nil)
+      older = create(:message, conversation:, created_at: 1.hour.ago)
+      newer = create(:message, conversation:, created_at: Time.current)
 
       expect(conversation.messages.chronological).to eq([older, newer])
-      expect(conversation.messages.unread).to eq([newer])
     end
   end
 end

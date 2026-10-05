@@ -35,7 +35,13 @@ class User < ApplicationRecord
 
   has_many :conversations_as_one, class_name: "Conversation", foreign_key: :user_one_id, dependent: :destroy
   has_many :conversations_as_two, class_name: "Conversation", foreign_key: :user_two_id, dependent: :destroy
+  has_many :conversation_participants, dependent: :destroy
   has_many :sent_messages, class_name: "Message", foreign_key: :sender_id, dependent: :destroy
+
+  def friends
+    User.where(id: active_follows.select(:followed_id))
+      .where(id: passive_follows.select(:follower_id))
+  end
 
   def following?(user)
     active_follows.exists?(followed_id: user.id)

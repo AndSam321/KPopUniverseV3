@@ -71,4 +71,37 @@ RSpec.describe "Api::V1::Messages", type: :request do
       expect(response).to have_http_status(:not_found)
     end
   end
+
+  describe "group conversations" do
+    let(:carol) { create(:user) }
+    let(:group) { create(:group_conversation, creator: alice, members: [bob, carol]) }
+
+    it "lets a member post and another member read" do
+      post "/api/v1/conversations/#{group.id}/messages",
+        params: {body: "hi all"}, headers: auth_headers(bob)
+      expect(response).to have_http_status(:created)
+
+      get "/api/v1/conversations/#{group.id}/messages", headers: auth_headers(carol)
+      expect(response).to have_http_status(:ok)
+      expect(json_response["data"].last["body"]).to eq("hi all")
+    end
+
+    it "tracks unread per member and clears it on read" do
+      MessageCreation.call(conversation: group, sender: alice, attributes: {body: "hey"})
+      expect(group.unread_count_for(carol)).to eq(1)
+
+      get "/api/v1/conversations/#{group.id}/messages", headers: auth_headers(carol)
+
+      expect(group.reload.unread_count_for(carol)).to eq(0)
+    end
+
+    it "blocks a non-member from posting" do
+      stranger = create(:user)
+
+      post "/api/v1/conversations/#{group.id}/messages",
+        params: {body: "sneak"}, headers: auth_headers(stranger)
+
+      expect(response).to have_http_status(:not_found)
+    end
+  end
 end

@@ -4,7 +4,7 @@ class Api::V1::ConversationsController < Api::V1::BaseController
   def index
     pagy, conversations = pagy(
       Conversation.for_user(current_user).with_activity.recent_first
-        .includes(user_one: {avatar_attachment: :blob}, user_two: {avatar_attachment: :blob}),
+        .includes(participants: {avatar_attachment: :blob}),
       items: 20
     )
     ids = conversations.map(&:id)
@@ -18,6 +18,8 @@ class Api::V1::ConversationsController < Api::V1::BaseController
   end
 
   def create
+    return create_group if params[:member_ids].present?
+
     recipient = User.find(params[:recipient_id])
     if recipient == current_user
       return render json: {status: "error", message: "You cannot message yourself"}, status: :unprocessable_entity
@@ -27,6 +29,13 @@ class Api::V1::ConversationsController < Api::V1::BaseController
     render json: {status: "success", data: ConversationSerializer.call(conversation, current_user)}, status: :created
   rescue ActiveRecord::RecordNotFound
     render json: {status: "error", message: "User not found"}, status: :not_found
+  end
+
+  def create_group
+    conversation = GroupConversationCreation.call(creator: current_user, member_ids: params[:member_ids], name: params[:name])
+    render json: {status: "success", data: ConversationSerializer.call(conversation, current_user)}, status: :created
+  rescue GroupConversationCreation::NotFriends
+    render json: {status: "error", message: "You can only start a group with friends (people who follow you back)"}, status: :unprocessable_entity
   end
 
   def unread_count
@@ -53,12 +62,16 @@ class Api::V1::ConversationsController < Api::V1::BaseController
     @last_messages ||= Message.where(conversation_id: ids)
       .select("DISTINCT ON (conversation_id) *")
       .order("conversation_id, created_at DESC")
+      .includes(sender: {avatar_attachment: :blob})
       .index_by(&:conversation_id)
   end
 
   def unread_counts(ids)
-    @unread_counts ||= Message.where(conversation_id: ids)
-      .where.not(sender_id: current_user.id).unread
+    @unread_counts ||= Message.joins(conversation: :conversation_participants)
+      .where(conversation_participants: {user_id: current_user.id})
+      .where(conversation_id: ids)
+      .where.not(sender_id: current_user.id)
+      .where("messages.created_at > COALESCE(conversation_participants.last_read_at, to_timestamp(0))")
       .group(:conversation_id).count
   end
 end

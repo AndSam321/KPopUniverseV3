@@ -11,11 +11,15 @@ class ConversationSerializer
   end
 
   def call
+    others = @conversation.other_participants(@current_user)
     {
       id: @conversation.id,
+      group: @conversation.group,
+      title: @conversation.title_for(@current_user),
       last_message_at: @conversation.last_message_at,
       unread_count: @unread_count || @conversation.unread_count_for(@current_user),
-      other_user: other_user_json,
+      other_user: @conversation.group ? nil : user_json(others.first),
+      participants: others.map { |participant| user_json(participant) },
       last_message: last_message && MessageSerializer.call(last_message)
     }
   end
@@ -26,8 +30,9 @@ class ConversationSerializer
     @last_message == :unset ? @conversation.messages.chronological.last : @last_message
   end
 
-  def other_user_json
-    other = @conversation.other_participant(@current_user)
-    {id: other.id, username: other.username, avatar_url: other.profile_avatar_url}
+  def user_json(user)
+    return nil unless user
+
+    {id: user.id, username: user.username, avatar_url: user.profile_avatar_url}
   end
 end

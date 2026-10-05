@@ -34,15 +34,24 @@ RSpec.describe Conversation do
   end
 
   describe "#unread_count_for" do
-    it "counts unread messages not sent by the user" do
+    it "counts messages from others after the reader's last_read_at" do
       conversation = create(:conversation)
       reader = conversation.user_one
       writer = conversation.user_two
-      create(:message, conversation:, sender: writer, read_at: nil)
-      create(:message, conversation:, sender: writer, read_at: Time.current)
-      create(:message, conversation:, sender: reader, read_at: nil)
+      create(:message, conversation:, sender: writer, created_at: 1.hour.ago)
+      conversation.mark_read_for(reader)
+      create(:message, conversation:, sender: writer, created_at: 1.hour.from_now)
+      create(:message, conversation:, sender: reader, created_at: 2.hours.from_now)
 
       expect(conversation.unread_count_for(reader)).to eq(1)
+    end
+  end
+
+  describe "#title_for" do
+    it "uses the group name for a group conversation" do
+      group = create(:group_conversation, name: "Stans")
+
+      expect(group.title_for(group.creator)).to eq("Stans")
     end
   end
 

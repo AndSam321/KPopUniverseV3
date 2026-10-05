@@ -19,7 +19,7 @@ class MessageCreation
   private
 
   def broadcast(message)
-    [@conversation.user_one, @conversation.user_two].each do |participant|
+    @conversation.participants.each do |participant|
       InboxChannel.broadcast_to(participant, {
         type: "message",
         conversation_id: @conversation.id,

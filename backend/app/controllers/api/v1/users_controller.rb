@@ -4,6 +4,14 @@ class Api::V1::UsersController < Api::V1::BaseController
   # GET /api/v1/users/:id
   before_action :authenticate_user!
 
+  def friends
+    friends = current_user.friends.includes(avatar_attachment: :blob).order(:username)
+    render json: {
+      status: "success",
+      data: friends.map { |friend| {id: friend.id, username: friend.username, avatar_url: friend.profile_avatar_url} }
+    }
+  end
+
   def my_profile
     user = current_user
     render json: {
