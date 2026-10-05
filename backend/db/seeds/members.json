@@ -1,0 +1,1482 @@
+[
+  {
+    "name": "(G)I-DLE",
+    "members": [
+      {
+        "stage_name": "Jeon Soyeon",
+        "full_name": null,
+        "birth_date": "1998-08-26",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/0226%20%28%EC%97%AC%EC%9E%90%29%EC%95%84%EC%9D%B4%EB%93%A4%20%EC%86%8C%EC%97%B0%20%ED%8F%AC%EC%BB%A4%EC%8A%A4%26%EC%84%B8%EB%A1%9C%EC%BA%A0%2C%202nd%20%EB%AF%B8%EB%8B%88%EC%95%A8%EB%B2%94%20%27I%20made%27%20%EC%87%BC%EC%BC%80%EC%9D%B4%EC%8A%A4%20%ED%8F%AC%ED%86%A0%ED%83%80%EC%9E%84%20%28derived%29.jpg?width=400",
+        "sort_order": 0
+      },
+      {
+        "stage_name": "Shuhua",
+        "full_name": null,
+        "birth_date": "2000-01-06",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/%28G%29I-DLE%27s%20Shuhua%20on%20June%202023%2001.jpg?width=400",
+        "sort_order": 1
+      },
+      {
+        "stage_name": "Song Yuqi",
+        "full_name": null,
+        "birth_date": "1999-09-23",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/20230630%20Song%20Yu-qi.jpg?width=400",
+        "sort_order": 2
+      },
+      {
+        "stage_name": "Cho Mi-yeon",
+        "full_name": null,
+        "birth_date": "1997-01-31",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/%28G%29I-DLE%20Airport%20Departure%202024%20Miyeon%20waving%20hands.png?width=400",
+        "sort_order": 3
+      },
+      {
+        "stage_name": "Minnie",
+        "full_name": null,
+        "birth_date": "1997-10-23",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Minnie%20at%20Owndays%20popup%20in%20Plaza%20Singapura%2001%20-%20RSKY%20-%2020260611.jpg?width=400",
+        "sort_order": 4
+      }
+    ]
+  },
+  {
+    "name": "ATEEZ",
+    "members": [
+      {
+        "stage_name": "Jung Woo-young",
+        "full_name": null,
+        "birth_date": "1999-11-26",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Wooyoung%20%28Ateez%29%20in%20February%202026.png?width=400",
+        "sort_order": 0
+      },
+      {
+        "stage_name": "Kim Hong-joong",
+        "full_name": null,
+        "birth_date": "1998-11-07",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Hongjoong%20in%202024%20%283%29%2004.jpg?width=400",
+        "sort_order": 1
+      },
+      {
+        "stage_name": "Jeong Yun-ho",
+        "full_name": null,
+        "birth_date": "1999-03-23",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Yunho%20in%20June%202025.png?width=400",
+        "sort_order": 2
+      },
+      {
+        "stage_name": "Kang Yeo-sang",
+        "full_name": null,
+        "birth_date": "1999-06-15",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/2025-12-12%20ATEEZ%20at%20Gimpo%20International%20Airport%2005%20%28cropped%29.jpg?width=400",
+        "sort_order": 3
+      },
+      {
+        "stage_name": "Song Min-gi",
+        "full_name": null,
+        "birth_date": "1999-08-09",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Mingi%20%28ATEEZ%29%20in%20October%202024.png?width=400",
+        "sort_order": 4
+      },
+      {
+        "stage_name": "Choi San",
+        "full_name": null,
+        "birth_date": "1999-07-10",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/260228%20ATEEZ%20Choi%20San%20%40%20Dolce%20%26%20Gabbana%20FW%2026.27%20Show%20in%20Milan.jpg?width=400",
+        "sort_order": 5
+      },
+      {
+        "stage_name": "Park Seong-hwa",
+        "full_name": null,
+        "birth_date": "1998-04-03",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/2026-04-02%20Seonghwa%20for%20Marie%20Claire%20Korea%2002%20%28cropped%29.jpg?width=400",
+        "sort_order": 6
+      },
+      {
+        "stage_name": "Choi Jong-ho",
+        "full_name": null,
+        "birth_date": "2000-10-12",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/240803%20Jongho%20%28cropped%29.jpg?width=400",
+        "sort_order": 7
+      }
+    ]
+  },
+  {
+    "name": "BLACKPINK",
+    "members": [
+      {
+        "stage_name": "Jennie",
+        "full_name": null,
+        "birth_date": "1996-01-16",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Jennie%202026%20GDA%201.jpg?width=400",
+        "sort_order": 0
+      },
+      {
+        "stage_name": "Lisa",
+        "full_name": null,
+        "birth_date": "1997-03-27",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/20240314%20Lisa%20Manoban%2007.png?width=400",
+        "sort_order": 1
+      },
+      {
+        "stage_name": "Jisoo",
+        "full_name": null,
+        "birth_date": "1995-01-03",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Jisoo%20at%20Boyfriend%20on%20Demand%20press%20conference%20on%2026022026%20%2812%29.png?width=400",
+        "sort_order": 2
+      },
+      {
+        "stage_name": "Rosé",
+        "full_name": "Park Chae-young",
+        "birth_date": "1997-02-11",
+        "position": null,
+        "photo_url": "https://static.wikia.nocookie.net/kpop/images/8/85/Ros%C3%A9_New_Trick_concept_photo.png/revision/latest?cb=20260917131328",
+        "sort_order": 3
+      }
+    ]
+  },
+  {
+    "name": "BTS",
+    "members": [
+      {
+        "stage_name": "RM",
+        "full_name": "Kim Nam-joon",
+        "birth_date": "1994-09-12",
+        "position": "Leader, Main Rapper",
+        "photo_url": "https://static.wikia.nocookie.net/kpop/images/e/ec/BTS_RM_Arirang_concept_photo_1.png/revision/latest?cb=20260320062404",
+        "sort_order": 0
+      },
+      {
+        "stage_name": "Jin",
+        "full_name": "Kim Seok-jin",
+        "birth_date": "1992-12-04",
+        "position": "Vocalist, Visual",
+        "photo_url": "https://static.wikia.nocookie.net/kpop/images/1/1d/BTS_Jin_Arirang_concept_photo_1.png/revision/latest?cb=20260320060606",
+        "sort_order": 1
+      },
+      {
+        "stage_name": "Suga",
+        "full_name": "Min Yoon-gi",
+        "birth_date": "1993-03-09",
+        "position": "Lead Rapper",
+        "photo_url": "https://static.wikia.nocookie.net/kpop/images/6/69/BTS_Suga_Arirang_concept_photo_1.png/revision/latest?cb=20260320060944",
+        "sort_order": 2
+      },
+      {
+        "stage_name": "j-hope",
+        "full_name": "Jung Ho-seok",
+        "birth_date": "1994-02-18",
+        "position": "Main Dancer, Rapper",
+        "photo_url": "https://static.wikia.nocookie.net/kpop/images/1/19/BTS_J-Hope_Arirang_concept_photo_1.png/revision/latest?cb=20260320061938",
+        "sort_order": 3
+      },
+      {
+        "stage_name": "Jimin",
+        "full_name": "Park Ji-min",
+        "birth_date": "1995-10-13",
+        "position": "Main Dancer, Vocalist",
+        "photo_url": "https://static.wikia.nocookie.net/kpop/images/c/c3/BTS_Jimin_Arirang_concept_photo_1.png/revision/latest?cb=20260320062854",
+        "sort_order": 4
+      },
+      {
+        "stage_name": "V",
+        "full_name": "Kim Tae-hyung",
+        "birth_date": "1995-12-30",
+        "position": "Vocalist, Visual",
+        "photo_url": "https://static.wikia.nocookie.net/kpop/images/b/bc/BTS_V_Arirang_concept_photo_1.png/revision/latest?cb=20260320063508",
+        "sort_order": 5
+      },
+      {
+        "stage_name": "Jungkook",
+        "full_name": "Jeon Jung-kook",
+        "birth_date": "1997-09-01",
+        "position": "Main Vocalist, Maknae",
+        "photo_url": "https://static.wikia.nocookie.net/kpop/images/2/29/BTS_Jung_Kook_Arirang_concept_photo_1.png/revision/latest?cb=20260320064156",
+        "sort_order": 6
+      }
+    ]
+  },
+  {
+    "name": "CORTIS",
+    "members": [
+      {
+        "stage_name": "Martin",
+        "full_name": "Martin Jonathan Edwards",
+        "birth_date": "2008-03-20",
+        "position": "Leader, Rapper, Vocalist",
+        "photo_url": "https://static.wikia.nocookie.net/kpop/images/0/05/CORTIS_Martin_Greengreen_concept_photo_3.webp/revision/latest?cb=20260406121836",
+        "sort_order": 0
+      },
+      {
+        "stage_name": "James",
+        "full_name": "James Chao",
+        "birth_date": "2005-10-14",
+        "position": "Main Dancer, Rapper, Vocalist",
+        "photo_url": "https://static.wikia.nocookie.net/kpop/images/7/7f/CORTIS_James_Greengreen_concept_photo_3.webp/revision/latest?cb=20260406121811",
+        "sort_order": 1
+      },
+      {
+        "stage_name": "Juhoon",
+        "full_name": "Kim Ju-hoon",
+        "birth_date": "2008-01-03",
+        "position": "Vocalist, Rapper, Visual",
+        "photo_url": "https://static.wikia.nocookie.net/kpop/images/7/7a/CORTIS_Juhoon_Greengreen_concept_photo_1.webp/revision/latest?cb=20260406121850",
+        "sort_order": 2
+      },
+      {
+        "stage_name": "Seonghyeon",
+        "full_name": "Eom Seong-hyeon",
+        "birth_date": "2009-01-13",
+        "position": "Vocalist, Dancer",
+        "photo_url": "https://static.wikia.nocookie.net/kpop/images/d/d0/CORTIS_Seonghyeon_Greengreen_concept_photo_3.webp/revision/latest?cb=20260406121836",
+        "sort_order": 3
+      },
+      {
+        "stage_name": "Keonho",
+        "full_name": "An Keon-ho",
+        "birth_date": "2009-02-14",
+        "position": "Vocalist, Dancer, Visual, Maknae",
+        "photo_url": "https://static.wikia.nocookie.net/kpop/images/f/fb/CORTIS_Keonho_Greengreen_concept_photo_1.webp/revision/latest?cb=20260406121837",
+        "sort_order": 4
+      }
+    ]
+  },
+  {
+    "name": "ENHYPEN",
+    "members": [
+      {
+        "stage_name": "Park Sung-hoon",
+        "full_name": null,
+        "birth_date": "2002-12-08",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/240408%20Park%20Sung-hoon%20%282%29%20%28cropped%29.jpg?width=400",
+        "sort_order": 0
+      },
+      {
+        "stage_name": "Jay",
+        "full_name": null,
+        "birth_date": "2002-04-20",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/JAY%20%28ENHYPEN%29%20220624.jpg?width=400",
+        "sort_order": 1
+      },
+      {
+        "stage_name": "Yang Jung-won",
+        "full_name": null,
+        "birth_date": "2004-02-09",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Jungwon%20of%20Enhypen%2C%20October%207%2C%202024.png?width=400",
+        "sort_order": 2
+      },
+      {
+        "stage_name": "Jake Sim",
+        "full_name": null,
+        "birth_date": "2002-11-15",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Sim%20Jae-yun%2C%202022.jpg?width=400",
+        "sort_order": 3
+      },
+      {
+        "stage_name": "Sunoo",
+        "full_name": null,
+        "birth_date": "2003-06-24",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/SUNOO%20%28ENHYPEN%29%20220624.jpg?width=400",
+        "sort_order": 4
+      },
+      {
+        "stage_name": "Ni-Ki",
+        "full_name": null,
+        "birth_date": "2005-12-09",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Ni-Ki%20at%20Love%20Your%20W%20event%20October%2014%202024.png?width=400",
+        "sort_order": 5
+      }
+    ]
+  },
+  {
+    "name": "EXO",
+    "members": [
+      {
+        "stage_name": "Byun Baek-hyun",
+        "full_name": null,
+        "birth_date": "1992-05-06",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/%ED%95%98%EC%96%80%EB%A8%B8%EB%A6%AC%20%EB%B0%B1%ED%98%84%203.jpg?width=400",
+        "sort_order": 0
+      },
+      {
+        "stage_name": "Oh Se-hun",
+        "full_name": null,
+        "birth_date": "1994-04-12",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Sehun%20for%20L%27Officiel%20Korea%202020%2002.png?width=400",
+        "sort_order": 1
+      },
+      {
+        "stage_name": "Suho",
+        "full_name": null,
+        "birth_date": "1991-05-22",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Suho%20at%2024th%20Busan%20Internation%20Film%20Festival%20red%20carpet%20on%20October%203%2C%202019.png?width=400",
+        "sort_order": 2
+      },
+      {
+        "stage_name": "Xiumin",
+        "full_name": null,
+        "birth_date": "1990-03-26",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Xiumin%20at%20Billboard%20K%20POWER%20100%20on%20August%2027%2C%202024.png?width=400",
+        "sort_order": 3
+      },
+      {
+        "stage_name": "Lay",
+        "full_name": null,
+        "birth_date": "1991-10-07",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Lay%20at%20Busan%20International%20Film%20Festival%20Opening%20Ceremony%20on%20October%204%2C%202018%20%282%29%20%28derived%29.jpg?width=400",
+        "sort_order": 4
+      },
+      {
+        "stage_name": "Doh Kyung-soo",
+        "full_name": null,
+        "birth_date": "1993-01-12",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/D.O.%20modeling%20for%20Marie%20Claire%20Korea%2C%20August%20issue%2C%202023%20%283%29.jpg?width=400",
+        "sort_order": 5
+      },
+      {
+        "stage_name": "Chen",
+        "full_name": null,
+        "birth_date": "1992-09-21",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Chen%20at%20Billboard%20K%20POWER%20100%20on%20August%2027%2C%202024.png?width=400",
+        "sort_order": 6
+      }
+    ]
+  },
+  {
+    "name": "GOT7",
+    "members": [
+      {
+        "stage_name": "JAY B",
+        "full_name": null,
+        "birth_date": "1994-01-06",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Siam%20Center%20x%20JAY%20B%20The%202nd%20Exhibition%20in%20Bangkok%20press%20conference%2C%2013%20January%202025%2002%20%28cropped%29.png?width=400",
+        "sort_order": 0
+      },
+      {
+        "stage_name": "Park Jin-young",
+        "full_name": null,
+        "birth_date": "1994-09-22",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Park%20Jin-young%20at%20Brunello%20Cucinelli%20Photocall%2C%2023%20October%202025%2004.jpg?width=400",
+        "sort_order": 1
+      },
+      {
+        "stage_name": "Mark Tuan",
+        "full_name": null,
+        "birth_date": "1993-09-04",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Mark%20Tuan%20at%20ShuDaxia%20event%2C%20March%202%2C%202024%2002.png?width=400",
+        "sort_order": 2
+      },
+      {
+        "stage_name": "BamBam",
+        "full_name": null,
+        "birth_date": "1997-05-02",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/BamBam%20for%20Samsonite%2015th%20anniversary%2C%2010%20March%202025%2006.png?width=400",
+        "sort_order": 3
+      },
+      {
+        "stage_name": "Jackson Wang",
+        "full_name": null,
+        "birth_date": "1994-03-28",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Jackson%20Wang%20interviewed%20for%20POVJOV%2002.png?width=400",
+        "sort_order": 4
+      },
+      {
+        "stage_name": "Choi Young-jae",
+        "full_name": null,
+        "birth_date": "1996-09-17",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Choi%20Youngjae%20at%20Incheon%20airport%2C%2016%20June%202025%2001.png?width=400",
+        "sort_order": 5
+      },
+      {
+        "stage_name": "Kim Yu-gyeom",
+        "full_name": null,
+        "birth_date": "1997-11-17",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Yugyeom%20for%20Marie%20Claire%20Korea%20June%202024%20issue%2001.png?width=400",
+        "sort_order": 6
+      }
+    ]
+  },
+  {
+    "name": "ITZY",
+    "members": [
+      {
+        "stage_name": "Chaeryeong",
+        "full_name": null,
+        "birth_date": "2001-06-05",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/241023%20ITZY%20Chaeryeong.jpg?width=400",
+        "sort_order": 0
+      },
+      {
+        "stage_name": "Shin Yu-na",
+        "full_name": null,
+        "birth_date": "2003-12-09",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Yuna%20at%20Incheon%20Airport%20on%20September%2022%2C%202025.jpg?width=400",
+        "sort_order": 1
+      },
+      {
+        "stage_name": "Shin Ryu-jin",
+        "full_name": null,
+        "birth_date": "2001-04-17",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/ITZY%27s%20Shin%20Ryujin%20in%20August%202023%2001.jpg?width=400",
+        "sort_order": 2
+      },
+      {
+        "stage_name": "Lia",
+        "full_name": null,
+        "birth_date": "2000-07-21",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Lia%20of%20Itzy%2C%20April%2017%2C%202025.png?width=400",
+        "sort_order": 3
+      },
+      {
+        "stage_name": "Hwang Ye-ji",
+        "full_name": null,
+        "birth_date": "2000-05-26",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Yeji%20at%20Tommy%20Hilfiger%20PhotoCall%20on%20October%2028%2C%202025.png?width=400",
+        "sort_order": 4
+      }
+    ]
+  },
+  {
+    "name": "IVE",
+    "members": [
+      {
+        "stage_name": "An Yu-jin",
+        "full_name": null,
+        "birth_date": "2003-09-01",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/181029%20IZ%2AONE%20Yujin%2002.png?width=400",
+        "sort_order": 0
+      },
+      {
+        "stage_name": "Jang Won-young",
+        "full_name": null,
+        "birth_date": "2004-08-31",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/051226%20Jang%20Won-young%20airport%20departure%20%282%29.jpg?width=400",
+        "sort_order": 1
+      },
+      {
+        "stage_name": "Gaeul",
+        "full_name": null,
+        "birth_date": "2002-09-24",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Ive%20Gaeul%20at%20Seoul%20Fashion%20Week%2C%201%20September%202025%2003%20%28cropped%29.png?width=400",
+        "sort_order": 2
+      },
+      {
+        "stage_name": "Liz",
+        "full_name": null,
+        "birth_date": "2004-11-21",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/260719%20LIZ%20%28Kim%20Jiwon%29.png?width=400",
+        "sort_order": 3
+      },
+      {
+        "stage_name": "Rei",
+        "full_name": null,
+        "birth_date": "2004-02-03",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Rei%20for%20Longines%2C%20February%202025%2001.png?width=400",
+        "sort_order": 5
+      },
+      {
+        "stage_name": "Leeseo",
+        "full_name": null,
+        "birth_date": "2007-02-21",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Leeseo%20of%20Ive%2C%20March%2019%2C%202026%20%283%29.png?width=400",
+        "sort_order": 6
+      }
+    ]
+  },
+  {
+    "name": "KATSEYE",
+    "members": [
+      {
+        "stage_name": "Manon Bannerman",
+        "full_name": null,
+        "birth_date": "2002-06-26",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Manon%20240913.jpg?width=400",
+        "sort_order": 0
+      },
+      {
+        "stage_name": "Sophia Laforteza",
+        "full_name": null,
+        "birth_date": "2002-12-31",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Sophia%20Katseye.jpg?width=400",
+        "sort_order": 1
+      },
+      {
+        "stage_name": "Daniela Avanzini",
+        "full_name": null,
+        "birth_date": "2004-07-01",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Daniela%20%28Katseye%29%20Music%20Bank%202024%204.jpg?width=400",
+        "sort_order": 2
+      },
+      {
+        "stage_name": "Lara Raj",
+        "full_name": null,
+        "birth_date": "2005-11-03",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Lara%20Raj%20240913%201.jpg?width=400",
+        "sort_order": 3
+      },
+      {
+        "stage_name": "Megan Skiendiel",
+        "full_name": null,
+        "birth_date": "2006-02-10",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Megan%20%28Katseye%29%20Music%20Bank%202024%202.jpg?width=400",
+        "sort_order": 4
+      },
+      {
+        "stage_name": "Yoonchae",
+        "full_name": null,
+        "birth_date": "2007-12-06",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Katseye%20in%20Seattle%20-%20KATSEYE%20%2854975981191%29%20%28Yoonchae%29.jpg?width=400",
+        "sort_order": 6
+      }
+    ]
+  },
+  {
+    "name": "Kep1er",
+    "members": [
+      {
+        "stage_name": "Choi Yu-jin",
+        "full_name": null,
+        "birth_date": "1996-08-12",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/160903%20CLC%20Choi%20Yujin%20Asia%20Music%20Stage.jpg?width=400",
+        "sort_order": 0
+      },
+      {
+        "stage_name": "Shen Xiaoting",
+        "full_name": null,
+        "birth_date": "1999-11-12",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Xiaoting%20220703.jpg?width=400",
+        "sort_order": 1
+      },
+      {
+        "stage_name": "Kim Chae-hyun",
+        "full_name": null,
+        "birth_date": "2002-04-26",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/%EA%B9%80%EC%B1%84%ED%98%84%20Kim%20Chae%20Hyun%20Doublast%20showcase.png?width=400",
+        "sort_order": 2
+      },
+      {
+        "stage_name": "Hikaru Ezaki",
+        "full_name": null,
+        "birth_date": "2004-03-12",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/%EC%97%90%EC%9E%90%ED%82%A4%20%ED%9E%88%EC%B9%B4%EB%A3%A8%20Ezaki%20Hikaru%20Doublast%20showcase.png?width=400",
+        "sort_order": 3
+      },
+      {
+        "stage_name": "Huening Bahiyyih",
+        "full_name": null,
+        "birth_date": "2004-07-27",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Huening%20Bahiyyih%20230208.jpg?width=400",
+        "sort_order": 4
+      },
+      {
+        "stage_name": "Kim Dayeon",
+        "full_name": null,
+        "birth_date": "2003-03-02",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/%EA%B9%80%EB%8B%A4%EC%97%B0%20Kim%20Da%20Yeon%20Doublast%20showcase.png?width=400",
+        "sort_order": 5
+      },
+      {
+        "stage_name": "Seo Young-eun",
+        "full_name": null,
+        "birth_date": "2004-12-27",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/%EC%84%9C%EC%98%81%EC%9D%80%20Seo%20Young%20Eun%20Doublast%20showcase.png?width=400",
+        "sort_order": 6
+      }
+    ]
+  },
+  {
+    "name": "LE SSERAFIM",
+    "members": [
+      {
+        "stage_name": "Sakura Miyawaki",
+        "full_name": null,
+        "birth_date": "1998-03-19",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/20241018%20Le%20Sserafim%27s%20Sakura%20Miyawaki%2003.jpg?width=400",
+        "sort_order": 0
+      },
+      {
+        "stage_name": "Kim Chaewon",
+        "full_name": null,
+        "birth_date": "2000-08-01",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Easy%20Crazy%20Hot%20Tour%20in%20Seattle%20-%20le%20sserafim%20%2854797154470%29.jpg?width=400",
+        "sort_order": 1
+      },
+      {
+        "stage_name": "Huh Yun-jin",
+        "full_name": null,
+        "birth_date": "2001-10-08",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/260110%20Le%20Sserafim%27s%20Huh%20Yunjin%20at%20GDA%202026%2001.jpg?width=400",
+        "sort_order": 2
+      },
+      {
+        "stage_name": "Hong Eun-chae",
+        "full_name": null,
+        "birth_date": "2006-11-10",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/221013%20Hong%20Eun%20Chae%20%28LE%20SSERAFIM%29%20Airport%20Departure.jpg?width=400",
+        "sort_order": 3
+      },
+      {
+        "stage_name": "Kazuha Nakamura",
+        "full_name": null,
+        "birth_date": "2003-08-09",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Easy%20Crazy%20Hot%20Tour%20in%20Seattle%20-%20le%20sserafim%20%2854797069863%29.jpg?width=400",
+        "sort_order": 4
+      }
+    ]
+  },
+  {
+    "name": "MAMAMOO",
+    "members": [
+      {
+        "stage_name": "Moonbyul",
+        "full_name": null,
+        "birth_date": "1992-12-22",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Mamamoo%20Moonbyul%20240324.jpg?width=400",
+        "sort_order": 0
+      },
+      {
+        "stage_name": "Solar",
+        "full_name": null,
+        "birth_date": "1991-02-21",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Solar%20Mamamoo%204.jpg?width=400",
+        "sort_order": 1
+      },
+      {
+        "stage_name": "Hwasa",
+        "full_name": null,
+        "birth_date": "1995-07-23",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Hwasa%20in%20January%202026.png?width=400",
+        "sort_order": 2
+      },
+      {
+        "stage_name": "Wheein",
+        "full_name": null,
+        "birth_date": "1995-04-17",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Wheein%20in%202022.jpg?width=400",
+        "sort_order": 3
+      }
+    ]
+  },
+  {
+    "name": "Monsta X",
+    "members": [
+      {
+        "stage_name": "Lee Jooheon",
+        "full_name": null,
+        "birth_date": "1994-10-06",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/171104%20%EC%A3%BC%ED%97%8C%2002.jpg?width=400",
+        "sort_order": 0
+      },
+      {
+        "stage_name": "Shownu",
+        "full_name": null,
+        "birth_date": "1992-06-18",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Shownu%20at%20Old%20School%20Public%20Broadcasting%20in%20October%202016.jpg?width=400",
+        "sort_order": 1
+      },
+      {
+        "stage_name": "Kihyun",
+        "full_name": null,
+        "birth_date": "1993-11-22",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/190424%20Kihyun%20The%20Fact%20Music%20Awards%20%283%29%20%28derived%29.jpg?width=400",
+        "sort_order": 2
+      },
+      {
+        "stage_name": "I.M",
+        "full_name": null,
+        "birth_date": "1996-01-26",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/I.M%20at%20Old%20School%20Public%20Broadcasting%20in%20October%202016%2002.jpg?width=400",
+        "sort_order": 3
+      },
+      {
+        "stage_name": "Hyung-won",
+        "full_name": null,
+        "birth_date": "1994-01-15",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/2025-05-28%20Hyungwon%20at%20Gimpo%20International%20Airport%2002%20%28cropped%29.jpg?width=400",
+        "sort_order": 4
+      },
+      {
+        "stage_name": "Wonho",
+        "full_name": null,
+        "birth_date": "1993-03-01",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Wonho%20at%20Old%20School%20Public%20Broadcasting%20in%20October%202016%2001.jpg?width=400",
+        "sort_order": 5
+      },
+      {
+        "stage_name": "Minhyuk",
+        "full_name": null,
+        "birth_date": "1993-11-03",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Lee%20Min-hyuk%20at%20Old%20School%20Public%20Broadcasting%20in%20October%202016.jpg?width=400",
+        "sort_order": 6
+      }
+    ]
+  },
+  {
+    "name": "NCT",
+    "members": [
+      {
+        "stage_name": "Haechan",
+        "full_name": null,
+        "birth_date": "2000-06-06",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/20231006%20Haechan%20%28NCT%29.jpg?width=400",
+        "sort_order": 0
+      },
+      {
+        "stage_name": "Yuta Nakamoto",
+        "full_name": null,
+        "birth_date": "1995-10-26",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/20231006%20Yuta%20%28NCT%29.jpg?width=400",
+        "sort_order": 1
+      },
+      {
+        "stage_name": "Jaehyun",
+        "full_name": null,
+        "birth_date": "1997-02-14",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/20231006%20Jaehyun%20%28NCT%29.jpg?width=400",
+        "sort_order": 2
+      },
+      {
+        "stage_name": "Ten",
+        "full_name": null,
+        "birth_date": "1996-02-27",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Ten%20Lee%20during%20fanmeeting%20in%20December%202019%2001.jpg?width=400",
+        "sort_order": 3
+      },
+      {
+        "stage_name": "Lee Tae-yong",
+        "full_name": null,
+        "birth_date": "1995-07-01",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/20231006%20Taeyong%20%28NCT%29.jpg?width=400",
+        "sort_order": 4
+      },
+      {
+        "stage_name": "Mark Lee",
+        "full_name": null,
+        "birth_date": "1999-08-02",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/20231006%20Mark%20%28NCT%29.jpg?width=400",
+        "sort_order": 6
+      },
+      {
+        "stage_name": "Kim Doyoung",
+        "full_name": null,
+        "birth_date": "1996-02-01",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/20231006%20Doyoung%20%28NCT%29.jpg?width=400",
+        "sort_order": 7
+      },
+      {
+        "stage_name": "Na Jaemin",
+        "full_name": null,
+        "birth_date": "2000-08-13",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Na%20Jae-min%20the%2025th%20DREAM%20CONCERT.png?width=400",
+        "sort_order": 8
+      },
+      {
+        "stage_name": "Park Ji-sung",
+        "full_name": null,
+        "birth_date": "2002-02-05",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Park%20Ji-sung%20at%2024th%20Dream%20Concert%2002.png?width=400",
+        "sort_order": 9
+      },
+      {
+        "stage_name": "Moon Tae-il",
+        "full_name": null,
+        "birth_date": "1994-06-14",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Moon%20Tae-il%20going%20to%20a%20Music%20Bank%20recording%20in%20March%202018.png?width=400",
+        "sort_order": 10
+      },
+      {
+        "stage_name": "Lee Je-no",
+        "full_name": null,
+        "birth_date": "2000-04-23",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Lee%20Je-no%20at%20Dream%20Concert%202017.png?width=400",
+        "sort_order": 11
+      },
+      {
+        "stage_name": "Zhong Chenle",
+        "full_name": null,
+        "birth_date": "2001-11-22",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Zhong%20Chenle%20going%20to%20a%20Music%20Bank%20recording%20in%20April%202018%2002.png?width=400",
+        "sort_order": 13
+      },
+      {
+        "stage_name": "Johnny Suh",
+        "full_name": null,
+        "birth_date": "1995-02-09",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Johnny%20Seo%20going%20to%20a%20Music%20Bank%20recording%20in%20March%202018%2002.png?width=400",
+        "sort_order": 15
+      },
+      {
+        "stage_name": "Dong Sicheng",
+        "full_name": null,
+        "birth_date": "1997-10-28",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Winwin%20going%20to%20a%20Music%20Bank%20recording%20in%20March%202018%2002.png?width=400",
+        "sort_order": 16
+      },
+      {
+        "stage_name": "Renjun Huang",
+        "full_name": null,
+        "birth_date": "2000-03-23",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/20230815%20Huang%20Ren-jun.jpg?width=400",
+        "sort_order": 17
+      },
+      {
+        "stage_name": "Qian Kun",
+        "full_name": null,
+        "birth_date": "1996-01-01",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Qian%20Kun%20during%20fanmeeting%20in%20December%202019%2003.jpg?width=400",
+        "sort_order": 18
+      },
+      {
+        "stage_name": "Kim Jungwoo",
+        "full_name": null,
+        "birth_date": "1998-02-19",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/20231006%20Jungwoo%20%28NCT%29.jpg?width=400",
+        "sort_order": 19
+      },
+      {
+        "stage_name": "Wong Kunhang",
+        "full_name": null,
+        "birth_date": "1999-09-28",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Hendery%20Wong%20at%20Incheon%20International%20Airport%2C%20South%20Korea%2C%20May%202019%2001.png?width=400",
+        "sort_order": 20
+      },
+      {
+        "stage_name": "Xiao Dejun",
+        "full_name": null,
+        "birth_date": "1999-08-08",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Xiaojun%20at%20Gimpo%20Airport3.png?width=400",
+        "sort_order": 21
+      },
+      {
+        "stage_name": "Liu Yangyang",
+        "full_name": null,
+        "birth_date": "2000-10-10",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Liu%20Yangyang%20during%20fanmeeting%20in%20December%202019%2001.jpg?width=400",
+        "sort_order": 22
+      },
+      {
+        "stage_name": "Oh Sion",
+        "full_name": null,
+        "birth_date": "2002-05-11",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Oh%20Sion%20Music%20Core.png?width=400",
+        "sort_order": 23
+      },
+      {
+        "stage_name": "Tokuno Yushi",
+        "full_name": null,
+        "birth_date": "2004-04-05",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Tokuno%20Yushi%20Music%20Core.png?width=400",
+        "sort_order": 24
+      },
+      {
+        "stage_name": "Maeda Riku",
+        "full_name": null,
+        "birth_date": "2003-06-28",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Maeda%20Riku%20Music%20Core.png?width=400",
+        "sort_order": 25
+      },
+      {
+        "stage_name": "Kim Daeyoung",
+        "full_name": null,
+        "birth_date": "2005-06-21",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/NCT%20Jaehee%20Music%20Core.png?width=400",
+        "sort_order": 26
+      },
+      {
+        "stage_name": "Sakuya Fujinaga",
+        "full_name": null,
+        "birth_date": "2007-11-18",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Fujinaga%20Sakuya%20Music%20Core.png?width=400",
+        "sort_order": 27
+      },
+      {
+        "stage_name": "Hirose Ryo",
+        "full_name": null,
+        "birth_date": "2007-08-04",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Hirose%20Ryo%20Music%20Core.png?width=400",
+        "sort_order": 28
+      }
+    ]
+  },
+  {
+    "name": "NMIXX",
+    "members": [
+      {
+        "stage_name": "Lily",
+        "full_name": null,
+        "birth_date": "2002-10-17",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/NMIXX%27s%20Lily%202023.png?width=400",
+        "sort_order": 0
+      },
+      {
+        "stage_name": "Sullyoon",
+        "full_name": null,
+        "birth_date": "2004-01-26",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Sullyoon%20%28%EC%84%A4%EC%9C%A4%29%202024%2006.jpg?width=400",
+        "sort_order": 1
+      },
+      {
+        "stage_name": "Bae",
+        "full_name": null,
+        "birth_date": "2004-12-28",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/221013%20Bae%20%28NMIXX%29%20Airport%20Departure.jpg?width=400",
+        "sort_order": 2
+      },
+      {
+        "stage_name": "Jiwoo",
+        "full_name": null,
+        "birth_date": "2005-04-13",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Nmixx%27s%20Jiwoo%20in%20April%202023.jpg?width=400",
+        "sort_order": 3
+      },
+      {
+        "stage_name": "Kyujin",
+        "full_name": null,
+        "birth_date": "2006-05-26",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/221013%20Kyujin%20%28NMIXX%29%20Airport%20Departure.jpg?width=400",
+        "sort_order": 4
+      },
+      {
+        "stage_name": "Haewon",
+        "full_name": null,
+        "birth_date": "2003-02-25",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/221013%20Haewon%20%28NMIXX%29%20Airport%20Departure.jpg?width=400",
+        "sort_order": 5
+      }
+    ]
+  },
+  {
+    "name": "NewJeans",
+    "members": [
+      {
+        "stage_name": "Minji",
+        "full_name": "Kim Min-ji",
+        "birth_date": "2004-05-07",
+        "position": "Leader",
+        "photo_url": "https://static.wikia.nocookie.net/kpop/images/2/2f/NewJeans_Minji_2026_Summer_of_NewJeans_concept_photo_2.png/revision/latest?cb=20260721155024",
+        "sort_order": 0
+      },
+      {
+        "stage_name": "Hanni",
+        "full_name": "Pham Ngoc Han",
+        "birth_date": "2004-10-06",
+        "position": "Vocalist",
+        "photo_url": "https://static.wikia.nocookie.net/kpop/images/4/45/NewJeans_Hanni_2026_Summer_of_NewJeans_concept_photo_3.png/revision/latest?cb=20260721160534",
+        "sort_order": 1
+      },
+      {
+        "stage_name": "Danielle",
+        "full_name": "Danielle Marsh",
+        "birth_date": "2005-04-11",
+        "position": "Vocalist",
+        "photo_url": "https://static.wikia.nocookie.net/kpop/images/0/0c/NJZ_Danielle_profile_photo_February_2025_%281%29.png/revision/latest?cb=20250207224004",
+        "sort_order": 2
+      },
+      {
+        "stage_name": "Haerin",
+        "full_name": "Kang Hae-rin",
+        "birth_date": "2006-05-15",
+        "position": "Vocalist",
+        "photo_url": "https://static.wikia.nocookie.net/kpop/images/9/9c/NewJeans_Haerin_2026_Summer_of_NewJeans_concept_photo_1.png/revision/latest?cb=20260721192411",
+        "sort_order": 3
+      },
+      {
+        "stage_name": "Hyein",
+        "full_name": "Lee Hye-in",
+        "birth_date": "2008-04-21",
+        "position": "Maknae",
+        "photo_url": "https://static.wikia.nocookie.net/kpop/images/b/b9/NewJeans_Hyein_2026_Summer_of_NewJeans_concept_photo_6.png/revision/latest?cb=20260721195827",
+        "sort_order": 4
+      }
+    ]
+  },
+  {
+    "name": "Red Velvet",
+    "members": [
+      {
+        "stage_name": "Irene",
+        "full_name": null,
+        "birth_date": "1991-03-29",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Irene%20Bae%20at%20GMP-KIX%20Airport%20on%20January%2022%2C%202020.png?width=400",
+        "sort_order": 0
+      },
+      {
+        "stage_name": "Kang Seul-gi",
+        "full_name": null,
+        "birth_date": "1994-02-10",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Kang%20Seul-gi%20at%20Coca-Cola%20Event%20on%20January%2018%2C%202020%2003.jpg?width=400",
+        "sort_order": 1
+      },
+      {
+        "stage_name": "Wendy",
+        "full_name": null,
+        "birth_date": "1994-02-21",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Wendy%20Son%20at%20Dream%20Concert%20on%20May%2012%2C%202018.jpg?width=400",
+        "sort_order": 2
+      },
+      {
+        "stage_name": "Joy",
+        "full_name": null,
+        "birth_date": "1996-09-03",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Joy%20Park%20at%20INK%20Concert%20in%20September%2001%2C%202018%20%288%29.jpg?width=400",
+        "sort_order": 3
+      },
+      {
+        "stage_name": "Yeri",
+        "full_name": null,
+        "birth_date": "1999-03-05",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/240511%20Red%20Velvet%20Yeri.jpg?width=400",
+        "sort_order": 4
+      }
+    ]
+  },
+  {
+    "name": "SEVENTEEN",
+    "members": [
+      {
+        "stage_name": "Dino",
+        "full_name": null,
+        "birth_date": "1999-02-11",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Dino%20Right%20Here%20241210.jpg?width=400",
+        "sort_order": 0
+      },
+      {
+        "stage_name": "Wen Junhui",
+        "full_name": null,
+        "birth_date": "1996-06-10",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Jun%20Follow%20240330%202.jpg?width=400",
+        "sort_order": 1
+      },
+      {
+        "stage_name": "Jeon Won-woo",
+        "full_name": null,
+        "birth_date": "1996-07-17",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Wonwoo%20Follow%20240330.jpg?width=400",
+        "sort_order": 2
+      },
+      {
+        "stage_name": "Lee Seok-min",
+        "full_name": null,
+        "birth_date": "1997-02-18",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/DK%20Follow%20240330.jpg?width=400",
+        "sort_order": 3
+      },
+      {
+        "stage_name": "Xu Minghao",
+        "full_name": null,
+        "birth_date": "1997-11-07",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/The8%20231118.png?width=400",
+        "sort_order": 4
+      },
+      {
+        "stage_name": "Kim Min-gyu",
+        "full_name": null,
+        "birth_date": "1997-04-06",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Mingyu%20Bvlgari%20240314.png?width=400",
+        "sort_order": 5
+      },
+      {
+        "stage_name": "Vernon Chwe",
+        "full_name": null,
+        "birth_date": "1998-02-18",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Vernon%20Follow%20240330%202.jpg?width=400",
+        "sort_order": 6
+      },
+      {
+        "stage_name": "Boo Seung-kwan",
+        "full_name": null,
+        "birth_date": "1998-01-16",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Seungkwan%20Caratland%202025.jpg?width=400",
+        "sort_order": 7
+      },
+      {
+        "stage_name": "Choi Seung-cheol",
+        "full_name": null,
+        "birth_date": "1995-08-08",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Glasto24%2028%20300624%20%2872%20of%20545%29%20%2853838093145%29%20%28cropped%29.jpg?width=400",
+        "sort_order": 8
+      },
+      {
+        "stage_name": "Woozi",
+        "full_name": null,
+        "birth_date": "1996-11-22",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Glasto24%2028%20300624%20%2841%20of%20545%29%20%2853837907513%29%20%28cropped%29.jpg?width=400",
+        "sort_order": 9
+      },
+      {
+        "stage_name": "Joshua Hong",
+        "full_name": null,
+        "birth_date": "1995-12-30",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Joshua%20Caratland%202025.jpg?width=400",
+        "sort_order": 10
+      },
+      {
+        "stage_name": "Hoshi",
+        "full_name": null,
+        "birth_date": "1996-06-15",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/240415%20Hoshi.jpg?width=400",
+        "sort_order": 11
+      },
+      {
+        "stage_name": "Yoon Jeong-han",
+        "full_name": null,
+        "birth_date": "1995-10-04",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Jeonghan%20Follow%20240330.jpg?width=400",
+        "sort_order": 12
+      }
+    ]
+  },
+  {
+    "name": "Stray Kids",
+    "members": [
+      {
+        "stage_name": "Hyunjin",
+        "full_name": null,
+        "birth_date": "2000-03-20",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Hyunjin%20of%20Stray%20Kids%2C%20September%2024%2C%202025.png?width=400",
+        "sort_order": 0
+      },
+      {
+        "stage_name": "Lee Know",
+        "full_name": null,
+        "birth_date": "1998-10-25",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Lee%20Know%20at%20the%20Incheon%20Airport%2C%20February%2025%2C%202026%20%284%29.png?width=400",
+        "sort_order": 1
+      },
+      {
+        "stage_name": "Bang Chan",
+        "full_name": null,
+        "birth_date": "1997-10-03",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Bang%20Chan%20of%20Stray%20Kids%2C%20February%2023%2C%202026%20%281%29.png?width=400",
+        "sort_order": 2
+      },
+      {
+        "stage_name": "I.N",
+        "full_name": null,
+        "birth_date": "2001-02-08",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/I.N%20of%20Stray%20Kids%20at%20the%20Incheon%20Airport%2C%20February%2025%2C%202026%20%281%29.png?width=400",
+        "sort_order": 3
+      },
+      {
+        "stage_name": "Seungmin",
+        "full_name": null,
+        "birth_date": "2000-09-22",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Seungmin%20of%20Stray%20Kids%2C%20October%2015%2C%202025.png?width=400",
+        "sort_order": 4
+      },
+      {
+        "stage_name": "Han",
+        "full_name": null,
+        "birth_date": "2000-09-14",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Han%20of%20Stray%20Kids%20at%20the%2040th%20Golden%20Disc%20Awards%2C%20January%2010%2C%202026%20%281%29.png?width=400",
+        "sort_order": 5
+      },
+      {
+        "stage_name": "Changbin",
+        "full_name": null,
+        "birth_date": "1999-08-11",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Changbin%20of%20Stray%20Kids%2C%20December%204%2C%202024.png?width=400",
+        "sort_order": 6
+      },
+      {
+        "stage_name": "Felix",
+        "full_name": null,
+        "birth_date": "2000-09-15",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Felix%20of%20Stray%20Kids%20at%20a%20Louis%20Vuitton%20event%2C%20August%2022%2C%202025.png?width=400",
+        "sort_order": 7
+      }
+    ]
+  },
+  {
+    "name": "TWICE",
+    "members": [
+      {
+        "stage_name": "Mina Myoi",
+        "full_name": null,
+        "birth_date": "1997-03-24",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Twice%20in%20Seattle%202026%20-%20TWICE.%20Mina%20%2855044093787%29.jpg?width=400",
+        "sort_order": 0
+      },
+      {
+        "stage_name": "Chou Tzuyu",
+        "full_name": null,
+        "birth_date": "1999-06-14",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Twice%20in%20Seattle%202026%20-%20TWICE.%20Tzuyu%20%2855045325500%29%20%28cropped%29.jpg?width=400",
+        "sort_order": 1
+      },
+      {
+        "stage_name": "Kim Da-hyun",
+        "full_name": null,
+        "birth_date": "1998-05-28",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Dahyun%20at%20press%20conference%20for%20You%20Are%20the%20Apple%20of%20My%20Eye%2002%20%28cropped%29.png?width=400",
+        "sort_order": 2
+      },
+      {
+        "stage_name": "Park Ji-hyo",
+        "full_name": null,
+        "birth_date": "1997-02-01",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Jihyo%20at%20Gucci%20Ancora%20on%2005032024%20%28cropped%29.png?width=400",
+        "sort_order": 3
+      },
+      {
+        "stage_name": "Im Nayeon",
+        "full_name": null,
+        "birth_date": "1995-09-22",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Nayeon%20in%20November%202025.png?width=400",
+        "sort_order": 4
+      },
+      {
+        "stage_name": "Minatozaki Sana",
+        "full_name": null,
+        "birth_date": "1996-12-29",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Twice%20in%20Seattle%202026%20-%20TWICE.%20Sana%20%2855044987426%29%20%28cropped%29.jpg?width=400",
+        "sort_order": 6
+      },
+      {
+        "stage_name": "Momo",
+        "full_name": null,
+        "birth_date": "1996-11-09",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/TWICE%20MOMO%20April%202024.jpg?width=400",
+        "sort_order": 7
+      },
+      {
+        "stage_name": "Son Chaeyoung",
+        "full_name": null,
+        "birth_date": "1999-04-23",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Chaeyoung%20at%20Gaon%20Awards%20red%20carpet%20on%20January%2023%2C%202019.jpg?width=400",
+        "sort_order": 8
+      },
+      {
+        "stage_name": "Yoo Jeong-yeon",
+        "full_name": null,
+        "birth_date": "1996-11-01",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/260306%20Twice%20Hamilton%20Jeongyeon%20%ED%8A%B8%EC%99%80%EC%9D%B4%EC%8A%A4%20%EC%A0%95%EC%97%B0%20%285%29%20%28cropped%29.jpg?width=400",
+        "sort_order": 9
+      }
+    ]
+  },
+  {
+    "name": "TXT",
+    "members": [
+      {
+        "stage_name": "Taehyun",
+        "full_name": null,
+        "birth_date": "2002-02-05",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Kang%20Tae-hyun%20at%20a%20Dior%20event%20in%202025%2002.jpg?width=400",
+        "sort_order": 0
+      },
+      {
+        "stage_name": "Huening Kai",
+        "full_name": null,
+        "birth_date": "2002-08-14",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/HueningKai%20at%20a%20Dior%20event%20in%202025%2002.jpg?width=400",
+        "sort_order": 1
+      },
+      {
+        "stage_name": "Beomgyu",
+        "full_name": null,
+        "birth_date": "2001-03-13",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Choi%20Beom-gyu%20at%20a%20Dior%20event%20in%202025%2002.jpg?width=400",
+        "sort_order": 2
+      },
+      {
+        "stage_name": "Soobin",
+        "full_name": null,
+        "birth_date": "2000-12-05",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Choi%20Soo-bin%20at%20a%20Dior%20event%20in%202025%2002.jpg?width=400",
+        "sort_order": 3
+      },
+      {
+        "stage_name": "Yeonjun",
+        "full_name": null,
+        "birth_date": "1999-09-13",
+        "position": null,
+        "photo_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Yeonjun%20250625.jpg?width=400",
+        "sort_order": 4
+      }
+    ]
+  },
+  {
+    "name": "aespa",
+    "members": [
+      {
+        "stage_name": "Karina",
+        "full_name": "Yu Ji-min",
+        "birth_date": "2000-04-11",
+        "position": "Leader",
+        "photo_url": "https://static.wikia.nocookie.net/kpop/images/f/f9/Aespa_Karina_Kiss_N_Tell_concept_photo_1.webp/revision/latest?cb=20260702162703",
+        "sort_order": 0
+      },
+      {
+        "stage_name": "Giselle",
+        "full_name": "Uchinaga Aeri",
+        "birth_date": "2000-10-30",
+        "position": "Rapper, Vocalist",
+        "photo_url": "https://static.wikia.nocookie.net/kpop/images/4/4f/Aespa_Giselle_Kiss_N_Tell_concept_photo_1.webp/revision/latest?cb=20260702162513",
+        "sort_order": 1
+      },
+      {
+        "stage_name": "Winter",
+        "full_name": "Kim Min-jeong",
+        "birth_date": "2001-01-01",
+        "position": "Vocalist",
+        "photo_url": "https://static.wikia.nocookie.net/kpop/images/6/62/Aespa_Winter_Kiss_N_Tell_concept_photo_1.webp/revision/latest?cb=20260702162559",
+        "sort_order": 2
+      },
+      {
+        "stage_name": "Ningning",
+        "full_name": "Ning Yi-zhuo",
+        "birth_date": "2002-10-23",
+        "position": "Main Vocalist",
+        "photo_url": "https://static.wikia.nocookie.net/kpop/images/e/eb/Aespa_Ningning_Kiss_N_Tell_concept_photo_1.webp/revision/latest?cb=20260702162555",
+        "sort_order": 3
+      }
+    ]
+  }
+]
