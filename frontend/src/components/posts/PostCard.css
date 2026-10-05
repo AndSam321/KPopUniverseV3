@@ -321,7 +321,8 @@
   border: 1px solid var(--border-color);
   border-radius: 10px;
   box-shadow: 0 8px 20px rgba(120, 110, 150, 0.2);
-  min-width: 160px;
+  min-width: 180px;
+  overflow: hidden;
   z-index: 10000;
 }
 
