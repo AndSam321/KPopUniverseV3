@@ -227,16 +227,24 @@ export default function Register() {
               </div>
             </div>
 
-            <p className="terms-notice">
-              by signing up, you agree to our{" "}
-              <button
-                type="button"
-                onClick={() => setShowTermsModal(true)}
-                className="terms-link-button"
-              >
-                terms and conditions
-              </button>
-            </p>
+            <label className="terms-checkbox-label">
+              <input
+                type="checkbox"
+                className="terms-checkbox"
+                checked={termsAccepted}
+                onChange={(e) => setTermsAccepted(e.target.checked)}
+              />
+              <span className="terms-checkbox-text">
+                i agree to the{" "}
+                <button
+                  type="button"
+                  onClick={() => setShowTermsModal(true)}
+                  className="terms-link-button"
+                >
+                  terms and conditions
+                </button>
+              </span>
+            </label>
 
             <button
               type="submit"
@@ -259,8 +267,6 @@ export default function Register() {
       <TermsModal
         isOpen={showTermsModal}
         onClose={() => setShowTermsModal(false)}
-        onAccept={() => setTermsAccepted(true)}
-        isAccepted={termsAccepted}
       />
     </div>
   );

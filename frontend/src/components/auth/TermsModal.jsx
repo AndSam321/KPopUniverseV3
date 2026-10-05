@@ -1,33 +1,12 @@
-import { useState, useEffect } from "react";
 import "./TermsModal.css";
 
-export default function TermsModal({ isOpen, onClose, onAccept, isAccepted }) {
-  const [hasRead, setHasRead] = useState(false);
-
-  useEffect(() => {
-    if (isOpen && isAccepted) {
-      setHasRead(true);
-    }
-  }, [isOpen, isAccepted]);
-
-  const handleClose = () => {
-    if (hasRead && onAccept) {
-      onAccept();
-    }
-    onClose();
-  };
-
+export default function TermsModal({ isOpen, onClose }) {
   if (!isOpen) return null;
 
   return (
-    <div className="modal-overlay">
+    <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-        <button
-          className="modal-close"
-          onClick={handleClose}
-          disabled={!hasRead}
-          title={!hasRead ? "Please read and accept the terms" : "Close"}
-        >
+        <button className="modal-close" onClick={onClose} title="Close">
           ✕
         </button>
 
@@ -115,24 +94,8 @@ export default function TermsModal({ isOpen, onClose, onAccept, isAccepted }) {
         </div>
 
         <div className="modal-footer">
-          <label className="modal-checkbox-label">
-            <input
-              type="checkbox"
-              className="modal-checkbox"
-              checked={hasRead}
-              onChange={(e) => setHasRead(e.target.checked)}
-            />
-            <span className="modal-checkbox-text">
-              I have read and agree to the Terms and Conditions
-            </span>
-          </label>
-
-          <button
-            onClick={handleClose}
-            className="modal-button"
-            disabled={!hasRead}
-          >
-            Accept & Close
+          <button onClick={onClose} className="modal-button">
+            Close
           </button>
         </div>
       </div>
