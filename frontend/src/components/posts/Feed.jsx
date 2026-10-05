@@ -11,6 +11,7 @@ const Feed = ({ variant = "for-you" }) => {
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [initialLoading, setInitialLoading] = useState(true);
+  const [showSkeleton, setShowSkeleton] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
   const [error, setError] = useState("");
   const sentinelRef = useRef(null);
@@ -24,7 +25,14 @@ const Feed = ({ variant = "for-you" }) => {
     setHasMore(true);
     setError("");
     setInitialLoading(true);
+    setShowSkeleton(false);
     startLoading();
+
+    // Only show skeletons if the load is actually slow — fast (cached/seeded)
+    // loads skip straight to a gentle fade-in instead of a skeleton flash.
+    const skeletonTimer = setTimeout(() => {
+      if (!cancelled) setShowSkeleton(true);
+    }, 180);
 
     fetchFn(1)
       .then((data) => {
@@ -36,12 +44,17 @@ const Feed = ({ variant = "for-you" }) => {
         if (!cancelled) setError("Failed to load posts. Please try again.");
       })
       .finally(() => {
+        clearTimeout(skeletonTimer);
         completeLoading();
-        if (!cancelled) setInitialLoading(false);
+        if (!cancelled) {
+          setInitialLoading(false);
+          setShowSkeleton(false);
+        }
       });
 
     return () => {
       cancelled = true;
+      clearTimeout(skeletonTimer);
     };
   }, [variant]);
 
@@ -98,11 +111,13 @@ const Feed = ({ variant = "for-you" }) => {
       </div>
 
       {initialLoading ? (
-        <div className="feed__posts">
-          <PostCardSkeleton showImage={true} />
-          <PostCardSkeleton showImage={false} />
-          <PostCardSkeleton showImage={true} />
-        </div>
+        showSkeleton ? (
+          <div className="feed__posts feed__posts--enter">
+            <PostCardSkeleton showImage={true} />
+            <PostCardSkeleton showImage={false} />
+            <PostCardSkeleton showImage={true} />
+          </div>
+        ) : null
       ) : error && posts.length === 0 ? (
         <div className="feed__error">
           <p>{error}</p>
@@ -120,7 +135,7 @@ const Feed = ({ variant = "for-you" }) => {
         </div>
       ) : (
         <>
-          <div className="feed__posts">
+          <div className="feed__posts feed__posts--enter" key={variant}>
             {posts.map((post) => (
               <PostCard key={post.id} post={post} />
             ))}
