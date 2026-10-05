@@ -20,7 +20,7 @@ export default function CreatePostModal({ onClose, onCreated, community, groupId
         <button className="create-post-modal__close" onClick={onClose} aria-label="close">
           <X size={18} strokeWidth={2.5} />
         </button>
-        <CreatePost onPostCreated={onCreated} community={community} groupId={groupId} />
+        <CreatePost onPostCreated={onCreated} community={community} onClose={onClose} />
       </div>
     </div>
   );

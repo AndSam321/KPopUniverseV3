@@ -94,6 +94,34 @@
   font-style: italic;
 }
 
+.create-post__empty {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 1rem;
+  border: 1px dashed var(--border-color);
+  border-radius: 14px;
+  background: rgba(117, 123, 200, 0.06);
+}
+
+.create-post__empty p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.92rem;
+}
+
+.create-post__empty-link {
+  color: var(--accent-link);
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-decoration: none;
+}
+
+.create-post__empty-hint {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
 .create-post__field input[type="text"]:focus,
 .create-post__field textarea:focus {
   outline: none;

@@ -319,11 +319,15 @@
   color: #e7e2ff;
 }
 
-/* Responsive */
+/* Responsive — anchor to the viewport so it never clips off the right edge */
 @media (max-width: 720px) {
   .notif-dropdown {
-    width: 300px;
-    right: -60px;
+    position: fixed;
+    top: calc(56px + env(safe-area-inset-top, 0px) + 6px);
+    left: 8px;
+    right: 8px;
+    width: auto;
+    max-height: calc(100vh - 120px);
   }
 }
 

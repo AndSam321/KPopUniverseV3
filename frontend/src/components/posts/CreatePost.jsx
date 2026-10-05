@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { createPost } from "../../api/postsApi";
-import { getGroupCommunities } from "../../api/communitiesApi";
-import { getGroups } from "../../api/groupsApi";
+import { getMyCommunities } from "../../api/communitiesApi";
 import "./CreatePost.css";
 
 const FLAIRS = [
@@ -13,7 +13,7 @@ const FLAIRS = [
   { value: "fan-content", label: "Fan Content", color: "#ff8ccf" },
 ];
 
-const CreatePost = ({ onPostCreated, groupId, community }) => {
+const CreatePost = ({ onPostCreated, community, onClose }) => {
   const [title, setTitle] = useState("");
   const [caption, setCaption] = useState("");
   const [images, setImages] = useState([]);
@@ -21,35 +21,23 @@ const CreatePost = ({ onPostCreated, groupId, community }) => {
   const [selectedFlair, setSelectedFlair] = useState("");
   const [communities, setCommunities] = useState(community ? [community] : []);
   const [communityId, setCommunityId] = useState(community?.id || "");
+  const [loadingCommunities, setLoadingCommunities] = useState(!community);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [allGroups, setAllGroups] = useState([]);
-  const [pickedGroupId, setPickedGroupId] = useState("");
 
   const locked = Boolean(community);
-  const globalMode = !community && !groupId;
-  const effectiveGroupId = groupId || pickedGroupId;
 
-  // Global mode (opened from the + button): let the user pick a group first.
+  // Global mode (from the + button): post to one of the communities you joined.
   useEffect(() => {
-    if (!globalMode) return;
-    getGroups()
-      .then(setAllGroups)
-      .catch(() => setError("Could not load groups"));
-  }, [globalMode]);
-
-  useEffect(() => {
-    if (locked || !effectiveGroupId) return;
-    setCommunities([]);
-    setCommunityId("");
-    getGroupCommunities(effectiveGroupId)
+    if (locked) return;
+    getMyCommunities()
       .then((data) => {
         setCommunities(data);
-        const preferred = data.find((c) => c.official) || data[0];
-        if (preferred) setCommunityId(preferred.id);
+        if (data.length) setCommunityId(data[0].id);
       })
-      .catch(() => setError("Could not load communities to post in"));
-  }, [effectiveGroupId, locked]);
+      .catch(() => setError("Could not load your communities"))
+      .finally(() => setLoadingCommunities(false));
+  }, [locked]);
 
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
@@ -116,32 +104,12 @@ const CreatePost = ({ onPostCreated, groupId, community }) => {
       {error && <div className="create-post__error">{error}</div>}
 
       <form onSubmit={handleSubmit} className="create-post__form">
-        {globalMode && (
-          <div className="create-post__field">
-            <label htmlFor="group">Group *</label>
-            <select
-              id="group"
-              className="create-post__select"
-              value={pickedGroupId}
-              onChange={(e) => setPickedGroupId(Number(e.target.value))}
-              required
-            >
-              <option value="" disabled>
-                Choose a group…
-              </option>
-              {allGroups.map((g) => (
-                <option key={g.id} value={g.id}>
-                  {g.name}
-                </option>
-              ))}
-            </select>
-          </div>
-        )}
-
         <div className="create-post__field">
           <label htmlFor="community">Community *</label>
           {locked ? (
             <div className="create-post__community-locked">{community.name}</div>
+          ) : loadingCommunities ? (
+            <div className="create-post__community-hint">Loading…</div>
           ) : communities.length > 0 ? (
             <select
               id="community"
@@ -152,14 +120,23 @@ const CreatePost = ({ onPostCreated, groupId, community }) => {
             >
               {communities.map((c) => (
                 <option key={c.id} value={c.id}>
-                  {c.name}
-                  {c.official ? " (General)" : ""}
+                  {c.group?.name ? `${c.group.name} › ${c.name}` : c.name}
                 </option>
               ))}
             </select>
           ) : (
-            <div className="create-post__community-hint">
-              {globalMode ? "Pick a group first" : "Loading communities…"}
+            <div className="create-post__empty">
+              <p>You haven't joined any communities yet.</p>
+              <Link
+                to="/groups"
+                className="create-post__empty-link"
+                onClick={() => onClose && onClose()}
+              >
+                Explore and join one →
+              </Link>
+              <span className="create-post__empty-hint">
+                (or open a community and post directly from there)
+              </span>
             </div>
           )}
         </div>
