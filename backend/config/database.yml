@@ -60,17 +60,11 @@ test:
 # for a full overview on how database connection configuration can be specified.
 #
 production:
-  # One physical database (DATABASE_URL). The cache/queue/cable roles exist so the
-  # Solid gems' models resolve a connection on boot, but production uses in-process
-  # adapters (see production.rb / cable.yml) so their tables are never queried.
-  primary: &primary_production
+  # Single Postgres. The Solid Queue/Cache/Cable tables live in this same
+  # database (created by a normal migration), so no separate role databases are
+  # needed and every Solid component uses the primary connection.
+  primary:
     <<: *default
     url: <%= ENV["DATABASE_URL"] %>
     # Neon's pooled connection runs PgBouncer in transaction mode.
     prepared_statements: false
-  cache:
-    <<: *primary_production
-  queue:
-    <<: *primary_production
-  cable:
-    <<: *primary_production

@@ -9,6 +9,6 @@ test:
   adapter: test
 
 production:
-  # In-process pub/sub — works on a single instance (no DB tables needed).
-  # Switch to solid_cable with a dedicated database when running multiple instances.
-  adapter: async
+  adapter: solid_cable
+  polling_interval: 0.1.seconds
+  message_retention: 1.day

@@ -46,11 +46,12 @@ Rails.application.configure do
   # Don't log any deprecations.
   config.active_support.report_deprecations = false
 
-  # In-process adapters — fine for a single instance (no extra DB tables needed).
-  # Switch back to Solid (cache/queue/cable) with dedicated databases when scaling
-  # to multiple instances.
-  config.cache_store = :memory_store
-  config.active_job.queue_adapter = :async
+  # Solid Queue/Cache/Cable, all backed by the single primary Postgres. Jobs run
+  # inside Puma on the always-on instance via the solid_queue plugin (enabled with
+  # SOLID_QUEUE_IN_PUMA=true), which also runs the recurring schedule.
+  config.cache_store = :solid_cache_store
+  config.active_job.queue_adapter = :solid_queue
+  config.solid_queue.connects_to = { database: { writing: :primary } }
 
   # Allow the deployed frontend to open ActionCable (WebSocket) connections.
   config.action_cable.allowed_request_origins = Array(ENV["FRONTEND_URL"].presence)
