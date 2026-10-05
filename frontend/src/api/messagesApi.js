@@ -11,6 +11,14 @@ export const createConversation = (recipientId) =>
     .post("/conversations", { recipient_id: recipientId })
     .then((res) => res.data.data);
 
+export const createGroupConversation = (memberIds, name) =>
+  api
+    .post("/conversations", { member_ids: memberIds, name })
+    .then((res) => res.data.data);
+
+export const getFriends = () =>
+  api.get("/users/friends").then((res) => res.data.data);
+
 export const getMessages = (conversationId, page = 1) =>
   api
     .get(`/conversations/${conversationId}/messages?page=${page}`)

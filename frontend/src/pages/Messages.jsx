@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { ArrowLeft, Send, ImagePlus, X, PenSquare } from "lucide-react";
+import { ArrowLeft, Send, ImagePlus, X, PenSquare, Users } from "lucide-react";
 import {
   getConversations,
   getMessages,
@@ -33,6 +33,17 @@ function Avatar({ user }) {
     return <img className="dm-avatar" src={user.avatar_url} alt={user.username} referrerPolicy="no-referrer" />;
   }
   return <div className="dm-avatar dm-avatar--fallback">{user?.username?.[0]?.toUpperCase() || "?"}</div>;
+}
+
+function ConversationAvatar({ conversation }) {
+  if (conversation.group) {
+    return (
+      <div className="dm-avatar dm-avatar--group">
+        <Users size={20} />
+      </div>
+    );
+  }
+  return <Avatar user={conversation.other_user} />;
 }
 
 const appendUnique = (list, message) =>
@@ -316,10 +327,10 @@ export default function Messages() {
                     String(conversation.id) === String(conversationId) ? "is-active" : ""
                   }`}
                 >
-                  <Avatar user={conversation.other_user} />
+                  <ConversationAvatar conversation={conversation} />
                   <span className="dm__conversation-body">
                     <span className="dm__conversation-top">
-                      <span className="dm__conversation-name">{conversation.other_user.username}</span>
+                      <span className="dm__conversation-name">{conversation.title}</span>
                       {conversation.last_message && (
                         <span className="dm__conversation-time">
                           {timeAgo(conversation.last_message.created_at)}
@@ -348,7 +359,18 @@ export default function Messages() {
               <button className="dm__back" onClick={() => navigate("/messages")} aria-label="Back">
                 <ArrowLeft size={20} />
               </button>
-              {activeConversation && (
+              {activeConversation && activeConversation.group && (
+                <div className="dm__thread-user">
+                  <ConversationAvatar conversation={activeConversation} />
+                  <span className="dm__thread-heading">
+                    <span className="dm__thread-name">{activeConversation.title}</span>
+                    <span className="dm__thread-sub">
+                      {activeConversation.participants.map((p) => p.username).join(", ")}
+                    </span>
+                  </span>
+                </div>
+              )}
+              {activeConversation && !activeConversation.group && (
                 <Link to={`/profile/${activeConversation.other_user.username}`} className="dm__thread-user">
                   <Avatar user={activeConversation.other_user} />
                   <span className="dm__thread-name">{activeConversation.other_user.username}</span>
@@ -370,6 +392,9 @@ export default function Messages() {
                       message.image ? "dm__bubble--media" : ""
                     }`}
                   >
+                    {activeConversation?.group && message.sender_id !== user?.id && (
+                      <span className="dm__bubble-sender">{message.sender?.username}</span>
+                    )}
                     {message.image && (
                       <a
                         href={message.image.url}

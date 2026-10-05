@@ -46,8 +46,72 @@
   padding: 4px;
 }
 
+.nm-tabs {
+  display: flex;
+  gap: 8px;
+  padding: 0 16px 12px;
+}
+
+.nm-tab {
+  padding: 6px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--border-color);
+  background: var(--card-bg);
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.nm-tab.is-active {
+  background: var(--pastel-sky);
+  border-color: transparent;
+  color: var(--pastel-ink);
+}
+
 .nm-search {
   margin: 0 16px 12px;
+}
+
+.nm-group-name {
+  margin: 0 16px 12px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  background: var(--card-bg);
+  color: var(--text-primary);
+  font-size: 14px;
+  font-family: var(--font-content);
+}
+
+.nm-group-name:focus {
+  outline: none;
+  border-color: var(--pastel-sky);
+}
+
+.nm-result.is-selected {
+  background: rgba(162, 210, 255, 0.22);
+}
+
+.nm-check {
+  color: var(--pastel-ink);
+}
+
+.nm-create {
+  margin: 8px 16px 16px;
+  padding: 11px;
+  border: none;
+  border-radius: 999px;
+  background: var(--pastel-sky);
+  color: #1f2a44;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.nm-create:disabled {
+  opacity: 0.5;
+  cursor: default;
 }
 
 .nm-results {
