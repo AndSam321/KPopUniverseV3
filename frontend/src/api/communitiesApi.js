@@ -19,7 +19,8 @@ export const getGroupCommunities = async (groupId) => {
 };
 
 export const createCommunity = async (groupId, attributes) => {
-  const response = await api.post(`/groups/${groupId}/communities`, attributes);
+  const url = groupId ? `/groups/${groupId}/communities` : "/communities";
+  const response = await api.post(url, attributes);
   return response.data.data;
 };
 

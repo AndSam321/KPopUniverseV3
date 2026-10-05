@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import {
   X,
   Users,
+  LayoutGrid,
   CalendarDays,
   CircleHelp,
   Settings,
@@ -64,11 +65,11 @@ export default function NavDrawer({ open, onClose }) {
           <button className="nav-drawer__link" onClick={go("/groups")}>
             <Users size={20} /> <span>Explore groups</span>
           </button>
+          <button className="nav-drawer__link" onClick={go("/communities")}>
+            <LayoutGrid size={20} /> <span>Communities</span>
+          </button>
           <button className="nav-drawer__link" onClick={go("/comebacks")}>
             <CalendarDays size={20} /> <span>Comebacks</span>
-          </button>
-          <button className="nav-drawer__link" onClick={go("/help")}>
-            <CircleHelp size={20} /> <span>Help &amp; support</span>
           </button>
 
           {user && (
@@ -85,6 +86,9 @@ export default function NavDrawer({ open, onClose }) {
                   <ChartColumn size={20} /> <span>Analytics</span>
                 </button>
               )}
+              <button className="nav-drawer__link" onClick={go("/help")}>
+                <CircleHelp size={20} /> <span>Help &amp; support</span>
+              </button>
               <button
                 className="nav-drawer__link nav-drawer__link--logout"
                 onClick={handleLogout}
@@ -97,6 +101,9 @@ export default function NavDrawer({ open, onClose }) {
           {!user && (
             <>
               <div className="nav-drawer__divider" />
+              <button className="nav-drawer__link" onClick={go("/help")}>
+                <CircleHelp size={20} /> <span>Help &amp; support</span>
+              </button>
               <button className="nav-drawer__cta nav-drawer__cta--primary" onClick={go("/register")}>
                 Join the community
               </button>

@@ -20,6 +20,7 @@ const Home = React.lazy(() => import("./components/home/Home.jsx"));
 const GroupsList = React.lazy(() => import("./components/groups/GroupsList.jsx"));
 const GroupDetail = React.lazy(() => import("./components/groups/GroupDetail.jsx"));
 const CommunityPage = React.lazy(() => import("./pages/CommunityPage.jsx"));
+const Communities = React.lazy(() => import("./pages/Communities.jsx"));
 const Comebacks = React.lazy(() => import("./pages/Comebacks.jsx"));
 const PostDetail = React.lazy(() => import("./pages/PostDetail.jsx"));
 const AccountSettings = React.lazy(() => import("./components/settings/AccountSettings.jsx"));
@@ -64,6 +65,7 @@ function App() {
             }
           />
           <Route path="/groups" element={<GroupsList />} />
+          <Route path="/communities" element={<Communities />} />
           <Route
             path="/comebacks"
             element={

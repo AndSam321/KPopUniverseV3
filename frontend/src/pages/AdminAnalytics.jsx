@@ -162,6 +162,28 @@ export default function AdminAnalytics() {
               <BarList items={stats.top_posters} labelKey="username" />
             </div>
           </div>
+
+          <div className="admin__panel">
+            <div className="admin__panel-head">
+              <h2>Feedback</h2>
+              <span>{stats.feedback.length} recent</span>
+            </div>
+            {stats.feedback.length === 0 ? (
+              <p className="admin__empty">No feedback yet.</p>
+            ) : (
+              <div className="admin__feedback">
+                {stats.feedback.map((fb) => (
+                  <div className="admin__feedback-row" key={fb.id}>
+                    <p className="admin__feedback-msg">{fb.message}</p>
+                    <div className="admin__feedback-meta">
+                      <span className="admin__feedback-user">{fb.username}</span>
+                      <span className="admin__feedback-time">{timeAgo(fb.created_at)}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </>
       )}
     </div>

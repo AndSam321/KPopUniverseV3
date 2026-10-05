@@ -34,6 +34,18 @@
   flex: 1;
 }
 
+.beta-toast__link {
+  padding: 0;
+  border: none;
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-weight: 800;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+
 .beta-toast__dismiss {
   flex-shrink: 0;
   display: flex;

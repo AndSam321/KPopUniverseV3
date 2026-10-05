@@ -5,7 +5,7 @@ class Community < ApplicationRecord
     against: :name,
     using: {tsearch: {prefix: true}, trigram: {threshold: 0.3}}
 
-  belongs_to :group
+  belongs_to :group, optional: true
   belongs_to :creator, class_name: "User", optional: true
 
   has_many :community_memberships, dependent: :destroy

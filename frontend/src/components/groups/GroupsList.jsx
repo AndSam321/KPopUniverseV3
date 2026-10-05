@@ -243,7 +243,7 @@ const GroupsList = () => {
                   )}
                 </div>
                 <span className="explore-community__group">
-                  in {community.group.name}
+                  {community.group ? `in ${community.group.name}` : "Community"}
                 </span>
                 <span className="explore-community__members">
                   <Users size={13} strokeWidth={2.5} />

@@ -1,5 +1,7 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ChevronLeft, Sparkles } from "lucide-react";
+import FeedbackModal from "../components/common/FeedbackModal";
 import "./Help.css";
 
 const INSTALL_STEPS = [
@@ -49,6 +51,8 @@ const FAQS = [
 ];
 
 export default function Help() {
+  const [showFeedback, setShowFeedback] = useState(false);
+
   return (
     <div className="help">
       <Link to="/" className="help__back">
@@ -125,7 +129,18 @@ export default function Help() {
           K-pop Universe is in beta — more groups and features are on the way.
           Found a bug or have an idea? We'd love your feedback.
         </p>
+        <button
+          type="button"
+          className="help__feedback-btn"
+          onClick={() => setShowFeedback(true)}
+        >
+          Send feedback
+        </button>
       </section>
+
+      {showFeedback && (
+        <FeedbackModal onClose={() => setShowFeedback(false)} />
+      )}
     </div>
   );
 }

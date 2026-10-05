@@ -9,7 +9,8 @@ class AdminStats
       recent_users: recent_users,
       posts_by_day: series(Post),
       top_groups: top_groups,
-      top_posters: top_posters
+      top_posters: top_posters,
+      feedback: recent_feedback
     }
   end
 
@@ -65,6 +66,17 @@ class AdminStats
       .limit(6)
       .pluck("groups.name", Arel.sql("COUNT(posts.id)"))
       .map { |name, count| {name: name, count: count} }
+  end
+
+  def recent_feedback
+    Feedback.includes(:user).order(created_at: :desc).limit(30).map do |fb|
+      {
+        id: fb.id,
+        message: fb.message,
+        username: fb.user&.username || "Guest",
+        created_at: fb.created_at.iso8601
+      }
+    end
   end
 
   def top_posters

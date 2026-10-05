@@ -3,3 +3,6 @@
 DEPLOYMENT.md
 API_CONTRACT.md
 audit-report.md
+
+# Playwright MCP local artifacts
+.playwright-mcp/

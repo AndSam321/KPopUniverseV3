@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_10_05_183503) do
+ActiveRecord::Schema[8.0].define(version: 2026_10_05_211705) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -102,7 +102,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_10_05_183503) do
   end
 
   create_table "communities", force: :cascade do |t|
-    t.bigint "group_id", null: false
+    t.bigint "group_id"
     t.bigint "creator_id"
     t.string "name", null: false
     t.string "slug", null: false
@@ -151,6 +151,14 @@ ActiveRecord::Schema[8.0].define(version: 2026_10_05_183503) do
     t.index ["user_one_id", "user_two_id"], name: "index_conversations_on_user_one_id_and_user_two_id", unique: true
     t.index ["user_one_id"], name: "index_conversations_on_user_one_id"
     t.index ["user_two_id"], name: "index_conversations_on_user_two_id"
+  end
+
+  create_table "feedbacks", force: :cascade do |t|
+    t.text "message", null: false
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_feedbacks_on_user_id"
   end
 
   create_table "follows", force: :cascade do |t|
@@ -478,6 +486,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_10_05_183503) do
   add_foreign_key "conversations", "users", column: "creator_id"
   add_foreign_key "conversations", "users", column: "user_one_id"
   add_foreign_key "conversations", "users", column: "user_two_id"
+  add_foreign_key "feedbacks", "users"
   add_foreign_key "follows", "users", column: "followed_id"
   add_foreign_key "follows", "users", column: "follower_id"
   add_foreign_key "groups", "users"

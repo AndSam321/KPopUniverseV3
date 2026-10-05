@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import { Sparkles, X } from "lucide-react";
+import FeedbackModal from "./FeedbackModal";
 import "./BetaToast.css";
 
 const STORAGE_KEY = "beta_notice_seen";
 
 const BetaToast = () => {
   const [visible, setVisible] = useState(false);
+  const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
     if (sessionStorage.getItem(STORAGE_KEY)) return;
@@ -22,23 +24,34 @@ const BetaToast = () => {
     return () => clearTimeout(hideId);
   }, [visible]);
 
-  if (!visible) return null;
+  if (!visible && !showForm) return null;
 
   return (
-    <div className="beta-toast" role="status">
-      <Sparkles size={16} strokeWidth={2.5} className="beta-toast__icon" />
-      <span className="beta-toast__message">
-        K-pop Universe is in beta — more groups and features are on the way. We'd
-        love your feedback!
-      </span>
-      <button
-        className="beta-toast__dismiss"
-        onClick={() => setVisible(false)}
-        aria-label="dismiss"
-      >
-        <X size={14} strokeWidth={2.5} />
-      </button>
-    </div>
+    <>
+      {visible && (
+        <div className="beta-toast" role="status">
+          <Sparkles size={16} strokeWidth={2.5} className="beta-toast__icon" />
+          <span className="beta-toast__message">
+            K-pop Universe is in beta — more groups and features are on the way.{" "}
+            <button
+              className="beta-toast__link"
+              onClick={() => setShowForm(true)}
+            >
+              Share your feedback
+            </button>
+            !
+          </span>
+          <button
+            className="beta-toast__dismiss"
+            onClick={() => setVisible(false)}
+            aria-label="dismiss"
+          >
+            <X size={14} strokeWidth={2.5} />
+          </button>
+        </div>
+      )}
+      {showForm && <FeedbackModal onClose={() => setShowForm(false)} />}
+    </>
   );
 };
 

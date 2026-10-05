@@ -51,6 +51,7 @@ Rails.application.routes.draw do
 
       get "search", to: "search#index"
       resources :comebacks, only: [:index]
+      resources :feedbacks, only: [:create]
 
       resources :groups, only: [:index, :show] do
         member do
@@ -59,7 +60,7 @@ Rails.application.routes.draw do
         resources :communities, only: [:index, :create]
       end
 
-      resources :communities, only: [:index, :show] do
+      resources :communities, only: [:index, :show, :create] do
         member do
           post :join
           delete :leave

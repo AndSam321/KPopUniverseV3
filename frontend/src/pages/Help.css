@@ -209,6 +209,23 @@
   line-height: 1.6;
 }
 
+.help__feedback-btn {
+  margin-top: 12px;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 999px;
+  background: var(--pastel-sky);
+  color: var(--pastel-ink);
+  font-size: 0.92rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+
+.help__feedback-btn:hover {
+  opacity: 0.85;
+}
+
 :root.dark-mode .install-step,
 :root.dark-mode .help__faq-item {
   background: var(--dark-card);

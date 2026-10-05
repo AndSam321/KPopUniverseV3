@@ -17,8 +17,7 @@ class Api::V1::CommunitiesController < Api::V1::BaseController
   end
 
   def create
-    group = Group.find(params[:group_id])
-    community = CommunityCreation.new(group, current_user).call(community_params)
+    community = CommunityCreation.new(target_group, current_user).call(community_params)
 
     if community.persisted?
       render json: {data: serialize([community.reload]).first}, status: :created
@@ -49,6 +48,10 @@ class Api::V1::CommunitiesController < Api::V1::BaseController
   end
 
   private
+
+  def target_group
+    params[:group_id] ? Group.find(params[:group_id]) : nil
+  end
 
   def group_communities
     Group.find(params[:group_id]).communities.includes(:group).order(official: :desc).popular
@@ -88,7 +91,7 @@ class Api::V1::CommunitiesController < Api::V1::BaseController
       description: community.description,
       official: community.official,
       member_count: community.member_count,
-      group: {id: community.group_id, name: community.group.name},
+      group: community.group ? {id: community.group_id, name: community.group.name} : nil,
       is_member: member_ids.include?(community.id)
     }
   end

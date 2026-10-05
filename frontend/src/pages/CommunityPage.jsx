@@ -59,7 +59,9 @@ export default function CommunityPage() {
 
   return (
     <div className="community-page">
-      <BackButton fallback={`/groups/${community.group.id}`} />
+      <BackButton
+        fallback={community.group ? `/groups/${community.group.id}` : "/communities"}
+      />
       <div className="community-page__header">
         <div className="community-page__heading">
           <h1 className="page-title">{community.name}</h1>
@@ -67,12 +69,14 @@ export default function CommunityPage() {
             <span className="community-page__badge">Official</span>
           )}
         </div>
-        <Link
-          to={`/groups/${community.group.id}`}
-          className="community-page__group-link"
-        >
-          {community.group.name}
-        </Link>
+        {community.group && (
+          <Link
+            to={`/groups/${community.group.id}`}
+            className="community-page__group-link"
+          >
+            {community.group.name}
+          </Link>
+        )}
         {community.description && (
           <p className="community-page__desc">{community.description}</p>
         )}
