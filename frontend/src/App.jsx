@@ -9,6 +9,7 @@ import { MessagesProvider } from "./context/MessagesContext.jsx";
 import GuestRoute from "./components/routes/GuestRoute.jsx";
 import PrivateRoute from "./components/routes/PrivateRoute.jsx";
 import BetaToast from "./components/common/BetaToast.jsx";
+import ScrollToTop from "./components/common/ScrollToTop.jsx";
 
 const Sandbox = React.lazy(() => import("./playground/Sandbox.jsx"));
 const Register = React.lazy(() => import("./components/auth/Register.jsx"));
@@ -37,6 +38,7 @@ function App() {
       <NavigationLoadingProvider>
       <AuthProvider>
         <MessagesProvider>
+        <ScrollToTop />
         <Navbar />
         <NavigationProgress />
         <Suspense fallback={<PageLoader />}>

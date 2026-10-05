@@ -54,6 +54,9 @@
 body, html {
   height: 100%;
   min-height: 100vh;
+  min-height: 100dvh;
+  overflow-x: clip;
+  overscroll-behavior-x: none;
   background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-mid) 45%, var(--gradient-end) 100%);
   background-attachment: fixed;
   color: var(--text-primary);
@@ -84,6 +87,8 @@ div { display: block; }
    the page background must live here to cover everything when scrolling. */
 #root {
   min-height: 100vh;
+  min-height: 100dvh;
+  overflow-x: clip;
   background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-mid) 45%, var(--gradient-end) 100%);
   background-attachment: fixed;
 }
@@ -96,7 +101,7 @@ div { display: block; }
 /* Reserve space for the mobile bottom tab bar */
 @media (max-width: 720px) {
   body {
-    padding-bottom: calc(64px + env(safe-area-inset-bottom, 0));
+    padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px));
   }
 }
 
