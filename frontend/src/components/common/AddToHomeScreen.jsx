@@ -38,10 +38,10 @@ export default function AddToHomeScreen() {
   if (!visible) return null;
 
   return (
-    <Link to="/install" className="a2hs" onClick={() => setVisible(false)}>
+    <Link to="/help" className="a2hs" onClick={() => setVisible(false)}>
       <img src="/kpopuniverselogo.svg" alt="" className="a2hs__logo" />
       <div className="a2hs__text">
-        <strong className="a2hs__title">Get the full experience</strong>
+        <strong className="a2hs__title">Want a better experience?</strong>
         <span className="a2hs__sub">Add K-pop Universe to your Home Screen</span>
       </div>
       <ChevronRight size={20} strokeWidth={2.5} className="a2hs__chevron" />

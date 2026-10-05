@@ -7,6 +7,7 @@ import {
   Users,
   User,
   Settings,
+  CircleHelp,
   LogOut,
 } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
@@ -29,6 +30,11 @@ export default function Navbar() {
   const handleSettingsClick = () => {
     setIsDropdownOpen(false);
     navigate("/settings");
+  };
+
+  const handleHelpClick = () => {
+    setIsDropdownOpen(false);
+    navigate("/help");
   };
 
   const handleLogout = async () => {
@@ -178,6 +184,13 @@ export default function Navbar() {
                   >
                     <Settings size={18} />
                     <span>account settings</span>
+                  </button>
+                  <button
+                    className="kp-nav__dropdown-item"
+                    onClick={handleHelpClick}
+                  >
+                    <CircleHelp size={18} />
+                    <span>help &amp; support</span>
                   </button>
                   <div className="kp-nav__dropdown-divider"></div>
                   <button

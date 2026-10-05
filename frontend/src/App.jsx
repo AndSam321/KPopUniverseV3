@@ -26,7 +26,7 @@ const AccountSettings = React.lazy(() => import("./components/settings/AccountSe
 const NotificationsPage = React.lazy(() => import("./pages/NotificationsPage.jsx"));
 const SearchResults = React.lazy(() => import("./pages/SearchResults.jsx"));
 const Messages = React.lazy(() => import("./pages/Messages.jsx"));
-const Install = React.lazy(() => import("./pages/Install.jsx"));
+const Help = React.lazy(() => import("./pages/Help.jsx"));
 
 const PageLoader = () => (
   <div className="page-loader">
@@ -72,7 +72,7 @@ function App() {
             }
           />
           <Route path="/search" element={<SearchResults />} />
-          <Route path="/install" element={<Install />} />
+          <Route path="/help" element={<Help />} />
           <Route
             path="/groups/:id"
             element={
