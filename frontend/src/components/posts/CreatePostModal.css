@@ -1,0 +1,74 @@
+.create-post-modal__overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1400;
+  background: rgba(40, 32, 70, 0.45);
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 5vh 16px calc(16px + env(safe-area-inset-bottom, 0px));
+  overflow-y: auto;
+  animation: cpmFade 180ms ease;
+}
+
+@keyframes cpmFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.create-post-modal {
+  position: relative;
+  width: 100%;
+  max-width: 560px;
+  background: var(--card-bg);
+  border-radius: 20px;
+  box-shadow: 0 16px 48px rgba(40, 32, 70, 0.4);
+  animation: cpmRise 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes cpmRise {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.create-post-modal__close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 999px;
+  background: rgba(120, 110, 150, 0.12);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.create-post-modal__close:hover {
+  background: rgba(120, 110, 150, 0.22);
+  color: var(--pastel-ink);
+}
+
+/* The embedded CreatePost already has its own padding/card; neutralize doubles */
+.create-post-modal .create-post {
+  box-shadow: none;
+  border: none;
+  margin: 0;
+}
+
+:root.dark-mode .create-post-modal {
+  background: var(--dark-card);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .create-post-modal__overlay,
+  .create-post-modal {
+    animation: none;
+  }
+}

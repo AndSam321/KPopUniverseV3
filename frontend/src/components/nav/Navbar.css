@@ -222,6 +222,29 @@
   margin: 6px 0;
 }
 
+/* Desktop create button (hidden on mobile — bottom bar has the + instead) */
+.kp-nav__create-desktop {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 999px;
+  background: var(--gradient-end);
+  color: #fff;
+  font-family: var(--font-content);
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.kp-nav__create-desktop:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(117, 123, 200, 0.35);
+}
+
 /* Auth buttons (logged out) */
 .kp-nav__auth-buttons {
   display: flex;
@@ -422,6 +445,30 @@
   .kp-nav__mobile-tab:hover,
   .kp-nav__mobile-tab--active {
     color: var(--pastel-ink);
+  }
+
+  /* Center create (+) button */
+  .kp-nav__create-tab {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    width: 48px;
+    height: 48px;
+    margin: 0 6px;
+    margin-top: -8px;
+    border: none;
+    border-radius: 999px;
+    background: var(--gradient-end);
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(117, 123, 200, 0.45);
+  }
+
+  /* Desktop create button never shows in the mobile bar */
+  .kp-nav__create-desktop {
+    display: none;
   }
 }
 

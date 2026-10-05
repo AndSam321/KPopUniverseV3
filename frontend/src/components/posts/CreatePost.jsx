@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { createPost } from "../../api/postsApi";
 import { getGroupCommunities } from "../../api/communitiesApi";
+import { getGroups } from "../../api/groupsApi";
 import "./CreatePost.css";
 
 const FLAIRS = [
@@ -22,19 +23,33 @@ const CreatePost = ({ onPostCreated, groupId, community }) => {
   const [communityId, setCommunityId] = useState(community?.id || "");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [allGroups, setAllGroups] = useState([]);
+  const [pickedGroupId, setPickedGroupId] = useState("");
 
   const locked = Boolean(community);
+  const globalMode = !community && !groupId;
+  const effectiveGroupId = groupId || pickedGroupId;
+
+  // Global mode (opened from the + button): let the user pick a group first.
+  useEffect(() => {
+    if (!globalMode) return;
+    getGroups()
+      .then(setAllGroups)
+      .catch(() => setError("Could not load groups"));
+  }, [globalMode]);
 
   useEffect(() => {
-    if (locked || !groupId) return;
-    getGroupCommunities(groupId)
+    if (locked || !effectiveGroupId) return;
+    setCommunities([]);
+    setCommunityId("");
+    getGroupCommunities(effectiveGroupId)
       .then((data) => {
         setCommunities(data);
         const preferred = data.find((c) => c.official) || data[0];
         if (preferred) setCommunityId(preferred.id);
       })
       .catch(() => setError("Could not load communities to post in"));
-  }, [groupId, locked]);
+  }, [effectiveGroupId, locked]);
 
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
@@ -101,11 +116,33 @@ const CreatePost = ({ onPostCreated, groupId, community }) => {
       {error && <div className="create-post__error">{error}</div>}
 
       <form onSubmit={handleSubmit} className="create-post__form">
+        {globalMode && (
+          <div className="create-post__field">
+            <label htmlFor="group">Group *</label>
+            <select
+              id="group"
+              className="create-post__select"
+              value={pickedGroupId}
+              onChange={(e) => setPickedGroupId(Number(e.target.value))}
+              required
+            >
+              <option value="" disabled>
+                Choose a group…
+              </option>
+              {allGroups.map((g) => (
+                <option key={g.id} value={g.id}>
+                  {g.name}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
+
         <div className="create-post__field">
           <label htmlFor="community">Community *</label>
           {locked ? (
             <div className="create-post__community-locked">{community.name}</div>
-          ) : (
+          ) : communities.length > 0 ? (
             <select
               id="community"
               className="create-post__select"
@@ -120,6 +157,10 @@ const CreatePost = ({ onPostCreated, groupId, community }) => {
                 </option>
               ))}
             </select>
+          ) : (
+            <div className="create-post__community-hint">
+              {globalMode ? "Pick a group first" : "Loading communities…"}
+            </div>
           )}
         </div>
 

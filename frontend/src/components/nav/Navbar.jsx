@@ -9,8 +9,10 @@ import {
   Settings,
   CircleHelp,
   ChartColumn,
+  Plus,
   LogOut,
 } from "lucide-react";
+import CreatePostModal from "../posts/CreatePostModal";
 import { useAuth } from "../../context/AuthContext";
 import { logout as logoutApi } from "../../api/authApi";
 import NotificationsDropdown from "../notifications/NotificationsDropdown";
@@ -21,7 +23,21 @@ export default function Navbar() {
   const navigate = useNavigate();
   const { user, logout, loading } = useAuth();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [showCreate, setShowCreate] = useState(false);
   const dropdownRef = useRef(null);
+
+  const openCreate = () => {
+    if (!user) {
+      navigate("/login");
+      return;
+    }
+    setShowCreate(true);
+  };
+
+  const handlePostCreated = (post) => {
+    setShowCreate(false);
+    if (post?.id) navigate(`/posts/${post.id}`);
+  };
 
   const handleProfileClick = () => {
     setIsDropdownOpen(false);
@@ -130,6 +146,14 @@ export default function Navbar() {
             <ContactRound size={22} />
             <span>following</span>
           </NavLink>
+          <button
+            type="button"
+            className="kp-nav__create-tab"
+            onClick={openCreate}
+            aria-label="create post"
+          >
+            <Plus size={26} strokeWidth={2.5} />
+          </button>
           <NavLink
             to="/groups"
             className={({ isActive }) =>
@@ -144,6 +168,15 @@ export default function Navbar() {
         {/* Right: Search + Profile */}
         <div className="kp-nav__right">
           <SearchBar />
+
+          <button
+            type="button"
+            className="kp-nav__create-desktop"
+            onClick={openCreate}
+          >
+            <Plus size={18} strokeWidth={2.5} />
+            <span>post</span>
+          </button>
 
           {user && <MessagesNavButton />}
           {user && <NotificationsDropdown />}
@@ -234,6 +267,13 @@ export default function Navbar() {
           )}
         </div>
       </div>
+
+      {showCreate && (
+        <CreatePostModal
+          onClose={() => setShowCreate(false)}
+          onCreated={handlePostCreated}
+        />
+      )}
     </nav>
   );
 }
