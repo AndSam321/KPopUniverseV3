@@ -20,9 +20,16 @@ const INSTALL_STEPS = [
   {
     n: 3,
     title: "Add to Home Screen",
-    text: "Scroll down in the share sheet and tap Add to Home Screen, then tap Add in the top corner.",
+    text: "Scroll down in the share sheet and tap Add to Home Screen.",
     img: "/install/step3-add.png",
     highlight: { left: "4%", top: "71%", width: "92%", height: "9%", radius: "14px" },
+  },
+  {
+    n: 4,
+    title: "Tap Add",
+    text: "Confirm by tapping Add — the K-pop Universe icon will appear on your home screen.",
+    img: "/install/step4-confirm.png",
+    highlight: { left: "78%", top: "8%", width: "20%", height: "24%", radius: "999px" },
   },
 ];
 
@@ -68,7 +75,7 @@ export default function Help() {
         <h2 className="help__section-title">Add to your Home Screen</h2>
         <p className="help__section-intro">
           Install K-pop Universe like an app — full screen, faster, and right on
-          your home screen. On iPhone (Safari), it takes three taps:
+          your home screen. On iPhone (Safari), it takes just a few taps:
         </p>
 
         <ol className="install-steps">
