@@ -103,6 +103,7 @@ class Api::V1::UsersController < Api::V1::BaseController
       followers_count: user.followers.count,
       following_count: user.following.count,
       is_following: user != current_user && current_user.following?(user),
+      admin: user.admin,
       created_at: user.created_at
     }
   end

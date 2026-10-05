@@ -10,6 +10,10 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
+      namespace :admin do
+        get "stats", to: "stats#index"
+      end
+
       devise_for :users, path: "auth",
                  defaults: { format: :json },
                  controllers: {

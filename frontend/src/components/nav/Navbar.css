@@ -222,6 +222,33 @@
   margin: 6px 0;
 }
 
+/* Auth buttons (logged out) */
+.kp-nav__auth-buttons {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.kp-nav__login-link {
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  font-family: var(--font-content);
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 8px 10px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.kp-nav__login-link:hover {
+  color: var(--pastel-ink);
+}
+
+:root.dark-mode .kp-nav__login-link {
+  color: #bbadff;
+}
+
 /* Login Button */
 .kp-nav__login-button {
   padding: 8px 20px;

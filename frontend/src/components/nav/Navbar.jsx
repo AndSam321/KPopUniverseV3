@@ -8,6 +8,7 @@ import {
   User,
   Settings,
   CircleHelp,
+  ChartColumn,
   LogOut,
 } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
@@ -192,6 +193,18 @@ export default function Navbar() {
                     <CircleHelp size={18} />
                     <span>help &amp; support</span>
                   </button>
+                  {user.admin && (
+                    <button
+                      className="kp-nav__dropdown-item"
+                      onClick={() => {
+                        setIsDropdownOpen(false);
+                        navigate("/admin");
+                      }}
+                    >
+                      <ChartColumn size={18} />
+                      <span>analytics</span>
+                    </button>
+                  )}
                   <div className="kp-nav__dropdown-divider"></div>
                   <button
                     className="kp-nav__dropdown-item kp-nav__dropdown-item--logout"
@@ -204,12 +217,20 @@ export default function Navbar() {
               )}
             </div>
           ) : (
-            <button
-              className="kp-nav__login-button"
-              onClick={() => navigate("/login")}
-            >
-              log in
-            </button>
+            <div className="kp-nav__auth-buttons">
+              <button
+                className="kp-nav__login-link"
+                onClick={() => navigate("/login")}
+              >
+                log in
+              </button>
+              <button
+                className="kp-nav__login-button"
+                onClick={() => navigate("/register")}
+              >
+                join
+              </button>
+            </div>
           )}
         </div>
       </div>

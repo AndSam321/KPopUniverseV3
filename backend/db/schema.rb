@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_10_05_160900) do
+ActiveRecord::Schema[8.0].define(version: 2026_10_05_183503) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -448,6 +448,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_10_05_160900) do
     t.datetime "updated_at", null: false
     t.jsonb "badges", default: []
     t.jsonb "notification_preferences", default: {"likes" => true, "replies" => true, "comments" => true}, null: false
+    t.boolean "admin", default: false, null: false
     t.index ["badges"], name: "index_users_on_badges", using: :gin
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["idol_points"], name: "index_users_on_idol_points"
