@@ -10,6 +10,7 @@ import { getPosts } from "../api/postsApi";
 import { useAuth } from "../context/AuthContext";
 import PostCard from "../components/posts/PostCard";
 import CreatePost from "../components/posts/CreatePost";
+import BackButton from "../components/common/BackButton";
 import "./CommunityPage.css";
 
 export default function CommunityPage() {
@@ -58,6 +59,7 @@ export default function CommunityPage() {
 
   return (
     <div className="community-page">
+      <BackButton fallback={`/groups/${community.group.id}`} />
       <div className="community-page__header">
         <div className="community-page__heading">
           <h1 className="page-title">{community.name}</h1>

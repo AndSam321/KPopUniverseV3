@@ -25,6 +25,7 @@ import { createConversation } from "../../api/messagesApi";
 import FollowListModal from "./FollowListModal";
 import AvatarCropper from "./AvatarCropper";
 import ProfileToast from "./ProfileToast";
+import BackButton from "../common/BackButton";
 import "./Profile.css";
 
 function Profile() {
@@ -245,6 +246,7 @@ function Profile() {
   return (
     <div className="profile-page">
       <div className="profile-container">
+        <BackButton fallback="/" />
         {/* ========== HERO ========== */}
         <section className="profile-hero">
           <div className="profile-hero__top">

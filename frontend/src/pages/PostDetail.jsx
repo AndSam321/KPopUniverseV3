@@ -7,6 +7,7 @@ import { useNavigationLoading } from "../context/NavigationLoadingContext";
 import CommentItem from "../components/comments/CommentItem";
 import CommentComposer from "../components/comments/CommentComposer";
 import PostDetailSkeleton from "../components/skeletons/PostDetailSkeleton";
+import BackButton from "../components/common/BackButton";
 import "./PostDetail.css";
 
 const FLAIRS = {
@@ -138,20 +139,7 @@ const PostDetail = () => {
   return (
     <div className="post-detail">
       <div className="post-detail__header">
-        <button onClick={() => navigate(-1)} className="post-detail__back">
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            width="20"
-            height="20"
-          >
-            <path d="M19 12H5M12 19l-7-7 7-7" />
-          </svg>
-        </button>
+        <BackButton fallback="/" />
       </div>
 
       {/* Post Content */}

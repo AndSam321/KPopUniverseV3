@@ -8,6 +8,7 @@ import { BellOff, Bell, ChevronDown, ChevronUp } from "lucide-react";
 import PostCard from "../posts/PostCard";
 import CommunitiesSection from "../communities/CommunitiesSection";
 import FadeImage from "../common/FadeImage";
+import BackButton from "../common/BackButton";
 import PostCardSkeleton from "../skeletons/PostCardSkeleton";
 import "./GroupDetail.css";
 import "../skeletons/Skeleton.css";
@@ -173,6 +174,7 @@ const GroupDetail = () => {
 
   return (
     <div className="group-detail">
+      <BackButton fallback="/groups" />
       <div className="group-detail__header">
         {groupData.logo_url && (
           <div className="group-detail__logo">

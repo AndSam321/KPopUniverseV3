@@ -1,0 +1,41 @@
+.back-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 6px 12px 6px 8px;
+  margin-bottom: 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  background: var(--card-bg);
+  color: var(--text-secondary);
+  font-family: var(--font-content);
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease;
+}
+
+.back-button:hover {
+  color: var(--pastel-ink);
+  background: rgba(117, 123, 200, 0.08);
+  transform: translateX(-2px);
+}
+
+:root.dark-mode .back-button {
+  background: var(--dark-card);
+  border-color: rgba(159, 160, 255, 0.18);
+  color: #bbadff;
+}
+
+:root.dark-mode .back-button:hover {
+  color: #e7e2ff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .back-button {
+    transition: none;
+  }
+  .back-button:hover {
+    transform: none;
+  }
+}
