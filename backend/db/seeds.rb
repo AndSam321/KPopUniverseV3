@@ -241,22 +241,27 @@ sample_posts = [
   }
 ]
 
+# Every group needs its official "General" community — users post into these.
+Group.find_each do |group|
+  next if group.communities.exists?(official: true)
+
+  group.communities.create!(name: "General", official: true)
+end
+puts "Ensured General communities (#{Community.where(official: true).count} total)"
+
 users = User.all
 if users.any?
   sample_posts.each do |post_data|
-    user = users.sample
-    post = user.posts.create!(
-      title: post_data[:title],
-      caption: post_data[:caption]
-    )
+    group = Group.find_by(name: post_data[:group_names].first)
+    community = group&.communities&.find_by(official: true)
+    next unless community
 
-    # Add groups to the post
-    post_data[:group_names].each do |group_name|
-      group = Group.find_by(name: group_name)
-      post.groups << group if group
+    Post.find_or_create_by!(title: post_data[:title]) do |post|
+      post.user = users.sample
+      post.caption = post_data[:caption]
+      post.community = community
     end
-
-    puts "  Created post: #{post.title}"
+    puts "  Created/Found post: #{post_data[:title]}"
   end
 end
 
