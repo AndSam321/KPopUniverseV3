@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Share, X, ChevronDown, PlusSquare } from "lucide-react";
+import { Menu, Share, X, ChevronDown, PlusSquare } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 import "./AddToHomeScreen.css";
 
@@ -44,8 +44,9 @@ export default function AddToHomeScreen() {
         <div className="a2hs__text">
           <strong className="a2hs__title">Install K-pop Universe</strong>
           <span className="a2hs__steps">
-            Tap <Share size={15} className="a2hs__icon" strokeWidth={2.5} /> in
-            the toolbar, then{" "}
+            Tap <Menu size={15} className="a2hs__icon" strokeWidth={2.5} /> in the
+            toolbar, then <Share size={15} className="a2hs__icon" strokeWidth={2.5} />{" "}
+            Share, then{" "}
             <span className="a2hs__chip">
               <PlusSquare size={13} strokeWidth={2.5} /> Add to Home Screen
             </span>
