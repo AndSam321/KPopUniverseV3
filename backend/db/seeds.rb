@@ -179,23 +179,31 @@ OLD_SAMPLE_TITLES = [
   "TWICE concert experience",
   "My favorite K-pop groups",
   "aespa's concept is so unique",
-  "ITZY's new album thoughts?"
+  "ITZY's new album thoughts?",
+  # Retired titles from an earlier realistic-seed pass (replaced below)
+  "11 years of TWICE 🥹",
+  "the b-sides on this mini are underrated",
+  "IVE's vocal growth this era is real",
+  "dance practice >>> the MV sometimes",
+  "hot take: (G)I-DLE has no skips",
+  "comeback season predictions?",
+  "ATEEZ live vocals are no joke"
 ]
 Post.where(title: OLD_SAMPLE_TITLES).destroy_all
 
 sample_posts = [
-  { author: "seoul_sonyeondan", group: "BTS", title: "Jin's solo era is treating us so well", caption: "the vocals on this title track?? ending me. what's everyone's fav b-side so far 💜" },
-  { author: "comeback_szn", group: "Stray Kids", title: "new STAY here — where do I start?", caption: "just fell down the rabbit hole with God's Menu and Thunderous. drop your must-listen albums 🙏" },
-  { author: "newjeans_daily", group: "NewJeans", title: "the choreo detail in their latest stage", caption: "the formations are insane, been rewatching on loop. rookies of the gen fr 🐰" },
-  { author: "woozi_vocalline", group: "SEVENTEEN", title: "13 members and not one weak link", caption: "self-producing idols stay winning. Woozi really is the backbone of this group 💎" },
-  { author: "aria_aurora", group: "aespa", title: "aespa's KWANGYA lore is actually elite", caption: "the whole universe they built is so detailed. nobody's doing it like them ✨" },
-  { author: "moonlight_mina", group: "TWICE", title: "11 years of TWICE 🥹", caption: "from rookie days to now... the anniversary pop-up looks gorgeous. ONCE forever 🍭" },
-  { author: "biaswrecked_again", group: "LE SSERAFIM", title: "the b-sides on this mini are underrated", caption: "everyone sleeps on the non-title tracks but they go so hard. FEARNOT rise up" },
-  { author: "lunar_eclipse97", group: "IVE", title: "IVE's vocal growth this era is real", caption: "you can actually hear the improvement live. so proud of them, DIVE stand up" },
-  { author: "danceline_kai", group: "ENHYPEN", title: "dance practice >>> the MV sometimes", caption: "the raw dance practice hits different. the synchronization is unreal 🕺" },
-  { author: "remy_reacts", group: "(G)I-DLE", title: "hot take: (G)I-DLE has no skips", caption: "Soyeon producing bangers back to back. fight me in the replies 🎧" },
-  { author: "seoul_sonyeondan", group: "BTS", title: "comeback season predictions?", caption: "manifesting an OT7 comeback soon. what concept are you hoping for next?" },
-  { author: "danceline_kai", group: "ATEEZ", title: "ATEEZ live vocals are no joke", caption: "they perform like it's their last stage every time. ATINY where you at 🔥" }
+  { author: "seoul_sonyeondan", group: "BTS", title: "Jin's solo era is treating us so well", caption: "been replaying the whole thing all week ngl. what's everyone's favorite b-side? i keep coming back to the ballad one", hours_ago: 2 },
+  { author: "comeback_szn", group: "Stray Kids", title: "new STAY here — where do I start?", caption: "just fell down the rabbit hole after god's menu and thunderous lol. the discography is huge… do i go chronological or just hit the title tracks first?", hours_ago: 5 },
+  { author: "newjeans_daily", group: "NewJeans", title: "the choreo detail in their latest stage", caption: "slowed the dance practice down and the formations are so clean. the footwork is way harder than people give them credit for", hours_ago: 9 },
+  { author: "woozi_vocalline", group: "SEVENTEEN", title: "13 members and not one weak link", caption: "the self-producing really is insane. name another group this size where it doesn't feel crowded. woozi carrying fr", hours_ago: 14 },
+  { author: "aria_aurora", group: "aespa", title: "aespa's KWANGYA lore is actually elite", caption: "everyone just streams the title tracks but the whole worldbuilding thing is so detailed when you actually dig into it", hours_ago: 21 },
+  { author: "moonlight_mina", group: "TWICE", title: "11 years of TWICE and i'm not normal about it", caption: "saw the anniversary pop-up photos and got way too emotional. from the sixteen days to stadiums. once for life", hours_ago: 28 },
+  { author: "biaswrecked_again", group: "LE SSERAFIM", title: "the b-sides on this mini are so underrated", caption: "the non-title tracks go so hard, not a single skip for me. everyone sleeps on them and i genuinely don't get it", hours_ago: 34 },
+  { author: "lunar_eclipse97", group: "IVE", title: "IVE's live vocals have improved so much", caption: "caught a music show recording and they sounded so stable live. the growth since debut is actually crazy", hours_ago: 45 },
+  { author: "danceline_kai", group: "ENHYPEN", title: "hot take: the dance practice > the MV", caption: "the raw practice vids hit different, no cuts just pure sync. wish more of their stages were one-takes honestly", hours_ago: 52 },
+  { author: "remy_reacts", group: "(G)I-DLE", title: "(G)I-DLE genuinely has no skips", caption: "soyeon producing banger after banger. the whole discography slaps and i said what i said", hours_ago: 61 },
+  { author: "seoul_sonyeondan", group: "BTS", title: "comeback predictions for this year?", caption: "manifesting a full comeback soon. what concept are you hoping for? personally praying for another darker era", hours_ago: 73 },
+  { author: "danceline_kai", group: "ATEEZ", title: "ATEEZ live vocals while doing that choreo??", caption: "performing like it's their last stage every single time. the stamina is unreal, how are they not out of breath", hours_ago: 90 }
 ]
 
 # Every group needs its official "General" community — users post into these.
@@ -215,12 +223,13 @@ if users.any?
 
     author = User.find_by(username: post_data[:author]) || users.sample
 
-    Post.find_or_create_by!(title: post_data[:title]) do |post|
-      post.user = author
-      post.caption = post_data[:caption]
-      post.community = community
-    end
-    puts "  Created/Found post: #{post_data[:title]}"
+    post = Post.find_or_initialize_by(title: post_data[:title])
+    post.user = author
+    post.caption = post_data[:caption]
+    post.community = community
+    post.created_at = (post_data[:hours_ago] || 1).hours.ago
+    post.save!
+    puts "  Upserted post: #{post_data[:title]}"
   end
 end
 
