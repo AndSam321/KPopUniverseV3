@@ -151,7 +151,11 @@ baseline_users = [
   { email: "noah@kpop.com", username: "newjeans_daily", bio: "bunnies 🐰 Minji bias wrecker", idol_points: 530, title: "Idol" },
   { email: "kai@kpop.com", username: "danceline_kai", bio: "here for the choreo 🕺 dance practice connoisseur", idol_points: 95, title: "Trainee" },
   { email: "luna@kpop.com", username: "lunar_eclipse97", bio: "97-liner supremacy | multifandom", idol_points: 160, title: "Rising Star" },
-  { email: "remy@kpop.com", username: "remy_reacts", bio: "hot takes & reaction threads 🎧", idol_points: 25, title: "Trainee" }
+  { email: "remy@kpop.com", username: "remy_reacts", bio: "hot takes & reaction threads 🎧", idol_points: 25, title: "Trainee" },
+  { email: "jiwon@kpop.com", username: "melon_charts_daily", bio: "i live on the charts 📊 | gg enthusiast", idol_points: 410, title: "Rising Star" },
+  { email: "theo@kpop.com", username: "vocalpositions", bio: "vocal analysis & live stage appreciation", idol_points: 150, title: "Rising Star" },
+  { email: "mimi@kpop.com", username: "fourthgen_itgirl", bio: "4th & 5th gen gg stan 💅", idol_points: 80, title: "Trainee" },
+  { email: "dae@kpop.com", username: "butterfly_93", bio: "been here since 2nd gen, i'm old lol", idol_points: 620, title: "Idol" }
 ]
 
 baseline_users.each do |user_data|
@@ -170,40 +174,27 @@ end
 
 puts "\nCreating sample posts..."
 
-# Remove the earlier generic sample posts so the seeded feed reads realistically.
-OLD_SAMPLE_TITLES = [
-  "BTS just announced their comeback!",
-  "BLACKPINK's new music video is amazing",
-  "Just got into Stray Kids",
-  "NewJeans performance was incredible",
-  "TWICE concert experience",
-  "My favorite K-pop groups",
-  "aespa's concept is so unique",
-  "ITZY's new album thoughts?",
-  # Retired titles from an earlier realistic-seed pass (replaced below)
-  "11 years of TWICE 🥹",
-  "the b-sides on this mini are underrated",
-  "IVE's vocal growth this era is real",
-  "dance practice >>> the MV sometimes",
-  "hot take: (G)I-DLE has no skips",
-  "comeback season predictions?",
-  "ATEEZ live vocals are no joke"
-]
-Post.where(title: OLD_SAMPLE_TITLES).destroy_all
+# Reset the demo posts each run — they're authored by the known seed users (real
+# users never use these handles), so the curated sample feed stays consistent as
+# topics are refreshed.
+seed_usernames = baseline_users.map { |u| u[:username] }
+Post.joins(:user).where(users: {username: seed_usernames}).destroy_all
 
+# Topics reflect real Oct 2026 happenings for our groups (researched); each post
+# has a unique author.
 sample_posts = [
-  { author: "seoul_sonyeondan", group: "BTS", title: "Jin's solo era is treating us so well", caption: "been replaying the whole thing all week ngl. what's everyone's favorite b-side? i keep coming back to the ballad one", hours_ago: 2 },
-  { author: "comeback_szn", group: "Stray Kids", title: "new STAY here — where do I start?", caption: "just fell down the rabbit hole after god's menu and thunderous lol. the discography is huge… do i go chronological or just hit the title tracks first?", hours_ago: 5 },
-  { author: "newjeans_daily", group: "NewJeans", title: "the choreo detail in their latest stage", caption: "slowed the dance practice down and the formations are so clean. the footwork is way harder than people give them credit for", hours_ago: 9 },
-  { author: "woozi_vocalline", group: "SEVENTEEN", title: "13 members and not one weak link", caption: "the self-producing really is insane. name another group this size where it doesn't feel crowded. woozi carrying fr", hours_ago: 14 },
-  { author: "aria_aurora", group: "aespa", title: "aespa's KWANGYA lore is actually elite", caption: "everyone just streams the title tracks but the whole worldbuilding thing is so detailed when you actually dig into it", hours_ago: 21 },
-  { author: "moonlight_mina", group: "TWICE", title: "11 years of TWICE and i'm not normal about it", caption: "saw the anniversary pop-up photos and got way too emotional. from the sixteen days to stadiums. once for life", hours_ago: 28 },
-  { author: "biaswrecked_again", group: "LE SSERAFIM", title: "the b-sides on this mini are so underrated", caption: "the non-title tracks go so hard, not a single skip for me. everyone sleeps on them and i genuinely don't get it", hours_ago: 34 },
-  { author: "lunar_eclipse97", group: "IVE", title: "IVE's live vocals have improved so much", caption: "caught a music show recording and they sounded so stable live. the growth since debut is actually crazy", hours_ago: 45 },
-  { author: "danceline_kai", group: "ENHYPEN", title: "hot take: the dance practice > the MV", caption: "the raw practice vids hit different, no cuts just pure sync. wish more of their stages were one-takes honestly", hours_ago: 52 },
-  { author: "remy_reacts", group: "(G)I-DLE", title: "(G)I-DLE genuinely has no skips", caption: "soyeon producing banger after banger. the whole discography slaps and i said what i said", hours_ago: 61 },
-  { author: "seoul_sonyeondan", group: "BTS", title: "comeback predictions for this year?", caption: "manifesting a full comeback soon. what concept are you hoping for? personally praying for another darker era", hours_ago: 73 },
-  { author: "danceline_kai", group: "ATEEZ", title: "ATEEZ live vocals while doing that choreo??", caption: "performing like it's their last stage every single time. the stamina is unreal, how are they not out of breath", hours_ago: 90 }
+  { author: "moonlight_mina", group: "TWICE", title: "TWICE comeback on the 16th!!", caption: "we are so back, a full group cb at last. only a week and a half out — what sound are we expecting this time? praying for a more & more type title", hours_ago: 2 },
+  { author: "woozi_vocalline", group: "SEVENTEEN", title: "JxJ (jeonghan x joshua) debut is coming", caption: "the vocal unit dropping DREAMSCAPE on the 19th… their tones layered together is going to be unreal. so ready for this", hours_ago: 6 },
+  { author: "aria_aurora", group: "aespa", title: "SYNK: COMPLæXITY tour was actually unreal", caption: "caught the LA show, the setlist and production were insane. if you're near oakland on the 6th GO. best tour they've done imo", hours_ago: 11 },
+  { author: "lunar_eclipse97", group: "IVE", title: "IVE 'Looks Can Kill' era incoming", caption: "pre-release on the 19th then the EP on the 26th?? they are not giving us a break and i'm here for it. the title alone is so them", hours_ago: 16 },
+  { author: "fourthgen_itgirl", group: "NMIXX", title: "NMIXX 'Strange Muse' with Birthday Wish", caption: "their title tracks are always so experimental, genuinely never know what we're getting. the 19th cannot come fast enough", hours_ago: 21 },
+  { author: "seoul_sonyeondan", group: "BTS", title: "ARIRANG tour cine fest in theaters oct 24-31", caption: "if you couldn't make the actual tour the cinema broadcast is the next best thing. gonna cry in a theater with other armys lol", hours_ago: 29 },
+  { author: "comeback_szn", group: "Stray Kids", title: "skz japanese comeback nov 25", caption: "another JP release locked in. their japanese title tracks go so hard though. who else is already counting down", hours_ago: 37 },
+  { author: "biaswrecked_again", group: "LE SSERAFIM", title: "le sserafim finally back after 7 months", caption: "the hiatus felt so long. hoping this one leans back into the harder sound. fearnot we survived the drought", hours_ago: 44 },
+  { author: "danceline_kai", group: "ENHYPEN", title: "enhypen comeback confirmed for november", caption: "the choreo teasers alone are going to end me. their nov releases always slap. engene assemble", hours_ago: 52 },
+  { author: "melon_charts_daily", group: "TXT", title: "txt's b-sides are so consistently underrated", caption: "everyone talks about the title tracks but half their albums are b-side gold. put some respect on the deep cuts", hours_ago: 63 },
+  { author: "remy_reacts", group: "(G)I-DLE", title: "soyeon's producing run is genuinely insane", caption: "she writes and produces this much of their catalog and it all slaps? name a more consistent idol-producer, i'll wait", hours_ago: 74 },
+  { author: "vocalpositions", group: "ATEEZ", title: "ateez comeback rumors for q4?", caption: "seeing whispers of a comeback but nothing confirmed yet. their live vocals and stamina doing that choreo is unmatched regardless", hours_ago: 88 }
 ]
 
 # Every group needs its official "General" community — users post into these.
