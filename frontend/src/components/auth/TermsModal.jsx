@@ -21,7 +21,7 @@ export default function TermsModal({ isOpen, onClose }) {
           <section className="terms-section">
             <h3 className="terms-heading">1. Acceptance of Terms</h3>
             <p className="terms-text">
-              By accessing and using K·POP UNIVERSE, you accept and agree to be
+              By accessing and using K-pop Universe, you accept and agree to be
               bound by the terms and provision of this agreement. If you do not
               agree to these terms, please do not use our service.
             </p>
@@ -49,7 +49,7 @@ export default function TermsModal({ isOpen, onClose }) {
           <section className="terms-section">
             <h3 className="terms-heading">4. Community Conduct</h3>
             <p className="terms-text">
-              Be respectful to all members of the K·POP UNIVERSE community.
+              Be respectful to all members of the K-pop Universe community.
               Harassment, hate speech, and toxic behavior will not be tolerated
               and may result in account suspension or termination.
             </p>

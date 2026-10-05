@@ -15,10 +15,10 @@ const HomeHero = () => (
     </p>
     <div className="home-hero__actions">
       <Link to="/register" className="home-hero__cta home-hero__cta--primary">
-        Join the community
+        Join the Community
       </Link>
       <Link to="/login" className="home-hero__cta home-hero__cta--ghost">
-        Log in
+        Log In
       </Link>
     </div>
   </section>

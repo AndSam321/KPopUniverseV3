@@ -43,12 +43,12 @@ export default function Login() {
   return (
     <div className="register-page">
       <div className="register-container">
-        <h1 className="register-site-title">k·pop universe</h1>
+        <h1 className="register-site-title">K-pop Universe</h1>
 
         <div className="register-card">
           <header className="register-header">
-            <h2 className="register-title">welcome back</h2>
-            <p className="register-subtitle">log in to your account</p>
+            <h2 className="register-title">Welcome Back</h2>
+            <p className="register-subtitle">Log in to your account</p>
           </header>
 
           {error && <div className="register-error">{error}</div>}
@@ -56,7 +56,7 @@ export default function Login() {
           <form className="register-form" onSubmit={handleSubmit}>
             <div className="form-group">
               <label className="form-label" htmlFor="email">
-                email
+                Email
               </label>
               <input
                 id="email"
@@ -72,7 +72,7 @@ export default function Login() {
 
             <div className="form-group">
               <label className="form-label" htmlFor="password">
-                password
+                Password
               </label>
               <input
                 id="password"
@@ -90,14 +90,14 @@ export default function Login() {
               className="register-button"
               disabled={loading}
             >
-              {loading ? "logging in..." : "log In"}
+              {loading ? "Logging in..." : "Log In"}
             </button>
           </form>
 
           <p className="register-footer-text">
-            don’t have an account yet?{" "}
+            Don’t have an account yet?{" "}
             <a href="/register" className="register-footer-link">
-              sign up
+              Sign Up
             </a>
           </p>
         </div>

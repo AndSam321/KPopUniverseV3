@@ -28,7 +28,7 @@ const BetaToast = () => {
     <div className="beta-toast" role="status">
       <Sparkles size={16} strokeWidth={2.5} className="beta-toast__icon" />
       <span className="beta-toast__message">
-        KPop Universe is in beta — more groups and features are on the way. We'd
+        K-pop Universe is in beta — more groups and features are on the way. We'd
         love your feedback!
       </span>
       <button

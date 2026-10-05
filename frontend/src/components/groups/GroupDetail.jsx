@@ -298,7 +298,7 @@ const GroupDetail = () => {
 
       <div className="group-detail__content">
         <div className="group-detail__posts-header">
-          <h2>Recent posts</h2>
+          <h2>Recent Posts</h2>
         </div>
 
         {loading ? (

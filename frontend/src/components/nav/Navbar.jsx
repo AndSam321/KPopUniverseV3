@@ -91,22 +91,22 @@ export default function Navbar() {
             alt="KPop Universe Logo"
             className="kp-nav__logo-mark"
           />
-          <div className="kp-nav__logo-text">k-pop universe</div>
+          <div className="kp-nav__logo-text">K-pop Universe</div>
         </div>
 
         {/* Center: Nav Links (desktop) */}
         <div className="kp-nav__center">
           <NavLink to="/" end className={({ isActive }) => (isActive ? "kp-nav__link kp-nav__link--active" : "kp-nav__link")}>
             <TrendingUp className="kp-nav__icon" />
-            <span className="kp-nav__label">for you</span>
+            <span className="kp-nav__label">For You</span>
           </NavLink>
           <NavLink to="/following" className={({ isActive }) => (isActive ? "kp-nav__link kp-nav__link--active" : "kp-nav__link")}>
             <ContactRound className="kp-nav__icon" />
-            <span className="kp-nav__label">following</span>
+            <span className="kp-nav__label">Following</span>
           </NavLink>
           <NavLink to="/groups" className={({ isActive }) => (isActive ? "kp-nav__link kp-nav__link--active" : "kp-nav__link")}>
             <Users className="kp-nav__icon" />
-            <span className="kp-nav__label">explore</span>
+            <span className="kp-nav__label">Explore</span>
           </NavLink>
         </div>
 
@@ -118,7 +118,7 @@ export default function Navbar() {
             <>
               <button className="kp-nav__create-desktop" onClick={openCreate}>
                 <Plus size={18} strokeWidth={2.5} />
-                <span>post</span>
+                <span>Post</span>
               </button>
               <button className="kp-nav__create-mobile" onClick={openCreate} aria-label="create post">
                 <Plus size={22} strokeWidth={2.5} />
@@ -149,26 +149,26 @@ export default function Navbar() {
                 <div className="kp-nav__dropdown">
                   <button className="kp-nav__dropdown-item" onClick={() => { setIsDropdownOpen(false); navigate("/profile"); }}>
                     <User size={18} />
-                    <span>view my profile</span>
+                    <span>View Profile</span>
                   </button>
                   <button className="kp-nav__dropdown-item" onClick={() => { setIsDropdownOpen(false); navigate("/settings"); }}>
                     <Settings size={18} />
-                    <span>account settings</span>
+                    <span>Account Settings</span>
                   </button>
                   <button className="kp-nav__dropdown-item" onClick={() => { setIsDropdownOpen(false); navigate("/help"); }}>
                     <CircleHelp size={18} />
-                    <span>help &amp; support</span>
+                    <span>Help &amp; Support</span>
                   </button>
                   {user.admin && (
                     <button className="kp-nav__dropdown-item" onClick={() => { setIsDropdownOpen(false); navigate("/admin"); }}>
                       <ChartColumn size={18} />
-                      <span>analytics</span>
+                      <span>Analytics</span>
                     </button>
                   )}
                   <div className="kp-nav__dropdown-divider"></div>
                   <button className="kp-nav__dropdown-item kp-nav__dropdown-item--logout" onClick={handleLogout}>
                     <LogOut size={18} />
-                    <span>log out</span>
+                    <span>Log Out</span>
                   </button>
                 </div>
               )}
@@ -176,10 +176,10 @@ export default function Navbar() {
           ) : (
             <div className="kp-nav__auth-buttons">
               <button className="kp-nav__login-link" onClick={() => navigate("/login")}>
-                log in
+                Log In
               </button>
               <button className="kp-nav__login-button" onClick={() => navigate("/register")}>
-                join
+                Join
               </button>
             </div>
           )}
@@ -191,7 +191,7 @@ export default function Navbar() {
         <div className="kp-nav__mobile-tabs">
           <NavLink to="/" end className={tabClass}>
             <House size={22} />
-            <span>home</span>
+            <span>Home</span>
           </NavLink>
           <NavLink to="/messages" className={tabClass}>
             <span className="kp-nav__tab-icon">
@@ -200,7 +200,7 @@ export default function Navbar() {
                 <span className="kp-nav__tab-badge">{unreadCount > 99 ? "99+" : unreadCount}</span>
               )}
             </span>
-            <span>inbox</span>
+            <span>Inbox</span>
           </NavLink>
           <NavLink to="/profile" className={tabClass}>
             <span className="kp-nav__tab-avatar">
@@ -210,7 +210,7 @@ export default function Navbar() {
                 user.username?.charAt(0).toUpperCase() || "U"
               )}
             </span>
-            <span>you</span>
+            <span>You</span>
           </NavLink>
         </div>
       )}

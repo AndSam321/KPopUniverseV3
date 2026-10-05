@@ -82,7 +82,7 @@ export default function CommunitiesSection({ groupId }) {
             className="communities-create-btn"
             onClick={() => setCreating(true)}
           >
-            <Plus size={14} strokeWidth={2.5} /> Create community
+            <Plus size={14} strokeWidth={2.5} /> Create Community
           </button>
         )}
       </div>
