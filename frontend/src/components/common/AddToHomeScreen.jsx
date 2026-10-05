@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { Menu, Share, X, ChevronDown, PlusSquare } from "lucide-react";
+import { Link } from "react-router-dom";
+import { X, ChevronRight } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 import "./AddToHomeScreen.css";
 
@@ -27,7 +28,9 @@ export default function AddToHomeScreen() {
     return () => clearTimeout(id);
   }, [user]);
 
-  const dismiss = () => {
+  const dismiss = (e) => {
+    e?.preventDefault();
+    e?.stopPropagation();
     setVisible(false);
     localStorage.setItem(STORAGE_KEY, "1");
   };
@@ -35,27 +38,16 @@ export default function AddToHomeScreen() {
   if (!visible) return null;
 
   return (
-    <div className="a2hs" role="dialog" aria-label="Add to home screen">
+    <Link to="/install" className="a2hs" onClick={() => setVisible(false)}>
+      <img src="/kpopuniverselogo.svg" alt="" className="a2hs__logo" />
+      <div className="a2hs__text">
+        <strong className="a2hs__title">Get the full experience</strong>
+        <span className="a2hs__sub">Add K-pop Universe to your Home Screen</span>
+      </div>
+      <ChevronRight size={20} strokeWidth={2.5} className="a2hs__chevron" />
       <button className="a2hs__close" onClick={dismiss} aria-label="dismiss">
         <X size={16} strokeWidth={2.5} />
       </button>
-      <div className="a2hs__body">
-        <img src="/kpopuniverselogo.svg" alt="" className="a2hs__logo" />
-        <div className="a2hs__text">
-          <strong className="a2hs__title">Install K-pop Universe</strong>
-          <span className="a2hs__steps">
-            Tap <Menu size={15} className="a2hs__icon" strokeWidth={2.5} /> in the
-            toolbar, then <Share size={15} className="a2hs__icon" strokeWidth={2.5} />{" "}
-            Share, then{" "}
-            <span className="a2hs__chip">
-              <PlusSquare size={13} strokeWidth={2.5} /> Add to Home Screen
-            </span>
-          </span>
-        </div>
-      </div>
-      <div className="a2hs__arrow" aria-hidden="true">
-        <ChevronDown size={28} strokeWidth={2.5} />
-      </div>
-    </div>
+    </Link>
   );
 }

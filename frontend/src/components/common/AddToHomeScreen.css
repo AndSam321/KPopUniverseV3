@@ -4,12 +4,16 @@
   transform: translateX(-50%);
   bottom: calc(64px + env(safe-area-inset-bottom, 0px) + 18px);
   z-index: 1300;
+  display: flex;
+  align-items: center;
+  gap: 12px;
   width: min(420px, calc(100% - 24px));
-  padding: 14px 40px 14px 16px;
-  border-radius: 18px;
+  padding: 12px 40px 12px 14px;
+  border-radius: 16px;
   background: var(--card-bg);
   border: 1px solid rgba(117, 123, 200, 0.22);
   box-shadow: 0 12px 30px rgba(120, 110, 150, 0.28);
+  text-decoration: none;
   animation: a2hsRise 300ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -18,15 +22,9 @@
   to   { opacity: 1; transform: translate(-50%, 0); }
 }
 
-.a2hs__body {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
 .a2hs__logo {
-  width: 40px;
-  height: 40px;
+  width: 38px;
+  height: 38px;
   flex-shrink: 0;
   border-radius: 10px;
   background: var(--pastel-orchid);
@@ -36,43 +34,34 @@
 .a2hs__text {
   display: flex;
   flex-direction: column;
-  gap: 3px;
-  font-family: var(--font-content);
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
 }
 
 .a2hs__title {
-  font-size: 0.95rem;
+  font-family: var(--font-content);
+  font-size: 0.92rem;
   font-weight: 700;
   color: var(--text-primary);
 }
 
-.a2hs__steps {
-  font-size: 0.82rem;
-  line-height: 1.5;
+.a2hs__sub {
+  font-family: var(--font-content);
+  font-size: 0.8rem;
+  line-height: 1.35;
   color: var(--text-secondary);
 }
 
-.a2hs__icon {
-  vertical-align: -3px;
+.a2hs__chevron {
+  flex-shrink: 0;
   color: var(--accent-link);
-}
-
-.a2hs__chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  padding: 1px 7px;
-  border-radius: 7px;
-  background: rgba(117, 123, 200, 0.12);
-  color: var(--accent-link);
-  font-weight: 600;
-  white-space: nowrap;
 }
 
 .a2hs__close {
   position: absolute;
-  top: 8px;
-  right: 8px;
+  top: 7px;
+  right: 7px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -89,20 +78,6 @@
   background: rgba(0, 0, 0, 0.05);
 }
 
-.a2hs__arrow {
-  position: absolute;
-  left: 50%;
-  bottom: -24px;
-  transform: translateX(-50%);
-  color: var(--gradient-end);
-  animation: a2hsBounce 1.3s ease-in-out infinite;
-}
-
-@keyframes a2hsBounce {
-  0%, 100% { transform: translate(-50%, 0); }
-  50% { transform: translate(-50%, 7px); }
-}
-
 :root.dark-mode .a2hs {
   background: var(--dark-card);
   border-color: rgba(159, 160, 255, 0.24);
@@ -114,5 +89,4 @@
 
 @media (prefers-reduced-motion: reduce) {
   .a2hs { animation: none; }
-  .a2hs__arrow { animation: none; }
 }
