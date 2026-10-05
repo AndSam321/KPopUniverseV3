@@ -359,6 +359,40 @@
   display: none;
 }
 
+/* Burger + mobile create are hidden on desktop; desktop-only shows normally */
+.kp-nav__burger,
+.kp-nav__create-mobile {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.kp-nav__burger {
+  background: transparent;
+  color: var(--text-secondary);
+}
+
+.kp-nav__burger:hover {
+  background: rgba(120, 110, 150, 0.1);
+  color: var(--pastel-ink);
+}
+
+.kp-nav__create-mobile {
+  background: var(--gradient-end);
+  color: #fff;
+}
+
+.kp-nav__desktop-only {
+  display: inline-flex;
+  align-items: center;
+}
+
 /* === Responsive === */
 @media (max-width: 720px) {
   .kp-nav__center {
@@ -447,27 +481,59 @@
     color: var(--pastel-ink);
   }
 
-  /* Center create (+) button */
-  .kp-nav__create-tab {
-    flex-shrink: 0;
+  /* Badge on the inbox tab */
+  .kp-nav__tab-icon {
+    position: relative;
+    display: flex;
+  }
+
+  .kp-nav__tab-badge {
+    position: absolute;
+    top: -5px;
+    right: -8px;
+    min-width: 16px;
+    height: 16px;
+    padding: 0 4px;
+    border-radius: 999px;
+    background: var(--accent-pink);
+    color: #fff;
+    font-size: 0.62rem;
+    font-weight: 700;
     display: flex;
     align-items: center;
     justify-content: center;
-    align-self: center;
-    width: 48px;
-    height: 48px;
-    margin: 0 6px;
-    margin-top: -8px;
-    border: none;
-    border-radius: 999px;
-    background: var(--gradient-end);
-    color: #fff;
-    cursor: pointer;
-    box-shadow: 0 4px 14px rgba(117, 123, 200, 0.45);
   }
 
-  /* Desktop create button never shows in the mobile bar */
-  .kp-nav__create-desktop {
+  /* Avatar on the "you" tab */
+  .kp-nav__tab-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 999px;
+    overflow: hidden;
+    background: var(--pastel-orchid);
+    color: var(--pastel-ink);
+    font-size: 0.72rem;
+    font-weight: 700;
+  }
+
+  .kp-nav__tab-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Mobile top-bar: burger replaces the logo, + replaces desktop post pill */
+  .kp-nav__burger,
+  .kp-nav__create-mobile {
+    display: flex;
+  }
+
+  .kp-nav__left,
+  .kp-nav__create-desktop,
+  .kp-nav__desktop-only {
     display: none;
   }
 }

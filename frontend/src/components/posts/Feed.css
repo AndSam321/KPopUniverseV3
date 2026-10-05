@@ -93,6 +93,43 @@
   margin-top: 2rem;
 }
 
+/* For You / Following toggle (mobile) */
+.feed__tabs {
+  display: none;
+  gap: 4px;
+  background: rgba(117, 123, 200, 0.1);
+  border-radius: 999px;
+  padding: 4px;
+}
+
+.feed__tab {
+  flex: 1;
+  text-align: center;
+  padding: 8px 0;
+  border-radius: 999px;
+  font-family: var(--font-content);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.feed__tab--active {
+  background: var(--card-bg);
+  color: var(--pastel-ink);
+  box-shadow: 0 2px 6px rgba(120, 110, 150, 0.12);
+}
+
+@media (max-width: 720px) {
+  .feed__title {
+    display: none;
+  }
+  .feed__tabs {
+    display: flex;
+  }
+}
+
 /* Gentle fade-in so switching tabs isn't a hard cut */
 .feed__posts--enter {
   animation: feedFadeIn 260ms cubic-bezier(0.22, 1, 0.36, 1);

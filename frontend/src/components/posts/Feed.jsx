@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
+import { NavLink } from "react-router-dom";
 import { getPosts, getFollowingFeed } from "../../api/postsApi";
 import { useNavigationLoading } from "../../context/NavigationLoadingContext";
 import PostCard from "./PostCard";
@@ -107,7 +108,15 @@ const Feed = ({ variant = "for-you" }) => {
   return (
     <div className="feed">
       <div className="feed__header">
-        <h1 className="page-title">{variant === "following" ? "following" : "for you"}</h1>
+        <h1 className="page-title feed__title">{variant === "following" ? "following" : "for you"}</h1>
+        <div className="feed__tabs">
+          <NavLink to="/" end className={({ isActive }) => (isActive ? "feed__tab feed__tab--active" : "feed__tab")}>
+            For You
+          </NavLink>
+          <NavLink to="/following" className={({ isActive }) => (isActive ? "feed__tab feed__tab--active" : "feed__tab")}>
+            Following
+          </NavLink>
+        </div>
       </div>
 
       {initialLoading ? (
