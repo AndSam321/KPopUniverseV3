@@ -51,7 +51,7 @@ export default function Messages() {
   const { conversationId } = useParams();
   const navigate = useNavigate();
   const { user } = useAuth();
-  const { lastEvent, setUnreadCount } = useMessages();
+  const { lastEvent, setUnreadCount, sendTyping } = useMessages();
 
   const [conversations, setConversations] = useState([]);
   const [convPage, setConvPage] = useState(1);
@@ -66,12 +66,15 @@ export default function Messages() {
 
   const [body, setBody] = useState("");
   const [sending, setSending] = useState(false);
+  const [peerTyping, setPeerTyping] = useState(false);
 
   const messagesRef = useRef(null);
   const endRef = useRef(null);
   const listSentinelRef = useRef(null);
   const conversationsRef = useRef([]);
   const conversationIdRef = useRef(conversationId);
+  const typingHideRef = useRef(null);
+  const typingSentAtRef = useRef(0);
 
   useEffect(() => {
     conversationsRef.current = conversations;
@@ -116,6 +119,8 @@ export default function Messages() {
 
   // --- Open thread (latest page) ---
   useEffect(() => {
+    setPeerTyping(false);
+    clearTimeout(typingHideRef.current);
     if (!conversationId) {
       setActiveConversation(null);
       setMessages([]);
@@ -164,6 +169,15 @@ export default function Messages() {
     if (!lastEvent) return;
     const openId = conversationIdRef.current;
 
+    if (lastEvent.type === "typing") {
+      if (String(lastEvent.conversation_id) === String(openId) && lastEvent.user_id !== user?.id) {
+        setPeerTyping(true);
+        clearTimeout(typingHideRef.current);
+        typingHideRef.current = setTimeout(() => setPeerTyping(false), 3000);
+      }
+      return;
+    }
+
     if (lastEvent.type === "read") {
       setConversations((prev) =>
         prev.map((c) => (c.id === lastEvent.conversation_id ? { ...c, unread_count: 0 } : c))
@@ -180,6 +194,8 @@ export default function Messages() {
     }
 
     if (String(convId) === String(openId)) {
+      setPeerTyping(false);
+      clearTimeout(typingHideRef.current);
       setMessages((prev) => appendUnique(prev, message));
       scrollToBottom();
       if (message.sender_id !== user?.id) {
@@ -189,6 +205,17 @@ export default function Messages() {
       }
     }
   }, [lastEvent]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const handleBodyChange = (event) => {
+    setBody(event.target.value);
+    const now = Date.now();
+    if (conversationId && now - typingSentAtRef.current > 2000) {
+      typingSentAtRef.current = now;
+      sendTyping(conversationId);
+    }
+  };
+
+  useEffect(() => () => clearTimeout(typingHideRef.current), []);
 
   const handleSend = async (event) => {
     event.preventDefault();
@@ -281,6 +308,13 @@ export default function Messages() {
                   </div>
                 ))
               )}
+              {peerTyping && (
+                <div className="dm__bubble dm__typing" aria-label="typing">
+                  <span className="dm__dot" />
+                  <span className="dm__dot" />
+                  <span className="dm__dot" />
+                </div>
+              )}
               <div ref={endRef} />
             </div>
 
@@ -290,7 +324,7 @@ export default function Messages() {
                 className="dm__input"
                 placeholder="Message…"
                 value={body}
-                onChange={(event) => setBody(event.target.value)}
+                onChange={handleBodyChange}
                 maxLength={5000}
               />
               <button type="submit" className="dm__send" disabled={!body.trim() || sending} aria-label="Send">
