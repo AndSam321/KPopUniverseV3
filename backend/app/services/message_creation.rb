@@ -1,16 +1,16 @@
 class MessageCreation
-  def self.call(conversation:, sender:, body:)
-    new(conversation, sender, body).call
+  def self.call(conversation:, sender:, attributes:)
+    new(conversation, sender, attributes).call
   end
 
-  def initialize(conversation, sender, body)
+  def initialize(conversation, sender, attributes)
     @conversation = conversation
     @sender = sender
-    @body = body
+    @attributes = attributes
   end
 
   def call
-    message = @conversation.messages.create!(sender: @sender, body: @body)
+    message = @conversation.messages.create!(@attributes.to_h.merge(sender: @sender))
     @conversation.update!(last_message_at: message.created_at)
     broadcast(message)
     message

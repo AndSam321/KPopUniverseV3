@@ -15,13 +15,17 @@ class Api::V1::MessagesController < Api::V1::BaseController
   end
 
   def create
-    message = MessageCreation.call(conversation: @conversation, sender: current_user, body: params[:body])
+    message = MessageCreation.call(conversation: @conversation, sender: current_user, attributes: message_params)
     render json: {status: "success", data: MessageSerializer.call(message)}, status: :created
   rescue ActiveRecord::RecordInvalid => e
     render json: {status: "error", message: e.record.errors.full_messages.to_sentence}, status: :unprocessable_entity
   end
 
   private
+
+  def message_params
+    params.permit(:body, :image, :image_url)
+  end
 
   def set_conversation
     @conversation = Conversation.for_user(current_user).find(params[:conversation_id])

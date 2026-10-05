@@ -13,7 +13,7 @@ RSpec.describe "Api::V1::Conversations", type: :request do
 
     it "lists the current user's conversations with an unread count" do
       conversation = Conversation.between(alice, bob)
-      MessageCreation.call(conversation:, sender: bob, body: "Hey Alice")
+      MessageCreation.call(conversation:, sender: bob, attributes: {body: "Hey Alice"})
 
       get "/api/v1/conversations", headers: auth_headers(alice)
 
@@ -61,7 +61,7 @@ RSpec.describe "Api::V1::Conversations", type: :request do
   describe "GET /api/v1/conversations/unread_count" do
     it "returns the total unread message count" do
       conversation = Conversation.between(alice, bob)
-      MessageCreation.call(conversation:, sender: bob, body: "Hi")
+      MessageCreation.call(conversation:, sender: bob, attributes: {body: "Hi"})
 
       get "/api/v1/conversations/unread_count", headers: auth_headers(alice)
 
@@ -72,7 +72,7 @@ RSpec.describe "Api::V1::Conversations", type: :request do
   describe "POST /api/v1/conversations/:id/read" do
     it "marks the conversation's incoming messages read" do
       conversation = Conversation.between(alice, bob)
-      MessageCreation.call(conversation:, sender: bob, body: "Hi")
+      MessageCreation.call(conversation:, sender: bob, attributes: {body: "Hi"})
 
       post "/api/v1/conversations/#{conversation.id}/read", headers: auth_headers(alice)
 

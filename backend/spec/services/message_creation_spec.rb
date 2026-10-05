@@ -6,21 +6,21 @@ RSpec.describe MessageCreation do
 
   it "creates a message in the conversation" do
     expect {
-      described_class.call(conversation:, sender:, body: "Hello")
+      described_class.call(conversation:, sender:, attributes: {body: "Hello"})
     }.to change(conversation.messages, :count).by(1)
   end
 
   it "advances the conversation's last_message_at" do
     conversation.update!(last_message_at: 1.day.ago)
 
-    message = described_class.call(conversation:, sender:, body: "Hi")
+    message = described_class.call(conversation:, sender:, attributes: {body: "Hi"})
 
     expect(conversation.reload.last_message_at).to be_within(1.second).of(message.created_at)
   end
 
   it "broadcasts to the recipient's inbox" do
     expect {
-      described_class.call(conversation:, sender:, body: "Hi")
+      described_class.call(conversation:, sender:, attributes: {body: "Hi"})
     }.to have_broadcasted_to(conversation.user_two).from_channel(InboxChannel)
   end
 end

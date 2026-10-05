@@ -1,0 +1,113 @@
+.nm-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 10vh;
+  background: rgba(31, 31, 46, 0.45);
+  backdrop-filter: blur(2px);
+}
+
+.nm-modal {
+  width: 100%;
+  max-width: 440px;
+  max-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  box-shadow: 0 20px 50px rgba(31, 31, 46, 0.3);
+  overflow: hidden;
+}
+
+.nm-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 16px 10px;
+}
+
+.nm-title {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.nm-close {
+  display: flex;
+  border: none;
+  background: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 4px;
+}
+
+.nm-search {
+  margin: 0 16px 12px;
+}
+
+.nm-results {
+  overflow-y: auto;
+  padding: 0 8px 8px;
+}
+
+.nm-hint {
+  padding: 16px;
+  color: var(--text-muted);
+  font-size: 14px;
+  text-align: center;
+}
+
+.nm-result {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 10px 12px;
+  border: none;
+  background: none;
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s ease;
+}
+
+.nm-result:hover {
+  background: rgba(162, 210, 255, 0.15);
+}
+
+.nm-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.nm-avatar--fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--pastel-orchid);
+  color: var(--pastel-ink);
+  font-weight: 700;
+}
+
+.nm-username {
+  flex: 1;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.nm-badge {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--pastel-ink);
+  background: var(--pastel-ice);
+  padding: 2px 8px;
+  border-radius: 999px;
+}

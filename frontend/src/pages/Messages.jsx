@@ -1,15 +1,20 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { ArrowLeft, Send } from "lucide-react";
+import { ArrowLeft, Send, ImagePlus, X, PenSquare } from "lucide-react";
 import {
   getConversations,
   getMessages,
   markConversationRead,
   sendMessage,
 } from "../api/messagesApi";
+import GifPicker from "../components/comments/GifPicker";
+import NewMessageModal from "../components/messages/NewMessageModal";
 import { useAuth } from "../context/AuthContext";
 import { useMessages } from "../context/MessagesContext";
 import "./Messages.css";
+
+const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
+const ACCEPTED_IMAGES = "image/jpeg,image/jpg,image/png,image/gif,image/webp";
 
 function timeAgo(dateString) {
   const seconds = Math.floor((new Date() - new Date(dateString)) / 1000);
@@ -32,6 +37,14 @@ function Avatar({ user }) {
 
 const appendUnique = (list, message) =>
   list.some((m) => m.id === message.id) ? list : [...list, message];
+
+const conversationPreview = (conversation) => {
+  const last = conversation.last_message;
+  if (!last) return "Say hi 👋";
+  if (last.body) return last.body;
+  if (last.image) return last.image.is_gif ? "GIF" : "📷 Photo";
+  return "";
+};
 
 const upsertConversation = (list, convId, message, openId, myId) => {
   const existing = list.find((c) => c.id === convId);
@@ -67,7 +80,13 @@ export default function Messages() {
   const [body, setBody] = useState("");
   const [sending, setSending] = useState(false);
   const [peerTyping, setPeerTyping] = useState(false);
+  const [imageFile, setImageFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
+  const [gifUrl, setGifUrl] = useState(null);
+  const [showGifPicker, setShowGifPicker] = useState(false);
+  const [showCompose, setShowCompose] = useState(false);
 
+  const fileInputRef = useRef(null);
   const messagesRef = useRef(null);
   const endRef = useRef(null);
   const listSentinelRef = useRef(null);
@@ -121,6 +140,14 @@ export default function Messages() {
   useEffect(() => {
     setPeerTyping(false);
     clearTimeout(typingHideRef.current);
+    setBody("");
+    setShowGifPicker(false);
+    setImageFile(null);
+    setGifUrl(null);
+    setImagePreview((prev) => {
+      if (prev) URL.revokeObjectURL(prev);
+      return null;
+    });
     if (!conversationId) {
       setActiveConversation(null);
       setMessages([]);
@@ -216,17 +243,45 @@ export default function Messages() {
   };
 
   useEffect(() => () => clearTimeout(typingHideRef.current), []);
+  useEffect(() => () => imagePreview && URL.revokeObjectURL(imagePreview), [imagePreview]);
+
+  const clearAttachment = () => {
+    if (imagePreview) URL.revokeObjectURL(imagePreview);
+    setImageFile(null);
+    setImagePreview(null);
+    setGifUrl(null);
+  };
+
+  const handleFile = (event) => {
+    const file = event.target.files[0];
+    event.target.value = "";
+    if (!file || file.size > MAX_IMAGE_SIZE) return;
+    clearAttachment();
+    setImageFile(file);
+    setImagePreview(URL.createObjectURL(file));
+  };
+
+  const handleGifSelect = (url) => {
+    clearAttachment();
+    setGifUrl(url);
+    setShowGifPicker(false);
+  };
 
   const handleSend = async (event) => {
     event.preventDefault();
     const text = body.trim();
-    if (!text || sending) return;
+    if ((!text && !imageFile && !gifUrl) || sending) return;
     setSending(true);
     try {
-      const message = await sendMessage(conversationId, text);
+      const message = await sendMessage(conversationId, {
+        body: text || undefined,
+        image: imageFile,
+        imageUrl: gifUrl,
+      });
       setMessages((prev) => appendUnique(prev, message));
       setConversations((prev) => upsertConversation(prev, message.conversation_id, message, conversationId, user?.id));
       setBody("");
+      clearAttachment();
       scrollToBottom();
     } catch {
       // keep the draft so the user can retry
@@ -238,7 +293,17 @@ export default function Messages() {
   return (
     <div className={`dm ${conversationId ? "dm--thread-open" : ""}`}>
       <aside className="dm__list">
-        <h1 className="page-title dm__title">Messages</h1>
+        <div className="dm__list-header">
+          <h1 className="page-title dm__title">Messages</h1>
+          <button
+            type="button"
+            className="dm__new"
+            onClick={() => setShowCompose(true)}
+            aria-label="New message"
+          >
+            <PenSquare size={20} />
+          </button>
+        </div>
         {conversations.length === 0 ? (
           <p className="dm__empty">No conversations yet.</p>
         ) : (
@@ -262,7 +327,7 @@ export default function Messages() {
                       )}
                     </span>
                     <span className="dm__conversation-preview">
-                      {conversation.last_message?.body || "Say hi 👋"}
+                      {conversationPreview(conversation)}
                     </span>
                   </span>
                   {conversation.unread_count > 0 && <span className="dm__unread-dot" />}
@@ -301,9 +366,21 @@ export default function Messages() {
                 messages.map((message) => (
                   <div
                     key={message.id}
-                    className={`dm__bubble ${message.sender_id === user?.id ? "dm__bubble--mine" : ""}`}
+                    className={`dm__bubble ${message.sender_id === user?.id ? "dm__bubble--mine" : ""} ${
+                      message.image ? "dm__bubble--media" : ""
+                    }`}
                   >
-                    <span className="dm__bubble-text">{message.body}</span>
+                    {message.image && (
+                      <a
+                        href={message.image.url}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="dm__bubble-media"
+                      >
+                        <img src={message.image.thumbnail_url} alt="" referrerPolicy="no-referrer" />
+                      </a>
+                    )}
+                    {message.body && <span className="dm__bubble-text">{message.body}</span>}
                     <span className="dm__bubble-time">{timeAgo(message.created_at)}</span>
                   </div>
                 ))
@@ -318,7 +395,44 @@ export default function Messages() {
               <div ref={endRef} />
             </div>
 
+            {(imagePreview || gifUrl) && (
+              <div className="dm__attachment">
+                <img src={imagePreview || gifUrl} alt="attachment preview" referrerPolicy="no-referrer" />
+                <button type="button" className="dm__attachment-remove" onClick={clearAttachment} aria-label="Remove attachment">
+                  <X size={14} />
+                </button>
+              </div>
+            )}
+
             <form className="dm__compose" onSubmit={handleSend}>
+              <button
+                type="button"
+                className="dm__compose-btn"
+                onClick={() => fileInputRef.current?.click()}
+                aria-label="Add photo"
+              >
+                <ImagePlus size={20} />
+              </button>
+              <div className="dm__gif-wrap">
+                <button
+                  type="button"
+                  className="dm__compose-btn dm__gif-btn"
+                  onClick={() => setShowGifPicker((v) => !v)}
+                  aria-label="Add GIF"
+                >
+                  GIF
+                </button>
+                {showGifPicker && (
+                  <GifPicker onSelect={handleGifSelect} onClose={() => setShowGifPicker(false)} />
+                )}
+              </div>
+              <input
+                type="file"
+                ref={fileInputRef}
+                accept={ACCEPTED_IMAGES}
+                onChange={handleFile}
+                hidden
+              />
               <input
                 type="text"
                 className="dm__input"
@@ -327,13 +441,20 @@ export default function Messages() {
                 onChange={handleBodyChange}
                 maxLength={5000}
               />
-              <button type="submit" className="dm__send" disabled={!body.trim() || sending} aria-label="Send">
+              <button
+                type="submit"
+                className="dm__send"
+                disabled={(!body.trim() && !imageFile && !gifUrl) || sending}
+                aria-label="Send"
+              >
                 <Send size={18} />
               </button>
             </form>
           </>
         )}
       </section>
+
+      {showCompose && <NewMessageModal onClose={() => setShowCompose(false)} />}
     </div>
   );
 }

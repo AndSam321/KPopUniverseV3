@@ -7,7 +7,7 @@ RSpec.describe "Api::V1::Messages", type: :request do
 
   describe "GET /api/v1/conversations/:conversation_id/messages" do
     it "returns the thread and marks incoming messages read" do
-      MessageCreation.call(conversation:, sender: bob, body: "Hello Alice")
+      MessageCreation.call(conversation:, sender: bob, attributes: {body: "Hello Alice"})
 
       get "/api/v1/conversations/#{conversation.id}/messages", headers: auth_headers(alice)
 
@@ -35,7 +35,27 @@ RSpec.describe "Api::V1::Messages", type: :request do
       expect(response).to have_http_status(:created)
     end
 
-    it "rejects a blank body" do
+    it "sends a GIF with no text" do
+      post "/api/v1/conversations/#{conversation.id}/messages",
+        params: {image_url: "https://media.giphy.com/x.gif"}, headers: auth_headers(alice)
+
+      expect(response).to have_http_status(:created)
+      expect(json_response["data"]["image"]["is_gif"]).to be(true)
+    end
+
+    it "sends an uploaded photo" do
+      file = fixture_file_upload("test.png", "image/png")
+
+      expect {
+        post "/api/v1/conversations/#{conversation.id}/messages",
+          params: {image: file}, headers: auth_headers(alice)
+      }.to change(conversation.messages, :count).by(1)
+
+      expect(response).to have_http_status(:created)
+      expect(json_response["data"]["image"]["url"]).to be_present
+    end
+
+    it "rejects a message with neither text nor image" do
       post "/api/v1/conversations/#{conversation.id}/messages",
         params: {body: ""}, headers: auth_headers(alice)
 

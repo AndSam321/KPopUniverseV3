@@ -20,9 +20,34 @@
   overflow-y: auto;
 }
 
+.dm__list-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 12px;
+}
+
 .dm__title {
   padding: 18px 16px 10px;
   font-size: 1.5rem;
+}
+
+.dm__new {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border: none;
+  border-radius: 50%;
+  background: none;
+  color: var(--pastel-ink);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.dm__new:hover {
+  background: rgba(162, 210, 255, 0.2);
 }
 
 .dm__empty,
@@ -210,6 +235,61 @@
   color: rgba(31, 42, 68, 0.6);
 }
 
+.dm__bubble--media {
+  padding: 4px;
+  gap: 4px;
+}
+
+.dm__bubble-media {
+  display: block;
+  max-width: 240px;
+}
+
+.dm__bubble-media img {
+  display: block;
+  width: 100%;
+  border-radius: 10px;
+}
+
+.dm__bubble--media .dm__bubble-text {
+  padding: 2px 8px;
+}
+
+.dm__bubble--media .dm__bubble-time {
+  padding: 0 8px 4px;
+}
+
+/* === Attachment preview (compose) === */
+.dm__attachment {
+  position: relative;
+  width: fit-content;
+  margin: 0 16px;
+  padding-top: 8px;
+}
+
+.dm__attachment img {
+  max-height: 120px;
+  max-width: 200px;
+  border-radius: 10px;
+  display: block;
+}
+
+.dm__attachment-remove {
+  position: absolute;
+  top: 12px;
+  right: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  cursor: pointer;
+}
+
 /* === Typing indicator === */
 .dm__typing {
   flex-direction: row;
@@ -259,6 +339,34 @@
   gap: 8px;
   padding: 12px 16px;
   border-top: 1px solid var(--border-color);
+}
+
+.dm__compose-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  height: 40px;
+  min-width: 40px;
+  padding: 0 8px;
+  border: none;
+  background: none;
+  border-radius: 999px;
+  color: var(--text-secondary);
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.dm__compose-btn:hover {
+  background: rgba(162, 210, 255, 0.18);
+  color: var(--pastel-ink);
+}
+
+.dm__gif-wrap {
+  position: relative;
+  display: flex;
 }
 
 .dm__input {

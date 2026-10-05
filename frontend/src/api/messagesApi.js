@@ -16,10 +16,17 @@ export const getMessages = (conversationId, page = 1) =>
     .get(`/conversations/${conversationId}/messages?page=${page}`)
     .then((res) => res.data);
 
-export const sendMessage = (conversationId, body) =>
-  api
-    .post(`/conversations/${conversationId}/messages`, { body })
+export const sendMessage = (conversationId, { body, image, imageUrl } = {}) => {
+  const form = new FormData();
+  if (body) form.append("body", body);
+  if (image) form.append("image", image);
+  if (imageUrl) form.append("image_url", imageUrl);
+  return api
+    .post(`/conversations/${conversationId}/messages`, form, {
+      headers: { "Content-Type": "multipart/form-data" },
+    })
     .then((res) => res.data.data);
+};
 
 export const markConversationRead = (conversationId) =>
   api.post(`/conversations/${conversationId}/read`).then((res) => res.data);
