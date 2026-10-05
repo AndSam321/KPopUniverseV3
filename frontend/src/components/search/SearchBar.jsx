@@ -22,10 +22,20 @@ const SearchBar = () => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [activeIndex, setActiveIndex] = useState(-1);
+  const [compact, setCompact] = useState(false);
   const containerRef = useRef(null);
   const abortRef = useRef(null);
 
   const term = query.trim();
+
+  // Short placeholder on narrow screens so it doesn't truncate mid-word
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 600px)");
+    const update = () => setCompact(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
 
   // Debounced fetch with stale-request cancellation
   useEffect(() => {
@@ -122,7 +132,7 @@ const SearchBar = () => {
         <input
           type="text"
           className="kp-search__input"
-          placeholder="search artists, groups, fans..."
+          placeholder={compact ? "Search" : "search artists, groups, fans..."}
           value={query}
           role="combobox"
           aria-expanded={open}

@@ -437,11 +437,12 @@
 }
 
 /* === Responsive: single pane on mobile === */
-@media (max-width: 768px) {
+@media (max-width: 720px) {
   .dm {
     grid-template-columns: 1fr;
     border: none;
-    height: calc(100dvh - 60px);
+    /* top nav (56) + fixed bottom tab bar (64) + safe area */
+    height: calc(100dvh - 56px - 64px - env(safe-area-inset-bottom, 0px));
   }
 
   .dm__list {
