@@ -53,6 +53,19 @@ Rails.application.configure do
   config.active_job.queue_adapter = :solid_queue
   config.solid_queue.connects_to = { database: { writing: :queue } }
 
+  # Allow the deployed frontend to open ActionCable (WebSocket) connections.
+  config.action_cable.allowed_request_origins = Array(ENV["FRONTEND_URL"].presence)
+
+  # Public host so Active Storage/mailer URLs resolve (set APP_HOST in prod).
+  if ENV["APP_HOST"].present?
+    config.action_controller.default_url_options = { host: ENV["APP_HOST"], protocol: "https" }
+    config.action_mailer.default_url_options = { host: ENV["APP_HOST"], protocol: "https" }
+    config.after_initialize do
+      Rails.application.routes.default_url_options[:host] = ENV["APP_HOST"]
+      Rails.application.routes.default_url_options[:protocol] = "https"
+    end
+  end
+
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false

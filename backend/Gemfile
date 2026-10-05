@@ -55,6 +55,9 @@ gem "omniauth-rails_csrf_protection", "~> 1.0"
 # CORS for React frontend
 gem "rack-cors", "~> 2.0"
 
+# Rate limiting / throttling (abuse + bot protection) [https://github.com/rack/rack-attack]
+gem "rack-attack", "~> 6.7"
+
 # Background Jobs & Caching
 gem "sidekiq", "~> 7.3"
 gem "redis", "~> 5.0"
