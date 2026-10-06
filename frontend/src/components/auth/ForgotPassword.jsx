@@ -39,6 +39,11 @@ export default function ForgotPassword() {
                   If an account exists for <strong>{email}</strong>, we've sent a
                   link to reset your password. It may take a minute to arrive.
                 </p>
+                <p className="register-subtitle">
+                  Don't see it? Check your <strong>spam</strong> or promotions
+                  folder — and mark it "not spam" so future emails land in your
+                  inbox.
+                </p>
               </header>
               <p className="register-footer-text">
                 <Link to="/login" className="register-footer-link">
