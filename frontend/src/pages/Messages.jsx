@@ -1,11 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { ArrowLeft, Send, ImagePlus, X, PenSquare, Users } from "lucide-react";
+import { ArrowLeft, Send, ImagePlus, X, PenSquare, Users, SmilePlus } from "lucide-react";
 import {
   getConversations,
   getMessages,
   markConversationRead,
   sendMessage,
+  toggleReaction,
 } from "../api/messagesApi";
 import GifPicker from "../components/comments/GifPicker";
 import NewMessageModal from "../components/messages/NewMessageModal";
@@ -46,8 +47,119 @@ function ConversationAvatar({ conversation }) {
   return <Avatar user={conversation.other_user} />;
 }
 
+const REACTION_EMOJIS = ["💜", "❤️", "😂", "😮", "😢", "🔥", "👍"];
+
 const appendUnique = (list, message) =>
   list.some((m) => m.id === message.id) ? list : [...list, message];
+
+// Toggle my reaction locally; also its own inverse, so it doubles as the revert.
+const applyReactionToggle = (reactions, emoji, myId) => {
+  const list = reactions || [];
+  const existing = list.find((r) => r.emoji === emoji);
+  if (existing && existing.user_ids.includes(myId)) {
+    const userIds = existing.user_ids.filter((id) => id !== myId);
+    if (userIds.length === 0) return list.filter((r) => r.emoji !== emoji);
+    return list.map((r) => (r.emoji === emoji ? { ...r, count: userIds.length, user_ids: userIds } : r));
+  }
+  if (existing) {
+    const userIds = [...existing.user_ids, myId];
+    return list.map((r) => (r.emoji === emoji ? { ...r, count: userIds.length, user_ids: userIds } : r));
+  }
+  return [...list, { emoji, count: 1, user_ids: [myId] }];
+};
+
+function MessageBubble({ message, mine, isGroup, myId, onToggleReaction }) {
+  const [pickerOpen, setPickerOpen] = useState(false);
+  const longPressRef = useRef(null);
+  const startPosRef = useRef(null);
+
+  const cancelLongPress = () => {
+    clearTimeout(longPressRef.current);
+    longPressRef.current = null;
+  };
+
+  const handlePointerDown = (event) => {
+    if (event.pointerType === "mouse") return; // desktop uses the hover affordance
+    startPosRef.current = { x: event.clientX, y: event.clientY };
+    longPressRef.current = setTimeout(() => setPickerOpen(true), 450);
+  };
+
+  const handlePointerMove = (event) => {
+    if (!startPosRef.current) return;
+    if (Math.abs(event.clientX - startPosRef.current.x) > 10 || Math.abs(event.clientY - startPosRef.current.y) > 10) {
+      cancelLongPress();
+    }
+  };
+
+  const react = (emoji) => {
+    setPickerOpen(false);
+    onToggleReaction(message, emoji);
+  };
+
+  const reactions = message.reactions || [];
+
+  return (
+    <div className={`dm__bubble-row ${mine ? "dm__bubble-row--mine" : ""}`}>
+      <div
+        className={`dm__bubble ${mine ? "dm__bubble--mine" : ""} ${message.image ? "dm__bubble--media" : ""} ${
+          pickerOpen ? "dm__bubble--reacting" : ""
+        }`}
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={cancelLongPress}
+        onPointerCancel={cancelLongPress}
+        onPointerLeave={cancelLongPress}
+      >
+        {isGroup && !mine && <span className="dm__bubble-sender">{message.sender?.username}</span>}
+        {message.image && (
+          <a href={message.image.url} target="_blank" rel="noreferrer" className="dm__bubble-media">
+            <img src={message.image.thumbnail_url} alt="" referrerPolicy="no-referrer" />
+          </a>
+        )}
+        {message.body && <span className="dm__bubble-text">{message.body}</span>}
+        <span className="dm__bubble-time">{timeAgo(message.created_at)}</span>
+
+        <button
+          type="button"
+          className="dm__react-btn"
+          onClick={() => setPickerOpen((open) => !open)}
+          aria-label="Add reaction"
+        >
+          <SmilePlus size={15} />
+        </button>
+
+        {pickerOpen && (
+          <>
+            <div className="dm__react-backdrop" onClick={() => setPickerOpen(false)} />
+            <div className="dm__react-picker" role="menu">
+              {REACTION_EMOJIS.map((emoji) => (
+                <button key={emoji} type="button" className="dm__react-option" onClick={() => react(emoji)}>
+                  {emoji}
+                </button>
+              ))}
+            </div>
+          </>
+        )}
+      </div>
+
+      {reactions.length > 0 && (
+        <div className="dm__reactions">
+          {reactions.map((r) => (
+            <button
+              key={r.emoji}
+              type="button"
+              className={`dm__reaction ${r.user_ids.includes(myId) ? "dm__reaction--mine" : ""}`}
+              onClick={() => onToggleReaction(message, r.emoji)}
+            >
+              <span className="dm__reaction-emoji">{r.emoji}</span>
+              <span className="dm__reaction-count">{r.count}</span>
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
 
 const conversationPreview = (conversation) => {
   const last = conversation.last_message;
@@ -216,6 +328,15 @@ export default function Messages() {
       return;
     }
 
+    if (lastEvent.type === "reaction") {
+      if (String(lastEvent.conversation_id) === String(openId)) {
+        setMessages((prev) =>
+          prev.map((m) => (m.id === lastEvent.message_id ? { ...m, reactions: lastEvent.reactions } : m))
+        );
+      }
+      return;
+    }
+
     if (lastEvent.type === "read") {
       setConversations((prev) =>
         prev.map((c) => (c.id === lastEvent.conversation_id ? { ...c, unread_count: 0 } : c))
@@ -243,6 +364,21 @@ export default function Messages() {
       }
     }
   }, [lastEvent]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const handleToggleReaction = (message, emoji) => {
+    const myId = user?.id;
+    const flip = (m) => ({ ...m, reactions: applyReactionToggle(m.reactions, emoji, myId) });
+    setMessages((prev) => prev.map((m) => (m.id === message.id ? flip(m) : m)));
+    toggleReaction(conversationId, message.id, emoji)
+      .then((data) =>
+        setMessages((prev) =>
+          prev.map((m) => (m.id === data.message_id ? { ...m, reactions: data.reactions } : m))
+        )
+      )
+      .catch(() =>
+        setMessages((prev) => prev.map((m) => (m.id === message.id ? flip(m) : m)))
+      );
+  };
 
   const handleBodyChange = (event) => {
     setBody(event.target.value);
@@ -386,28 +522,14 @@ export default function Messages() {
                 <p className="dm__loading">No messages yet. Send the first one!</p>
               ) : (
                 messages.map((message) => (
-                  <div
+                  <MessageBubble
                     key={message.id}
-                    className={`dm__bubble ${message.sender_id === user?.id ? "dm__bubble--mine" : ""} ${
-                      message.image ? "dm__bubble--media" : ""
-                    }`}
-                  >
-                    {activeConversation?.group && message.sender_id !== user?.id && (
-                      <span className="dm__bubble-sender">{message.sender?.username}</span>
-                    )}
-                    {message.image && (
-                      <a
-                        href={message.image.url}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="dm__bubble-media"
-                      >
-                        <img src={message.image.thumbnail_url} alt="" referrerPolicy="no-referrer" />
-                      </a>
-                    )}
-                    {message.body && <span className="dm__bubble-text">{message.body}</span>}
-                    <span className="dm__bubble-time">{timeAgo(message.created_at)}</span>
-                  </div>
+                    message={message}
+                    mine={message.sender_id === user?.id}
+                    isGroup={activeConversation?.group}
+                    myId={user?.id}
+                    onToggleReaction={handleToggleReaction}
+                  />
                 ))
               )}
               {peerTyping && (

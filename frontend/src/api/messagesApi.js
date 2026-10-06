@@ -38,3 +38,10 @@ export const sendMessage = (conversationId, { body, image, imageUrl } = {}) => {
 
 export const markConversationRead = (conversationId) =>
   api.post(`/conversations/${conversationId}/read`).then((res) => res.data);
+
+export const toggleReaction = (conversationId, messageId, emoji) =>
+  api
+    .post(`/conversations/${conversationId}/messages/${messageId}/reactions`, {
+      emoji,
+    })
+    .then((res) => res.data.data);

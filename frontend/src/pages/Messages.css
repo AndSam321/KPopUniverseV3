@@ -227,6 +227,7 @@
 }
 
 .dm__bubble {
+  position: relative;
   align-self: flex-start;
   max-width: 72%;
   display: flex;
@@ -236,6 +237,26 @@
   border-radius: 14px;
   background: var(--card-bg);
   border: 1px solid var(--border-color);
+}
+
+/* === Bubble row: stacks the bubble + its reaction chips === */
+.dm__bubble-row {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  max-width: 72%;
+  align-self: flex-start;
+  align-items: flex-start;
+}
+
+.dm__bubble-row--mine {
+  align-self: flex-end;
+  align-items: flex-end;
+}
+
+.dm__bubble-row .dm__bubble {
+  align-self: auto;
+  max-width: 100%;
 }
 
 .dm__bubble--mine {
@@ -287,6 +308,133 @@
 
 .dm__bubble--media .dm__bubble-time {
   padding: 0 8px 4px;
+}
+
+/* === Reactions === */
+.dm__react-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border: 1px solid var(--border-color);
+  border-radius: 50%;
+  background: var(--card-bg);
+  color: var(--text-muted);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.12s ease, color 0.12s ease;
+}
+
+.dm__bubble:not(.dm__bubble--mine) .dm__react-btn {
+  right: -34px;
+}
+
+.dm__bubble--mine .dm__react-btn {
+  left: -34px;
+}
+
+/* Hover reveal on devices with a real pointer; touch uses long-press. */
+@media (hover: hover) {
+  .dm__bubble:hover .dm__react-btn {
+    opacity: 1;
+  }
+}
+
+.dm__react-btn:hover {
+  color: var(--pastel-ink);
+}
+
+/* Lift the targeted bubble above the backdrop so the picker isn't covered. */
+.dm__bubble--reacting {
+  z-index: 50;
+}
+
+.dm__react-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+}
+
+.dm__react-picker {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  z-index: 51;
+  display: flex;
+  gap: 2px;
+  padding: 6px;
+  border-radius: 999px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 8px 24px rgba(120, 110, 150, 0.22);
+}
+
+.dm__bubble:not(.dm__bubble--mine) .dm__react-picker {
+  left: 0;
+}
+
+.dm__bubble--mine .dm__react-picker {
+  right: 0;
+}
+
+.dm__react-option {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: none;
+  font-size: 23px;
+  line-height: 1;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.1s ease, background 0.1s ease;
+}
+
+.dm__react-option:hover {
+  transform: scale(1.25);
+  background: var(--hover-bg, rgba(120, 110, 150, 0.1));
+}
+
+.dm__reactions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 0 2px;
+}
+
+.dm__reaction {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 1px 7px 1px 5px;
+  border-radius: 999px;
+  border: 1px solid var(--border-color);
+  background: var(--card-bg);
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: background 0.12s ease, border-color 0.12s ease;
+}
+
+.dm__reaction--mine {
+  border-color: var(--pastel-sky);
+  background: rgba(162, 210, 255, 0.22);
+  color: var(--pastel-ink);
+}
+
+.dm__reaction-emoji {
+  font-size: 13px;
+}
+
+.dm__reaction-count {
+  font-weight: 600;
 }
 
 /* === Attachment preview (compose) === */
