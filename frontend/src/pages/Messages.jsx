@@ -389,6 +389,13 @@ export default function Messages() {
     }
   };
 
+  // Hide the bottom tab bar while a chat thread is open so the composer owns
+  // the bottom edge (restored when you leave the conversation).
+  useEffect(() => {
+    document.body.classList.toggle("dm-thread-active", !!conversationId);
+    return () => document.body.classList.remove("dm-thread-active");
+  }, [conversationId]);
+
   // Keep the composer above the iOS on-screen keyboard. visualViewport shrinks
   // when the keyboard opens; expose that gap as --kb so the fixed thread lifts.
   useEffect(() => {

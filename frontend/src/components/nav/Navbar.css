@@ -359,6 +359,12 @@
   display: none;
 }
 
+/* Inside an open chat thread the composer owns the bottom (like WhatsApp /
+   TikTok), so the tab bar is hidden until you leave the conversation. */
+body.dm-thread-active .kp-nav__mobile-tabs {
+  display: none;
+}
+
 /* Burger + mobile create are hidden on desktop; desktop-only shows normally */
 .kp-nav__burger,
 .kp-nav__create-mobile {

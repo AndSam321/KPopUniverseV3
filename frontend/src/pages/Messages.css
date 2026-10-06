@@ -629,9 +629,10 @@
     top: calc(56px + env(safe-area-inset-top, 0px));
     left: 0;
     right: 0;
-    /* Sit above the bottom tab bar normally, but above the on-screen keyboard
-       when it's open (--kb is set from visualViewport in Messages.jsx). */
-    bottom: max(calc(64px + env(safe-area-inset-bottom, 0px)), var(--kb, 0px));
+    /* The tab bar is hidden in a thread, so the composer sits at the very
+       bottom (above the home indicator) and rises above the on-screen keyboard
+       when it opens (--kb is set from visualViewport in Messages.jsx). */
+    bottom: max(env(safe-area-inset-bottom, 0px), var(--kb, 0px));
     z-index: 30;
     background: var(--card-bg);
   }
