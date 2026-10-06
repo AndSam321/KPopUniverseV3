@@ -8,7 +8,16 @@ class Rack::Attack
   # dodge limits by rotating IPs), falling back to IP for anonymous requests.
   def self.client_key(req)
     token = req.get_header("HTTP_AUTHORIZATION").to_s.split(" ").last
-    token.present? ? "tok:#{Digest::SHA256.hexdigest(token)[0, 20]}" : "ip:#{req.ip}"
+    token.present? ? "tok:#{Digest::SHA256.hexdigest(token)[0, 20]}" : "ip:#{request_ip(req)}"
+  end
+
+  # Behind Render's proxy the real client IP is in X-Forwarded-For. Rails'
+  # ActionDispatch::RemoteIp (which runs before this middleware) resolves it
+  # correctly, so prefer its value over Rack's own req.ip parsing.
+  def self.request_ip(req)
+    req.get_header("action_dispatch.remote_ip")&.to_s.presence || req.ip
+  rescue ActionDispatch::RemoteIp::IpSpoofAttackError
+    req.ip
   end
 
   # Heavy writes that can attach many images to S3 — the main cost driver.
@@ -22,38 +31,38 @@ class Rack::Attack
 
   # Global safety net: cap total requests per IP.
   throttle("req/ip", limit: 300, period: 5.minutes) do |req|
-    req.ip unless req.path.start_with?("/up")
+    request_ip(req) unless req.path.start_with?("/up")
   end
 
   # Sustained-abuse timeout: an IP that blows far past the global cap is held off
   # for the rest of the hour.
   throttle("req/ip/sustained", limit: 1500, period: 1.hour) do |req|
-    req.ip unless req.path.start_with?("/up")
+    request_ip(req) unless req.path.start_with?("/up")
   end
 
   # Brute-force protection on login.
   throttle("logins/ip", limit: 10, period: 1.minute) do |req|
-    req.ip if req.post? && req.path.end_with?("/auth/sign_in")
+    request_ip(req) if req.post? && req.path.end_with?("/auth/sign_in")
   end
 
   # Limit new account creation per IP.
   throttle("signups/ip", limit: 5, period: 1.hour) do |req|
-    req.ip if req.post? && req.path.end_with?("/auth")
+    request_ip(req) if req.post? && req.path.end_with?("/auth")
   end
 
   # Limit password-reset requests per IP.
   throttle("password_resets/ip", limit: 5, period: 1.hour) do |req|
-    req.ip if req.post? && req.path.end_with?("/auth/password")
+    request_ip(req) if req.post? && req.path.end_with?("/auth/password")
   end
 
   # Throttle message sending to curb DM spam.
   throttle("messages/ip", limit: 30, period: 1.minute) do |req|
-    req.ip if req.post? && req.path.match?(%r{/conversations/\d+/messages\z})
+    request_ip(req) if req.post? && req.path.match?(%r{/conversations/\d+/messages\z})
   end
 
   # Throttle starting new conversations/groups.
   throttle("conversations/ip", limit: 20, period: 1.hour) do |req|
-    req.ip if req.post? && req.path.end_with?("/conversations")
+    request_ip(req) if req.post? && req.path.end_with?("/conversations")
   end
 
   # Cap image-bearing writes (posts, post edits, comments, avatar) — these hit S3.
@@ -83,7 +92,7 @@ class Rack::Attack
 
   # Public feedback endpoint — guard against spam flooding the table.
   throttle("feedback/ip", limit: 6, period: 1.hour) do |req|
-    req.ip if req.post? && req.path.end_with?("/feedbacks")
+    request_ip(req) if req.post? && req.path.end_with?("/feedbacks")
   end
 
   # Curb scripted like-bombing (posts and comments).
