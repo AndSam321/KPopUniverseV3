@@ -1,22 +1,27 @@
 import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { Sparkles, X } from "lucide-react";
 import FeedbackModal from "./FeedbackModal";
 import "./BetaToast.css";
 
 const STORAGE_KEY = "beta_notice_seen";
+const AUTH_PATHS = ["/login", "/register", "/forgot-password", "/reset-password"];
 
 const BetaToast = () => {
   const [visible, setVisible] = useState(false);
   const [showForm, setShowForm] = useState(false);
+  const { pathname } = useLocation();
+  const onAuthPage = AUTH_PATHS.includes(pathname);
 
   useEffect(() => {
+    if (onAuthPage) return;
     if (sessionStorage.getItem(STORAGE_KEY)) return;
     const showId = setTimeout(() => {
       setVisible(true);
       sessionStorage.setItem(STORAGE_KEY, "1");
     }, 900);
     return () => clearTimeout(showId);
-  }, []);
+  }, [onAuthPage]);
 
   useEffect(() => {
     if (!visible) return;
@@ -28,7 +33,7 @@ const BetaToast = () => {
 
   return (
     <>
-      {visible && (
+      {visible && !onAuthPage && (
         <div className="beta-toast" role="status">
           <Sparkles size={16} strokeWidth={2.5} className="beta-toast__icon" />
           <span className="beta-toast__message">
