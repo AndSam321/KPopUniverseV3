@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { getPost } from "../api/postsApi";
+import { Trash2 } from "lucide-react";
+import { getPost, likePost, deletePost } from "../api/postsApi";
 import { getComments, createComment } from "../api/commentsApi";
-import { likePost } from "../api/postsApi";
+import { useAuth } from "../context/AuthContext";
 import { useNavigationLoading } from "../context/NavigationLoadingContext";
 import CommentItem from "../components/comments/CommentItem";
 import CommentComposer from "../components/comments/CommentComposer";
@@ -19,9 +20,19 @@ const FLAIRS = {
   "fan-content": { label: "Fan Content", color: "#ff8ccf" },
 };
 
+const formatDate = (dateString) => {
+  const diffInSeconds = Math.floor((new Date() - new Date(dateString)) / 1000);
+  if (diffInSeconds < 60) return "just now";
+  if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)}m ago`;
+  if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds / 3600)}h ago`;
+  if (diffInSeconds < 604800) return `${Math.floor(diffInSeconds / 86400)}d ago`;
+  return new Date(dateString).toLocaleDateString();
+};
+
 const PostDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { user } = useAuth();
   const { startLoading, completeLoading } = useNavigationLoading();
   const [post, setPost] = useState(null);
   const [comments, setComments] = useState([]);
@@ -115,6 +126,16 @@ const PostDetail = () => {
     setShowShareMenu(!showShareMenu);
   };
 
+  const handleDelete = async () => {
+    if (!window.confirm("Delete this post? This can't be undone.")) return;
+    try {
+      await deletePost(id);
+      navigate("/");
+    } catch {
+      window.alert("Couldn't delete the post. Please try again.");
+    }
+  };
+
   const handleCopyLink = () => {
     const postUrl = `${window.location.origin}/posts/${id}`;
     navigator.clipboard.writeText(postUrl).then(() => {
@@ -140,6 +161,16 @@ const PostDetail = () => {
     <div className="post-detail">
       <div className="post-detail__header">
         <BackButton fallback="/" />
+        {user?.id === post.user.id && (
+          <button
+            type="button"
+            className="post-detail__delete"
+            onClick={handleDelete}
+            aria-label="Delete post"
+          >
+            <Trash2 size={18} />
+          </button>
+        )}
       </div>
 
       {/* Post Content */}
@@ -164,7 +195,7 @@ const PostDetail = () => {
           >
             @{post.user.username}
           </span>{" "}
-          • {new Date(post.created_at).toLocaleString()}
+          • {formatDate(post.created_at)}
           {post.flair && FLAIRS[post.flair] && (
             <>
               {" • "}

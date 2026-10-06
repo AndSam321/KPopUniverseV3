@@ -7,6 +7,29 @@
 
 .post-detail__header {
   margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.post-detail__delete {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+}
+
+.post-detail__delete:hover {
+  color: #e5484d;
+  border-color: #e5484d;
+  background: rgba(229, 72, 77, 0.08);
 }
 
 .post-detail__back {
