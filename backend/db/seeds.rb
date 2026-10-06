@@ -232,6 +232,7 @@ end
 
 load Rails.root.join("db/seeds/kpop_details.rb")
 load Rails.root.join("db/seeds/members.rb")
+load Rails.root.join("db/seeds/albums.rb")
 
 puts "\n✓ Seeding complete!"
 puts "#{Group.count} K-pop groups in database"
