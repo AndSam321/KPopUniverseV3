@@ -1,6 +1,7 @@
 class Message < ApplicationRecord
   belongs_to :conversation
   belongs_to :sender, class_name: "User"
+  has_many :message_reactions, dependent: :destroy
 
   has_one_attached :image do |attachable|
     attachable.variant :thumb, resize_to_limit: [400, 400]

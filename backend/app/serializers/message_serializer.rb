@@ -7,8 +7,15 @@ class MessageSerializer
       sender: sender_json(message.sender),
       body: message.body,
       image: image_json(message),
+      reactions: reactions_json(message),
       created_at: message.created_at
     }
+  end
+
+  def self.reactions_json(message)
+    message.message_reactions.group_by(&:emoji).map do |emoji, rows|
+      {emoji: emoji, count: rows.size, user_ids: rows.map(&:user_id)}
+    end
   end
 
   def self.sender_json(user)

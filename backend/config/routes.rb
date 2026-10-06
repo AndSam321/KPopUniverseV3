@@ -94,7 +94,9 @@ Rails.application.routes.draw do
         member do
           post :read
         end
-        resources :messages, only: [:index, :create]
+        resources :messages, only: [:index, :create] do
+          resources :reactions, only: [:create]
+        end
       end
     end
   end

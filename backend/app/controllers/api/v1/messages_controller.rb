@@ -3,7 +3,7 @@ class Api::V1::MessagesController < Api::V1::BaseController
   before_action :set_conversation
 
   def index
-    pagy, records = pagy(@conversation.messages.order(created_at: :desc), items: 50)
+    pagy, records = pagy(@conversation.messages.includes(:message_reactions).order(created_at: :desc), items: 50)
     ConversationReader.call(conversation: @conversation, user: current_user)
 
     render json: {
