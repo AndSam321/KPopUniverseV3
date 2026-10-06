@@ -133,7 +133,11 @@ export default function CommunityPage() {
         ) : (
           <div className="community-page__posts">
             {posts.map((post) => (
-              <PostCard key={post.id} post={post} />
+              <PostCard
+                key={post.id}
+                post={post}
+                onDeleted={(id) => setPosts((prev) => prev.filter((p) => p.id !== id))}
+              />
             ))}
           </div>
         )}

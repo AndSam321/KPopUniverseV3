@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import ReactDOM from "react-dom";
 import { useNavigate } from "react-router-dom";
+import { Trash2 } from "lucide-react";
 import "./PostCard.css";
-import { likePost } from "../../api/postsApi";
+import { likePost, deletePost } from "../../api/postsApi";
 import { useAuth } from "../../context/AuthContext";
 
 const FLAIRS = {
@@ -80,7 +81,7 @@ const WhatsAppIcon = () => (
   </svg>
 );
 
-const PostCard = ({ post }) => {
+const PostCard = ({ post, onDeleted }) => {
   const navigate = useNavigate();
   const { user } = useAuth();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -115,6 +116,18 @@ const PostCard = ({ post }) => {
 
   const postUrl = `${window.location.origin}/posts/${post.id}`;
   const shareText = post.title || "Check out this post on K-pop Universe";
+
+  const handleDelete = useCallback(async (e) => {
+    e.stopPropagation();
+    if (!window.confirm("Delete this post? This can't be undone.")) return;
+    try {
+      await deletePost(post.id);
+      if (onDeleted) onDeleted(post.id);
+      else navigate("/");
+    } catch {
+      window.alert("Couldn't delete the post. Please try again.");
+    }
+  }, [post.id, onDeleted, navigate]);
 
   const handleShareClick = useCallback(async (e) => {
     e.stopPropagation();
@@ -281,6 +294,16 @@ const PostCard = ({ post }) => {
             </div>
           </div>
         </div>
+        {user?.id === post.user.id && (
+          <button
+            className="post-card__delete"
+            onClick={handleDelete}
+            aria-label="Delete post"
+            title="Delete post"
+          >
+            <Trash2 size={16} />
+          </button>
+        )}
       </div>
 
       <div className="post-card__content">

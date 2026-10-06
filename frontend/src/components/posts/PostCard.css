@@ -17,8 +17,36 @@
 
 /* === Header: User + Group === */
 .post-card__header {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
   padding: 0.75rem 1rem;
   border-bottom: 1px solid var(--border-color);
+}
+
+.post-card__header .post-card__user {
+  flex: 1;
+  min-width: 0;
+}
+
+.post-card__delete {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: transparent;
+  border-radius: 999px;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.post-card__delete:hover {
+  background: rgba(209, 67, 91, 0.12);
+  color: #d1435b;
 }
 
 .post-card__user {

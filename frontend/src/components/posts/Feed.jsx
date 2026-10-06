@@ -146,7 +146,11 @@ const Feed = ({ variant = "for-you" }) => {
         <>
           <div className="feed__posts feed__posts--enter" key={variant}>
             {posts.map((post) => (
-              <PostCard key={post.id} post={post} />
+              <PostCard
+                key={post.id}
+                post={post}
+                onDeleted={(id) => setPosts((prev) => prev.filter((p) => p.id !== id))}
+              />
             ))}
           </div>
 
