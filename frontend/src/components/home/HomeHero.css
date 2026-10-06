@@ -1,7 +1,8 @@
 .home-hero {
   position: relative;
   overflow: hidden;
-  margin-bottom: 20px;
+  max-width: 800px;
+  margin: 0 auto 20px;
   padding: 28px 28px 30px;
   border-radius: 22px;
   background:
