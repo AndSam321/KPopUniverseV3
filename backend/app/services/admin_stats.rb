@@ -10,7 +10,8 @@ class AdminStats
       posts_by_day: series(Post),
       top_groups: top_groups,
       top_posters: top_posters,
-      feedback: recent_feedback
+      feedback: recent_feedback,
+      group_sync: group_sync
     }
   end
 
@@ -66,6 +67,20 @@ class AdminStats
       .limit(6)
       .pluck("groups.name", Arel.sql("COUNT(posts.id)"))
       .map { |name, count| {name: name, count: count} }
+  end
+
+  def group_sync
+    album_counts = Album.group(:group_id).count
+    Group.order(:name).map do |group|
+      {
+        id: group.id,
+        name: group.name,
+        status: group.sync_status,
+        last_synced_at: group.last_synced_at&.iso8601,
+        error: group.sync_error,
+        albums: album_counts[group.id] || 0
+      }
+    end
   end
 
   def recent_feedback

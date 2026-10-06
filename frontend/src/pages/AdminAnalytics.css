@@ -239,6 +239,76 @@
   font-size: 0.9rem;
 }
 
+.admin__sync {
+  display: flex;
+  flex-direction: column;
+}
+
+.admin__sync-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border-color);
+  flex-wrap: wrap;
+}
+
+.admin__sync-row:last-child {
+  border-bottom: none;
+}
+
+.admin__sync-name {
+  font-weight: 600;
+  color: var(--text-primary);
+  min-width: 120px;
+  flex: 1;
+}
+
+.admin__sync-albums {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  min-width: 70px;
+}
+
+.admin__sync-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+.admin__sync-badge--ok {
+  color: #1f7a4d;
+  background: rgba(46, 160, 97, 0.15);
+}
+
+.admin__sync-badge--error {
+  color: #b4233a;
+  background: rgba(209, 67, 91, 0.15);
+}
+
+.admin__sync-badge--none {
+  color: var(--text-muted);
+  background: rgba(120, 110, 150, 0.12);
+}
+
+.admin__sync-time {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  min-width: 70px;
+}
+
+.admin__sync-error {
+  flex-basis: 100%;
+  font-size: 0.78rem;
+  color: #b4233a;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .admin__grid {
   display: grid;
   grid-template-columns: 1fr 1fr;

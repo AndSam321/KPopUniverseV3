@@ -184,6 +184,36 @@ export default function AdminAnalytics() {
               </div>
             )}
           </div>
+
+          <div className="admin__panel">
+            <div className="admin__panel-head">
+              <h2>Content sync</h2>
+              <span>
+                {stats.group_sync.filter((g) => g.status === "error").length} errors
+              </span>
+            </div>
+            <div className="admin__sync">
+              {stats.group_sync.map((g) => (
+                <div className="admin__sync-row" key={g.id}>
+                  <span className="admin__sync-name">{g.name}</span>
+                  <span className="admin__sync-albums">{g.albums} albums</span>
+                  <span
+                    className={`admin__sync-badge admin__sync-badge--${g.status || "none"}`}
+                  >
+                    {g.status || "—"}
+                  </span>
+                  <span className="admin__sync-time">
+                    {g.last_synced_at ? timeAgo(g.last_synced_at) : "never"}
+                  </span>
+                  {g.error && (
+                    <span className="admin__sync-error" title={g.error}>
+                      {g.error}
+                    </span>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
         </>
       )}
     </div>
