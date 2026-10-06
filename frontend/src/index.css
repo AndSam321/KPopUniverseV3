@@ -54,13 +54,23 @@
 body, html {
   min-height: 100vh;
   overflow-x: clip;
-  overscroll-behavior-x: none;
+  /* Stop the iOS rubber-band bounce that drags the sticky top bar past the
+     content in the installed PWA. */
+  overscroll-behavior: none;
   background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-mid) 45%, var(--gradient-end) 100%);
   background-attachment: fixed;
   color: var(--text-primary);
   font-family: var(--font-content);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* iOS Safari auto-zooms when focusing a control whose text is under 16px.
+   Forcing 16px on touch keeps typing/searching at a normal zoom level. */
+@media (max-width: 768px) {
+  input, textarea, select {
+    font-size: 16px !important;
+  }
 }
 
 div { display: block; }

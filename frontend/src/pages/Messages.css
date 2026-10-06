@@ -220,14 +220,28 @@
   flex: 1;
   min-height: 0;
   overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
   padding: 16px;
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
+/* On touch, long-press opens the reaction picker — stop iOS from also
+   starting a text selection (the whole thread turning blue) or showing the
+   callout menu. Pointer devices keep normal selection. */
+@media (hover: none) {
+  .dm__messages {
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+  }
+}
+
 .dm__bubble {
   position: relative;
+  -webkit-tap-highlight-color: transparent;
   align-self: flex-start;
   max-width: 72%;
   display: flex;
