@@ -182,19 +182,23 @@ Post.joins(:user).where(users: {username: seed_usernames}).destroy_all
 
 # Topics reflect real Oct 2026 happenings for our groups (researched); each post
 # has a unique author.
+# Posts retired from the seed set — purge any left over from earlier seeds.
+retired_post_titles = [
+  "TWICE comeback on the 16th!!",
+  "JxJ (jeonghan x joshua) debut is coming",
+  "SYNK: COMPLæXITY tour was actually unreal",
+  "IVE 'Looks Can Kill' era incoming",
+  "NMIXX 'Strange Muse' with Birthday Wish"
+]
+
 sample_posts = [
-  { author: "Specific_Banana772", group: "TWICE", title: "TWICE comeback on the 16th!!", caption: "we are so back, a full group cb at last. only a week and a half out — what sound are we expecting this time? praying for a more & more type title", hours_ago: 2 },
-  { author: "No-Permission4402", group: "SEVENTEEN", title: "JxJ (jeonghan x joshua) debut is coming", caption: "the vocal unit dropping DREAMSCAPE on the 19th… their tones layered together is going to be unreal. so ready for this", hours_ago: 6 },
-  { author: "lavenderdusk", group: "aespa", title: "SYNK: COMPLæXITY tour was actually unreal", caption: "caught the LA show, the setlist and production were insane. if you're near oakland on the 6th GO. best tour they've done imo", hours_ago: 11 },
-  { author: "kimchi_friedrice", group: "IVE", title: "IVE 'Looks Can Kill' era incoming", caption: "pre-release on the 19th then the EP on the 26th?? they are not giving us a break and i'm here for it. the title alone is so them", hours_ago: 16 },
-  { author: "velvet_echoes", group: "NMIXX", title: "NMIXX 'Strange Muse' with Birthday Wish", caption: "their title tracks are always so experimental, genuinely never know what we're getting. the 19th cannot come fast enough", hours_ago: 21 },
-  { author: "Ok-Dragonfly-3321", group: "BTS", title: "ARIRANG tour cine fest in theaters oct 24-31", caption: "if you couldn't make the actual tour the cinema broadcast is the next best thing. gonna cry in a theater with other armys lol", hours_ago: 29 },
-  { author: "mattcanread", group: "Stray Kids", title: "skz japanese comeback nov 25", caption: "another JP release locked in. their japanese title tracks go so hard though. who else is already counting down", hours_ago: 37 },
-  { author: "quietstorm87", group: "LE SSERAFIM", title: "le sserafim finally back after 7 months", caption: "the hiatus felt so long. hoping this one leans back into the harder sound. fearnot we survived the drought", hours_ago: 44 },
-  { author: "Cheerful-Yogurt18", group: "ENHYPEN", title: "enhypen comeback confirmed for november", caption: "the choreo teasers alone are going to end me. their nov releases always slap. engene assemble", hours_ago: 52 },
-  { author: "notmain_alt", group: "TXT", title: "txt's b-sides are so consistently underrated", caption: "everyone talks about the title tracks but half their albums are b-side gold. put some respect on the deep cuts", hours_ago: 63 },
-  { author: "Aggressive_Toast640", group: "(G)I-DLE", title: "soyeon's producing run is genuinely insane", caption: "she writes and produces this much of their catalog and it all slaps? name a more consistent idol-producer, i'll wait", hours_ago: 74 },
-  { author: "Puzzled-Meringue221", group: "ATEEZ", title: "ateez comeback rumors for q4?", caption: "seeing whispers of a comeback but nothing confirmed yet. their live vocals and stamina doing that choreo is unmatched regardless", hours_ago: 88 }
+  { author: "Ok-Dragonfly-3321", group: "BTS", title: "ARIRANG tour cine fest in theaters oct 24-31", caption: "if you couldn't make the actual tour the cinema broadcast is the next best thing. gonna cry in a theater with other armys lol", hours_ago: 3 },
+  { author: "mattcanread", group: "Stray Kids", title: "skz japanese comeback nov 25", caption: "another JP release locked in. their japanese title tracks go so hard though. who else is already counting down", hours_ago: 8 },
+  { author: "quietstorm87", group: "LE SSERAFIM", title: "le sserafim finally back after 7 months", caption: "the hiatus felt so long. hoping this one leans back into the harder sound. fearnot we survived the drought", hours_ago: 15 },
+  { author: "Cheerful-Yogurt18", group: "ENHYPEN", title: "enhypen comeback confirmed for november", caption: "the choreo teasers alone are going to end me. their nov releases always slap. engene assemble", hours_ago: 23 },
+  { author: "notmain_alt", group: "TXT", title: "txt's b-sides are so consistently underrated", caption: "everyone talks about the title tracks but half their albums are b-side gold. put some respect on the deep cuts", hours_ago: 34 },
+  { author: "Aggressive_Toast640", group: "(G)I-DLE", title: "soyeon's producing run is genuinely insane", caption: "she writes and produces this much of their catalog and it all slaps? name a more consistent idol-producer, i'll wait", hours_ago: 49 },
+  { author: "Puzzled-Meringue221", group: "ATEEZ", title: "ateez comeback rumors for q4?", caption: "seeing whispers of a comeback but nothing confirmed yet. their live vocals and stamina doing that choreo is unmatched regardless", hours_ago: 66 }
 ]
 
 # Every group needs its official "General" community — users post into these.
@@ -204,6 +208,8 @@ Group.find_each do |group|
   group.communities.create!(name: "General", official: true)
 end
 puts "Ensured General communities (#{Community.where(official: true).count} total)"
+
+Post.where(title: retired_post_titles).destroy_all
 
 users = User.all
 if users.any?
