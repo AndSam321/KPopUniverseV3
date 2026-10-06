@@ -632,22 +632,26 @@
     display: none;
   }
 
-  /* Pin the open thread between the top nav and the bottom tab bar so the
-     composer stays put and messages scroll within — no scroll-to-reach-input,
-     no overlap with the bottom nav, and no dependence on 100vh (which Safari's
-     URL bar makes unreliable). */
+  /* The open thread is its own full-screen surface sized to the *visual*
+     viewport (top/height from visualViewport in Messages.jsx). This keeps the
+     header pinned and the composer above the keyboard when it opens — iOS can't
+     pan the chrome off-screen because the whole chat already fits the visible
+     area. It sits above the app nav (z 50 > 40), so the thread header is the
+     only top bar, like a native chat. */
   .dm--thread-open .dm__thread {
     display: flex;
     position: fixed;
-    top: calc(56px + env(safe-area-inset-top, 0px));
+    top: var(--vv-top, 0px);
     left: 0;
     right: 0;
-    /* The tab bar is hidden in a thread, so the thread reaches the screen
-       bottom (the composer pads for the home indicator) and rises above the
-       keyboard when it opens (--kb is set from visualViewport in Messages.jsx). */
-    bottom: var(--kb, 0px);
-    z-index: 30;
+    height: var(--vv-height, 100dvh);
+    z-index: 50;
     background: var(--card-bg);
+  }
+
+  /* Thread header is now the top bar, so it clears the notch itself. */
+  .dm--thread-open .dm__thread-header {
+    padding-top: calc(12px + env(safe-area-inset-top, 0px));
   }
 
   .dm__back {

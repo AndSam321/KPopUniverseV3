@@ -396,24 +396,30 @@ export default function Messages() {
     return () => document.body.classList.remove("dm-thread-active");
   }, [conversationId]);
 
-  // Keep the composer above the iOS on-screen keyboard. visualViewport shrinks
-  // when the keyboard opens; expose that gap as --kb so the fixed thread lifts.
+  // Size the open thread to the *visual* viewport so the header stays pinned
+  // and the composer rides above the keyboard — iOS shrinks/pans the visual
+  // viewport when the keyboard opens, and matching it keeps the whole chat in
+  // the visible area instead of letting the browser scroll the chrome away.
   useEffect(() => {
     const vv = window.visualViewport;
     if (!vv || !conversationId) return;
     const root = document.documentElement;
     const update = () => {
-      const kb = Math.max(0, window.innerHeight - vv.height - vv.offsetTop);
-      root.style.setProperty("--kb", `${kb}px`);
-      if (kb > 0) scrollToBottom();
+      root.style.setProperty("--vv-top", `${vv.offsetTop}px`);
+      root.style.setProperty("--vv-height", `${vv.height}px`);
+    };
+    const onResize = () => {
+      update();
+      scrollToBottom(); // keyboard opened/closed — keep the latest in view
     };
     update();
-    vv.addEventListener("resize", update);
+    vv.addEventListener("resize", onResize);
     vv.addEventListener("scroll", update);
     return () => {
-      vv.removeEventListener("resize", update);
+      vv.removeEventListener("resize", onResize);
       vv.removeEventListener("scroll", update);
-      root.style.setProperty("--kb", "0px");
+      root.style.removeProperty("--vv-top");
+      root.style.removeProperty("--vv-height");
     };
   }, [conversationId]);
 
