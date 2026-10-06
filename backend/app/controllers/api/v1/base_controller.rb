@@ -31,9 +31,19 @@ class Api::V1::BaseController < ActionController::API
     return unless token
 
     payload = JWT.decode(token, ENV["DEVISE_JWT_SECRET_KEY"]).first
-    User.find(payload["sub"])
+    user = User.find(payload["sub"])
+    track_activity(user)
+    user
   rescue JWT::DecodeError, ActiveRecord::RecordNotFound
     nil
+  end
+
+  # Records a privacy-friendly "last active" timestamp (no IP), throttled so we
+  # write at most once per window per user.
+  def track_activity(user)
+    return if user.last_active_at && user.last_active_at > 15.minutes.ago
+
+    user.update_column(:last_active_at, Time.current)
   end
 
   attr_reader :current_user

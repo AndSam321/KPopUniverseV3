@@ -106,7 +106,7 @@ export default function AdminAnalytics() {
           </div>
 
           <div className="admin-card admin__active">
-            <span className="admin-card__label">Active users (signed in)</span>
+            <span className="admin-card__label">Active users</span>
             <div className="admin__active-row">
               <div><strong>{stats.active_users.day}</strong><span>today</span></div>
               <div><strong>{stats.active_users.week}</strong><span>this week</span></div>

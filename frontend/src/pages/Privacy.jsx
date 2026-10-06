@@ -33,11 +33,12 @@ export default function Privacy() {
             you join.
           </li>
           <li>
-            <strong>Technical info:</strong> we don't store your IP address on
-            your account. Like any website, your IP is used momentarily to
-            prevent spam and abuse (rate limiting) and may appear in the standard
-            server logs kept by our hosting providers. New sign-ups pass a bot
-            check (Cloudflare Turnstile).
+            <strong>Technical info:</strong> we keep a "last active" timestamp on
+            your account to understand overall usage — but we do <strong>not</strong>{" "}
+            store your IP address on your account. Like any website, your IP is
+            used momentarily to prevent spam and abuse (rate limiting) and may
+            appear in the standard server logs kept by our hosting providers. New
+            sign-ups pass a bot check (Cloudflare Turnstile).
           </li>
         </ul>
       </section>

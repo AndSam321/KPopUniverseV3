@@ -29,14 +29,14 @@ class AdminStats
 
   def active_users
     {
-      day: signed_in_since(1.day.ago),
-      week: signed_in_since(7.days.ago),
-      month: signed_in_since(30.days.ago)
+      day: active_since(1.day.ago),
+      week: active_since(7.days.ago),
+      month: active_since(30.days.ago)
     }
   end
 
-  def signed_in_since(time)
-    User.where("last_sign_in_at > ?", time).count
+  def active_since(time)
+    User.where("last_active_at > ?", time).count
   end
 
   def series(model)

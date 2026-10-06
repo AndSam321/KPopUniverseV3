@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_10_05_211705) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_06_065457) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -457,9 +457,11 @@ ActiveRecord::Schema[8.0].define(version: 2026_10_05_211705) do
     t.jsonb "badges", default: []
     t.jsonb "notification_preferences", default: {"likes" => true, "replies" => true, "comments" => true}, null: false
     t.boolean "admin", default: false, null: false
+    t.datetime "last_active_at"
     t.index ["badges"], name: "index_users_on_badges", using: :gin
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["idol_points"], name: "index_users_on_idol_points"
+    t.index ["last_active_at"], name: "index_users_on_last_active_at"
     t.index ["provider", "uid"], name: "index_users_on_provider_and_uid", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["title"], name: "index_users_on_title"
