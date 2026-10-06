@@ -1,14 +1,12 @@
-/* === Full-page layout (no scroll) === */
+/* === Page layout: centered horizontally, top-aligned below the nav === */
 .register-page {
-  height: 100vh;
   margin: 0;
-  padding: 0;
+  padding: 2rem 16px 3rem;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   background: transparent;
   font-family: var(--font-content);
-  overflow: hidden;
 }
 
 /* === Container holds title + card === */
@@ -19,7 +17,6 @@
   flex-direction: column;
   align-items: center;
   gap: 24px;
-  padding: 0 16px;
 }
 
 /* === Website title (outside card) === */
