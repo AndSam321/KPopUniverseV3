@@ -389,6 +389,27 @@ export default function Messages() {
     }
   };
 
+  // Keep the composer above the iOS on-screen keyboard. visualViewport shrinks
+  // when the keyboard opens; expose that gap as --kb so the fixed thread lifts.
+  useEffect(() => {
+    const vv = window.visualViewport;
+    if (!vv || !conversationId) return;
+    const root = document.documentElement;
+    const update = () => {
+      const kb = Math.max(0, window.innerHeight - vv.height - vv.offsetTop);
+      root.style.setProperty("--kb", `${kb}px`);
+      if (kb > 0) scrollToBottom();
+    };
+    update();
+    vv.addEventListener("resize", update);
+    vv.addEventListener("scroll", update);
+    return () => {
+      vv.removeEventListener("resize", update);
+      vv.removeEventListener("scroll", update);
+      root.style.setProperty("--kb", "0px");
+    };
+  }, [conversationId]);
+
   useEffect(() => () => clearTimeout(typingHideRef.current), []);
   useEffect(() => () => imagePreview && URL.revokeObjectURL(imagePreview), [imagePreview]);
 
@@ -586,6 +607,7 @@ export default function Messages() {
                 placeholder="Message…"
                 value={body}
                 onChange={handleBodyChange}
+                onFocus={scrollToBottom}
                 maxLength={5000}
               />
               <button
