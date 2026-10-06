@@ -457,8 +457,19 @@
     display: none;
   }
 
+  /* Pin the open thread between the top nav and the bottom tab bar so the
+     composer stays put and messages scroll within — no scroll-to-reach-input,
+     no overlap with the bottom nav, and no dependence on 100vh (which Safari's
+     URL bar makes unreliable). */
   .dm--thread-open .dm__thread {
     display: flex;
+    position: fixed;
+    top: calc(56px + env(safe-area-inset-top, 0px));
+    left: 0;
+    right: 0;
+    bottom: calc(64px + env(safe-area-inset-bottom, 0px));
+    z-index: 30;
+    background: var(--card-bg);
   }
 
   .dm__back {
