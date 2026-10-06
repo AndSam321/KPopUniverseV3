@@ -31,19 +31,27 @@ class GroupSpotifySync
   end
 
   def sync_albums(group, artist_id)
+    # Transient API errors propagate so the job can retry; one bad album can't
+    # abort the rest of the discography.
     client.artist_albums(artist_id).each do |album|
       next if album["id"].blank?
 
-      record = find_album(group, album)
-      record.spotify_id = album["id"]
-      record.update!(
-        title: album["name"],
-        album_type: album["album_type"],
-        release_date: parse_release_date(album),
-        cover_url: album.dig("images", 0, "url"),
-        external_url: album.dig("external_urls", "spotify")
-      )
+      upsert_album(group, album)
+    rescue => e
+      Rails.logger.warn("[GroupSpotifySync] skipped album #{album["id"]} for #{group.name}: #{e.class}: #{e.message}")
     end
+  end
+
+  def upsert_album(group, album)
+    record = find_album(group, album)
+    record.spotify_id = album["id"]
+    record.update!(
+      title: album["name"],
+      album_type: album["album_type"],
+      release_date: parse_release_date(album),
+      cover_url: album.dig("images", 0, "url"),
+      external_url: album.dig("external_urls", "spotify")
+    )
   end
 
   def find_album(group, album)

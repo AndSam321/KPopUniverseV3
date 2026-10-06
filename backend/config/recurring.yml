@@ -15,7 +15,7 @@ production:
     schedule: every hour at minute 12
 
   weekly_group_sync:
-    class: EnqueueGroupSyncsJob
+    class: SyncGroupsJob
     queue: default
     schedule: every sunday at 4am
 
