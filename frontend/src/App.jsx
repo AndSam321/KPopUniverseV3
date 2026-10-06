@@ -15,6 +15,8 @@ import AddToHomeScreen from "./components/common/AddToHomeScreen.jsx";
 const Sandbox = React.lazy(() => import("./playground/Sandbox.jsx"));
 const Register = React.lazy(() => import("./components/auth/Register.jsx"));
 const Login = React.lazy(() => import("./components/auth/Login.jsx"));
+const ForgotPassword = React.lazy(() => import("./components/auth/ForgotPassword.jsx"));
+const ResetPassword = React.lazy(() => import("./components/auth/ResetPassword.jsx"));
 const Profile = React.lazy(() => import("./components/profile/Profile.jsx"));
 const Home = React.lazy(() => import("./components/home/Home.jsx"));
 const GroupsList = React.lazy(() => import("./components/groups/GroupsList.jsx"));
@@ -114,6 +116,22 @@ function App() {
             element={
               <GuestRoute>
                 <Login />
+              </GuestRoute>
+            }
+          />
+          <Route
+            path="/forgot-password"
+            element={
+              <GuestRoute>
+                <ForgotPassword />
+              </GuestRoute>
+            }
+          />
+          <Route
+            path="/reset-password"
+            element={
+              <GuestRoute>
+                <ResetPassword />
               </GuestRoute>
             }
           />

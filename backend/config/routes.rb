@@ -19,6 +19,7 @@ Rails.application.routes.draw do
                  controllers: {
                    registrations: "api/v1/auth/registrations",
                    sessions: "api/v1/auth/sessions",
+                   passwords: "api/v1/auth/passwords",
                    omniauth_callbacks: "api/v1/auth/omniauth"
                  }
 

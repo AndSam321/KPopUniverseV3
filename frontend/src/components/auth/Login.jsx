@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { login } from "../../api/authApi";
 import { useAuth } from "../../context/AuthContext";
 import "./Register.css";
@@ -83,6 +83,11 @@ export default function Login() {
                 required
                 autoComplete="current-password"
               />
+              <div className="form-forgot">
+                <Link to="/forgot-password" className="register-footer-link">
+                  Forgot password?
+                </Link>
+              </div>
             </div>
 
             <button

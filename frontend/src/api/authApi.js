@@ -1,6 +1,30 @@
 import api from "./axios";
 
 /**
+ * Request a password-reset email
+ * POST /api/v1/auth/password
+ */
+export const requestPasswordReset = async (email) => {
+  const response = await api.post("/auth/password", { user: { email } });
+  return response.data;
+};
+
+/**
+ * Set a new password using the token from the reset email
+ * PUT /api/v1/auth/password
+ */
+export const resetPassword = async ({ token, password, passwordConfirmation }) => {
+  const response = await api.put("/auth/password", {
+    user: {
+      reset_password_token: token,
+      password,
+      password_confirmation: passwordConfirmation,
+    },
+  });
+  return response.data;
+};
+
+/**
  * Register a new user
  * POST /api/v1/auth
  */
