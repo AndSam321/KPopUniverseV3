@@ -529,8 +529,9 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 12px 16px;
+  padding: 12px 16px calc(12px + env(safe-area-inset-bottom, 0px));
   border-top: 1px solid var(--border-color);
+  background: var(--card-bg);
 }
 
 .dm__compose-btn {
@@ -600,6 +601,18 @@
 
 /* === Responsive: single pane on mobile === */
 @media (max-width: 720px) {
+  /* Lock the document while a thread is open so iOS can't scroll the whole
+     page up to reveal the focused input — the top bar and composer stay put,
+     and only .dm__messages scrolls. */
+  body.dm-thread-active {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+  }
+
   .dm {
     grid-template-columns: 1fr;
     border: none;
@@ -629,10 +642,10 @@
     top: calc(56px + env(safe-area-inset-top, 0px));
     left: 0;
     right: 0;
-    /* The tab bar is hidden in a thread, so the composer sits at the very
-       bottom (above the home indicator) and rises above the on-screen keyboard
-       when it opens (--kb is set from visualViewport in Messages.jsx). */
-    bottom: max(env(safe-area-inset-bottom, 0px), var(--kb, 0px));
+    /* The tab bar is hidden in a thread, so the thread reaches the screen
+       bottom (the composer pads for the home indicator) and rises above the
+       keyboard when it opens (--kb is set from visualViewport in Messages.jsx). */
+    bottom: var(--kb, 0px);
     z-index: 30;
     background: var(--card-bg);
   }
