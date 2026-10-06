@@ -64,7 +64,10 @@ export default function Privacy() {
         </p>
         <ul>
           <li><strong>Render</strong> — app hosting and database.</li>
-          <li><strong>Amazon S3</strong> — storage for uploaded images.</li>
+          <li>
+            <strong>Amazon Web Services (AWS)</strong> — cloud infrastructure and
+            storage for uploaded images.
+          </li>
           <li><strong>Cloudflare</strong> — website delivery and bot protection.</li>
           <li><strong>Our email provider</strong> — to send account emails.</li>
           <li>
