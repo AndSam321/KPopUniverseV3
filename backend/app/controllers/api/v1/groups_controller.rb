@@ -41,6 +41,7 @@ class Api::V1::GroupsController < Api::V1::BaseController
       group_type: group.group_type,
       status: group.status,
       fandom_name: group.fandom_name,
+      spotify_url: group.spotify_id.present? ? "https://open.spotify.com/artist/#{group.spotify_id}" : nil,
       user_id: group.user_id
     }
   end

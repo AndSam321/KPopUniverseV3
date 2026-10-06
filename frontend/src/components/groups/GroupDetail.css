@@ -304,6 +304,26 @@
   color: #e0498b;
 }
 
+.group-detail__spotify {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 12px;
+  padding: 7px 16px;
+  border-radius: 999px;
+  background: #1db954;
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.group-detail__spotify:hover {
+  background: #1ed760;
+  transform: translateY(-1px);
+}
+
 /* === Members / Discography sections === */
 .group-detail__section {
   background: var(--card-bg);
@@ -368,6 +388,22 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
   gap: 1.25rem;
+}
+
+.album-card--link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.album-card--link:hover {
+  transform: translateY(-2px);
+}
+
+.album-card--link:hover .album-card__title {
+  color: var(--accent-link);
 }
 
 .album-card__cover {

@@ -209,6 +209,16 @@ const GroupDetail = () => {
               </span>
             )}
           </div>
+          {groupData.spotify_url && (
+            <a
+              className="group-detail__spotify"
+              href={groupData.spotify_url}
+              target="_blank"
+              rel="noreferrer"
+            >
+              ▶ Listen on Spotify
+            </a>
+          )}
         </div>
         {user && (
           <button
@@ -249,23 +259,33 @@ const GroupDetail = () => {
         <section className="group-detail__section" ref={discographyRef}>
           <h2 className="group-detail__section-title">Discography</h2>
           <div className="group-detail__albums">
-            {visibleAlbums.map((album) => (
-              <div key={album.id} className="album-card">
-                <div className="album-card__cover">
-                  {album.cover_url ? (
-                    <FadeImage src={album.cover_url} alt={album.title} />
-                  ) : (
-                    <span>♪</span>
-                  )}
-                </div>
-                <div className="album-card__title">{album.title}</div>
-                <div className="album-card__meta">
-                  {[ALBUM_TYPE_LABELS[album.album_type] || album.album_type, formatYear(album.release_date)]
-                    .filter(Boolean)
-                    .join(" · ")}
-                </div>
-              </div>
-            ))}
+            {visibleAlbums.map((album) => {
+              const Tag = album.external_url ? "a" : "div";
+              const linkProps = album.external_url
+                ? { href: album.external_url, target: "_blank", rel: "noreferrer" }
+                : {};
+              return (
+                <Tag
+                  key={album.id}
+                  className={`album-card${album.external_url ? " album-card--link" : ""}`}
+                  {...linkProps}
+                >
+                  <div className="album-card__cover">
+                    {album.cover_url ? (
+                      <FadeImage src={album.cover_url} alt={album.title} />
+                    ) : (
+                      <span>♪</span>
+                    )}
+                  </div>
+                  <div className="album-card__title">{album.title}</div>
+                  <div className="album-card__meta">
+                    {[ALBUM_TYPE_LABELS[album.album_type] || album.album_type, formatYear(album.release_date)]
+                      .filter(Boolean)
+                      .join(" · ")}
+                  </div>
+                </Tag>
+              );
+            })}
           </div>
 
           {hasMoreAlbums && !albumsExpanded && (
