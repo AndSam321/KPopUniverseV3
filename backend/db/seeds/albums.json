@@ -889,20 +889,68 @@
   ],
   "CORTIS": [
     {
-      "spotify_id": null,
-      "title": "Color Outside the Lines",
-      "album_type": "ep",
-      "release_date": "2025-09-08",
-      "cover_url": null,
-      "external_url": null
+      "spotify_id": "26w4RoexAyiXRogASNJDZj",
+      "title": "GREENGREEN_playextended",
+      "album_type": "album",
+      "release_date": "2026-08-23",
+      "cover_url": "https://i.scdn.co/image/ab67616d0000b273da2a04ef57dfebfb8946fd49",
+      "external_url": "https://open.spotify.com/album/26w4RoexAyiXRogASNJDZj"
     },
     {
-      "spotify_id": null,
+      "spotify_id": "7hkn5DHPOpLwrlUpxAbbnp",
+      "title": "MOTION (feat. Juicy J)",
+      "album_type": "single",
+      "release_date": "2026-07-31",
+      "cover_url": "https://i.scdn.co/image/ab67616d0000b273eca615c30cc2bba6191d1544",
+      "external_url": "https://open.spotify.com/album/7hkn5DHPOpLwrlUpxAbbnp"
+    },
+    {
+      "spotify_id": "2zEdi42kfgLEySoikGJMFT",
+      "title": "GREENGREEN",
+      "album_type": "single",
+      "release_date": "2026-05-04",
+      "cover_url": "https://i.scdn.co/image/ab67616d0000b2737a702a4c3a18c1439fdc29ff",
+      "external_url": "https://open.spotify.com/album/2zEdi42kfgLEySoikGJMFT"
+    },
+    {
+      "spotify_id": "52J8GQoNp2vgDJ6992NjiM",
+      "title": "REDRED",
+      "album_type": "single",
+      "release_date": "2026-04-20",
+      "cover_url": "https://i.scdn.co/image/ab67616d0000b27324ace1518851b27e9983f739",
+      "external_url": "https://open.spotify.com/album/52J8GQoNp2vgDJ6992NjiM"
+    },
+    {
+      "spotify_id": "3M3mRFHjiwrVBBYR5tGGzd",
+      "title": "Mention Me (From The Movie \"GOAT\")",
+      "album_type": "single",
+      "release_date": "2026-02-13",
+      "cover_url": "https://i.scdn.co/image/ab67616d0000b27312fbc981d094ef600fd0cb42",
+      "external_url": "https://open.spotify.com/album/3M3mRFHjiwrVBBYR5tGGzd"
+    },
+    {
+      "spotify_id": "2yMfaynthtWVAkJ5A3Kwrf",
+      "title": "COLOR OUTSIDE THE LINES",
+      "album_type": "single",
+      "release_date": "2025-09-08",
+      "cover_url": "https://i.scdn.co/image/ab67616d0000b2734b56a34b0c2b3798fd46f855",
+      "external_url": "https://open.spotify.com/album/2yMfaynthtWVAkJ5A3Kwrf"
+    },
+    {
+      "spotify_id": "0YoNZBlXu7clpO3QcBrldX",
+      "title": "What You Want (feat. Teezo Touchdown)",
+      "album_type": "single",
+      "release_date": "2025-08-22",
+      "cover_url": "https://i.scdn.co/image/ab67616d0000b273d0673e1ea402302f5d487060",
+      "external_url": "https://open.spotify.com/album/0YoNZBlXu7clpO3QcBrldX"
+    },
+    {
+      "spotify_id": "6HQEHkwhLmwN0VTJSWgOgE",
       "title": "What You Want",
       "album_type": "single",
       "release_date": "2025-08-18",
-      "cover_url": null,
-      "external_url": null
+      "cover_url": "https://i.scdn.co/image/ab67616d0000b273c99e4b439fcb318678a9a1a6",
+      "external_url": "https://open.spotify.com/album/6HQEHkwhLmwN0VTJSWgOgE"
     }
   ],
   "ENHYPEN": [
@@ -3765,12 +3813,76 @@
       "external_url": "https://open.spotify.com/album/10M8ccltzArj4gzfYQu9hn"
     },
     {
+      "spotify_id": "1oniugll0x2gZ3l7o4z9iG",
+      "title": "Beautiful Christmas",
+      "album_type": "single",
+      "release_date": "2022-12-14",
+      "cover_url": "https://i.scdn.co/image/ab67616d0000b273d3f431dc2bee60eac129a8ba",
+      "external_url": "https://open.spotify.com/album/1oniugll0x2gZ3l7o4z9iG"
+    },
+    {
+      "spotify_id": "58OR7UoaJkJzqeQGClHzh1",
+      "title": "‘The ReVe Festival 2022 - Birthday’",
+      "album_type": "single",
+      "release_date": "2022-11-28",
+      "cover_url": "https://i.scdn.co/image/ab67616d0000b273d2ef237da7f94762997c2083",
+      "external_url": "https://open.spotify.com/album/58OR7UoaJkJzqeQGClHzh1"
+    },
+    {
       "spotify_id": "4ualu7nMAcmoAqp47YaA95",
       "title": "Bloom",
       "album_type": "album",
       "release_date": "2022-04-06",
       "cover_url": "https://i.scdn.co/image/ab67616d0000b2739d750d969d227e6506a2c176",
       "external_url": "https://open.spotify.com/album/4ualu7nMAcmoAqp47YaA95"
+    },
+    {
+      "spotify_id": "3HgoCO9wWuPcNhz8Ip4C46",
+      "title": "‘The ReVe Festival 2022 - Feel My Rhythm’",
+      "album_type": "single",
+      "release_date": "2022-03-21",
+      "cover_url": "https://i.scdn.co/image/ab67616d0000b2738c4a282e84a53c1c8acf129a",
+      "external_url": "https://open.spotify.com/album/3HgoCO9wWuPcNhz8Ip4C46"
+    },
+    {
+      "spotify_id": "46q4DrAttifm5PnrAtYqp2",
+      "title": "iScreaM Vol.12 : Bad Boy Remixes",
+      "album_type": "single",
+      "release_date": "2021-11-01",
+      "cover_url": "https://i.scdn.co/image/ab67616d0000b27315375c39fa5a417709ca99bc",
+      "external_url": "https://open.spotify.com/album/46q4DrAttifm5PnrAtYqp2"
+    },
+    {
+      "spotify_id": "7uCTBsGC6JHlwmmrOCIUBw",
+      "title": "iScreaM Vol.11 : Queendom Remix",
+      "album_type": "single",
+      "release_date": "2021-10-15",
+      "cover_url": "https://i.scdn.co/image/ab67616d0000b273084833739074e548da317e37",
+      "external_url": "https://open.spotify.com/album/7uCTBsGC6JHlwmmrOCIUBw"
+    },
+    {
+      "spotify_id": "6Pe5LGQgU3mmvuRjFMsACV",
+      "title": "Queendom - The 6th Mini Album",
+      "album_type": "single",
+      "release_date": "2021-08-16",
+      "cover_url": "https://i.scdn.co/image/ab67616d0000b273830de2e836036f181df598d0",
+      "external_url": "https://open.spotify.com/album/6Pe5LGQgU3mmvuRjFMsACV"
+    },
+    {
+      "spotify_id": "06h9n6zGd1T17s1RkdXIc4",
+      "title": "START-UP (Original Television Soundtrack) Pt. 1",
+      "album_type": "single",
+      "release_date": "2020-10-17",
+      "cover_url": "https://i.scdn.co/image/ab67616d0000b273412d3cea1ee1bdd71a429d27",
+      "external_url": "https://open.spotify.com/album/06h9n6zGd1T17s1RkdXIc4"
+    },
+    {
+      "spotify_id": "0MYodAzFX64jToQpE5jWNW",
+      "title": "Our Beloved BoA #4 - SM STATION",
+      "album_type": "single",
+      "release_date": "2020-08-21",
+      "cover_url": "https://i.scdn.co/image/ab67616d0000b2731ff5d88a4453ce83682ab209",
+      "external_url": "https://open.spotify.com/album/0MYodAzFX64jToQpE5jWNW"
     },
     {
       "spotify_id": "3rVtm00UfbuzWOewdm4iYM",
@@ -3781,12 +3893,84 @@
       "external_url": "https://open.spotify.com/album/3rVtm00UfbuzWOewdm4iYM"
     },
     {
+      "spotify_id": "3DXz6ItR9DzIw9S0h3Cxfc",
+      "title": "‘The ReVe Festival’ Day 2",
+      "album_type": "single",
+      "release_date": "2019-08-20",
+      "cover_url": "https://i.scdn.co/image/ab67616d0000b2733a7804057d817ff9f68ca85c",
+      "external_url": "https://open.spotify.com/album/3DXz6ItR9DzIw9S0h3Cxfc"
+    },
+    {
+      "spotify_id": "5STl99J7pIPr4qIJ72COq0",
+      "title": "Hotel del Luna (Original Television Soundtrack) Pt. 8",
+      "album_type": "single",
+      "release_date": "2019-08-10",
+      "cover_url": "https://i.scdn.co/image/ab67616d0000b27351d4a2f7e6188ddc597a92af",
+      "external_url": "https://open.spotify.com/album/5STl99J7pIPr4qIJ72COq0"
+    },
+    {
+      "spotify_id": "2nLEiP268mSFZHW5dajM4R",
+      "title": "‘The ReVe Festival’ Day 1",
+      "album_type": "single",
+      "release_date": "2019-06-19",
+      "cover_url": "https://i.scdn.co/image/ab67616d0000b27370a04b3e66d6a4a38237dc7f",
+      "external_url": "https://open.spotify.com/album/2nLEiP268mSFZHW5dajM4R"
+    },
+    {
+      "spotify_id": "5jKmId2jXjJx4LpdcUzwgG",
+      "title": "Power Up (Japanese Ver.)",
+      "album_type": "single",
+      "release_date": "2019-05-29",
+      "cover_url": "https://i.scdn.co/image/ab67616d0000b273a8f67d533c2b25768f54ec22",
+      "external_url": "https://open.spotify.com/album/5jKmId2jXjJx4LpdcUzwgG"
+    },
+    {
+      "spotify_id": "4n2UdASUneo56k6Uk5ZRIb",
+      "title": "SAPPY",
+      "album_type": "single",
+      "release_date": "2019-05-29",
+      "cover_url": "https://i.scdn.co/image/ab67616d0000b2738e81896206136337b03c15c6",
+      "external_url": "https://open.spotify.com/album/4n2UdASUneo56k6Uk5ZRIb"
+    },
+    {
+      "spotify_id": "7dg5iqyFYqRQH7vtAG9VNf",
+      "title": "Close To Me (Red Velvet Remix)",
+      "album_type": "single",
+      "release_date": "2019-04-05",
+      "cover_url": "https://i.scdn.co/image/ab67616d0000b273e689157967d6f852fc59a746",
+      "external_url": "https://open.spotify.com/album/7dg5iqyFYqRQH7vtAG9VNf"
+    },
+    {
+      "spotify_id": "3rViQRN8GMdIrUymVBh0IG",
+      "title": "Sayonara",
+      "album_type": "single",
+      "release_date": "2019-02-20",
+      "cover_url": "https://i.scdn.co/image/ab67616d0000b2731830cf707098bac512f52dba",
+      "external_url": "https://open.spotify.com/album/3rViQRN8GMdIrUymVBh0IG"
+    },
+    {
+      "spotify_id": "7rNIvLwIpB2mwOzk20iqIl",
+      "title": "RBB - The 5th Mini Album",
+      "album_type": "single",
+      "release_date": "2018-11-30",
+      "cover_url": "https://i.scdn.co/image/ab67616d0000b2732270d3bd1d13133edf0be836",
+      "external_url": "https://open.spotify.com/album/7rNIvLwIpB2mwOzk20iqIl"
+    },
+    {
       "spotify_id": "5zWa1ZEUBctbKqvwXbFawo",
       "title": "Summer Magic - Summer Mini Album",
       "album_type": "album",
       "release_date": "2018-08-06",
       "cover_url": "https://i.scdn.co/image/ab67616d0000b2736017bca98dea58ceddea77c1",
       "external_url": "https://open.spotify.com/album/5zWa1ZEUBctbKqvwXbFawo"
+    },
+    {
+      "spotify_id": "4W6K0DP1YlZ48JlvdKCkZh",
+      "title": "#Cookie Jar",
+      "album_type": "single",
+      "release_date": "2018-07-04",
+      "cover_url": "https://i.scdn.co/image/ab67616d0000b2739acd884a943f3630236a5ca3",
+      "external_url": "https://open.spotify.com/album/4W6K0DP1YlZ48JlvdKCkZh"
     },
     {
       "spotify_id": "0OkJThJls8FO1lutMzMDJ0",
@@ -3805,12 +3989,52 @@
       "external_url": "https://open.spotify.com/album/0rvrbZvaDX5S9ZBhwOwFfH"
     },
     {
+      "spotify_id": "3N2kQMt5yVXyGAVUDxzqup",
+      "title": "Rebirth - SM STATION",
+      "album_type": "single",
+      "release_date": "2017-08-18",
+      "cover_url": "https://i.scdn.co/image/ab67616d0000b27331e0373e4903af2be9cadc4a",
+      "external_url": "https://open.spotify.com/album/3N2kQMt5yVXyGAVUDxzqup"
+    },
+    {
+      "spotify_id": "6OXg149IkmbgW7zfzbwgS2",
+      "title": "The Red Summer - Summer Mini Album",
+      "album_type": "single",
+      "release_date": "2017-07-09",
+      "cover_url": "https://i.scdn.co/image/ab67616d0000b2738164cd1a2e03b7ca2db9ff5e",
+      "external_url": "https://open.spotify.com/album/6OXg149IkmbgW7zfzbwgS2"
+    },
+    {
+      "spotify_id": "55Pg6r2oJfQaVm3yzhgZsG",
+      "title": "Would U - SM STATION",
+      "album_type": "single",
+      "release_date": "2017-03-31",
+      "cover_url": "https://i.scdn.co/image/ab67616d0000b27303f0ae1be05283665ac60f7f",
+      "external_url": "https://open.spotify.com/album/55Pg6r2oJfQaVm3yzhgZsG"
+    },
+    {
+      "spotify_id": "5Bg49LEfyoZzKpQsEwRCtI",
+      "title": "Rookie - The 4th Mini Album",
+      "album_type": "single",
+      "release_date": "2017-02-01",
+      "cover_url": "https://i.scdn.co/image/ab67616d0000b273a38af5bbda76202e9d9eb8fd",
+      "external_url": "https://open.spotify.com/album/5Bg49LEfyoZzKpQsEwRCtI"
+    },
+    {
       "spotify_id": "6MNlcai3skKLKv5syzFwC3",
       "title": "Russian Roulette - The 3rd Mini Album",
       "album_type": "album",
       "release_date": "2016-09-07",
       "cover_url": "https://i.scdn.co/image/ab67616d0000b2733f30a062dafcdbc1a8fad842",
       "external_url": "https://open.spotify.com/album/6MNlcai3skKLKv5syzFwC3"
+    },
+    {
+      "spotify_id": "698RZEC6WYFtoQR1cABe4x",
+      "title": "Yossism (Music from Telemonster)",
+      "album_type": "single",
+      "release_date": "2016-05-02",
+      "cover_url": "https://i.scdn.co/image/ab67616d0000b273ad2002e31133c0d5c9dfb0f0",
+      "external_url": "https://open.spotify.com/album/698RZEC6WYFtoQR1cABe4x"
     },
     {
       "spotify_id": "2qgl7dAgslqL1w2l2wQhMA",
@@ -3821,12 +4045,52 @@
       "external_url": "https://open.spotify.com/album/2qgl7dAgslqL1w2l2wQhMA"
     },
     {
+      "spotify_id": "5Cuvubu7p7KgZVXelmxgjK",
+      "title": "투유 프로젝트 - 슈가맨 Pt.13",
+      "album_type": "single",
+      "release_date": "2016-01-13",
+      "cover_url": "https://i.scdn.co/image/ab67616d0000b27399245de8bd696b9495af5d1c",
+      "external_url": "https://open.spotify.com/album/5Cuvubu7p7KgZVXelmxgjK"
+    },
+    {
+      "spotify_id": "69a7YNzhApHfLFwHvPkCso",
+      "title": "세가지 소원 Wish Tree - WINTER GARDEN",
+      "album_type": "single",
+      "release_date": "2015-12-18",
+      "cover_url": "https://i.scdn.co/image/ab67616d0000b2733e2194d332ceeb0ab6018b21",
+      "external_url": "https://open.spotify.com/album/69a7YNzhApHfLFwHvPkCso"
+    },
+    {
       "spotify_id": "6YL9J0E6PGtYzkhyMxnmXd",
       "title": "The Red - The 1st Album",
       "album_type": "album",
       "release_date": "2015-09-09",
       "cover_url": "https://i.scdn.co/image/ab67616d0000b27371a70331062453ece06f8b79",
       "external_url": "https://open.spotify.com/album/6YL9J0E6PGtYzkhyMxnmXd"
+    },
+    {
+      "spotify_id": "27cBQ5FDqv0xLgiJ7qNpZr",
+      "title": "Ice Cream Cake - The 1st Mini Album",
+      "album_type": "single",
+      "release_date": "2015-03-17",
+      "cover_url": "https://i.scdn.co/image/ab67616d0000b2733beb8877c3a0cde5be9a139c",
+      "external_url": "https://open.spotify.com/album/27cBQ5FDqv0xLgiJ7qNpZr"
+    },
+    {
+      "spotify_id": "4OeQ9nilS4Sy3efzt0hVFi",
+      "title": "Be Natural - The 2nd Single",
+      "album_type": "single",
+      "release_date": "2014-10-13",
+      "cover_url": "https://i.scdn.co/image/ab67616d0000b27372ee4e2e933836a66e5869b6",
+      "external_url": "https://open.spotify.com/album/4OeQ9nilS4Sy3efzt0hVFi"
+    },
+    {
+      "spotify_id": "6MMkaYzyM0aLZmDBce3nL6",
+      "title": "행복(Happiness)",
+      "album_type": "single",
+      "release_date": "2014-08-01",
+      "cover_url": "https://i.scdn.co/image/ab67616d0000b273ccd9a8fe25e9ae6039ac6ce6",
+      "external_url": "https://open.spotify.com/album/6MMkaYzyM0aLZmDBce3nL6"
     }
   ],
   "SEVENTEEN": [
@@ -4799,12 +5063,12 @@
       "external_url": "https://open.spotify.com/album/437o5FFGCf3CszTjO3wVAi"
     },
     {
-      "spotify_id": "7ED3mOUgYLjyvtRDrrSyrn",
-      "title": "LEMONADE - The 2nd Album (GISELLE Special Version)",
+      "spotify_id": "73SHpMyZYowaI7hCBo0rSQ",
+      "title": "LEMONADE - The 2nd Album (WINTER Special Version)",
       "album_type": "album",
       "release_date": "2026-05-28",
-      "cover_url": "https://i.scdn.co/image/ab67616d0000b273c8e473ed553fc89b70d1557b",
-      "external_url": "https://open.spotify.com/album/7ED3mOUgYLjyvtRDrrSyrn"
+      "cover_url": "https://i.scdn.co/image/ab67616d0000b273e9ad5b2becb5f9aae0d67de6",
+      "external_url": "https://open.spotify.com/album/73SHpMyZYowaI7hCBo0rSQ"
     },
     {
       "spotify_id": "3dUrT5Fo4xOTALDH7vX05C",
@@ -4815,12 +5079,12 @@
       "external_url": "https://open.spotify.com/album/3dUrT5Fo4xOTALDH7vX05C"
     },
     {
-      "spotify_id": "73SHpMyZYowaI7hCBo0rSQ",
-      "title": "LEMONADE - The 2nd Album (WINTER Special Version)",
+      "spotify_id": "7ED3mOUgYLjyvtRDrrSyrn",
+      "title": "LEMONADE - The 2nd Album (GISELLE Special Version)",
       "album_type": "album",
       "release_date": "2026-05-28",
-      "cover_url": "https://i.scdn.co/image/ab67616d0000b273e9ad5b2becb5f9aae0d67de6",
-      "external_url": "https://open.spotify.com/album/73SHpMyZYowaI7hCBo0rSQ"
+      "cover_url": "https://i.scdn.co/image/ab67616d0000b273c8e473ed553fc89b70d1557b",
+      "external_url": "https://open.spotify.com/album/7ED3mOUgYLjyvtRDrrSyrn"
     },
     {
       "spotify_id": "4AbQDUPzGwI0QKqdZsLdNL",
@@ -4935,20 +5199,20 @@
       "external_url": "https://open.spotify.com/album/006UXCEdNTfhQXQgQ19HG0"
     },
     {
-      "spotify_id": "3aLbyAljCs2NI9AdjfRPqc",
-      "title": "iScreaM Vol.33 : Supernova / Armageddon Remixes",
-      "album_type": "single",
-      "release_date": "2024-09-20",
-      "cover_url": "https://i.scdn.co/image/ab67616d0000b27311b2619b6939eff2c1dc144f",
-      "external_url": "https://open.spotify.com/album/3aLbyAljCs2NI9AdjfRPqc"
-    },
-    {
       "spotify_id": "6HmUGM55FYKtA0jm3lgyFW",
       "title": "We Go (English Version)",
       "album_type": "single",
       "release_date": "2024-09-20",
       "cover_url": "https://i.scdn.co/image/ab67616d0000b273418e2c9e674ca6704e182387",
       "external_url": "https://open.spotify.com/album/6HmUGM55FYKtA0jm3lgyFW"
+    },
+    {
+      "spotify_id": "3aLbyAljCs2NI9AdjfRPqc",
+      "title": "iScreaM Vol.33 : Supernova / Armageddon Remixes",
+      "album_type": "single",
+      "release_date": "2024-09-20",
+      "cover_url": "https://i.scdn.co/image/ab67616d0000b27311b2619b6939eff2c1dc144f",
+      "external_url": "https://open.spotify.com/album/3aLbyAljCs2NI9AdjfRPqc"
     },
     {
       "spotify_id": "2PvpuCui1GVO8DkFcCHzYU",
@@ -5087,20 +5351,20 @@
       "external_url": "https://open.spotify.com/album/2rTc5TdRP7hr7gE4h4lUR1"
     },
     {
-      "spotify_id": "69xF8jTd0c4Zoo7DT3Rwrn",
-      "title": "MY WORLD - The 3rd Mini Album",
-      "album_type": "single",
-      "release_date": "2023-05-08",
-      "cover_url": "https://i.scdn.co/image/ab67616d0000b273cbc3556fdf9cf0203d86657a",
-      "external_url": "https://open.spotify.com/album/69xF8jTd0c4Zoo7DT3Rwrn"
-    },
-    {
       "spotify_id": null,
       "title": "My World",
       "album_type": "ep",
       "release_date": "2023-05-08",
       "cover_url": null,
       "external_url": null
+    },
+    {
+      "spotify_id": "69xF8jTd0c4Zoo7DT3Rwrn",
+      "title": "MY WORLD - The 3rd Mini Album",
+      "album_type": "single",
+      "release_date": "2023-05-08",
+      "cover_url": "https://i.scdn.co/image/ab67616d0000b273cbc3556fdf9cf0203d86657a",
+      "external_url": "https://open.spotify.com/album/69xF8jTd0c4Zoo7DT3Rwrn"
     },
     {
       "spotify_id": "2o35lokKrBVG73xWFDEVsX",
@@ -5135,20 +5399,20 @@
       "external_url": "https://open.spotify.com/album/2jK7H4A5Y2xJaoOyzBedaS"
     },
     {
-      "spotify_id": null,
-      "title": "Girls",
-      "album_type": "ep",
-      "release_date": "2022-07-08",
-      "cover_url": null,
-      "external_url": null
-    },
-    {
       "spotify_id": "4w1dbvUy1crv0knXQvcSeY",
       "title": "Girls - The 2nd Mini Album",
       "album_type": "album",
       "release_date": "2022-07-08",
       "cover_url": "https://i.scdn.co/image/ab67616d0000b2731cbd221702dc7fe4efaf3b4f",
       "external_url": "https://open.spotify.com/album/4w1dbvUy1crv0knXQvcSeY"
+    },
+    {
+      "spotify_id": null,
+      "title": "Girls",
+      "album_type": "ep",
+      "release_date": "2022-07-08",
+      "cover_url": null,
+      "external_url": null
     },
     {
       "spotify_id": null,
