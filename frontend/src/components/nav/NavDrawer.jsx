@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   X,
+  Home,
   Users,
   LayoutGrid,
   CalendarDays,
@@ -59,6 +60,9 @@ export default function NavDrawer({ open, onClose }) {
         </div>
 
         <nav className="nav-drawer__links">
+          <button className="nav-drawer__link" onClick={go("/")}>
+            <Home size={20} /> <span>Home</span>
+          </button>
           <button className="nav-drawer__link" onClick={go("/following")}>
             <ContactRound size={20} /> <span>Following</span>
           </button>

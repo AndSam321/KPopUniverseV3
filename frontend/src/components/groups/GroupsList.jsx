@@ -68,10 +68,6 @@ const GroupsList = () => {
   };
 
   const handleOpenGroup = (group) => {
-    if (!user) {
-      navigate("/login");
-      return;
-    }
     navigate(`/groups/${group.id}`);
   };
 
@@ -117,7 +113,7 @@ const GroupsList = () => {
         <button
           type="button"
           className={`explore-tab ${exploreTab === "comebacks" ? "explore-tab--active" : ""}`}
-          onClick={() => (user ? setExploreTab("comebacks") : navigate("/login"))}
+          onClick={() => (user ? setExploreTab("comebacks") : navigate("/comebacks"))}
         >
           Comebacks
         </button>

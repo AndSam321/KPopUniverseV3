@@ -1,5 +1,5 @@
-import { Navigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import LoginGate from "./LoginGate";
 
 const PrivateRoute = ({ children }) => {
   const { user, loading } = useAuth();
@@ -9,7 +9,7 @@ const PrivateRoute = ({ children }) => {
   }
 
   if (!user) {
-    return <Navigate to="/login" replace />;
+    return <LoginGate />;
   }
 
   return children;
