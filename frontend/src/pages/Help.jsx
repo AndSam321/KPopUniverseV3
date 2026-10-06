@@ -136,6 +136,13 @@ export default function Help() {
         >
           Send feedback
         </button>
+        <p className="help__contact">
+          Read our{" "}
+          <Link to="/privacy" className="help__privacy-link">
+            Privacy Policy
+          </Link>
+          .
+        </p>
       </section>
 
       {showFeedback && (

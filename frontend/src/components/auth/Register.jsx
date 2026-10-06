@@ -245,7 +245,16 @@ export default function Register() {
                   className="terms-link-button"
                 >
                   Terms and Conditions
-                </button>
+                </button>{" "}
+                and{" "}
+                <a
+                  href="/privacy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="terms-link-button"
+                >
+                  Privacy Policy
+                </a>
               </span>
             </label>
 

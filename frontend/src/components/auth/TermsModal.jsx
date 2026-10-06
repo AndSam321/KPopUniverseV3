@@ -59,8 +59,11 @@ export default function TermsModal({ isOpen, onClose }) {
             <h3 className="terms-heading">5. Privacy</h3>
             <p className="terms-text">
               Your privacy is important to us. We collect and use your personal
-              information as described in our Privacy Policy. By using our
-              service, you consent to such processing.
+              information as described in our{" "}
+              <a href="/privacy" target="_blank" rel="noopener noreferrer">
+                Privacy Policy
+              </a>
+              . By using our service, you consent to such processing.
             </p>
           </section>
 

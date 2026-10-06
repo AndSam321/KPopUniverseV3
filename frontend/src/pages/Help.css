@@ -226,6 +226,16 @@
   opacity: 0.85;
 }
 
+.help__privacy-link {
+  color: var(--accent-link);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.help__privacy-link:hover {
+  text-decoration: underline;
+}
+
 :root.dark-mode .install-step,
 :root.dark-mode .help__faq-item {
   background: var(--dark-card);

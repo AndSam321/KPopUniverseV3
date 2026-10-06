@@ -30,6 +30,7 @@ const NotificationsPage = React.lazy(() => import("./pages/NotificationsPage.jsx
 const SearchResults = React.lazy(() => import("./pages/SearchResults.jsx"));
 const Messages = React.lazy(() => import("./pages/Messages.jsx"));
 const Help = React.lazy(() => import("./pages/Help.jsx"));
+const Privacy = React.lazy(() => import("./pages/Privacy.jsx"));
 const AdminAnalytics = React.lazy(() => import("./pages/AdminAnalytics.jsx"));
 
 const PageLoader = () => (
@@ -78,6 +79,7 @@ function App() {
           />
           <Route path="/search" element={<SearchResults />} />
           <Route path="/help" element={<Help />} />
+          <Route path="/privacy" element={<Privacy />} />
           <Route
             path="/admin"
             element={
