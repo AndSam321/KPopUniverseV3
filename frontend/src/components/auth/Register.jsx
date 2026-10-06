@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { signup } from "../../api/authApi";
 import { useAuth } from "../../context/AuthContext";
 import TermsModal from "./TermsModal";
+import TurnstileWidget, { turnstileEnabled } from "./TurnstileWidget";
 import "./Register.css";
 
 export default function Register() {
@@ -20,6 +21,7 @@ export default function Register() {
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordConfirmation, setShowPasswordConfirmation] =
     useState(false);
+  const [turnstileToken, setTurnstileToken] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -38,6 +40,7 @@ export default function Register() {
         password,
         passwordConfirmation,
         username,
+        turnstileToken,
       });
 
       // Update auth context with user data
@@ -246,10 +249,16 @@ export default function Register() {
               </span>
             </label>
 
+            <TurnstileWidget onVerify={setTurnstileToken} />
+
             <button
               type="submit"
               className="register-button"
-              disabled={loading || !termsAccepted}
+              disabled={
+                loading ||
+                !termsAccepted ||
+                (turnstileEnabled && !turnstileToken)
+              }
             >
               {loading ? "Creating account..." : "Sign Up"}
             </button>

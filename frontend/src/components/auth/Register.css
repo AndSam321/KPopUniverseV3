@@ -129,6 +129,12 @@
   font-size: 0.85rem;
 }
 
+.turnstile-widget {
+  display: flex;
+  justify-content: center;
+  min-height: 65px;
+}
+
 /* row for password + confirm on desktop */
 .form-row {
   display: flex;

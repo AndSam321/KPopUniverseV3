@@ -2,11 +2,22 @@ class Api::V1::Auth::RegistrationsController < Devise::RegistrationsController
   include ActionController::MimeResponds
   respond_to :json
   prepend_before_action :skip_session_storage
+  prepend_before_action :verify_turnstile, only: [:create]
 
   private
 
   def skip_session_storage
     request.session_options[:skip] = true
+  end
+
+  def verify_turnstile
+    return if TurnstileVerifier.verify(token: params[:turnstile_token], remote_ip: request.remote_ip)
+
+    render json: {
+      success: false,
+      message: "Please complete the verification challenge and try again.",
+      errors: ["Verification failed"]
+    }, status: :unprocessable_entity
   end
 
   def respond_with(resource, _opts = {})

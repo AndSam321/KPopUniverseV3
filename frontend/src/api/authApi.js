@@ -36,6 +36,7 @@ export const signup = async (userData) => {
       password_confirmation: userData.passwordConfirmation,
       username: userData.username,
     },
+    turnstile_token: userData.turnstileToken,
   });
 
   const token = response.data?.data?.token;
