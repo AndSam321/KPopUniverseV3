@@ -67,7 +67,27 @@ class Api::V1::UsersController < Api::V1::BaseController
     render json: {status: "error", message: "User not found"}, status: :not_found
   end
 
+  def comments
+    user = User.find_by!(username: params[:id])
+    pagy, records = pagy(user.comments.includes(:post).order(created_at: :desc), items: params[:per_page] || 10)
+    render json: {
+      data: records.map { |comment| profile_comment_json(comment) },
+      meta: {current_page: pagy.page, total_pages: pagy.pages, total_count: pagy.count}
+    }
+  rescue ActiveRecord::RecordNotFound
+    render json: {status: "error", message: "User not found"}, status: :not_found
+  end
+
   private
+
+  def profile_comment_json(comment)
+    {
+      id: comment.id,
+      content: comment.content,
+      created_at: comment.created_at,
+      post: {id: comment.post_id, title: comment.post.title}
+    }
+  end
 
   def user_card(user)
     {

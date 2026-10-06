@@ -31,6 +31,20 @@ RSpec.describe "Posts API", type: :request do
     end
   end
 
+  describe "GET /api/v1/posts?user_id=" do
+    it "returns only posts by the given user" do
+      author = create(:user)
+      create(:post, user: author, title: "mine")
+      create(:post, title: "someone else's")
+
+      get "/api/v1/posts", params: {user_id: author.id}, headers: auth_headers(user)
+
+      expect(response).to have_http_status(:ok)
+      titles = json_response["data"].map { |p| p["title"] }
+      expect(titles).to eq(["mine"])
+    end
+  end
+
   describe "GET /api/v1/posts/following" do
     it "returns posts from communities the user has joined" do
       joined = create(:community)

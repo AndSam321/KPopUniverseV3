@@ -28,6 +28,7 @@ class Api::V1::PostsController < Api::V1::BaseController
   def index
     scope = Post.includes(:user, community: :group, images_attachments: :blob).order(created_at: :desc)
     scope = scope.where(community_id: params[:community_id]) if params[:community_id].present?
+    scope = scope.where(user_id: params[:user_id]) if params[:user_id].present?
     @pagy, @posts = pagy(scope, items: params[:per_page] || 10)
 
     @liked_post_ids = if current_user

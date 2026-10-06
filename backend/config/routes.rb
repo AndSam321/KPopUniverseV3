@@ -35,6 +35,7 @@ Rails.application.routes.draw do
           delete :follow, to: "follows#destroy"
           get :followers, to: "users#followers"
           get :following, to: "users#following"
+          get :comments, to: "users#comments"
         end
       end
 

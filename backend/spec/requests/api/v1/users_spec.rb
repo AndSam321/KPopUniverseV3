@@ -3,6 +3,28 @@ require "rails_helper"
 RSpec.describe "Api::V1::Users", type: :request do
   let(:user) { create(:user, username: "minji") }
 
+  describe "GET /api/v1/users/:id/comments" do
+    it "returns the user's comments newest-first with post context" do
+      post = create(:post)
+      create(:comment, user: user, post: post, content: "older", created_at: 2.hours.ago)
+      create(:comment, user: user, post: post, content: "newer")
+      create(:comment, content: "someone else's")
+
+      get "/api/v1/users/#{user.username}/comments", headers: auth_headers(user)
+
+      expect(response).to have_http_status(:ok)
+      contents = json_response["data"].map { |c| c["content"] }
+      expect(contents).to eq(["newer", "older"])
+      expect(json_response["data"].first.dig("post", "title")).to eq(post.title)
+    end
+
+    it "returns 404 for an unknown user" do
+      get "/api/v1/users/nobody/comments", headers: auth_headers(user)
+
+      expect(response).to have_http_status(:not_found)
+    end
+  end
+
   describe "GET /api/v1/users/my_profile" do
     it "returns the authenticated user's profile with a JWT" do
       get "/api/v1/users/my_profile", headers: auth_headers(user)
