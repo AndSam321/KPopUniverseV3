@@ -48,3 +48,10 @@ export const getFollowing = async (username) => {
   const response = await api.get(`/users/${username}/following`);
   return response.data.data;
 };
+
+export const getUserComments = async (username, page = 1) => {
+  const response = await api.get(`/users/${username}/comments`, {
+    params: { page },
+  });
+  return response.data;
+};

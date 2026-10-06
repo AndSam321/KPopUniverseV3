@@ -25,6 +25,7 @@ import { createConversation } from "../../api/messagesApi";
 import FollowListModal from "./FollowListModal";
 import AvatarCropper from "./AvatarCropper";
 import ProfileToast from "./ProfileToast";
+import ProfileActivity from "./ProfileActivity";
 import BackButton from "../common/BackButton";
 import "./Profile.css";
 
@@ -467,6 +468,9 @@ function Profile() {
             </p>
           )}
         </section>
+
+        {/* ========== POSTS & COMMENTS ========== */}
+        {!editing && <ProfileActivity user={user} />}
 
         {/* ========== EDIT ACTION BAR ========== */}
         {editing && (

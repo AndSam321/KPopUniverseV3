@@ -1,8 +1,9 @@
 import api from "./axios";
 
-export const getPosts = async (page = 1, { communityId } = {}) => {
+export const getPosts = async (page = 1, { communityId, userId } = {}) => {
   const params = { page };
   if (communityId) params.community_id = communityId;
+  if (userId) params.user_id = userId;
   const response = await api.get("/posts", { params });
   return response.data;
 };
