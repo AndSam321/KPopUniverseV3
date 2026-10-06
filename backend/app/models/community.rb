@@ -3,6 +3,7 @@ class Community < ApplicationRecord
 
   pg_search_scope :search,
     against: :name,
+    associated_against: {group: :name},
     using: {tsearch: {prefix: true}, trigram: {threshold: 0.3}}
 
   belongs_to :group, optional: true

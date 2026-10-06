@@ -58,7 +58,10 @@ class Api::V1::CommunitiesController < Api::V1::BaseController
   end
 
   def browse_communities
-    scope = Community.where(official: false).includes(:group)
+    scope = Community.includes(:group)
+    # The public directory hides official communities (shown via their groups),
+    # but the post-composer picker needs them too.
+    scope = scope.where(official: false) unless params[:include_official] == "true"
     return scope.search(params[:q]) if params[:q].present?
     return scope.order(created_at: :desc) if params[:sort] == "new"
 

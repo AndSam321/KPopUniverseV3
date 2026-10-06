@@ -54,6 +54,7 @@ class Api::V1::PostsController < Api::V1::BaseController
     @post = current_user.posts.build(post_params)
 
     if @post.save
+      join_community(@post.community)
       @post.user.award_points(:create_post)
       BadgeAwarder.new(@post.user).check_fandom_badges([@post.community&.group].compact)
       ProfileBroadcaster.call(@post.user)
@@ -103,6 +104,14 @@ class Api::V1::PostsController < Api::V1::BaseController
   end
 
   private
+
+  def join_community(community)
+    return unless community
+
+    current_user.community_memberships.find_or_create_by(community: community)
+  rescue ActiveRecord::RecordNotUnique
+    # already a member
+  end
 
   def award_post_author_points
     return if current_user.id == @post.user_id

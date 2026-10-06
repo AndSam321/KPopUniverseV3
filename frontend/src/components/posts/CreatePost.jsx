@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
 import { createPost } from "../../api/postsApi";
-import { getMyCommunities } from "../../api/communitiesApi";
+import CommunityPicker from "./CommunityPicker";
 import "./CreatePost.css";
 
 const FLAIRS = [
@@ -19,25 +18,13 @@ const CreatePost = ({ onPostCreated, community, onClose }) => {
   const [images, setImages] = useState([]);
   const [imagePreviews, setImagePreviews] = useState([]);
   const [selectedFlair, setSelectedFlair] = useState("");
-  const [communities, setCommunities] = useState(community ? [community] : []);
-  const [communityId, setCommunityId] = useState(community?.id || "");
-  const [loadingCommunities, setLoadingCommunities] = useState(!community);
+  const [selectedCommunity, setSelectedCommunity] = useState(community || null);
+  const [showPicker, setShowPicker] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
   const locked = Boolean(community);
-
-  // Global mode (from the + button): post to one of the communities you joined.
-  useEffect(() => {
-    if (locked) return;
-    getMyCommunities()
-      .then((data) => {
-        setCommunities(data);
-        if (data.length) setCommunityId(data[0].id);
-      })
-      .catch(() => setError("Could not load your communities"))
-      .finally(() => setLoadingCommunities(false));
-  }, [locked]);
+  const communityId = selectedCommunity?.id || "";
 
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
@@ -98,6 +85,7 @@ const CreatePost = ({ onPostCreated, community, onClose }) => {
   };
 
   return (
+    <>
     <div className="create-post">
       <h2>Create New Post</h2>
 
@@ -105,39 +93,21 @@ const CreatePost = ({ onPostCreated, community, onClose }) => {
 
       <form onSubmit={handleSubmit} className="create-post__form">
         <div className="create-post__field">
-          <label htmlFor="community">Community *</label>
+          <label>Community *</label>
           {locked ? (
             <div className="create-post__community-locked">{community.name}</div>
-          ) : loadingCommunities ? (
-            <div className="create-post__community-hint">Loading…</div>
-          ) : communities.length > 0 ? (
-            <select
-              id="community"
-              className="create-post__select"
-              value={communityId}
-              onChange={(e) => setCommunityId(Number(e.target.value))}
-              required
-            >
-              {communities.map((c) => (
-                <option key={c.id} value={c.id}>
-                  {c.group?.name ? `${c.group.name} › ${c.name}` : c.name}
-                </option>
-              ))}
-            </select>
           ) : (
-            <div className="create-post__empty">
-              <p>You haven't joined any communities yet.</p>
-              <Link
-                to="/groups"
-                className="create-post__empty-link"
-                onClick={() => onClose && onClose()}
-              >
-                Explore and join one →
-              </Link>
-              <span className="create-post__empty-hint">
-                (or open a community and post directly from there)
-              </span>
-            </div>
+            <button
+              type="button"
+              className="create-post__community-select"
+              onClick={() => setShowPicker(true)}
+            >
+              {selectedCommunity
+                ? selectedCommunity.group?.name
+                  ? `${selectedCommunity.group.name} › ${selectedCommunity.name}`
+                  : selectedCommunity.name
+                : "Choose a community"}
+            </button>
           )}
         </div>
 
@@ -239,6 +209,17 @@ const CreatePost = ({ onPostCreated, community, onClose }) => {
         </button>
       </form>
     </div>
+    {showPicker && (
+      <CommunityPicker
+        currentId={selectedCommunity?.id}
+        onSelect={(c) => {
+          setSelectedCommunity(c);
+          setShowPicker(false);
+        }}
+        onClose={() => setShowPicker(false)}
+      />
+    )}
+    </>
   );
 };
 

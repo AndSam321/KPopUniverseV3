@@ -1,9 +1,10 @@
 import api from "./axios";
 
-export const getCommunities = async ({ q, sort } = {}) => {
+export const getCommunities = async ({ q, sort, includeOfficial } = {}) => {
   const params = {};
   if (q) params.q = q;
   if (sort) params.sort = sort;
+  if (includeOfficial) params.include_official = true;
   const response = await api.get("/communities", { params });
   return response.data.data;
 };
