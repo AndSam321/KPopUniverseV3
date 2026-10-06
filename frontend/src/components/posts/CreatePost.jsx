@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { createPost } from "../../api/postsApi";
+import { resizeImage } from "../../utils/resizeImage";
 import CommunityPicker from "./CommunityPicker";
 import "./CreatePost.css";
 
@@ -26,23 +27,25 @@ const CreatePost = ({ onPostCreated, community, onClose }) => {
   const locked = Boolean(community);
   const communityId = selectedCommunity?.id || "";
 
-  const handleImageChange = (e) => {
+  const handleImageChange = async (e) => {
     const files = Array.from(e.target.files);
+    e.target.value = "";
     if (files.length + images.length > 10) {
       setError("You can only upload up to 10 images");
       return;
     }
     const validFiles = files.filter((file) => {
-      if (file.size > 5 * 1024 * 1024) {
-        setError("Each image must be less than 5MB");
+      if (file.size > 30 * 1024 * 1024) {
+        setError("Each image must be less than 30MB");
         return false;
       }
       return true;
     });
-    setImages([...images, ...validFiles]);
+    const resized = await Promise.all(validFiles.map((file) => resizeImage(file)));
+    setImages([...images, ...resized]);
     setImagePreviews([
       ...imagePreviews,
-      ...validFiles.map((file) => URL.createObjectURL(file)),
+      ...resized.map((file) => URL.createObjectURL(file)),
     ]);
   };
 

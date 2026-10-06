@@ -12,9 +12,10 @@ import GifPicker from "../components/comments/GifPicker";
 import NewMessageModal from "../components/messages/NewMessageModal";
 import { useAuth } from "../context/AuthContext";
 import { useMessages } from "../context/MessagesContext";
+import { resizeImage } from "../utils/resizeImage";
 import "./Messages.css";
 
-const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
+const MAX_RAW_IMAGE_SIZE = 30 * 1024 * 1024; // sanity cap before client-side resize
 const ACCEPTED_IMAGES = "image/jpeg,image/jpg,image/png,image/gif,image/webp";
 
 function timeAgo(dateString) {
@@ -433,13 +434,14 @@ export default function Messages() {
     setGifUrl(null);
   };
 
-  const handleFile = (event) => {
+  const handleFile = async (event) => {
     const file = event.target.files[0];
     event.target.value = "";
-    if (!file || file.size > MAX_IMAGE_SIZE) return;
+    if (!file || file.size > MAX_RAW_IMAGE_SIZE) return;
     clearAttachment();
-    setImageFile(file);
-    setImagePreview(URL.createObjectURL(file));
+    const resized = await resizeImage(file);
+    setImageFile(resized);
+    setImagePreview(URL.createObjectURL(resized));
   };
 
   const handleGifSelect = (url) => {

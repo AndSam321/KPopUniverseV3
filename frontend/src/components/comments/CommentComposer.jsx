@@ -1,9 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import { ImagePlus, X } from "lucide-react";
 import GifPicker from "./GifPicker";
+import { resizeImage } from "../../utils/resizeImage";
 import "./CommentComposer.css";
-
-const MAX_SIZE = 5 * 1024 * 1024;
 const ACCEPTED = "image/jpeg,image/jpg,image/png,image/gif,image/webp";
 
 const CommentComposer = ({
@@ -40,18 +39,19 @@ const CommentComposer = ({
     setGifUrl(null);
   };
 
-  const handleFile = (e) => {
+  const handleFile = async (e) => {
     const file = e.target.files[0];
     e.target.value = "";
     if (!file) return;
-    if (file.size > MAX_SIZE) {
-      setError("Image must be less than 5MB");
+    if (file.size > 30 * 1024 * 1024) {
+      setError("Image must be less than 30MB");
       return;
     }
     clearAttachment();
     setError("");
-    setImageFile(file);
-    setImagePreview(URL.createObjectURL(file));
+    const resized = await resizeImage(file);
+    setImageFile(resized);
+    setImagePreview(URL.createObjectURL(resized));
   };
 
   const handleGifSelect = (url) => {

@@ -12,9 +12,8 @@ amazon:
   secret_access_key: <%= ENV['AWS_SECRET_ACCESS_KEY'] %>
   region: <%= ENV['AWS_REGION'] %>
   bucket: <%= ENV['AWS_BUCKET'] %>
-  http_open_timeout: 5
-  http_read_timeout: 5
-  ssl_verify_peer: false
+  http_open_timeout: 15
+  http_read_timeout: 60
 
 # Remember not to checkin your GCS keyfile to a repository
 # google:
