@@ -23,6 +23,11 @@ const Onboarding = () => {
       .finally(() => setLoading(false));
   }, []);
 
+  useEffect(() => {
+    document.body.classList.add("onboarding-active");
+    return () => document.body.classList.remove("onboarding-active");
+  }, []);
+
   const toggle = (groupId) => {
     setSelected((prev) => {
       const next = new Set(prev);

@@ -365,6 +365,12 @@ body.dm-thread-active .kp-nav__mobile-tabs {
   display: none;
 }
 
+/* The onboarding flow owns the full screen; its own footer holds the CTA and
+   skip, so the tab bar is hidden until the user finishes or skips. */
+body.onboarding-active .kp-nav__mobile-tabs {
+  display: none;
+}
+
 /* Burger + mobile create are hidden on desktop; desktop-only shows normally */
 .kp-nav__burger,
 .kp-nav__create-mobile {
