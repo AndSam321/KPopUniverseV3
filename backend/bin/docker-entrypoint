@@ -6,13 +6,9 @@ if [ -z "${LD_PRELOAD+x}" ]; then
     export LD_PRELOAD
 fi
 
-# If running the rails server then create or migrate existing database.
-# db:prepare skips seeding on an existing database, so seed explicitly; the
-# seeds are idempotent (find_or_create_by, no external calls), so running on
-# every boot only ensures baseline data (groups, General communities, posts).
-if [ "${@: -2:1}" == "./bin/rails" ] && [ "${@: -1:1}" == "server" ]; then
-  ./bin/rails db:prepare
-  ./bin/rails db:seed
-fi
+# Database migration and seeding run in Render's pre-deploy command
+# (./bin/rails db:prepare && ./bin/rails db:seed), not here. Keeping them out of
+# the container start means they run once per deploy instead of on every boot,
+# so a crash-recovery restart no longer re-runs the seed under memory pressure.
 
 exec "${@}"
