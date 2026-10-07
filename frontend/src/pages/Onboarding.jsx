@@ -70,12 +70,14 @@ const Onboarding = () => {
                 onClick={() => toggle(group.id)}
                 aria-pressed={isSelected}
               >
-                <div className="onboarding__logo">
-                  {group.logo_url ? (
-                    <FadeImage src={group.logo_url} alt={group.name} />
-                  ) : (
-                    <span>{group.name.charAt(0)}</span>
-                  )}
+                <div className="onboarding__logo-wrap">
+                  <div className="onboarding__logo">
+                    {group.logo_url ? (
+                      <FadeImage src={group.logo_url} alt={group.name} />
+                    ) : (
+                      <span>{group.name.charAt(0)}</span>
+                    )}
+                  </div>
                   {isSelected && (
                     <span className="onboarding__check">
                       <Check size={16} strokeWidth={3} />
