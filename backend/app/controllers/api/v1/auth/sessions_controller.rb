@@ -21,7 +21,8 @@ class Api::V1::Auth::SessionsController < Devise::SessionsController
             username: user.username,
             avatar_url: user.profile_avatar_url,
             title: user.title,
-            idol_points: user.idol_points
+            idol_points: user.idol_points,
+            onboarded_at: user.onboarded_at
           },
           token: token
         }

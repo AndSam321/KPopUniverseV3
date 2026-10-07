@@ -54,6 +54,7 @@ Rails.application.routes.draw do
       get "search", to: "search#index"
       resources :comebacks, only: [:index]
       resources :feedbacks, only: [:create]
+      post "onboarding", to: "onboarding#create"
 
       resources :groups, only: [:index, :show] do
         member do

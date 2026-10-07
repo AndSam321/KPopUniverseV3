@@ -32,7 +32,8 @@ class Api::V1::Auth::RegistrationsController < Devise::RegistrationsController
             username: resource.username,
             avatar_url: resource.profile_avatar_url,
             title: resource.title,
-            idol_points: resource.idol_points
+            idol_points: resource.idol_points,
+            onboarded_at: resource.onboarded_at
           },
           token: request.env["warden-jwt_auth.token"]
         }
