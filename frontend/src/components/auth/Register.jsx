@@ -46,7 +46,7 @@ export default function Register() {
       // Update auth context with user data
       setUser(data.user);
 
-      navigate("/");
+      navigate("/onboarding");
     } catch (err) {
       console.error(err);
       const msg =

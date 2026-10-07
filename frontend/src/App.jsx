@@ -10,6 +10,7 @@ import GuestRoute from "./components/routes/GuestRoute.jsx";
 import PrivateRoute from "./components/routes/PrivateRoute.jsx";
 import BetaToast from "./components/common/BetaToast.jsx";
 import ScrollToTop from "./components/common/ScrollToTop.jsx";
+import OnboardingGate from "./components/routes/OnboardingGate.jsx";
 import AddToHomeScreen from "./components/common/AddToHomeScreen.jsx";
 
 const Sandbox = React.lazy(() => import("./playground/Sandbox.jsx"));
@@ -32,6 +33,7 @@ const Messages = React.lazy(() => import("./pages/Messages.jsx"));
 const Help = React.lazy(() => import("./pages/Help.jsx"));
 const Privacy = React.lazy(() => import("./pages/Privacy.jsx"));
 const AdminAnalytics = React.lazy(() => import("./pages/AdminAnalytics.jsx"));
+const Onboarding = React.lazy(() => import("./pages/Onboarding.jsx"));
 
 const PageLoader = () => (
   <div className="page-loader">
@@ -46,11 +48,20 @@ function App() {
       <AuthProvider>
         <MessagesProvider>
         <ScrollToTop />
+        <OnboardingGate />
         <Navbar />
         <NavigationProgress />
         <Suspense fallback={<PageLoader />}>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route
+            path="/onboarding"
+            element={
+              <PrivateRoute>
+                <Onboarding />
+              </PrivateRoute>
+            }
+          />
           <Route
             path="/following"
             element={

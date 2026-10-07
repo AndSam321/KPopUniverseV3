@@ -5,23 +5,25 @@ import FeedbackModal from "./FeedbackModal";
 import "./BetaToast.css";
 
 const STORAGE_KEY = "beta_notice_seen";
-const AUTH_PATHS = ["/login", "/register", "/forgot-password", "/reset-password"];
+// Pages with their own full-height layout or a fixed bottom bar the toast
+// would collide with.
+const HIDDEN_PATHS = ["/login", "/register", "/forgot-password", "/reset-password", "/onboarding"];
 
 const BetaToast = () => {
   const [visible, setVisible] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const { pathname } = useLocation();
-  const onAuthPage = AUTH_PATHS.includes(pathname);
+  const onHiddenPage = HIDDEN_PATHS.includes(pathname);
 
   useEffect(() => {
-    if (onAuthPage) return;
+    if (onHiddenPage) return;
     if (sessionStorage.getItem(STORAGE_KEY)) return;
     const showId = setTimeout(() => {
       setVisible(true);
       sessionStorage.setItem(STORAGE_KEY, "1");
     }, 900);
     return () => clearTimeout(showId);
-  }, [onAuthPage]);
+  }, [onHiddenPage]);
 
   useEffect(() => {
     if (!visible) return;
@@ -33,7 +35,7 @@ const BetaToast = () => {
 
   return (
     <>
-      {visible && !onAuthPage && (
+      {visible && !onHiddenPage && (
         <div className="beta-toast" role="status">
           <Sparkles size={16} strokeWidth={2.5} className="beta-toast__icon" />
           <span className="beta-toast__message">
