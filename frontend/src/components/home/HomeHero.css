@@ -2,7 +2,7 @@
   position: relative;
   overflow: hidden;
   max-width: 800px;
-  margin: 0 auto 20px;
+  margin: 20px auto;
   padding: 28px 28px 30px;
   border-radius: 22px;
   /* Match the feed's 16px side inset below its max-width so the rounded
