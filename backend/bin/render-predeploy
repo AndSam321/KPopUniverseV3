@@ -1,0 +1,7 @@
+#!/bin/bash -e
+
+# Render pre-deploy command. Runs once per deploy (not on crash-recovery
+# restarts): migrate the database, then seed baseline data. The seeds are
+# idempotent (find_or_create_by, no external calls).
+./bin/rails db:prepare
+./bin/rails db:seed
