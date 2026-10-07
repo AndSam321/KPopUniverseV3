@@ -48,10 +48,10 @@ const Onboarding = () => {
   return (
     <div className="onboarding">
       <header className="onboarding__header">
-        <h1 className="onboarding__title">Who do you stan?</h1>
+        <h1 className="onboarding__title">Follow your favorite groups</h1>
         <p className="onboarding__subtitle">
-          Pick your favorite groups and we'll fill your feed with their posts.
-          You can always change this later.
+          We'll fill your Following feed with their posts. You can change this
+          anytime.
         </p>
       </header>
 
@@ -59,13 +59,14 @@ const Onboarding = () => {
         <div className="onboarding__loading">Loading groups…</div>
       ) : (
         <div className="onboarding__grid">
-          {groups.map((group) => {
+          {groups.map((group, index) => {
             const isSelected = selected.has(group.id);
             return (
               <button
                 key={group.id}
                 type="button"
                 className={`onboarding__card ${isSelected ? "onboarding__card--selected" : ""}`}
+                style={{ "--card-index": index }}
                 onClick={() => toggle(group.id)}
                 aria-pressed={isSelected}
               >

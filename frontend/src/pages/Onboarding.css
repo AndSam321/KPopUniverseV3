@@ -48,18 +48,39 @@
   border-radius: 16px;
   background: var(--card-bg);
   cursor: pointer;
-  transition: border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
   -webkit-tap-highlight-color: transparent;
+  opacity: 0;
+  animation: onboardingCardIn 0.4s ease forwards;
+  animation-delay: calc(var(--card-index, 0) * 22ms);
+}
+
+@keyframes onboardingCardIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .onboarding__card:hover {
-  transform: translateY(-2px);
   border-color: var(--pastel-sky);
+  box-shadow: 0 8px 20px rgba(117, 123, 200, 0.18);
 }
 
 .onboarding__card--selected {
   border-color: var(--accent-link);
   box-shadow: 0 0 0 2px var(--accent-link) inset;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .onboarding__card {
+    animation: none;
+    opacity: 1;
+  }
 }
 
 .onboarding__logo {
